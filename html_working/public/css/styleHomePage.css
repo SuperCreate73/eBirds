@@ -1,0 +1,74 @@
+/*   HomePage - données nichoir (caméra et senseurs)  */
+/*----------------------------------------------------*/
+/******* CAMERA ***********/
+.camera{
+	width:100%;
+	border-radius:10px;
+	border: 3px solid #461A00;
+}
+
+/******** SENSOR DATA **********/
+.sensors{
+	border-radius:10px;
+	margin-bottom: .8rem;
+	padding: .3rem;
+	border:1px solid white;
+}
+
+/******** sensor text value **********/
+.valeur{
+	min-width:30%;
+	text-align:center;
+	margin-top:1rem;
+	margin-bottom:1rem;
+	text-shadow: 1px 1px 1px rgba(255,255,255,.3), 0px -1px 0px rgba(0,0,0,.7);
+}
+
+/******** sensor text label **********/
+.label{
+	text-align: center;
+	color: white;
+}
+
+/******** sensor icon **********/
+.icone{
+	display: block;
+	text-align:center;
+	max-width:230px;
+  	max-height:95px;
+ 	width: auto;
+  	height: auto;
+}
+
+/******** layout separator **********/
+.separateur{
+	border-bottom: 2px solid white;
+}
+
+/*
+
+#sensors{
+	border-radius:10px;
+	margin-bottom: .8rem;
+	padding: .3rem;
+	border:1px solid white;
+	background: -moz-linear-gradient(top, #f2f5f6 0%, #e3eaed 14%, #009192 100%); /* FF3.6-15
+	background: -webkit-linear-gradient(top, #f2f5f6 0%,#e3eaed 14%,#009192 100%); /* Chrome10-25,Safari5.1-6
+	background: linear-gradient(to bottom, #f2f5f6 0%,#e3eaed 14%,#009192 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+
+}
+.valeur{
+	min-width:30%;
+	text-align:center;
+	margin-top:1rem;
+	margin-bottom:1rem;
+	text-shadow: 0px 1px 0px rgba(255,255,255,.3), 0px -1px 0px rgba(0,0,0,.7);
+}
+.label{
+	text-align: center;
+	color: #9F1077;
+}
+.separateur{
+	border-bottom: 1px solid #9F1077;
+*/
+
+

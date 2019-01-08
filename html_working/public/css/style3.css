@@ -1,0 +1,822 @@
+/******** GENERAL *********/
+
+/*****Sous-menu data ******/
+
+/***** REGLAGES => FENETRE MODALE *****/
+.tHeader{
+	font-size: 1.8rem;
+	border-bottom: 1px solid white;
+}
+
+.tRow{
+	border-bottom: 1px solid white;
+}
+
+.basPage {
+	margin-top: 30px;
+}
+
+/**********/
+/*   viewGraphique - contrôles switch et sliders  */
+/*------------------------------------------------*/
+.switch {
+  	position: relative;
+  	display: inline-block;
+  	width: 34px;
+  	height: 17px;
+	margin:  auto;
+ 	top: 3px;
+ 	float: right;
+ 	cursor: pointer;
+}
+
+.switch input {display:none;}
+
+.slider {
+  	position: absolute;
+  	cursor: pointer;
+  	top: 0;
+  	left: 0;
+  	right: 0;
+  	bottom: 0;
+  	background-color: #ccc;
+  	-webkit-transition: .4s;
+  	transition: .4s;
+}
+
+.slider:before {
+  	position: absolute;
+  	content: "";
+  	height: 17px;
+  	width: 17px;
+  	background-color: white;
+  	-webkit-transition: .4s;
+  	transition: .4s;
+}
+
+input:checked + .slider.tExt {
+  	background-color: #DFBD0B;
+}
+input:checked + .slider.tInt {
+  	background-color: #ef43e5;
+}
+input:checked + .slider.hExt {
+  	background-color: #089F4A;
+}
+input:checked + .slider.hInt {
+  	background-color: #13abe2;
+}
+
+input:focus + .slider {
+  	box-shadow: 0 0 3px black;
+}
+
+input:checked + .slider:before {
+  	-webkit-transform: translateX(19px);
+  	-ms-transform: translateX(19px);
+  	transform: translateX(19px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  	border-radius: 28px;
+ }
+
+.slider.round:before {
+  	border-radius: 50%;
+  	border: 2px solid black;
+}
+
+/*********/
+/*   viewGraphique - propriétés du graphique  */
+/*--------------------------------------------*/
+.styleGraph {
+	stroke-width:2px;
+	fill: #f2ea00;
+   	fill-opacity:0;
+    stroke: #DFBD0B;
+}
+
+#contenant{
+	font-size: 1.6rem;
+}
+
+.legende {
+	color: white;
+	margin-bottom: 12px;
+}
+
+.legendeTitre{
+	text-align: center;
+	text-decoration: underline;
+}
+
+.styleGraph2 {
+	stroke-width:2px;
+  	fill: #f2ea00;
+  	fill-opacity:0;
+    stroke: #ef43e5;
+}
+
+.styleGraph3 {
+	stroke-width:2px;
+	stroke: #b3ab00;
+	fill: #f2ea00;
+	fill-opacity:0;
+	stroke: #089F4A;
+}
+
+.styleGraph4 {
+	stroke-width:2px;
+	stroke: #b3ab00;
+	fill: #f2ea00;
+	fill-opacity:0;
+	stroke: #13abe2;
+}
+
+/*   All view (template) - fenêtre modale  */
+/*-----------------------------------------*/
+#FenetreMessage{ /* Fenetre qui apparaît devant la page courante pour l'affichage de message */  
+	margin: auto;
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;
+	width: 80%;
+	height:80%;
+	background-color: #009192;
+	border: solid 3px white;
+	padding: 10px;
+	border-radius: 10px;
+	font-size: 2.2rem;
+	text-align: center;
+}
+
+@keyframes montrer_message { /* Animation lors de l'affichage du message */
+	from{opacity:0;}
+    to {opacity:1;}
+}
+
+@keyframes cacher_message {
+	from{opacity:1;}
+    to {opacity:0;}
+}
+
+.cache{
+	display:none;
+}
+
+.montre{
+	animation: montrer_message 2s;
+	display:block;
+}
+
+/*   multi-views - propriétés des boutons  */
+/*-----------------------------------------*/
+.my_button{
+	cursor: pointer;
+	display: inline-block;
+	height: 40px;
+	width: 40px;
+	float:right;
+	margin-left:8px;
+}
+
+.save{
+	background-image:url(../images/btn_save.png);
+}
+
+.save:hover{
+	background-position: 0 -40px;
+    cursor: pointer;
+}
+
+#btn_restart{
+	background-image: url(../images/btn_restart3.png);
+	height: 66px;
+	width: 66px;
+}
+#btn_restart:hover{
+	background-position: 0 -66px;
+    cursor: pointer;
+}
+
+#add_user{
+	background-image: url(../images/btn_ajout.png);
+}
+#add_user:hover{
+	background-position: 0 -40px;
+    cursor: pointer;
+}
+
+
+#btn_shutdown{
+	background-image: url(../images/btn_shutdown3.png);
+	height: 66px;
+	width: 66px;
+}
+#btn_shutdown:hover{
+	background-position: 0 -66px;
+    cursor: pointer;
+}
+
+.spaced{
+	margin-bottom: 30px;
+}
+
+/************************/
+
+
+
+/*   multi-views - propriétés générales  */
+/*---------------------------------------*/
+body {
+	background-color: grey;
+	color: white;
+	background-image: url(../images/Melamine-wood-004.png);
+}
+
+.alerte {
+	color: red;
+	font-size: 2rem;
+}
+
+h1 {
+	margin-bottom:1rem;
+	font-size:3.4rem;
+}
+
+/******  HEADER + NAV menu***************/
+/*   All views (template) - menu principal  */
+/*------------------------------------------*/
+#logout{
+	cursor: pointer;
+}
+
+header{
+	padding-top:.8rem;
+}
+
+#header_icon{
+	background: url("../images/logo_nichoir.png") no-repeat;
+	background-size: contain;
+	display:block;
+	height:100px;
+	margin-bottom: 1.8rem;
+}
+
+#headertag{
+	display: block;
+	float: right;
+	text-align: right;
+}
+
+nav{
+	/*margin-bottom:1em;*/
+}
+
+.menuContainer{
+	width: 100%;
+	height: 40px;
+	list-style-type:none;
+	margin: 0;
+}
+/*
+ul.menu {
+	list-style-type:none;
+	margin: 0;
+}
+*/
+/*
+li.menu {
+	float:left;
+}
+*/
+li.right{
+	float: right;
+}
+
+.menuitem {
+	color:white;
+	font-size: 2rem;
+	border-right: 1px solid white;
+	text-decoration: none;
+	text-align:center;
+	display:block;
+	float:left;
+	padding-right: 10px;
+	padding-left: 10px;
+	text-transform: none;
+	font-variant: small-caps;
+	text-shadow: 0px 1px 0px rgba(255,255,255,.3), 0px -1px 0px rgba(0,0,0,.7);
+	transition-property: background-color;
+	transition-duration: 1s;
+}
+
+.menuitem:hover {
+	background-color:white;
+}
+
+.prems{
+	border-top-left-radius: 10px;
+	border-left: 1px solid white;
+}
+
+.der{
+	border-top-right-radius: 10px;
+	border-left: 1px solid white;
+}
+
+.selected{
+	background-color: #009192;
+	border-color: #009192;
+
+}
+.menu_icon{
+	display:inline-block;
+	width: 100%;
+	height:30px;
+	display: block;
+	margin-top:.5rem;
+}
+
+#home_icon{
+	background: url(../images/dashboard.png) no-repeat;
+	background-size: contain;
+	background-position: center center;
+}
+
+#donnees_icon{
+	background: url(../images/donnees.png) no-repeat;
+	background-size: contain;
+	background-position: center center;
+}
+
+#informations_icon{
+	background: url(../images/info.png) no-repeat;
+	background-size: contain;
+	background-position: center center;
+}
+
+#reglages_icon{
+	background: url(../images/reglages.png) no-repeat;
+	background-size: contain;
+	background-position: center center;
+}
+
+/*   HomePage - données nichoir (caméra et senseurs)  */
+/*----------------------------------------------------*/
+/******* CAMERA ***********/
+.camera{
+	width:100%;
+	border-radius:10px;
+	border: 3px solid #461A00;
+}
+
+/******** SENSOR DATA **********/
+#sensors{
+	border-radius:10px;
+	margin-bottom: .8rem;
+	padding: .3rem;
+	border:1px solid white;
+}
+
+.valeur{
+	min-width:30%;
+	text-align:center;
+	margin-top:1rem;
+	margin-bottom:1rem;
+	text-shadow: 1px 1px 1px rgba(255,255,255,.3), 0px -1px 0px rgba(0,0,0,.7);
+}
+
+.label{
+	text-align: center;
+	color: white;
+}
+
+.separateur{
+	border-bottom: 2px solid white;
+}
+/*
+
+#sensors{
+	border-radius:10px;
+	margin-bottom: .8rem;
+	padding: .3rem;
+	border:1px solid white;
+	background: -moz-linear-gradient(top, #f2f5f6 0%, #e3eaed 14%, #009192 100%); /* FF3.6-15
+	background: -webkit-linear-gradient(top, #f2f5f6 0%,#e3eaed 14%,#009192 100%); /* Chrome10-25,Safari5.1-6
+	background: linear-gradient(to bottom, #f2f5f6 0%,#e3eaed 14%,#009192 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+
+}
+.valeur{
+	min-width:30%;
+	text-align:center;
+	margin-top:1rem;
+	margin-bottom:1rem;
+	text-shadow: 0px 1px 0px rgba(255,255,255,.3), 0px -1px 0px rgba(0,0,0,.7);
+}
+.label{
+	text-align: center;
+	color: #9F1077;
+}
+.separateur{
+	border-bottom: 1px solid #9F1077;
+*/
+
+.icone{
+	display: block;
+	text-align:center;
+	max-width:230px;
+  	max-height:95px;
+ 	width: auto;
+  	height: auto;
+}
+
+/****** DONNEES *****/
+.main-pane{
+	/*display:block;*/
+	width: 100%;
+	/*height: 400px;*/
+	border: 1px solid white;
+	border-radius: 10px;
+}
+
+
+/******** REGLAGES ***********/
+
+form.loginform{
+	border: 1px solid white;
+	padding-top: 2em;
+	padding-bottom: 2em;
+	padding-left: 1em;
+	padding-right: 1em;
+	border-radius: 10px;
+}
+
+.boutonLogin{
+	float:right;
+}
+
+input, select{
+	color: #461A00;
+	font-size: 1.8rem;
+}
+
+#presentation{
+	font-size:  1.6rem;
+	margin-bottom: 2rem;
+	text-shadow: 0px 1px 0px rgba(255,255,255,.3), 0px -1px 0px rgba(0,0,0,.7);
+}
+
+input.button{
+	background-color: #009192;
+	color:  white;
+	border-color: #009192;
+}
+
+.cadre{
+	border: 1px solid white;
+	border-radius: 10px;
+	margin-bottom: 1em;
+	padding: 1em;
+}
+
+/********  SMALL SCREENS *****/
+@media(min-width: 150px){
+	h1{
+		font-size:2rem;
+	}
+	#sensors{
+		float:left;
+		width:30%;
+		margin-left: .8rem;
+	}
+	.menuitem {
+		font-size:1rem;
+		padding-right: 8px;
+		padding-left: 8px;
+	}
+	#header_icon{
+		height:50px;
+		margin-bottom: 1.8rem;
+		width: 30%;
+	}
+	#headertag{
+		font-size:.5rem;
+		width: 30%;
+	}
+	.label{
+		width: 30.6666666667%;
+		font-size: .5em;
+	}
+	.icone{
+		width: 26%;
+		display:none;
+	}
+	.valeur{
+		width: 35.66%;
+	}
+}
+
+@media(min-width: 450px){
+	h1{
+		font-size:3.4rem;
+	}
+	h2{
+		font-variant: small-caps;
+		font-size: 2.8rem;
+		line-height: 2.8rem;
+	}
+	h3{
+		font-size: 2rem;
+		line-height: 2.8rem;
+		margin-bottom:  .3rem;
+	}
+	.menuitem {
+		font-size:1.6rem;
+		padding-right: 8px;
+		padding-left: 8px;
+	}
+	#header_icon{
+		height:100px;
+		margin-bottom: 1.8rem;
+	}
+	#headertag{
+		font-size:1.2rem;
+	}
+	.icone{
+		width: 26%;
+		display:block;
+	}
+}
+
+@media(min-width:575px){
+	#sensors{
+		margin-left: 2rem;
+		float: right;
+	}
+	.menuitem {
+		font-size:2rem;
+		padding-right: 8px;
+		padding-left: 8px;
+	}
+	#sensors{
+		min-height:  60px;
+	}
+	.valeur{
+		font-size: 2rem;
+	}
+	.label{
+		font-size: 1rem;
+	}
+	.icone{
+		padding-top: .3rem;
+	}
+}
+
+@media(min-width:750px){
+	.menuitem {
+		font-size:2.2rem;
+		padding-right: 10px;
+		padding-left: 10px;
+	}
+	#sensors{
+		min-height:  60px;
+	}
+	.valeur{
+		font-size: 2.4rem;
+	}
+	.label{
+		font-size: 1.6rem;
+	}
+	.icone{
+		padding-top: .7rem;
+	}
+}
+
+@media(min-width:850px){
+	.menuitem{
+		font-size: 2.4rem;
+	}
+	#sensors{
+		min-height:  60px;
+	}
+	.valeur{
+		font-size: 3rem;
+	}
+	.label{
+		font-size: 2rem;
+	}
+	.icone{
+		padding-top: 1.2rem;
+	}
+}
+
+@media(min-width:1050px){
+	.menuitem{
+		font-size: 2.8rem;
+	}
+	#sensors{
+		min-height:  60px;
+	}
+	.valeur{
+		font-size: 3.6rem;
+	}
+	.label{
+		font-size: 2.4rem;
+	}
+	.icone{
+		padding-top: 1.8rem;
+	}
+}
+
+/* *******  Menu secondaire ******** */
+.menu2Container {
+	font-variant: small-caps;
+	margin-bottom: 18px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid white;
+	border-radius: 10px;
+}
+
+.menu2Item {  
+	color: white;
+	font-size: 1.8rem;
+	text-decoration: none;
+	padding: 3px 11px;
+	transition-property: color;
+	transition-duration: 0.5s;
+}
+
+.menu2Item:hover{
+	color: #009192;
+}
+
+.menu2ItemSelect {
+	color: white;
+	border-bottom: solid;
+	border-bottom-width: 2px;
+	border-color:  #009192;
+	border-radius:5px;
+}
+
+#explorerPane {
+	display : flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items:center;
+}
+
+/* #photoThumb {
+  	display: flex;
+ 	flex-direction: row;
+  	align-items: center; 
+    width: 100%;
+	overflow: hidden;
+    background-color: rgba(0,0,0,0.3);
+} 
+*/
+#photoThumbContainer {
+  	display: flex;
+ 	flex-direction: row;
+ 	justify-content: space-around;
+  	align-items: center;
+    width: 60%; 
+	height: 0px;
+	overflow: hidden;
+    /* Ci-dessous, nous appliquons un background de couleur noire et de transparence 0.3 */
+    background-color: rgba(0,0,0,0.3);
+	margin-bottom: 5px;
+	transition-property: height;
+	transition-duration: 1s;
+}
+
+#photoList {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;  
+}
+
+.main-pane {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: stretch;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.fileList:hover {
+    cursor: pointer;
+}
+
+.fileList {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.highSelected{
+	background-color: #D12626;
+	border-color: #D12626;
+}
+
+#photoThumb {
+	width: 180px;
+}
+
+.menuPhoto {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.photoNav {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.menuEdit {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+}
+
+#btn_delete{
+	background-image: url(../images/btn_delete.png);
+	background-repeat:no-repeat;
+	float:right;
+	width:40px;
+    cursor: pointer;
+}
+#btn_delete:hover{
+	background-position: 0 -40px;
+}
+
+#btn_download {
+	background-image: url(../images/btn_download.png);
+	background-repeat:no-repeat;
+	float:right;
+	width:40px;
+}
+
+#btn_tag {
+	background-image: url(../images/btn_tag.png);
+	background-repeat:no-repeat;
+	float:right;
+	width:40px;
+}
+
+#btn_comment {
+	background-image: url(../images/btn_comment.png);
+	background-repeat:no-repeat;
+	float:right;
+	width:40px;
+}
+
+.toggleUnSelect{
+	background-image: url(../images/btn_checkBox.png);
+	background-repeat:no-repeat;
+	float:right;
+	width:40px;
+}
+#btn_toggleSelect:hover{
+	background-position: -59px 0;
+    cursor: pointer;
+}
+
+.toggleSelect{
+	background-image: url(../images/btn_checkBox.png);
+	background-repeat:no-repeat;
+	float:right;
+	width:40px;
+	background-position: -118px 0px;
+}
+
+.toggleSelectall {
+	background-image: url(../images/btn_checkBox.png);
+	background-repeat: no-repeat;
+	float: right;
+	width: 40px;
+	background-position: -118px 0px;
+}
+
+.jpg {
+	background-image: url(../images/logo_imageMini.png);
+	background-repeat: no-repeat;
+	width: 20px;
+	height: 20px;
+}
+.tag {
+	background-image: url(../images/logo_tagMini.png);
+	background-repeat: no-repeat;
+	width: 20px;
+	height: 20px;
+}
+.comment {
+	background-image: url(../images/logo_commentMini.png);
+	background-repeat: no-repeat;
+	width: 20px;
+	height: 20px;
+}

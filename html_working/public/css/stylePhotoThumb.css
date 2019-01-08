@@ -1,0 +1,17 @@
+
+.main-pane{
+	display:flex;
+	justify-content:center;
+	width: 100%;
+	margin-Top:3.5rem;
+}
+
+/* #photoThumb {
+  	display: flex;
+ 	flex-direction: row;
+  	align-items: center; 
+    width: 100%;
+	overflow: hidden;
+    background-color: rgba(0,0,0,0.3);
+} 
+*/
