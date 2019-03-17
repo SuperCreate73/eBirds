@@ -1,4 +1,4 @@
-<?php 
+<?php
 	$title = 'Mon nichoir: Photos et vidéos';
 	$styles = '<link href="public/css/stylePhotoList.css" rel="stylesheet" type="text/css" />';
 ?>
@@ -41,23 +41,34 @@
 				<div id="fileName" class="fileName" value="Nom :">name</div>
 				<div id="fileTag" class="fileTag" value="Tag :">tag</div>
 				<div id="nbrSelected" class="nbrSelected" value="Photos sélectionnées : ">photos </div>
-				 
+
 			</div>
 		</div>
+
+		<span id="photoThumbContainer2" class="photoHide">
+			<div id="photoThumb2" class="photoThumb"></div>
+			<div id="photoInfo2" class="photoInfo">
+				<div id="fileName2" class="fileName" value="Nom :">name</div>
+				<div id="fileTag2" class="fileTag" value="Tag :">tag</div>
+				<div id="nbrSelected2" class="nbrSelected" value="Photos sélectionnées : ">photos </div>
+
+			</div>
+		</span>
+
 		<div id="photoList" class="photoList">
 
-		<?php 
+		<?php
 			$count=0;
 			foreach ($explorerPane as $explorerPaneCol) {
-				$count+=1; 
+				$count+=1;
 		?>
 
 			<div id="explorer<?= $count ?>" class="listPane" ondblclick="invertSelection(this.id)">
 
-			<?php 
+			<?php
 				foreach ($explorerPaneCol as $item) {
 					$pathParts = pathinfo($fileManager->filePath().$item);
-			?>						
+			?>
 
 				<div class="fileList" extension="<?= $pathParts["extension"] ?>" onclick="selectFiles(this)" id="<?= $pathParts["filename"] ?>">
 					<div class="fileExtension <?= $pathParts["extension"] ?>"></div>
@@ -66,7 +77,7 @@
 					<div class="fileComment comment"></div>
 				</div>
 			<?php } ?>
-				
+
 			</div>
 		<?php } ?>
 	   	</div>
@@ -74,4 +85,3 @@
 <?php $content = ob_get_clean(); ?>
 
 <?php require('view/template.php'); ?>
-

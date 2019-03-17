@@ -23,18 +23,18 @@
 /* #photoThumb {
   	display: flex;
  	flex-direction: row;
-  	align-items: center; 
+  	align-items: center;
     width: 100%;
 	overflow: hidden;
     background-color: rgba(0,0,0,0.3);
-} 
+}
 */
 #photoThumbContainer {
   	display: flex;
  	flex-direction: row;
  	justify-content: space-around;
   	align-items: center;
-    width: 60%; 
+    width: 60%;
 	height: 0px;
 	overflow: hidden;
     /* Ci-dessous, nous appliquons un background de couleur noire et de transparence 0.3 */
@@ -48,7 +48,7 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
-	width: 100%;  
+	width: 100%;
 }
 
 .fileList:hover {
@@ -165,4 +165,11 @@
 	background-repeat: no-repeat;
 	width: 20px;
 	height: 20px;
+}
+
+#photoThumbContainer2 {
+	display:none;
+}
+#fileList:hover span {
+	display:block;
 }

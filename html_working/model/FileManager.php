@@ -3,17 +3,17 @@
 class FileManager {
 	// Classe qui gère les fichiers sur le serveur
 	// Attention, nécessite le droit d'exécution sur les fichiers et répertoires !
-	
+
 //Attributs:
 	private $_filePath = 'public/cameraShots/' ; //
 	private $_fileMask = '.'; // expression Regex
 	private $_fileCount;
 	private $_fileList;
-//---------------------------------------------	
+//---------------------------------------------
 
 //Méthodes:
 	public function __construct($inputMask = '.') {
-	// méthode appelée lorsque la classe est instanciée (= un objet est créé à partir de cette classe)	
+	// méthode appelée lorsque la classe est instanciée (= un objet est créé à partir de cette classe)
 		// chequer et enregistrer le filePath
 		//
 		// Initialiser le fileMask
@@ -25,8 +25,8 @@ class FileManager {
 		// Initialiser le compteur fileCount
 //		$this->_fileCount=$this->setFileCount($this->_fileList);
 	}
-	
-  	// Liste des getters : fonctions permettant de récupérer les valeurs des attributs privés 
+
+  	// Liste des getters : fonctions permettant de récupérer les valeurs des attributs privés
 //  	public function fileCount() {return $this->_fileCount;}
 //  	public function fileList() {return $this->_fileList;}
   	public function filePath() {return $this->_filePath;}
@@ -39,21 +39,18 @@ class FileManager {
 		$inputPath=$this->_filePath;
 		$fileMask=$this->_fileMask; // not used for the moment ...
 		return array_filter(scandir($inputPath), function($fileTest) { return ($fileTest !="." && $fileTest != ".."); });
-	}		
+	}
 
 	public function deleteFiles($fileList) {
 		// Efface les fichiers donnés en arguments
-		if (!$this->file_perms($this->_filePath.$fileList[0])) {
-			throw new Exception("Vous n'avez pas la permission d'effectuer cette opération !");
-			return false;
-		}
+
 		// ouverture du répertoire
 		$openedPath = opendir($this->_filePath);
 
 		// parcours du tableau avec les fichiers à effacer
 		foreach ($fileList as $file) {
 			// association du chemin d'accès et du nom de fichier
-			$fileToDelete = $this->_filePath.$file;
+			$fileToDelete = $this->_filePath.$file.".jpg";
 			// efface le fichier courant
 			unlink($fileToDelete);
         }
@@ -83,14 +80,14 @@ class FileManager {
 			header('Content-Transfer-Encoding: binary'); //Transfert en binaire (fichier).
 			header('Content-Disposition: attachment; filename="Archive.zip"'); //Nom du fichier.
 			header('Content-Length: '.filesize('Archive.zip')); //Taille du fichier.
-			readfile('Archive.zip');	  
+			readfile('Archive.zip');
 		}
 		else {throw new Exception('Unable to create archive');}
 		return 'Archive.zip';
 	}
 
 	private function setFileCount($fileList) {
-		// Compte le nombre de fichiers en paramètres 	
+		// Compte le nombre de fichiers en paramètres
 		return count($fileList);
 	}
 
@@ -100,21 +97,10 @@ class FileManager {
 			mkdir($inputPath);
 		}
 	}
-	
+
 	private function checkPath($inputPath) {
-		// vérifie l'existance du chemin d'accès en paramètre	
+		// vérifie l'existance du chemin d'accès en paramètre
 		return realpath($inputPath);
 	}
 
-	private function file_perms($testFile) {
-		// Vérification de la permission d'exécution sur un fichier
-		if (substr(decoct(fileperms($testFile)), -1) != 7) {
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
-
 }
-

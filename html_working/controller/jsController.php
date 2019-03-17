@@ -2,7 +2,7 @@
 
 require_once('model/PiManager.php');
 require_once('model/FileManager.php');
-require_once('model/ImageFileManager.php');
+//require_once('model/ImageFileManager.php');
 
 function shutdown() {
 	// éteint le raspberri
@@ -29,7 +29,7 @@ function distUpgrade() {
 }
 
 function changeName($nom){
-	// change le nom du raspberry	
+	// change le nom du raspberry
 	$piManager = new PiManager();
 	$piManager->changeName($nom);
 }
@@ -51,4 +51,3 @@ function zipUpload() {
 	$archive = $fileManager->zipFiles(explode(",",$_POST['selectionArray']));
 	return($archive);
 }
-

@@ -21,7 +21,7 @@ function countSelection() {
 
 
 function selectAll() {
-	// Selection de toutes les images 
+	// Selection de toutes les images
 	//
 	// parcours de tous les fichiers et stockage dans le tableau de sélection
 	$('.fileList').each(function() {selectionArray.push($(this).attr('id'));});
@@ -105,7 +105,7 @@ function showThumbnail(currentImage) {
   //      photoThumb.innerHTML = '';
     //    photoThumb.appendChild(img);
     });
-	
+
 	// définition des caractéristiques de l'image
 	img.width = 213;
 	img.heigth = 160;
@@ -130,7 +130,7 @@ function hideThumbnail() {
 	// le contenu html est effacé
 	$('#photoThumb').html('');
 	// les classes sont adaptées pour gérer la visibilité
-	$('#photoThumbContainer').addClass('photoUnselect').removeClass('photoSelected');	
+	$('#photoThumbContainer').addClass('photoUnselect').removeClass('photoSelected');
 	// active la transition CSS
 	photoThumbContainer.style.height='0px';
 	// la page est scrollée pour compenser la disparition du thumbnail
@@ -158,7 +158,7 @@ function selectFiles(myElement) {
 		// compte le nombre de fichier sélectionné pour affichage dans l'aperçu
 		countSelection();
 		// montre l'image du fichier actif dans l'aperçu
-		showThumbnail(myElement.id); 	
+		showThumbnail(myElement.id);
 	}
 	else {
 		// efface l'id de l'élément courant de la sélection active
@@ -207,9 +207,10 @@ function deleteFiles() {
 			})}
 			$('.fileList').removeClass('highSelected selected');
 			selectionArray =[];
+			localStorage.setItem('selectionArray', JSON.stringify(selectionArray));
 			},
 		error: function(eXhr,eStatus, eError){
-			$('#FenetreContenu').html("<br><div class='row'><div class ='offset-by-three columns'><div class='six columns'>xhr: "+xhr+"</br>Status: "+status+"</br>Error :"+error+"</div></div></div>");
+			$('#FenetreContenu').html("<br><div class='row'><div class ='offset-by-three columns'><div class='six columns'>xhr: "+eXhr+"</br>Status: "+eStatus+"</br>Error :"+eError+"</div></div></div>");
   			$('#FenetreMessage').removeClass('cache').addClass('montre');
         	}
 	});
@@ -217,10 +218,10 @@ function deleteFiles() {
 
 
 function showPhotoSelection () {
-	// Affiche la page 'PhotoThumb' avec la sélection active 
+	// Affiche la page 'PhotoThumb' avec la sélection active
 	//
 	// si pas de sélection, affiche tout
-	if (selectionArray.length < 1) { 
+	if (selectionArray.length < 1) {
 		console.log ('array lenght = 0');
 		location.href="index.php?page=photothumb";
 		return false;
@@ -237,13 +238,13 @@ function showPhotoSelection () {
 	document.hiddenForm.valueTable.value = JSON.stringify(selectionArrayMod);
 	document.hiddenForm.method='POST';
 	document.hiddenForm.action = "index.php?page=photothumb&action=table";
-	document.hiddenForm.submit(); 
+	document.hiddenForm.submit();
 }
 
 
 function resetSelection () {
 	// Affiche la sélection en mémoire à l'ouverture de la page
-	// 
+	//
 	if (selectionArray.length<1) {return;}
 	$('.highSelected').removeClass('highSelected');
 	selectionArray.forEach(function(element) {
@@ -279,7 +280,7 @@ function downloadFiles () {
 				}
 			},
 		error: function(eXhr,eStatus, eError){
-			$('#FenetreContenu').html("<br><div class='row'><div class ='offset-by-three columns'><div class='six columns'>xhr: "+xhr+"</br>Status: "+status+"</br>Error :"+error+"</div></div></div>");
+			$('#FenetreContenu').html("<br><div class='row'><div class ='offset-by-three columns'><div class='six columns'>xhr: "+eXhr+"</br>Status: "+eStatus+"</br>Error :"+eError+"</div></div></div>");
   			$('#FenetreMessage').removeClass('cache').addClass('montre');
         	}
 	});
@@ -291,7 +292,7 @@ function commentFiles () {
 	//
 	// Apparition d'une zone de saisie avec boutons 'OK' et 'Cancel'
 	// Si CANCEL annulation
-	// Si OK 
+	// Si OK
 	// 		Test de validation du commentaire
 	// 		envoi du commentaire et du tableau de sélection au serveur
 	//
