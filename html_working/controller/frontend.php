@@ -100,7 +100,13 @@ function information($nom) {
 function reglages($nom) {
 	$tabFocus=setFocus(3);
 
-	require('view/viewReglages.php');
+	$user = new User();
+	$users = $user->getUsers();
+	if (! $users) {
+		//impossible de charger les utilisateurs
+		$users="Unable to load users";
+	}
+		require('view/viewReglages.php');
 }
 
 function login($message) {
@@ -121,7 +127,7 @@ function loginVerify($nom, $password) {
 	if ($user->checkUser($nom,$password)) {
 		//Si l'utilisateur est trouvé On recharge la page précédant le login
 		$user->logUser($nom);
-		header('Location: index.php?page='.$_SESSION['pageCourante']); 
+		header('Location: index.php?page='.$_SESSION['pageCourante']);
 		// On recharge la page précédant le login.
 	}
 	else {
@@ -133,7 +139,7 @@ function loginVerify($nom, $password) {
 function logOut() {
 	$user = new User();
 	$user->unlogUser();
-	header('Location: index.php?page='.$_SESSION['pageCourante']); 
+	header('Location: index.php?page='.$_SESSION['pageCourante']);
 
 	// On supprime la variable de session 'nom' pour déconnecter l'usager et on redirige vers la dernière page consultée
 }
@@ -144,4 +150,3 @@ function doReglages() {
 		//update parameters
 	}
 }
-

@@ -14,30 +14,30 @@ class DbMngData extends DbManager {
 	private $_visites;
 
 	public function __construct() {
-	
+
 		$this->setTempHum();
 		$this->setEntrees();
 		$this->setSorties();
 		$this->setVisites();
 	}
-	
-  // Liste des getters : fonctions permettant de récupérer les valeurs des attributs privés 
-  
-  	public function tempExt() {return $this->_tempExt;}
+
+  // Liste des getters : fonctions permettant de récupérer les valeurs des attributs privés
+
+  public function tempExt() {return $this->_tempExt;}
  	public function tempInt() {return $this->_tempInt;}
-  	public function humExt() {return $this->_humExt;}
-  	public function humInt() {return $this->_humInt;}
+  public function humExt() {return $this->_humExt;}
+  public function humInt() {return $this->_humInt;}
 	public function dateHeure() {return $this->_dateHeure;}
 	public function entrees() {return $this->_entrees;}
 	public function sorties() {return $this->_sorties;}
 	public function visites() {return $this->_visites;}
-	
+
 	private function setTempHum() {
-	
+
 		$_db=$this->dbConnect();
 		$sql = "SELECT * FROM meteo ORDER BY dateHeure DESC LIMIT 1;";
-  		$resultat = $_db->query($sql);
-  		$tableauResultat = $resultat->fetch();
+  	$resultat = $_db->query($sql);
+  	$tableauResultat = $resultat->fetch();
 		$this->_tempExt = $tableauResultat['tempExt'];
 		$this->_humExt = $tableauResultat['humExt'];
 		$this->_tempInt = $tableauResultat['tempInt'];
@@ -46,7 +46,7 @@ class DbMngData extends DbManager {
 	}
 
 	private function setEntrees() {
-	
+
 		$_db=$this->dbConnect();
 		if ($this->_sql) {
 			$sql = "SELECT count(*) FROM InOut_IR  WHERE FStatus like 'E%';";
@@ -86,10 +86,10 @@ class DbMngData extends DbManager {
 		$resultat = $_db->query($sql);
 		$tableauResultat = $resultat->fetch();
 		$this->_visites = $tableauResultat[0];
-	}	
+	}
 
 	public function setDataTable($maxDay) {
-	
+
 		$_db=$this->dbConnect();
 		// vérification du paramètre d'entrée, si ce n'est pas un nombre entier, mis à 0
 		if (!is_int($maxDay)) {
@@ -104,19 +104,19 @@ class DbMngData extends DbManager {
 			}
 			else {
 				$sql = "SELECT * FROM meteo WHERE dateHeure >= date('now','-" .$maxDay. " days') ORDER BY dateHeure DESC ;";
-			}	
+			}
 		}
 		else {
 			$sql = "SELECT * FROM meteo ORDER BY dateHeure DESC ;";
 		}
-		
+
 		$resultat = $_db->query($sql);
-		
+
 		return $resultat;
 	}
 
 	public function setDataGraph($maxDay) {
-	
+
 		$_db=$this->dbConnect();
 		// vérification du paramètre d'entrée, si ce n'est pas un nombre entier, mis à 0
 		if (!is_int($maxDay)) {
@@ -129,15 +129,14 @@ class DbMngData extends DbManager {
 			}
 			else {
 				$sql = "SELECT * FROM meteo WHERE dateHeure >= date('now','-" .$maxDay. " days') ORDER BY dateHeure ;";
-			}		
+			}
 		}
 		else {
 			$sql = "SELECT * FROM meteo ORDER BY dateHeure ;";
 		}
-		
+
 		$resultat = $_db->query($sql);
 		return $resultat;
 	}
 
 }
-

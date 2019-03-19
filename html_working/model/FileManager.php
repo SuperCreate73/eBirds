@@ -81,9 +81,9 @@ class FileManager {
 			header('Content-Disposition: attachment; filename="Archive.zip"'); //Nom du fichier.
 			header('Content-Length: '.filesize('Archive.zip')); //Taille du fichier.
 			readfile('Archive.zip');
+			return 'Archive.zip';
 		}
 		else {throw new Exception('Unable to create archive');}
-		return 'Archive.zip';
 	}
 
 	private function setFileCount($fileList) {

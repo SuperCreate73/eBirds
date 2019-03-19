@@ -1,28 +1,14 @@
 <?php
 	$nom_hote = gethostname();
-	$title = 'Mon nichoir: Reglages et paramètres';
-	$styles = '<link href="public/css/styleReglages.css" rel="stylesheet" type="text/css" />'; 
+	$title = 'Mon nichoir: Réglages et paramètres';
+	$styles = '<link href="public/css/styleReglages.css" rel="stylesheet" type="text/css" />';
 	$javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
-
-//$fichier_db = new PDO('sqlite:/var/www/nichoir.db');  //cette ligne sert à établir la connexion à la db mysql sur le raspberry.
-//$fichier_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//$sql = "SELECT * FROM Users";
-//$demande = $fichier_db->query($sql);
-
-$listeUtilisateurs ="";
-//foreach($demande as $rangee){
-//	$listeUtilisateurs.="
-//		<div class='row'>
-//			<div class='offset-by-four columns'>
-//				<div class='five columns'>".$rangee['login']."
-//				</div></div></div>";
-
 
 ?>
 
 
 <?php ob_start(); ?>	<!-- Contenu de la page, intégré à la variable $content -->
-			
+
 	<h1>Réglages</h1>
 	<div id="accordion">
 		<form method="POST" action="index.php?action=doreglages">
@@ -31,7 +17,7 @@ $listeUtilisateurs ="";
 					<div class="eight columns">
 						<h2>Système</h2>
 					</div>
-				
+
 					<div class="eight columns">
 						<div id="btn_shutdown" class='my_button' value="Shutdown" title="Shutdown" onclick="shutdown()"></div>
 						<div id="btn_restart" class='my_button' value="Redémarrer" title="Reboot" onclick="reboot()"></div>
@@ -40,7 +26,7 @@ $listeUtilisateurs ="";
 		<!--input class="button u-full-width boutonLogin" value="Redémarrer" onclick="reboot()"-->
 					</div>
 				</div>
-					
+
 				<div class="row">
 					<div class="offset-by-two columns">
 						<div class="two columns">
@@ -89,7 +75,14 @@ $listeUtilisateurs ="";
 					</div>
 				</div>
 
-				<?php echo $listeUtilisateurs; ?>
+				<?php foreach ($users as $key => $userItem) { ?>
+					<div class='row'>
+						<div class='offset-by-four columns'>
+							<div class='five columns'><?= $userItem[0] ; ?></div>
+						</div>
+					</div>
+				<?php } ?>
+
 			</div> <!--    FIN CADRE II -->
 
 			<div class="cadre">
@@ -105,7 +98,7 @@ $listeUtilisateurs ="";
 							<option value="Option 2">Occupation</option>
 						</select>
 					</div>
-	
+
 					<div class="five columns">
 						<label>Email(s) à contacter en cas d'occupation:</label>
 						<input class="u-full-width" type="text" placeholder="email(s)" name="emails">
@@ -118,7 +111,7 @@ $listeUtilisateurs ="";
 					<div class="two columns">
 						<h2>Caméra</h2>
 					</div>
-				
+
 					<div class="five columns">
 						<label for="modeCamera">Mode d'enregistrement images:</label>
 						<select class="u-full-width" id="modeCamera">
