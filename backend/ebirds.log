@@ -1,0 +1,1879 @@
+INFO:2019-03-19 21:48:13,073-Verbose mode (debug) activated
+INFO:2019-03-19 21:48:13,074-Simulation mode activated
+WARNING:2019-03-19 21:48:13,077-begin program eBirds...
+DEBUG:2019-03-19 21:48:13,094-Demarrage des Thread pour interrupts sur capteurs IR d'entrees/sorties
+DEBUG:2019-03-19 21:48:13,113-Demarrage boucle infinie pour lecture des differents capteurs
+DEBUG:2019-03-19 21:48:13,119-Iteration boucle courante=1
+DEBUG:2019-03-19 21:48:13,120-Simulation capteurs IR entrees/sorties
+INFO:2019-03-19 21:48:13,133-Changement de date, nous sommes le 20190319
+DEBUG:2019-03-19 21:48:13,135-nombre sequentiel pour capteurs IR I/O = 20190319000000
+DEBUG:2019-03-19 21:48:13,137-Write in Capt_IR DB - [(1, 1, 1553032093130L, 20190319000000L)]
+DEBUG:2019-03-19 21:48:13,298-lv_IRcur = 10
+DEBUG:2019-03-19 21:48:13,300-gv_IRprec = 00
+DEBUG:2019-03-19 21:48:13,314-Testing IR Paire - 0010
+DEBUG:2019-03-19 21:48:13,316-Non matching Paires (serie not found or not checked) - 0010
+DEBUG:2019-03-19 21:48:13,318-Reinitialisation de la table des series
+DEBUG:2019-03-19 21:48:13,320-lv_IRcur = 20
+DEBUG:2019-03-19 21:48:13,322-gv_IRprec = 10
+DEBUG:2019-03-19 21:48:13,332-Testing IR Paire - 1020
+DEBUG:2019-03-19 21:48:13,334-Matching Paire - 1020
+DEBUG:2019-03-19 21:48:13,336-Testing IR Serie - 11
+DEBUG:2019-03-19 21:48:13,338-Non matching Serie (mvt not found) - 11
+DEBUG:2019-03-19 21:48:13,352-lv_IRcur = 11
+DEBUG:2019-03-19 21:48:13,354-gv_IRprec = 20
+DEBUG:2019-03-19 21:48:13,357-Testing IR Paire - 2011
+DEBUG:2019-03-19 21:48:13,358-Non matching Paires (serie not found or not checked) - 2011
+DEBUG:2019-03-19 21:48:13,362-lv_IRcur = 21
+DEBUG:2019-03-19 21:48:13,364-gv_IRprec = 11
+DEBUG:2019-03-19 21:48:13,368-Testing IR Paire - 1121
+DEBUG:2019-03-19 21:48:13,370-Matching Paire - 1121
+DEBUG:2019-03-19 21:48:13,372-Testing IR Serie - 1112
+DEBUG:2019-03-19 21:48:13,374-Matching Serie (mvt found) - 1112
+DEBUG:2019-03-19 21:48:13,376-Write in InOut_IR DB - [('E1', 1553032093360L)]
+DEBUG:2019-03-19 21:48:13,527-lv_IRcur = 20
+DEBUG:2019-03-19 21:48:13,529-gv_IRprec = 
+DEBUG:2019-03-19 21:48:13,532-Testing IR Paire - 20
+DEBUG:2019-03-19 21:48:13,534-Non matching Paires (serie not found or not checked) - 20
+DEBUG:2019-03-19 21:48:13,536-Reinitialisation de la table des series
+DEBUG:2019-03-19 21:48:13,538-lv_IRcur = 10
+DEBUG:2019-03-19 21:48:13,539-gv_IRprec = 20
+DEBUG:2019-03-19 21:48:13,542-Testing IR Paire - 2010
+DEBUG:2019-03-19 21:48:13,543-Matching Paire - 2010
+DEBUG:2019-03-19 21:48:13,545-Testing IR Serie - 21
+DEBUG:2019-03-19 21:48:13,546-Non matching Serie (mvt not found) - 21
+DEBUG:2019-03-19 21:48:13,549-lv_IRcur = 21
+DEBUG:2019-03-19 21:48:13,550-gv_IRprec = 10
+DEBUG:2019-03-19 21:48:13,553-Testing IR Paire - 1021
+DEBUG:2019-03-19 21:48:13,555-Non matching Paires (serie not found or not checked) - 1021
+DEBUG:2019-03-19 21:48:13,557-lv_IRcur = 11
+DEBUG:2019-03-19 21:48:13,558-gv_IRprec = 21
+DEBUG:2019-03-19 21:48:13,561-Testing IR Paire - 2111
+DEBUG:2019-03-19 21:48:13,562-Matching Paire - 2111
+DEBUG:2019-03-19 21:48:13,564-Testing IR Serie - 2122
+DEBUG:2019-03-19 21:48:13,566-Matching Serie (mvt found) - 2122
+DEBUG:2019-03-19 21:48:13,568-Write in InOut_IR DB - [('S1', 1553032093556L)]
+DEBUG:2019-03-19 21:48:13,718-lv_IRcur = 10
+DEBUG:2019-03-19 21:48:13,719-gv_IRprec = 
+DEBUG:2019-03-19 21:48:13,723-Testing IR Paire - 10
+DEBUG:2019-03-19 21:48:13,724-Non matching Paires (serie not found or not checked) - 10
+DEBUG:2019-03-19 21:48:13,727-Reinitialisation de la table des series
+DEBUG:2019-03-19 21:48:13,730-lv_IRcur = 11
+DEBUG:2019-03-19 21:48:13,732-gv_IRprec = 10
+DEBUG:2019-03-19 21:48:13,735-Testing IR Paire - 1011
+DEBUG:2019-03-19 21:48:13,737-Matching Paire - 1011
+DEBUG:2019-03-19 21:48:13,738-Testing IR Serie - 31
+DEBUG:2019-03-19 21:48:13,741-Non matching Serie (mvt not found) - 31
+DEBUG:2019-03-19 21:48:13,744-lv_IRcur = 20
+DEBUG:2019-03-19 21:48:13,745-gv_IRprec = 11
+DEBUG:2019-03-19 21:48:13,748-Testing IR Paire - 1120
+DEBUG:2019-03-19 21:48:13,750-Non matching Paires (serie not found or not checked) - 1120
+DEBUG:2019-03-19 21:48:13,754-lv_IRcur = 21
+DEBUG:2019-03-19 21:48:13,756-gv_IRprec = 20
+DEBUG:2019-03-19 21:48:13,759-Testing IR Paire - 2021
+DEBUG:2019-03-19 21:48:13,761-Matching Paire - 2021
+DEBUG:2019-03-19 21:48:13,763-Testing IR Serie - 3132
+DEBUG:2019-03-19 21:48:13,765-Matching Serie (mvt found) - 3132
+DEBUG:2019-03-19 21:48:13,767-Write in InOut_IR DB - [('E2', 1553032093752L)]
+DEBUG:2019-03-19 21:48:13,924-lv_IRcur = 20
+DEBUG:2019-03-19 21:48:13,925-gv_IRprec = 
+DEBUG:2019-03-19 21:48:13,929-Testing IR Paire - 20
+DEBUG:2019-03-19 21:48:13,930-Non matching Paires (serie not found or not checked) - 20
+DEBUG:2019-03-19 21:48:13,932-Reinitialisation de la table des series
+DEBUG:2019-03-19 21:48:13,935-lv_IRcur = 21
+DEBUG:2019-03-19 21:48:13,936-gv_IRprec = 20
+DEBUG:2019-03-19 21:48:13,938-Testing IR Paire - 2021
+DEBUG:2019-03-19 21:48:13,940-Matching Paire - 2021
+DEBUG:2019-03-19 21:48:13,942-Testing IR Serie - 32
+DEBUG:2019-03-19 21:48:13,943-Non matching Serie (mvt not found) - 32
+DEBUG:2019-03-19 21:48:13,946-lv_IRcur = 10
+DEBUG:2019-03-19 21:48:13,948-gv_IRprec = 21
+DEBUG:2019-03-19 21:48:13,951-Testing IR Paire - 2110
+DEBUG:2019-03-19 21:48:13,953-Non matching Paires (serie not found or not checked) - 2110
+DEBUG:2019-03-19 21:48:13,957-lv_IRcur = 11
+DEBUG:2019-03-19 21:48:13,959-gv_IRprec = 10
+DEBUG:2019-03-19 21:48:13,962-Testing IR Paire - 1011
+DEBUG:2019-03-19 21:48:13,964-Matching Paire - 1011
+DEBUG:2019-03-19 21:48:13,966-Testing IR Serie - 3231
+DEBUG:2019-03-19 21:48:13,968-Matching Serie (mvt found) - 3231
+DEBUG:2019-03-19 21:48:13,970-Write in InOut_IR DB - [('S2', 1553032093956L)]
+DEBUG:2019-03-19 21:48:14,119-lv_IRcur = 10
+DEBUG:2019-03-19 21:48:14,120-gv_IRprec = 
+DEBUG:2019-03-19 21:48:14,124-Testing IR Paire - 10
+DEBUG:2019-03-19 21:48:14,125-Non matching Paires (serie not found or not checked) - 10
+DEBUG:2019-03-19 21:48:14,127-Reinitialisation de la table des series
+DEBUG:2019-03-19 21:48:14,129-lv_IRcur = 20
+DEBUG:2019-03-19 21:48:14,131-gv_IRprec = 10
+DEBUG:2019-03-19 21:48:14,133-Testing IR Paire - 1020
+DEBUG:2019-03-19 21:48:14,135-Matching Paire - 1020
+DEBUG:2019-03-19 21:48:14,137-Testing IR Serie - 11
+DEBUG:2019-03-19 21:48:14,138-Non matching Serie (mvt not found) - 11
+DEBUG:2019-03-19 21:48:14,141-lv_IRcur = 21
+DEBUG:2019-03-19 21:48:14,142-gv_IRprec = 20
+DEBUG:2019-03-19 21:48:14,145-Testing IR Paire - 2021
+DEBUG:2019-03-19 21:48:14,146-Non matching Paires (serie not found or not checked) - 2021
+DEBUG:2019-03-19 21:48:14,149-lv_IRcur = 11
+DEBUG:2019-03-19 21:48:14,150-gv_IRprec = 21
+DEBUG:2019-03-19 21:48:14,153-Testing IR Paire - 2111
+DEBUG:2019-03-19 21:48:14,155-Matching Paire - 2111
+DEBUG:2019-03-19 21:48:14,157-Testing IR Serie - 1122
+DEBUG:2019-03-19 21:48:14,159-Matching Serie (mvt found) - 1122
+DEBUG:2019-03-19 21:48:14,162-Write in InOut_IR DB - [('V1', 1553032094148L)]
+DEBUG:2019-03-19 21:48:14,313-lv_IRcur = 11
+DEBUG:2019-03-19 21:48:14,314-gv_IRprec = 
+DEBUG:2019-03-19 21:48:14,320-Testing IR Paire - 11
+DEBUG:2019-03-19 21:48:14,322-Non matching Paires (serie not found or not checked) - 11
+DEBUG:2019-03-19 21:48:14,324-Reinitialisation de la table des series
+DEBUG:2019-03-19 21:48:14,332-lv_IRcur = 21
+DEBUG:2019-03-19 21:48:14,334-gv_IRprec = 11
+DEBUG:2019-03-19 21:48:14,342-Testing IR Paire - 1121
+DEBUG:2019-03-19 21:48:14,344-Matching Paire - 1121
+DEBUG:2019-03-19 21:48:14,345-Testing IR Serie - 12
+DEBUG:2019-03-19 21:48:14,347-Non matching Serie (mvt not found) - 12
+DEBUG:2019-03-19 21:48:14,350-lv_IRcur = 20
+DEBUG:2019-03-19 21:48:14,352-gv_IRprec = 21
+DEBUG:2019-03-19 21:48:14,354-Testing IR Paire - 2120
+DEBUG:2019-03-19 21:48:14,356-Non matching Paires (serie not found or not checked) - 2120
+DEBUG:2019-03-19 21:48:14,358-lv_IRcur = 10
+DEBUG:2019-03-19 21:48:14,359-gv_IRprec = 20
+DEBUG:2019-03-19 21:48:14,363-Testing IR Paire - 2010
+DEBUG:2019-03-19 21:48:14,366-Matching Paire - 2010
+DEBUG:2019-03-19 21:48:14,368-Testing IR Serie - 1221
+DEBUG:2019-03-19 21:48:14,369-Matching Serie (mvt found) - 1221
+DEBUG:2019-03-19 21:48:14,372-Write in InOut_IR DB - [('V2', 1553032094357L)]
+DEBUG:2019-03-19 21:48:14,507-Clean and Exit
+DEBUG:2019-03-19 21:48:14,519-Thank you, Goodbye!
+DEBUG:2019-03-19 21:48:14,521-Clean and Exit
+DEBUG:2019-03-19 21:48:14,523-Thank you, Goodbye!
+INFO:2019-03-19 21:52:29,416-Verbose mode (debug) activated
+INFO:2019-03-19 21:52:29,427-Simulation mode activated
+WARNING:2019-03-19 21:52:29,429-begin program eBirds...
+DEBUG:2019-03-19 21:52:29,440-Demarrage des Thread pour interrupts sur capteurs IR d'entrees/sorties
+DEBUG:2019-03-19 21:52:29,456-Demarrage boucle infinie pour lecture des differents capteurs
+DEBUG:2019-03-19 21:52:29,465-Iteration boucle courante=1
+DEBUG:2019-03-19 21:52:29,467-Simulation capteurs IR entrees/sorties
+INFO:2019-03-19 21:52:29,479-Changement de date, nous sommes le 20190319
+DEBUG:2019-03-19 21:52:29,481-nombre sequentiel pour capteurs IR I/O = 20190319000000
+DEBUG:2019-03-19 21:52:29,482-Write in Capt_IR DB - [(1, 0, 1553032349468L, 20190319000000L)]
+DEBUG:2019-03-19 21:52:29,642-lv_IRcur = 10
+DEBUG:2019-03-19 21:52:29,643-gv_IRprec = 00
+DEBUG:2019-03-19 21:52:29,647-Testing IR Paire - 0010
+DEBUG:2019-03-19 21:52:29,650-Non matching Paires (serie not found or not checked) - 0010
+DEBUG:2019-03-19 21:52:29,652-Reinitialisation de la table des series
+DEBUG:2019-03-19 21:52:29,655-lv_IRcur = 20
+DEBUG:2019-03-19 21:52:29,657-gv_IRprec = 10
+DEBUG:2019-03-19 21:52:29,660-Testing IR Paire - 1020
+DEBUG:2019-03-19 21:52:29,662-Matching Paire - 1020
+DEBUG:2019-03-19 21:52:29,664-Testing IR Serie - 11
+DEBUG:2019-03-19 21:52:29,666-Non matching Serie (mvt not found) - 11
+DEBUG:2019-03-19 21:52:29,669-lv_IRcur = 11
+DEBUG:2019-03-19 21:52:29,671-gv_IRprec = 20
+DEBUG:2019-03-19 21:52:29,674-Testing IR Paire - 2011
+DEBUG:2019-03-19 21:52:29,676-Non matching Paires (serie not found or not checked) - 2011
+DEBUG:2019-03-19 21:52:29,679-lv_IRcur = 21
+DEBUG:2019-03-19 21:52:29,681-gv_IRprec = 11
+DEBUG:2019-03-19 21:52:29,684-Testing IR Paire - 1121
+DEBUG:2019-03-19 21:52:29,686-Matching Paire - 1121
+DEBUG:2019-03-19 21:52:29,688-Testing IR Serie - 1112
+DEBUG:2019-03-19 21:52:29,690-Matching Serie (mvt found) - 1112
+DEBUG:2019-03-19 21:52:29,693-Write in InOut_IR DB - [('E1', 1553032349678L)]
+DEBUG:2019-03-19 21:52:29,869-lv_IRcur = 20
+DEBUG:2019-03-19 21:52:29,870-gv_IRprec = 
+DEBUG:2019-03-19 21:52:29,874-Testing IR Paire - 20
+DEBUG:2019-03-19 21:52:29,876-Non matching Paires (serie not found or not checked) - 20
+DEBUG:2019-03-19 21:52:29,877-Reinitialisation de la table des series
+DEBUG:2019-03-19 21:52:29,880-lv_IRcur = 10
+DEBUG:2019-03-19 21:52:29,881-gv_IRprec = 20
+DEBUG:2019-03-19 21:52:29,884-Testing IR Paire - 2010
+DEBUG:2019-03-19 21:52:29,885-Matching Paire - 2010
+DEBUG:2019-03-19 21:52:29,887-Testing IR Serie - 21
+DEBUG:2019-03-19 21:52:29,889-Non matching Serie (mvt not found) - 21
+DEBUG:2019-03-19 21:52:29,891-lv_IRcur = 21
+DEBUG:2019-03-19 21:52:29,893-gv_IRprec = 10
+DEBUG:2019-03-19 21:52:29,895-Testing IR Paire - 1021
+DEBUG:2019-03-19 21:52:29,897-Non matching Paires (serie not found or not checked) - 1021
+DEBUG:2019-03-19 21:52:29,899-lv_IRcur = 11
+DEBUG:2019-03-19 21:52:29,901-gv_IRprec = 21
+DEBUG:2019-03-19 21:52:29,903-Testing IR Paire - 2111
+DEBUG:2019-03-19 21:52:29,905-Matching Paire - 2111
+DEBUG:2019-03-19 21:52:29,907-Testing IR Serie - 2122
+DEBUG:2019-03-19 21:52:29,908-Matching Serie (mvt found) - 2122
+DEBUG:2019-03-19 21:52:29,911-Write in InOut_IR DB - [('S1', 1553032349898L)]
+DEBUG:2019-03-19 21:52:30,047-lv_IRcur = 10
+DEBUG:2019-03-19 21:52:30,049-gv_IRprec = 
+DEBUG:2019-03-19 21:52:30,052-Testing IR Paire - 10
+DEBUG:2019-03-19 21:52:30,054-Non matching Paires (serie not found or not checked) - 10
+DEBUG:2019-03-19 21:52:30,055-Reinitialisation de la table des series
+DEBUG:2019-03-19 21:52:30,058-lv_IRcur = 11
+DEBUG:2019-03-19 21:52:30,060-gv_IRprec = 10
+DEBUG:2019-03-19 21:52:30,062-Testing IR Paire - 1011
+DEBUG:2019-03-19 21:52:30,064-Matching Paire - 1011
+DEBUG:2019-03-19 21:52:30,066-Testing IR Serie - 31
+DEBUG:2019-03-19 21:52:30,067-Non matching Serie (mvt not found) - 31
+DEBUG:2019-03-19 21:52:30,070-lv_IRcur = 20
+DEBUG:2019-03-19 21:52:30,071-gv_IRprec = 11
+DEBUG:2019-03-19 21:52:30,074-Testing IR Paire - 1120
+DEBUG:2019-03-19 21:52:30,075-Non matching Paires (serie not found or not checked) - 1120
+DEBUG:2019-03-19 21:52:30,078-lv_IRcur = 21
+DEBUG:2019-03-19 21:52:30,079-gv_IRprec = 20
+DEBUG:2019-03-19 21:52:30,082-Testing IR Paire - 2021
+DEBUG:2019-03-19 21:52:30,084-Matching Paire - 2021
+DEBUG:2019-03-19 21:52:30,085-Testing IR Serie - 3132
+DEBUG:2019-03-19 21:52:30,087-Matching Serie (mvt found) - 3132
+DEBUG:2019-03-19 21:52:30,090-Write in InOut_IR DB - [('E2', 1553032350077L)]
+DEBUG:2019-03-19 21:52:30,253-lv_IRcur = 20
+DEBUG:2019-03-19 21:52:30,254-gv_IRprec = 
+DEBUG:2019-03-19 21:52:30,258-Testing IR Paire - 20
+DEBUG:2019-03-19 21:52:30,260-Non matching Paires (serie not found or not checked) - 20
+DEBUG:2019-03-19 21:52:30,262-Reinitialisation de la table des series
+DEBUG:2019-03-19 21:52:30,265-lv_IRcur = 21
+DEBUG:2019-03-19 21:52:30,267-gv_IRprec = 20
+DEBUG:2019-03-19 21:52:30,270-Testing IR Paire - 2021
+DEBUG:2019-03-19 21:52:30,272-Matching Paire - 2021
+DEBUG:2019-03-19 21:52:30,274-Testing IR Serie - 32
+DEBUG:2019-03-19 21:52:30,276-Non matching Serie (mvt not found) - 32
+DEBUG:2019-03-19 21:52:30,279-lv_IRcur = 10
+DEBUG:2019-03-19 21:52:30,281-gv_IRprec = 21
+DEBUG:2019-03-19 21:52:30,284-Testing IR Paire - 2110
+DEBUG:2019-03-19 21:52:30,286-Non matching Paires (serie not found or not checked) - 2110
+DEBUG:2019-03-19 21:52:30,290-lv_IRcur = 11
+DEBUG:2019-03-19 21:52:30,292-gv_IRprec = 10
+DEBUG:2019-03-19 21:52:30,295-Testing IR Paire - 1011
+DEBUG:2019-03-19 21:52:30,297-Matching Paire - 1011
+DEBUG:2019-03-19 21:52:30,299-Testing IR Serie - 3231
+DEBUG:2019-03-19 21:52:30,301-Matching Serie (mvt found) - 3231
+DEBUG:2019-03-19 21:52:30,304-Write in InOut_IR DB - [('S2', 1553032350288L)]
+DEBUG:2019-03-19 21:52:30,463-lv_IRcur = 10
+DEBUG:2019-03-19 21:52:30,464-gv_IRprec = 
+DEBUG:2019-03-19 21:52:30,468-Testing IR Paire - 10
+DEBUG:2019-03-19 21:52:30,469-Non matching Paires (serie not found or not checked) - 10
+DEBUG:2019-03-19 21:52:30,471-Reinitialisation de la table des series
+DEBUG:2019-03-19 21:52:30,474-lv_IRcur = 20
+DEBUG:2019-03-19 21:52:30,475-gv_IRprec = 10
+DEBUG:2019-03-19 21:52:30,478-Testing IR Paire - 1020
+DEBUG:2019-03-19 21:52:30,480-Matching Paire - 1020
+DEBUG:2019-03-19 21:52:30,481-Testing IR Serie - 11
+DEBUG:2019-03-19 21:52:30,483-Non matching Serie (mvt not found) - 11
+DEBUG:2019-03-19 21:52:30,486-lv_IRcur = 21
+DEBUG:2019-03-19 21:52:30,487-gv_IRprec = 20
+DEBUG:2019-03-19 21:52:30,489-Testing IR Paire - 2021
+DEBUG:2019-03-19 21:52:30,491-Non matching Paires (serie not found or not checked) - 2021
+DEBUG:2019-03-19 21:52:30,494-lv_IRcur = 11
+DEBUG:2019-03-19 21:52:30,495-gv_IRprec = 21
+DEBUG:2019-03-19 21:52:30,497-Testing IR Paire - 2111
+DEBUG:2019-03-19 21:52:30,499-Matching Paire - 2111
+DEBUG:2019-03-19 21:52:30,501-Testing IR Serie - 1122
+DEBUG:2019-03-19 21:52:30,503-Matching Serie (mvt found) - 1122
+DEBUG:2019-03-19 21:52:30,505-Write in InOut_IR DB - [('V1', 1553032350493L)]
+DEBUG:2019-03-19 21:52:30,655-lv_IRcur = 11
+DEBUG:2019-03-19 21:52:30,658-gv_IRprec = 
+DEBUG:2019-03-19 21:52:30,662-Testing IR Paire - 11
+DEBUG:2019-03-19 21:52:30,666-Non matching Paires (serie not found or not checked) - 11
+DEBUG:2019-03-19 21:52:30,668-Reinitialisation de la table des series
+DEBUG:2019-03-19 21:52:30,672-lv_IRcur = 21
+DEBUG:2019-03-19 21:52:30,674-gv_IRprec = 11
+DEBUG:2019-03-19 21:52:30,679-Testing IR Paire - 1121
+DEBUG:2019-03-19 21:52:30,681-Matching Paire - 1121
+DEBUG:2019-03-19 21:52:30,685-Testing IR Serie - 12
+DEBUG:2019-03-19 21:52:30,687-Non matching Serie (mvt not found) - 12
+DEBUG:2019-03-19 21:52:30,691-lv_IRcur = 20
+DEBUG:2019-03-19 21:52:30,694-gv_IRprec = 21
+DEBUG:2019-03-19 21:52:30,698-Testing IR Paire - 2120
+DEBUG:2019-03-19 21:52:30,700-Non matching Paires (serie not found or not checked) - 2120
+DEBUG:2019-03-19 21:52:30,706-lv_IRcur = 10
+DEBUG:2019-03-19 21:52:30,708-gv_IRprec = 20
+DEBUG:2019-03-19 21:52:30,713-Testing IR Paire - 2010
+DEBUG:2019-03-19 21:52:30,715-Matching Paire - 2010
+DEBUG:2019-03-19 21:52:30,718-Testing IR Serie - 1221
+DEBUG:2019-03-19 21:52:30,721-Matching Serie (mvt found) - 1221
+DEBUG:2019-03-19 21:52:30,725-Write in InOut_IR DB - [('V2', 1553032350704L)]
+DEBUG:2019-03-19 21:52:30,875-Clean and Exit
+DEBUG:2019-03-19 21:52:30,882-Thank you, Goodbye!
+DEBUG:2019-03-19 21:52:30,884-Clean and Exit
+DEBUG:2019-03-19 21:52:30,885-Thank you, Goodbye!
+INFO:2019-03-19 21:56:13,723-Verbose mode (debug) activated
+WARNING:2019-03-19 21:56:13,733-begin program eBirds...
+DEBUG:2019-03-19 21:56:13,745-Demarrage des Thread pour interrupts sur capteurs IR d'entrees/sorties
+DEBUG:2019-03-19 21:56:13,763-Demarrage boucle infinie pour lecture des differents capteurs
+DEBUG:2019-03-19 21:56:13,769-Iteration boucle courante=1
+DEBUG:2019-03-19 21:56:13,772-Lecture capteur Meteo
+DEBUG:2019-03-19 21:56:13,774-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:56:16,204-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 21:56:16,206-Capteur 1 (OUT) - Status 0
+INFO:2019-03-19 21:56:16,223-Changement de date, nous sommes le 20190319
+DEBUG:2019-03-19 21:56:16,225-nombre sequentiel pour capteurs IR I/O = 20190319000000
+DEBUG:2019-03-19 21:56:16,226-Write in Capt_IR DB - [('1', 0, 1553032576204L, 20190319000000L)]
+DEBUG:2019-03-19 21:56:16,273-lv_IRcur = 10
+DEBUG:2019-03-19 21:56:16,274-gv_IRprec = 00
+DEBUG:2019-03-19 21:56:16,285-Testing IR Paire - 0010
+DEBUG:2019-03-19 21:56:16,288-Non matching Paires (serie not found or not checked) - 0010
+DEBUG:2019-03-19 21:56:16,290-Reinitialisation de la table des series
+DEBUG:2019-03-19 21:56:16,364-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 21:56:16,366-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 21:56:16,374-nombre sequentiel pour capteurs IR I/O = 20190319000001
+DEBUG:2019-03-19 21:56:16,392-Write in Capt_IR DB - [('1', 1, 1553032576364L, 20190319000001L)]
+DEBUG:2019-03-19 21:56:16,445-lv_IRcur = 11
+DEBUG:2019-03-19 21:56:16,446-gv_IRprec = 10
+DEBUG:2019-03-19 21:56:16,453-Testing IR Paire - 1011
+DEBUG:2019-03-19 21:56:16,454-Matching Paire - 1011
+DEBUG:2019-03-19 21:56:16,456-Testing IR Serie - 31
+DEBUG:2019-03-19 21:56:16,458-Non matching Serie (mvt not found) - 31
+DEBUG:2019-03-19 21:56:16,518-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 21:56:16,520-Capteur 1 (OUT) - Status 0
+DEBUG:2019-03-19 21:56:16,535-nombre sequentiel pour capteurs IR I/O = 20190319000002
+DEBUG:2019-03-19 21:56:16,536-Write in Capt_IR DB - [('1', 0, 1553032576518L, 20190319000002L)]
+DEBUG:2019-03-19 21:56:16,584-lv_IRcur = 10
+DEBUG:2019-03-19 21:56:16,586-gv_IRprec = 11
+DEBUG:2019-03-19 21:56:16,592-Testing IR Paire - 1110
+DEBUG:2019-03-19 21:56:16,594-Non matching Paires (serie not found or not checked) - 1110
+DEBUG:2019-03-19 21:56:17,001-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 21:56:17,003-Capteur 2 (IN) - Status 0
+DEBUG:2019-03-19 21:56:17,014-nombre sequentiel pour capteurs IR I/O = 20190319000003
+DEBUG:2019-03-19 21:56:17,015-Write in Capt_IR DB - [('2', 0, 1553032577001L, 20190319000003L)]
+DEBUG:2019-03-19 21:56:17,089-lv_IRcur = 20
+DEBUG:2019-03-19 21:56:17,091-gv_IRprec = 10
+DEBUG:2019-03-19 21:56:17,099-Testing IR Paire - 1020
+DEBUG:2019-03-19 21:56:17,101-Matching Paire - 1020
+DEBUG:2019-03-19 21:56:17,103-Testing IR Serie - 3111
+DEBUG:2019-03-19 21:56:17,105-Non matching Serie (mvt not found) - 3111
+DEBUG:2019-03-19 21:56:17,125-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 21:56:17,126-Capteur 2 (IN) - Status 1
+DEBUG:2019-03-19 21:56:17,144-nombre sequentiel pour capteurs IR I/O = 20190319000004
+DEBUG:2019-03-19 21:56:17,146-Write in Capt_IR DB - [('2', 1, 1553032577124L, 20190319000004L)]
+DEBUG:2019-03-19 21:56:17,194-lv_IRcur = 21
+DEBUG:2019-03-19 21:56:17,195-gv_IRprec = 20
+DEBUG:2019-03-19 21:56:17,206-Testing IR Paire - 2021
+DEBUG:2019-03-19 21:56:17,207-Non matching Paires (serie not found or not checked) - 2021
+DEBUG:2019-03-19 21:56:17,581-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 21:56:17,583-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 21:56:17,590-nombre sequentiel pour capteurs IR I/O = 20190319000005
+DEBUG:2019-03-19 21:56:17,595-Write in Capt_IR DB - [('1', 1, 1553032577581L, 20190319000005L)]
+DEBUG:2019-03-19 21:56:17,631-lv_IRcur = 11
+DEBUG:2019-03-19 21:56:17,633-gv_IRprec = 21
+DEBUG:2019-03-19 21:56:17,639-Testing IR Paire - 2111
+DEBUG:2019-03-19 21:56:17,641-Matching Paire - 2111
+DEBUG:2019-03-19 21:56:17,646-Testing IR Serie - 1122
+DEBUG:2019-03-19 21:56:17,648-Matching Serie (mvt found) - 1122
+DEBUG:2019-03-19 21:56:17,651-Write in InOut_IR DB - [('V1', 1553032577581L)]
+DEBUG:2019-03-19 21:56:19,493-TempOut=22.0C HumidityOut=42.0%
+DEBUG:2019-03-19 21:56:20,021-TempIn=21.0C  HumidityIn=41.0%
+DEBUG:2019-03-19 21:56:20,023-TempIn=21.0C  HumidityIn=41.0% -- TempOut=22.0C HumidityOut=42.0%
+DEBUG:2019-03-19 21:56:20,025-Write in meteo DB - [(22.0, 42.0, 21.0, 41.0)]
+DEBUG:2019-03-19 21:56:20,033-Lecture capteur Poids
+DEBUG:2019-03-19 21:56:20,034-Lecture capteur de poids
+DEBUG:2019-03-19 21:56:20,730-Write in Balance DB - [6408.347826086957]
+DEBUG:2019-03-19 21:56:20,767-sleep 3 secondes
+DEBUG:2019-03-19 21:56:23,773-Iteration boucle courante=2
+DEBUG:2019-03-19 21:56:23,777-Lecture capteur Meteo
+DEBUG:2019-03-19 21:56:23,780-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:56:24,309-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:56:24,837-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:56:24,840-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:56:24,842-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:56:24,849-Lecture capteur Poids
+DEBUG:2019-03-19 21:56:24,851-Lecture capteur de poids
+DEBUG:2019-03-19 21:56:26,419-Write in Balance DB - [-29918.608695652172]
+DEBUG:2019-03-19 21:56:26,470-sleep 3 secondes
+DEBUG:2019-03-19 21:56:29,477-Iteration boucle courante=3
+DEBUG:2019-03-19 21:56:29,481-Lecture capteur Meteo
+DEBUG:2019-03-19 21:56:29,485-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:56:30,014-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:56:30,541-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:56:30,543-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:56:30,545-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:56:30,549-Lecture capteur Poids
+DEBUG:2019-03-19 21:56:30,551-Lecture capteur de poids
+DEBUG:2019-03-19 21:56:30,584-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 21:56:30,585-Capteur 1 (OUT) - Status 0
+DEBUG:2019-03-19 21:56:30,594-nombre sequentiel pour capteurs IR I/O = 20190319000006
+DEBUG:2019-03-19 21:56:30,595-Write in Capt_IR DB - [('1', 0, 1553032590584L, 20190319000006L)]
+DEBUG:2019-03-19 21:56:30,638-lv_IRcur = 10
+DEBUG:2019-03-19 21:56:30,640-gv_IRprec = 
+DEBUG:2019-03-19 21:56:30,652-Testing IR Paire - 10
+DEBUG:2019-03-19 21:56:30,654-Non matching Paires (serie not found or not checked) - 10
+DEBUG:2019-03-19 21:56:30,655-Reinitialisation de la table des series
+DEBUG:2019-03-19 21:56:30,674-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 21:56:30,675-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 21:56:30,683-nombre sequentiel pour capteurs IR I/O = 20190319000007
+DEBUG:2019-03-19 21:56:30,684-Write in Capt_IR DB - [('1', 1, 1553032590674L, 20190319000007L)]
+DEBUG:2019-03-19 21:56:30,723-lv_IRcur = 11
+DEBUG:2019-03-19 21:56:30,725-gv_IRprec = 10
+DEBUG:2019-03-19 21:56:30,733-Testing IR Paire - 1011
+DEBUG:2019-03-19 21:56:30,734-Matching Paire - 1011
+DEBUG:2019-03-19 21:56:30,736-Testing IR Serie - 31
+DEBUG:2019-03-19 21:56:30,738-Non matching Serie (mvt not found) - 31
+DEBUG:2019-03-19 21:56:32,062-Write in Balance DB - [-14959.304347826086]
+DEBUG:2019-03-19 21:56:32,096-sleep 3 secondes
+DEBUG:2019-03-19 21:56:35,102-Iteration boucle courante=4
+DEBUG:2019-03-19 21:56:35,105-Lecture capteur Meteo
+DEBUG:2019-03-19 21:56:35,106-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:56:35,633-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:56:36,161-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:56:36,163-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:56:36,164-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:56:36,169-Lecture capteur Poids
+DEBUG:2019-03-19 21:56:36,171-Lecture capteur de poids
+DEBUG:2019-03-19 21:56:36,906-Write in Balance DB - [-37042.086956521736]
+DEBUG:2019-03-19 21:56:36,944-sleep 3 secondes
+DEBUG:2019-03-19 21:56:39,955-Iteration boucle courante=5
+DEBUG:2019-03-19 21:56:39,959-Lecture capteur Meteo
+DEBUG:2019-03-19 21:56:39,970-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:56:40,500-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:56:41,027-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:56:41,029-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:56:41,031-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:56:41,036-Lecture capteur Poids
+DEBUG:2019-03-19 21:56:41,037-Lecture capteur de poids
+DEBUG:2019-03-19 21:56:41,744-Write in Balance DB - [-7835.826086956522]
+DEBUG:2019-03-19 21:56:41,780-sleep 3 secondes
+DEBUG:2019-03-19 21:56:44,785-Iteration boucle courante=6
+DEBUG:2019-03-19 21:56:44,788-Lecture capteur Meteo
+DEBUG:2019-03-19 21:56:44,790-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:56:45,319-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:56:45,848-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:56:45,850-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:56:45,852-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:56:45,856-Lecture capteur Poids
+DEBUG:2019-03-19 21:56:45,858-Lecture capteur de poids
+DEBUG:2019-03-19 21:56:46,582-Write in Balance DB - [-37042.086956521736]
+DEBUG:2019-03-19 21:56:46,617-sleep 3 secondes
+DEBUG:2019-03-19 21:56:49,623-Iteration boucle courante=7
+DEBUG:2019-03-19 21:56:49,626-Lecture capteur Meteo
+DEBUG:2019-03-19 21:56:49,628-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:56:50,157-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:56:50,684-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:56:50,686-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:56:50,688-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:56:50,693-Lecture capteur Poids
+DEBUG:2019-03-19 21:56:50,694-Lecture capteur de poids
+DEBUG:2019-03-19 21:56:51,432-Write in Balance DB - [-4986.434782608696]
+DEBUG:2019-03-19 21:56:51,493-sleep 3 secondes
+DEBUG:2019-03-19 21:56:54,499-Iteration boucle courante=8
+DEBUG:2019-03-19 21:56:54,502-Lecture capteur Meteo
+DEBUG:2019-03-19 21:56:54,504-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:56:55,031-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:56:55,559-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:56:55,561-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:56:55,562-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:56:55,567-Lecture capteur Poids
+DEBUG:2019-03-19 21:56:55,569-Lecture capteur de poids
+DEBUG:2019-03-19 21:56:56,670-Write in Balance DB - [-5698.782608695652]
+DEBUG:2019-03-19 21:56:56,721-sleep 3 secondes
+DEBUG:2019-03-19 21:56:59,727-Iteration boucle courante=9
+DEBUG:2019-03-19 21:56:59,729-Lecture capteur Meteo
+DEBUG:2019-03-19 21:56:59,731-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:57:00,259-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:57:00,788-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:57:00,790-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:57:00,792-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:57:00,797-Lecture capteur Poids
+DEBUG:2019-03-19 21:57:00,800-Lecture capteur de poids
+DEBUG:2019-03-19 21:57:01,508-Write in Balance DB - [11397.565217391304]
+DEBUG:2019-03-19 21:57:01,544-sleep 3 secondes
+DEBUG:2019-03-19 21:57:04,550-Iteration boucle courante=10
+DEBUG:2019-03-19 21:57:04,555-Lecture capteur Meteo
+DEBUG:2019-03-19 21:57:04,557-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:57:05,086-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:57:05,613-TempIn=22.0C  HumidityIn=36.0%
+DEBUG:2019-03-19 21:57:05,615-TempIn=22.0C  HumidityIn=36.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:57:05,617-Write in meteo DB - [(22.0, 37.0, 22.0, 36.0)]
+DEBUG:2019-03-19 21:57:05,621-Lecture capteur Poids
+DEBUG:2019-03-19 21:57:05,623-Lecture capteur de poids
+DEBUG:2019-03-19 21:57:07,145-Write in Balance DB - [-11397.565217391304]
+DEBUG:2019-03-19 21:57:07,195-sleep 3 secondes
+DEBUG:2019-03-19 21:57:10,201-Iteration boucle courante=11
+DEBUG:2019-03-19 21:57:10,203-Lecture capteur Meteo
+DEBUG:2019-03-19 21:57:10,205-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:57:10,732-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:57:11,260-TempIn=22.0C  HumidityIn=36.0%
+DEBUG:2019-03-19 21:57:11,261-TempIn=22.0C  HumidityIn=36.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:57:11,263-Write in meteo DB - [(22.0, 37.0, 22.0, 36.0)]
+DEBUG:2019-03-19 21:57:11,268-Lecture capteur Poids
+DEBUG:2019-03-19 21:57:11,269-Lecture capteur de poids
+DEBUG:2019-03-19 21:57:12,438-Write in Balance DB - [46302.608695652176]
+DEBUG:2019-03-19 21:57:12,488-sleep 3 secondes
+DEBUG:2019-03-19 21:57:15,492-Iteration boucle courante=12
+DEBUG:2019-03-19 21:57:15,494-Lecture capteur Meteo
+DEBUG:2019-03-19 21:57:15,496-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:57:16,023-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:57:16,550-TempIn=22.0C  HumidityIn=36.0%
+DEBUG:2019-03-19 21:57:16,552-TempIn=22.0C  HumidityIn=36.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:57:16,554-Write in meteo DB - [(22.0, 36.0, 22.0, 36.0)]
+DEBUG:2019-03-19 21:57:16,558-Lecture capteur Poids
+DEBUG:2019-03-19 21:57:16,560-Lecture capteur de poids
+DEBUG:2019-03-19 21:57:18,075-Write in Balance DB - [-61974.260869565216]
+DEBUG:2019-03-19 21:57:18,124-sleep 3 secondes
+DEBUG:2019-03-19 21:57:21,130-Iteration boucle courante=13
+DEBUG:2019-03-19 21:57:21,132-Lecture capteur Meteo
+DEBUG:2019-03-19 21:57:21,134-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:57:21,661-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:57:22,189-TempIn=22.0C  HumidityIn=36.0%
+DEBUG:2019-03-19 21:57:22,190-TempIn=22.0C  HumidityIn=36.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:57:22,192-Write in meteo DB - [(22.0, 37.0, 22.0, 36.0)]
+DEBUG:2019-03-19 21:57:22,197-Lecture capteur Poids
+DEBUG:2019-03-19 21:57:22,198-Lecture capteur de poids
+DEBUG:2019-03-19 21:57:23,322-Write in Balance DB - [-14246.95652173913]
+DEBUG:2019-03-19 21:57:23,930-sleep 3 secondes
+DEBUG:2019-03-19 21:57:26,941-Iteration boucle courante=14
+DEBUG:2019-03-19 21:57:26,943-Lecture capteur Meteo
+DEBUG:2019-03-19 21:57:26,945-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:57:30,000-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:57:30,528-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:57:30,530-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:57:30,531-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:57:30,536-Lecture capteur Poids
+DEBUG:2019-03-19 21:57:30,538-Lecture capteur de poids
+DEBUG:2019-03-19 21:57:31,638-Write in Balance DB - [22795.130434782608]
+DEBUG:2019-03-19 21:57:32,698-sleep 3 secondes
+DEBUG:2019-03-19 21:57:35,704-Iteration boucle courante=15
+DEBUG:2019-03-19 21:57:35,707-Lecture capteur Meteo
+DEBUG:2019-03-19 21:57:35,708-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:57:36,236-TempOut=22.0C HumidityOut=40.0%
+DEBUG:2019-03-19 21:57:36,764-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:57:36,766-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=40.0%
+DEBUG:2019-03-19 21:57:36,768-Write in meteo DB - [(22.0, 40.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:57:36,776-Lecture capteur Poids
+DEBUG:2019-03-19 21:57:36,778-Lecture capteur de poids
+DEBUG:2019-03-19 21:57:38,745-Write in Balance DB - [-61974.260869565216]
+DEBUG:2019-03-19 21:57:38,898-sleep 3 secondes
+DEBUG:2019-03-19 21:57:41,902-Iteration boucle courante=16
+DEBUG:2019-03-19 21:57:41,904-Lecture capteur Meteo
+DEBUG:2019-03-19 21:57:41,906-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:57:44,962-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:57:45,501-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:57:45,503-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:57:45,505-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:57:45,518-Lecture capteur Poids
+DEBUG:2019-03-19 21:57:45,520-Lecture capteur de poids
+DEBUG:2019-03-19 21:57:46,208-Write in Balance DB - [29206.260869565216]
+DEBUG:2019-03-19 21:57:47,648-sleep 3 secondes
+DEBUG:2019-03-19 21:57:50,655-Iteration boucle courante=17
+DEBUG:2019-03-19 21:57:50,658-Lecture capteur Meteo
+DEBUG:2019-03-19 21:57:50,659-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:57:51,187-TempOut=22.0C HumidityOut=40.0%
+DEBUG:2019-03-19 21:57:51,715-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:57:51,728-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=40.0%
+DEBUG:2019-03-19 21:57:51,730-Write in meteo DB - [(22.0, 40.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:57:51,735-Lecture capteur Poids
+DEBUG:2019-03-19 21:57:51,737-Lecture capteur de poids
+DEBUG:2019-03-19 21:57:52,494-Write in Balance DB - [-2139.8260869565215]
+DEBUG:2019-03-19 21:57:52,902-sleep 3 secondes
+DEBUG:2019-03-19 21:57:55,239-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 21:57:55,240-Capteur 1 (OUT) - Status 0
+DEBUG:2019-03-19 21:57:55,247-nombre sequentiel pour capteurs IR I/O = 20190319000008
+DEBUG:2019-03-19 21:57:55,249-Write in Capt_IR DB - [('1', 0, 1553032675239L, 20190319000008L)]
+DEBUG:2019-03-19 21:57:55,707-lv_IRcur = 10
+DEBUG:2019-03-19 21:57:55,709-gv_IRprec = 11
+DEBUG:2019-03-19 21:57:55,712-Testing IR Paire - 1110
+DEBUG:2019-03-19 21:57:55,714-Non matching Paires (serie not found or not checked) - 1110
+DEBUG:2019-03-19 21:57:55,720-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 21:57:55,722-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 21:57:55,726-nombre sequentiel pour capteurs IR I/O = 20190319000009
+DEBUG:2019-03-19 21:57:55,728-Write in Capt_IR DB - [('1', 1, 1553032675720L, 20190319000009L)]
+DEBUG:2019-03-19 21:57:55,763-lv_IRcur = 11
+DEBUG:2019-03-19 21:57:55,765-gv_IRprec = 10
+DEBUG:2019-03-19 21:57:55,767-Testing IR Paire - 1011
+DEBUG:2019-03-19 21:57:55,769-Matching Paire - 1011
+DEBUG:2019-03-19 21:57:55,771-Testing IR Serie - 3131
+DEBUG:2019-03-19 21:57:55,772-Non matching Serie (mvt not found) - 3131
+DEBUG:2019-03-19 21:57:55,908-Iteration boucle courante=18
+DEBUG:2019-03-19 21:57:55,911-Lecture capteur Meteo
+DEBUG:2019-03-19 21:57:55,917-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:57:56,444-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:57:56,973-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:57:56,975-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:57:56,976-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:57:56,981-Lecture capteur Poids
+DEBUG:2019-03-19 21:57:56,986-Lecture capteur de poids
+DEBUG:2019-03-19 21:57:57,696-Write in Balance DB - [106134.26086956522]
+DEBUG:2019-03-19 21:57:57,735-sleep 3 secondes
+DEBUG:2019-03-19 21:58:00,741-Iteration boucle courante=19
+DEBUG:2019-03-19 21:58:00,743-Lecture capteur Meteo
+DEBUG:2019-03-19 21:58:00,745-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:58:03,800-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:58:04,328-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:58:04,330-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:58:04,331-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:58:04,336-Lecture capteur Poids
+DEBUG:2019-03-19 21:58:04,338-Lecture capteur de poids
+DEBUG:2019-03-19 21:58:06,275-Write in Balance DB - [-61974.260869565216]
+DEBUG:2019-03-19 21:58:06,313-sleep 3 secondes
+DEBUG:2019-03-19 21:58:09,319-Iteration boucle courante=20
+DEBUG:2019-03-19 21:58:09,322-Lecture capteur Meteo
+DEBUG:2019-03-19 21:58:09,323-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:58:09,851-TempOut=22.0C HumidityOut=41.0%
+DEBUG:2019-03-19 21:58:10,380-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:58:10,382-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=41.0%
+DEBUG:2019-03-19 21:58:10,383-Write in meteo DB - [(22.0, 41.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:58:10,388-Lecture capteur Poids
+DEBUG:2019-03-19 21:58:10,389-Lecture capteur de poids
+CRITICAL:2019-03-19 21:58:11,522-Erreur d'ecriture dans la table BALANCE - [(22.0, 41.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:58:11,534-Clean and Exit
+DEBUG:2019-03-19 21:58:11,542-Thank you, Goodbye!
+INFO:2019-03-19 21:59:04,686-Verbose mode (debug) activated
+WARNING:2019-03-19 21:59:04,697-begin program eBirds...
+DEBUG:2019-03-19 21:59:04,708-Demarrage des Thread pour interrupts sur capteurs IR d'entrees/sorties
+DEBUG:2019-03-19 21:59:04,726-Demarrage boucle infinie pour lecture des differents capteurs
+DEBUG:2019-03-19 21:59:04,732-Iteration boucle courante=1
+DEBUG:2019-03-19 21:59:04,734-Lecture capteur Meteo
+DEBUG:2019-03-19 21:59:04,742-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:59:09,857-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:59:10,394-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:59:10,395-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:59:10,397-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:59:10,404-Lecture capteur Poids
+DEBUG:2019-03-19 21:59:10,406-Lecture capteur de poids
+DEBUG:2019-03-19 21:59:11,976-Write in Balance DB - [-27069.217391304348]
+DEBUG:2019-03-19 21:59:12,012-sleep 3 secondes
+DEBUG:2019-03-19 21:59:15,018-Iteration boucle courante=2
+DEBUG:2019-03-19 21:59:15,023-Lecture capteur Meteo
+DEBUG:2019-03-19 21:59:15,025-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:59:15,552-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:59:16,080-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:59:16,082-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:59:16,083-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:59:16,088-Lecture capteur Poids
+DEBUG:2019-03-19 21:59:16,089-Lecture capteur de poids
+DEBUG:2019-03-19 21:59:17,213-Write in Balance DB - [29918.608695652172]
+DEBUG:2019-03-19 21:59:17,262-sleep 3 secondes
+DEBUG:2019-03-19 21:59:20,267-Iteration boucle courante=3
+DEBUG:2019-03-19 21:59:20,270-Lecture capteur Meteo
+DEBUG:2019-03-19 21:59:20,273-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:59:20,801-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:59:21,328-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:59:21,330-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:59:21,332-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:59:21,336-Lecture capteur Poids
+DEBUG:2019-03-19 21:59:21,338-Lecture capteur de poids
+DEBUG:2019-03-19 21:59:22,051-Write in Balance DB - [-12109.91304347826]
+DEBUG:2019-03-19 21:59:22,086-sleep 3 secondes
+DEBUG:2019-03-19 21:59:25,092-Iteration boucle courante=4
+DEBUG:2019-03-19 21:59:25,095-Lecture capteur Meteo
+DEBUG:2019-03-19 21:59:25,096-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:59:25,623-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:59:26,151-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:59:26,153-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:59:26,154-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:59:26,159-Lecture capteur Poids
+DEBUG:2019-03-19 21:59:26,161-Lecture capteur de poids
+DEBUG:2019-03-19 21:59:27,688-Write in Balance DB - [-55909.543478260872]
+DEBUG:2019-03-19 21:59:27,737-sleep 3 secondes
+DEBUG:2019-03-19 21:59:30,743-Iteration boucle courante=5
+DEBUG:2019-03-19 21:59:30,745-Lecture capteur Meteo
+DEBUG:2019-03-19 21:59:30,747-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:59:31,274-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:59:34,331-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:59:34,333-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:59:34,334-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:59:34,339-Lecture capteur Poids
+DEBUG:2019-03-19 21:59:34,340-Lecture capteur de poids
+DEBUG:2019-03-19 21:59:35,060-Write in Balance DB - [-22795.130434782608]
+DEBUG:2019-03-19 21:59:35,094-sleep 3 secondes
+DEBUG:2019-03-19 21:59:38,100-Iteration boucle courante=6
+DEBUG:2019-03-19 21:59:38,103-Lecture capteur Meteo
+DEBUG:2019-03-19 21:59:38,105-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:59:38,632-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:59:39,160-TempIn=22.0C  HumidityIn=38.0%
+DEBUG:2019-03-19 21:59:39,161-TempIn=22.0C  HumidityIn=38.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:59:39,163-Write in meteo DB - [(22.0, 37.0, 22.0, 38.0)]
+DEBUG:2019-03-19 21:59:39,167-Lecture capteur Poids
+DEBUG:2019-03-19 21:59:39,169-Lecture capteur de poids
+DEBUG:2019-03-19 21:59:41,135-Write in Balance DB - [-55563.130434782608]
+DEBUG:2019-03-19 21:59:41,171-sleep 3 secondes
+DEBUG:2019-03-19 21:59:44,177-Iteration boucle courante=7
+DEBUG:2019-03-19 21:59:44,179-Lecture capteur Meteo
+DEBUG:2019-03-19 21:59:44,181-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:59:44,709-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:59:45,237-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:59:45,238-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:59:45,240-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:59:45,247-Lecture capteur Poids
+DEBUG:2019-03-19 21:59:45,249-Lecture capteur de poids
+DEBUG:2019-03-19 21:59:46,418-Write in Balance DB - [-7835.826086956522]
+DEBUG:2019-03-19 21:59:46,470-sleep 3 secondes
+DEBUG:2019-03-19 21:59:49,476-Iteration boucle courante=8
+DEBUG:2019-03-19 21:59:49,479-Lecture capteur Meteo
+DEBUG:2019-03-19 21:59:49,480-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:59:50,012-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:59:50,539-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:59:50,541-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 21:59:50,543-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:59:50,547-Lecture capteur Poids
+DEBUG:2019-03-19 21:59:50,549-Lecture capteur de poids
+DEBUG:2019-03-19 21:59:52,116-Write in Balance DB - [-55563.130434782608]
+DEBUG:2019-03-19 21:59:52,151-sleep 3 secondes
+DEBUG:2019-03-19 21:59:55,157-Iteration boucle courante=9
+DEBUG:2019-03-19 21:59:55,161-Lecture capteur Meteo
+DEBUG:2019-03-19 21:59:55,164-Lecture capteur meteo DHT
+DEBUG:2019-03-19 21:59:55,693-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:59:56,220-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 21:59:56,222-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 21:59:56,224-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 21:59:56,228-Lecture capteur Poids
+DEBUG:2019-03-19 21:59:56,230-Lecture capteur de poids
+DEBUG:2019-03-19 21:59:57,412-Write in Balance DB - [-1424.695652173913]
+DEBUG:2019-03-19 21:59:57,464-sleep 3 secondes
+DEBUG:2019-03-19 22:00:00,470-Iteration boucle courante=10
+DEBUG:2019-03-19 22:00:00,473-Lecture capteur Meteo
+DEBUG:2019-03-19 22:00:00,478-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:00:01,005-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:00:01,533-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:00:01,535-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:00:01,537-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:00:01,542-Lecture capteur Poids
+DEBUG:2019-03-19 22:00:01,543-Lecture capteur de poids
+DEBUG:2019-03-19 22:00:02,250-Write in Balance DB - [-37042.086956521736]
+DEBUG:2019-03-19 22:00:02,286-sleep 3 secondes
+DEBUG:2019-03-19 22:00:05,293-Iteration boucle courante=11
+DEBUG:2019-03-19 22:00:05,296-Lecture capteur Meteo
+DEBUG:2019-03-19 22:00:05,297-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:00:08,354-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:00:08,883-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:00:08,884-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:00:08,886-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:00:08,891-Lecture capteur Poids
+DEBUG:2019-03-19 22:00:08,892-Lecture capteur de poids
+DEBUG:2019-03-19 22:00:09,623-Write in Balance DB - [-35617.391304347824]
+DEBUG:2019-03-19 22:00:09,658-sleep 3 secondes
+DEBUG:2019-03-19 22:00:12,664-Iteration boucle courante=12
+DEBUG:2019-03-19 22:00:12,667-Lecture capteur Meteo
+DEBUG:2019-03-19 22:00:12,669-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:00:13,197-TempOut=22.0C HumidityOut=41.0%
+DEBUG:2019-03-19 22:00:13,724-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:00:13,726-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=41.0%
+DEBUG:2019-03-19 22:00:13,727-Write in meteo DB - [(22.0, 41.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:00:13,732-Lecture capteur Poids
+DEBUG:2019-03-19 22:00:13,734-Lecture capteur de poids
+DEBUG:2019-03-19 22:00:15,258-Write in Balance DB - [-26356.869565217392]
+DEBUG:2019-03-19 22:00:15,295-sleep 3 secondes
+DEBUG:2019-03-19 22:00:18,301-Iteration boucle courante=13
+DEBUG:2019-03-19 22:00:18,304-Lecture capteur Meteo
+DEBUG:2019-03-19 22:00:18,305-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:00:18,833-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:00:21,890-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:00:21,893-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:00:21,895-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:00:21,902-Lecture capteur Poids
+DEBUG:2019-03-19 22:00:21,904-Lecture capteur de poids
+DEBUG:2019-03-19 22:00:23,071-Write in Balance DB - [81920.0]
+DEBUG:2019-03-19 22:00:23,106-sleep 3 secondes
+DEBUG:2019-03-19 22:00:26,112-Iteration boucle courante=14
+DEBUG:2019-03-19 22:00:26,114-Lecture capteur Meteo
+DEBUG:2019-03-19 22:00:26,116-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:00:26,643-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:00:27,171-TempIn=22.0C  HumidityIn=38.0%
+DEBUG:2019-03-19 22:00:27,173-TempIn=22.0C  HumidityIn=38.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:00:27,174-Write in meteo DB - [(22.0, 37.0, 22.0, 38.0)]
+DEBUG:2019-03-19 22:00:27,179-Lecture capteur Poids
+DEBUG:2019-03-19 22:00:27,180-Lecture capteur de poids
+DEBUG:2019-03-19 22:00:27,922-Write in Balance DB - [29206.260869565216]
+DEBUG:2019-03-19 22:00:27,961-sleep 3 secondes
+DEBUG:2019-03-19 22:00:30,973-Iteration boucle courante=15
+DEBUG:2019-03-19 22:00:30,977-Lecture capteur Meteo
+DEBUG:2019-03-19 22:00:30,979-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:00:31,531-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:00:32,058-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:00:32,061-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:00:32,063-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:00:32,068-Lecture capteur Poids
+DEBUG:2019-03-19 22:00:32,069-Lecture capteur de poids
+DEBUG:2019-03-19 22:00:33,635-Write in Balance DB - [-55908.17391304348]
+DEBUG:2019-03-19 22:00:33,684-sleep 3 secondes
+DEBUG:2019-03-19 22:00:36,690-Iteration boucle courante=16
+DEBUG:2019-03-19 22:00:36,693-Lecture capteur Meteo
+DEBUG:2019-03-19 22:00:36,694-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:00:37,222-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:00:37,749-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:00:37,751-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:00:37,753-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:00:37,758-Lecture capteur Poids
+DEBUG:2019-03-19 22:00:37,759-Lecture capteur de poids
+DEBUG:2019-03-19 22:00:40,124-Write in Balance DB - [-55909.543478260872]
+DEBUG:2019-03-19 22:00:40,159-sleep 3 secondes
+DEBUG:2019-03-19 22:00:43,165-Iteration boucle courante=17
+DEBUG:2019-03-19 22:00:43,167-Lecture capteur Meteo
+DEBUG:2019-03-19 22:00:43,169-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:00:43,697-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:00:44,225-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:00:44,226-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:00:44,228-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:00:44,233-Lecture capteur Poids
+DEBUG:2019-03-19 22:00:44,234-Lecture capteur de poids
+DEBUG:2019-03-19 22:00:46,160-Write in Balance DB - [-55909.543478260872]
+DEBUG:2019-03-19 22:00:46,196-sleep 3 secondes
+DEBUG:2019-03-19 22:00:49,202-Iteration boucle courante=18
+DEBUG:2019-03-19 22:00:49,205-Lecture capteur Meteo
+DEBUG:2019-03-19 22:00:49,206-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:00:49,734-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:00:50,261-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:00:50,263-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:00:50,264-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:00:50,269-Lecture capteur Poids
+DEBUG:2019-03-19 22:00:50,271-Lecture capteur de poids
+DEBUG:2019-03-19 22:00:50,998-Write in Balance DB - [20658.08695652174]
+DEBUG:2019-03-19 22:00:51,033-sleep 3 secondes
+DEBUG:2019-03-19 22:00:54,037-Iteration boucle courante=19
+DEBUG:2019-03-19 22:00:54,040-Lecture capteur Meteo
+DEBUG:2019-03-19 22:00:54,042-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:00:54,570-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:00:55,098-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:00:55,100-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:00:55,101-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:00:55,107-Lecture capteur Poids
+DEBUG:2019-03-19 22:00:55,109-Lecture capteur de poids
+DEBUG:2019-03-19 22:00:57,075-Write in Balance DB - [-55563.130434782608]
+DEBUG:2019-03-19 22:00:57,125-sleep 3 secondes
+DEBUG:2019-03-19 22:01:00,131-Iteration boucle courante=20
+DEBUG:2019-03-19 22:01:00,133-Lecture capteur Meteo
+DEBUG:2019-03-19 22:01:00,135-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:01:00,662-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:01:01,190-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:01:01,192-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:01:01,193-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:01:01,198-Lecture capteur Poids
+DEBUG:2019-03-19 22:01:01,199-Lecture capteur de poids
+DEBUG:2019-03-19 22:01:03,165-Write in Balance DB - [-55563.130434782608]
+DEBUG:2019-03-19 22:01:03,203-sleep 3 secondes
+DEBUG:2019-03-19 22:01:06,210-Iteration boucle courante=21
+DEBUG:2019-03-19 22:01:06,213-Lecture capteur Meteo
+DEBUG:2019-03-19 22:01:06,214-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:01:09,270-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:01:09,807-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:01:09,809-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:01:09,811-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:01:09,817-Lecture capteur Poids
+DEBUG:2019-03-19 22:01:09,819-Lecture capteur de poids
+DEBUG:2019-03-19 22:01:10,538-Write in Balance DB - [-19945.739130434784]
+DEBUG:2019-03-19 22:01:10,577-sleep 3 secondes
+DEBUG:2019-03-19 22:01:13,584-Iteration boucle courante=22
+DEBUG:2019-03-19 22:01:13,587-Lecture capteur Meteo
+DEBUG:2019-03-19 22:01:13,588-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:01:14,117-TempOut=22.0C HumidityOut=41.0%
+DEBUG:2019-03-19 22:01:14,644-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:01:14,645-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=41.0%
+DEBUG:2019-03-19 22:01:14,647-Write in meteo DB - [(22.0, 41.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:01:14,652-Lecture capteur Poids
+DEBUG:2019-03-19 22:01:14,653-Lecture capteur de poids
+DEBUG:2019-03-19 22:01:16,173-Write in Balance DB - [-55909.543478260872]
+DEBUG:2019-03-19 22:01:16,223-sleep 3 secondes
+DEBUG:2019-03-19 22:01:19,230-Iteration boucle courante=23
+DEBUG:2019-03-19 22:01:19,234-Lecture capteur Meteo
+DEBUG:2019-03-19 22:01:19,237-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:01:19,765-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:01:20,293-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:01:20,295-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:01:20,296-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:01:20,301-Lecture capteur Poids
+DEBUG:2019-03-19 22:01:20,306-Lecture capteur de poids
+DEBUG:2019-03-19 22:01:22,669-Write in Balance DB - [-55909.543478260872]
+DEBUG:2019-03-19 22:01:22,703-sleep 3 secondes
+DEBUG:2019-03-19 22:01:25,709-Iteration boucle courante=24
+DEBUG:2019-03-19 22:01:25,712-Lecture capteur Meteo
+DEBUG:2019-03-19 22:01:25,714-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:01:26,241-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:01:26,769-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:01:26,770-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:01:26,772-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:01:26,777-Lecture capteur Poids
+DEBUG:2019-03-19 22:01:26,779-Lecture capteur de poids
+DEBUG:2019-03-19 22:01:28,305-Write in Balance DB - [-35617.391304347824]
+DEBUG:2019-03-19 22:01:28,340-sleep 3 secondes
+DEBUG:2019-03-19 22:01:31,346-Iteration boucle courante=25
+DEBUG:2019-03-19 22:01:31,349-Lecture capteur Meteo
+DEBUG:2019-03-19 22:01:31,350-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:01:31,879-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:01:32,408-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:01:32,409-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:01:32,411-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:01:32,416-Lecture capteur Poids
+DEBUG:2019-03-19 22:01:32,417-Lecture capteur de poids
+INFO:2019-03-19 22:02:34,592-Verbose mode (debug) activated
+WARNING:2019-03-19 22:02:34,602-begin program eBirds...
+DEBUG:2019-03-19 22:02:34,614-Demarrage des Thread pour interrupts sur capteurs IR d'entrees/sorties
+DEBUG:2019-03-19 22:02:34,622-Demarrage boucle infinie pour lecture des differents capteurs
+DEBUG:2019-03-19 22:02:34,625-Iteration boucle courante=1
+DEBUG:2019-03-19 22:02:34,628-Lecture capteur Meteo
+DEBUG:2019-03-19 22:02:34,630-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:02:39,610-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:02:40,146-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:02:40,148-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:02:40,149-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:02:40,155-Lecture capteur Poids
+DEBUG:2019-03-19 22:02:40,157-Lecture capteur de poids
+DEBUG:2019-03-19 22:02:40,885-Write in Balance DB - [8548.173913043478]
+DEBUG:2019-03-19 22:02:40,924-sleep 3 secondes
+DEBUG:2019-03-19 22:02:43,930-Iteration boucle courante=2
+DEBUG:2019-03-19 22:02:43,933-Lecture capteur Meteo
+DEBUG:2019-03-19 22:02:43,935-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:02:44,462-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:02:44,991-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:02:44,993-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:02:44,994-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:02:44,999-Lecture capteur Poids
+DEBUG:2019-03-19 22:02:45,000-Lecture capteur de poids
+DEBUG:2019-03-19 22:02:45,724-Write in Balance DB - [-31343.304347826088]
+DEBUG:2019-03-19 22:02:45,760-sleep 3 secondes
+DEBUG:2019-03-19 22:02:48,766-Iteration boucle courante=3
+DEBUG:2019-03-19 22:02:48,770-Lecture capteur Meteo
+DEBUG:2019-03-19 22:02:48,773-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:02:49,303-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:02:49,831-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:02:49,833-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:02:49,835-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:02:49,842-Lecture capteur Poids
+DEBUG:2019-03-19 22:02:49,844-Lecture capteur de poids
+CRITICAL:2019-03-19 22:02:50,568-Erreur d'ecriture dans la table BALANCE - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:02:50,570-Clean and Exit
+DEBUG:2019-03-19 22:02:50,589-Thank you, Goodbye!
+INFO:2019-03-19 22:03:33,836-Verbose mode (debug) activated
+WARNING:2019-03-19 22:03:33,838-begin program eBirds...
+DEBUG:2019-03-19 22:03:33,849-Demarrage des Thread pour interrupts sur capteurs IR d'entrees/sorties
+DEBUG:2019-03-19 22:03:33,866-Demarrage boucle infinie pour lecture des differents capteurs
+DEBUG:2019-03-19 22:03:33,873-Iteration boucle courante=1
+DEBUG:2019-03-19 22:03:33,876-Lecture capteur Meteo
+DEBUG:2019-03-19 22:03:33,877-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:03:38,944-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:03:39,472-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:03:39,474-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:03:39,476-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:03:39,495-Lecture capteur Poids
+DEBUG:2019-03-19 22:03:39,497-Lecture capteur de poids
+DEBUG:2019-03-19 22:03:41,915-Write in Balance DB - [-56998.956521739128]
+DEBUG:2019-03-19 22:03:41,950-sleep 3 secondes
+DEBUG:2019-03-19 22:03:44,956-Iteration boucle courante=2
+DEBUG:2019-03-19 22:03:44,960-Lecture capteur Meteo
+DEBUG:2019-03-19 22:03:44,963-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:03:45,492-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:03:46,020-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:03:46,022-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:03:46,024-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:03:46,031-Lecture capteur Poids
+DEBUG:2019-03-19 22:03:46,043-Lecture capteur de poids
+DEBUG:2019-03-19 22:03:47,211-Write in Balance DB - [24932.17391304348]
+DEBUG:2019-03-19 22:03:47,258-sleep 3 secondes
+DEBUG:2019-03-19 22:03:50,265-Iteration boucle courante=3
+DEBUG:2019-03-19 22:03:50,267-Lecture capteur Meteo
+DEBUG:2019-03-19 22:03:50,269-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:03:50,798-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:03:51,327-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:03:51,328-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:03:51,330-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:03:51,336-Lecture capteur Poids
+DEBUG:2019-03-19 22:03:51,338-Lecture capteur de poids
+DEBUG:2019-03-19 22:03:53,305-Write in Balance DB - [-56987.82608695652]
+DEBUG:2019-03-19 22:03:53,340-sleep 3 secondes
+DEBUG:2019-03-19 22:03:56,346-Iteration boucle courante=4
+DEBUG:2019-03-19 22:03:56,349-Lecture capteur Meteo
+DEBUG:2019-03-19 22:03:56,350-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:03:56,878-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:03:57,407-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:03:57,409-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:03:57,410-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:03:57,415-Lecture capteur Poids
+DEBUG:2019-03-19 22:03:57,417-Lecture capteur de poids
+DEBUG:2019-03-19 22:03:58,143-Write in Balance DB - [43453.217391304344]
+DEBUG:2019-03-19 22:03:58,178-sleep 3 secondes
+DEBUG:2019-03-19 22:04:01,182-Iteration boucle courante=5
+DEBUG:2019-03-19 22:04:01,184-Lecture capteur Meteo
+DEBUG:2019-03-19 22:04:01,186-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:04:01,713-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:04:02,240-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:04:02,242-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:04:02,244-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:04:02,249-Lecture capteur Poids
+DEBUG:2019-03-19 22:04:02,250-Lecture capteur de poids
+DEBUG:2019-03-19 22:04:03,381-Write in Balance DB - [-4274.086956521739]
+DEBUG:2019-03-19 22:04:03,430-sleep 3 secondes
+DEBUG:2019-03-19 22:04:06,436-Iteration boucle courante=6
+DEBUG:2019-03-19 22:04:06,438-Lecture capteur Meteo
+DEBUG:2019-03-19 22:04:06,440-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:04:06,968-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:04:07,498-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:04:07,499-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:04:07,501-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:04:07,509-Lecture capteur Poids
+DEBUG:2019-03-19 22:04:07,511-Lecture capteur de poids
+DEBUG:2019-03-19 22:04:08,220-Write in Balance DB - [31343.304347826088]
+DEBUG:2019-03-19 22:04:08,258-sleep 3 secondes
+DEBUG:2019-03-19 22:04:11,264-Iteration boucle courante=7
+DEBUG:2019-03-19 22:04:11,268-Lecture capteur Meteo
+DEBUG:2019-03-19 22:04:11,271-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:04:11,800-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:04:12,329-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:04:12,332-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:04:12,334-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:04:12,340-Lecture capteur Poids
+DEBUG:2019-03-19 22:04:12,343-Lecture capteur de poids
+DEBUG:2019-03-19 22:04:13,058-Write in Balance DB - [22082.782608695652]
+DEBUG:2019-03-19 22:04:13,098-sleep 3 secondes
+DEBUG:2019-03-19 22:04:16,105-Iteration boucle courante=8
+DEBUG:2019-03-19 22:04:16,110-Lecture capteur Meteo
+DEBUG:2019-03-19 22:04:16,114-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:04:16,643-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:04:17,172-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:04:17,175-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:04:17,178-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:04:17,187-Lecture capteur Poids
+DEBUG:2019-03-19 22:04:17,190-Lecture capteur de poids
+DEBUG:2019-03-19 22:04:18,360-Write in Balance DB - [-39179.130434782608]
+DEBUG:2019-03-19 22:04:18,409-sleep 3 secondes
+DEBUG:2019-03-19 22:04:21,417-Iteration boucle courante=9
+DEBUG:2019-03-19 22:04:21,422-Lecture capteur Meteo
+DEBUG:2019-03-19 22:04:21,426-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:04:21,956-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:04:22,484-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:04:22,488-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:04:22,491-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:04:22,504-Lecture capteur Poids
+DEBUG:2019-03-19 22:04:22,512-Lecture capteur de poids
+DEBUG:2019-03-19 22:04:24,022-Write in Balance DB - [50573.913043478264]
+DEBUG:2019-03-19 22:04:24,059-sleep 3 secondes
+DEBUG:2019-03-19 22:04:27,066-Iteration boucle courante=10
+DEBUG:2019-03-19 22:04:27,071-Lecture capteur Meteo
+DEBUG:2019-03-19 22:04:27,085-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:04:30,143-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:04:30,682-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:04:30,684-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:04:30,686-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:04:30,693-Lecture capteur Poids
+DEBUG:2019-03-19 22:04:30,695-Lecture capteur de poids
+DEBUG:2019-03-19 22:04:31,793-Write in Balance DB - [-33477.565217391304]
+DEBUG:2019-03-19 22:04:31,830-sleep 3 secondes
+DEBUG:2019-03-19 22:04:33,897-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:04:33,899-Capteur 1 (OUT) - Status 0
+INFO:2019-03-19 22:04:33,905-Changement de date, nous sommes le 20190319
+DEBUG:2019-03-19 22:04:33,908-nombre sequentiel pour capteurs IR I/O = 20190319000000
+DEBUG:2019-03-19 22:04:33,910-Write in Capt_IR DB - [('1', 0, 1553033073896L, 20190319000000L)]
+DEBUG:2019-03-19 22:04:33,946-lv_IRcur = 10
+DEBUG:2019-03-19 22:04:33,948-gv_IRprec = 00
+DEBUG:2019-03-19 22:04:33,952-Testing IR Paire - 0010
+DEBUG:2019-03-19 22:04:33,957-Non matching Paires (serie not found or not checked) - 0010
+DEBUG:2019-03-19 22:04:33,959-Reinitialisation de la table des series
+DEBUG:2019-03-19 22:04:33,979-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:04:33,981-Capteur 2 (IN) - Status 0
+DEBUG:2019-03-19 22:04:33,988-nombre sequentiel pour capteurs IR I/O = 20190319000001
+DEBUG:2019-03-19 22:04:33,991-Write in Capt_IR DB - [('2', 0, 1553033073979L, 20190319000001L)]
+DEBUG:2019-03-19 22:04:34,036-lv_IRcur = 20
+DEBUG:2019-03-19 22:04:34,039-gv_IRprec = 10
+DEBUG:2019-03-19 22:04:34,054-Testing IR Paire - 1020
+DEBUG:2019-03-19 22:04:34,059-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:04:34,073-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 22:04:34,058-Matching Paire - 1020
+DEBUG:2019-03-19 22:04:34,077-Testing IR Serie - 11
+DEBUG:2019-03-19 22:04:34,082-Non matching Serie (mvt not found) - 11
+DEBUG:2019-03-19 22:04:34,087-nombre sequentiel pour capteurs IR I/O = 20190319000002
+DEBUG:2019-03-19 22:04:34,100-Write in Capt_IR DB - [('1', 1, 1553033074059L, 20190319000002L)]
+DEBUG:2019-03-19 22:04:34,104-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:04:34,112-Capteur 2 (IN) - Status 1
+DEBUG:2019-03-19 22:04:34,125-nombre sequentiel pour capteurs IR I/O = 20190319000003
+DEBUG:2019-03-19 22:04:34,133-Write in Capt_IR DB - [('2', 1, 1553033074104L, 20190319000003L)]
+DEBUG:2019-03-19 22:04:34,163-lv_IRcur = 11
+DEBUG:2019-03-19 22:04:34,165-gv_IRprec = 20
+DEBUG:2019-03-19 22:04:34,170-Testing IR Paire - 2011
+DEBUG:2019-03-19 22:04:34,177-Non matching Paires (serie not found or not checked) - 2011
+DEBUG:2019-03-19 22:04:34,206-lv_IRcur = 21
+DEBUG:2019-03-19 22:04:34,209-gv_IRprec = 11
+DEBUG:2019-03-19 22:04:34,214-Testing IR Paire - 1121
+DEBUG:2019-03-19 22:04:34,217-Matching Paire - 1121
+DEBUG:2019-03-19 22:04:34,220-Testing IR Serie - 1112
+DEBUG:2019-03-19 22:04:34,222-Matching Serie (mvt found) - 1112
+DEBUG:2019-03-19 22:04:34,226-Write in InOut_IR DB - [('E1', 1553033074104L)]
+DEBUG:2019-03-19 22:04:34,837-Iteration boucle courante=11
+DEBUG:2019-03-19 22:04:34,842-Lecture capteur Meteo
+DEBUG:2019-03-19 22:04:34,846-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:04:35,377-TempOut=22.0C HumidityOut=41.0%
+DEBUG:2019-03-19 22:04:35,905-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:04:35,909-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=41.0%
+DEBUG:2019-03-19 22:04:35,913-Write in meteo DB - [(22.0, 41.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:04:35,922-Lecture capteur Poids
+DEBUG:2019-03-19 22:04:35,926-Lecture capteur de poids
+DEBUG:2019-03-19 22:04:37,497-Write in Balance DB - [-57334.239130434784]
+DEBUG:2019-03-19 22:04:37,537-sleep 3 secondes
+DEBUG:2019-03-19 22:04:40,548-Iteration boucle courante=12
+DEBUG:2019-03-19 22:04:40,550-Lecture capteur Meteo
+DEBUG:2019-03-19 22:04:40,556-Lecture capteur meteo DHT
+CRITICAL:2019-03-19 22:04:40,836-Erreur d'ecriture dans la table METEO - [-57334.239130434784]
+DEBUG:2019-03-19 22:04:40,839-Clean and Exit
+DEBUG:2019-03-19 22:04:40,852-Thank you, Goodbye!
+INFO:2019-03-19 22:12:31,978-Verbose mode (debug) activated
+WARNING:2019-03-19 22:12:31,981-begin program eBirds...
+DEBUG:2019-03-19 22:12:31,992-Demarrage des Thread pour interrupts sur capteurs IR d'entrees/sorties
+DEBUG:2019-03-19 22:12:32,011-Demarrage boucle infinie pour lecture des differents capteurs
+DEBUG:2019-03-19 22:12:32,016-Iteration boucle courante=1
+DEBUG:2019-03-19 22:12:32,022-Lecture capteur Meteo
+DEBUG:2019-03-19 22:12:32,023-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:12:37,257-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:12:37,793-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:12:37,795-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:12:37,797-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:12:37,803-Lecture capteur Poids
+DEBUG:2019-03-19 22:12:37,805-Lecture capteur de poids
+DEBUG:2019-03-19 22:12:38,542-Write in Balance DB - [29918.608695652172]
+DEBUG:2019-03-19 22:12:38,585-sleep 3 secondes
+DEBUG:2019-03-19 22:12:41,591-Iteration boucle courante=2
+DEBUG:2019-03-19 22:12:41,594-Lecture capteur Meteo
+DEBUG:2019-03-19 22:12:41,596-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:12:42,123-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:12:42,652-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:12:42,654-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:12:42,655-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:12:42,660-Lecture capteur Poids
+DEBUG:2019-03-19 22:12:42,662-Lecture capteur de poids
+DEBUG:2019-03-19 22:12:44,227-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:12:44,278-sleep 3 secondes
+DEBUG:2019-03-19 22:12:47,282-Iteration boucle courante=3
+DEBUG:2019-03-19 22:12:47,284-Lecture capteur Meteo
+DEBUG:2019-03-19 22:12:47,286-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:12:47,813-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:12:48,341-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:12:48,343-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:12:48,345-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:12:48,349-Lecture capteur Poids
+DEBUG:2019-03-19 22:12:48,351-Lecture capteur de poids
+DEBUG:2019-03-19 22:12:49,223-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:12:49,224-Capteur 1 (OUT) - Status 0
+INFO:2019-03-19 22:12:49,233-Changement de date, nous sommes le 20190319
+DEBUG:2019-03-19 22:12:49,235-nombre sequentiel pour capteurs IR I/O = 20190319000000
+DEBUG:2019-03-19 22:12:49,237-Write in Capt_IR DB - [('1', 0, 1553033569222L, 20190319000000L)]
+DEBUG:2019-03-19 22:12:49,284-lv_IRcur = 10
+DEBUG:2019-03-19 22:12:49,285-gv_IRprec = 00
+DEBUG:2019-03-19 22:12:49,292-Testing IR Paire - 0010
+DEBUG:2019-03-19 22:12:49,294-Non matching Paires (serie not found or not checked) - 0010
+DEBUG:2019-03-19 22:12:49,302-Reinitialisation de la table des series
+DEBUG:2019-03-19 22:12:49,314-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:12:49,315-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 22:12:49,324-nombre sequentiel pour capteurs IR I/O = 20190319000001
+DEBUG:2019-03-19 22:12:49,325-Write in Capt_IR DB - [('1', 1, 1553033569314L, 20190319000001L)]
+DEBUG:2019-03-19 22:12:49,373-lv_IRcur = 11
+DEBUG:2019-03-19 22:12:49,374-gv_IRprec = 10
+DEBUG:2019-03-19 22:12:49,381-Testing IR Paire - 1011
+DEBUG:2019-03-19 22:12:49,383-Matching Paire - 1011
+DEBUG:2019-03-19 22:12:49,392-Testing IR Serie - 31
+DEBUG:2019-03-19 22:12:49,394-Non matching Serie (mvt not found) - 31
+DEBUG:2019-03-19 22:12:49,865-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:12:49,901-sleep 3 secondes
+DEBUG:2019-03-19 22:12:52,907-Iteration boucle courante=4
+DEBUG:2019-03-19 22:12:52,910-Lecture capteur Meteo
+DEBUG:2019-03-19 22:12:52,911-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:12:53,442-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:12:53,969-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:12:53,972-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:12:53,974-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:12:53,981-Lecture capteur Poids
+DEBUG:2019-03-19 22:12:53,983-Lecture capteur de poids
+DEBUG:2019-03-19 22:12:54,553-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:12:54,555-Capteur 1 (OUT) - Status 0
+DEBUG:2019-03-19 22:12:54,563-nombre sequentiel pour capteurs IR I/O = 20190319000002
+DEBUG:2019-03-19 22:12:54,565-Write in Capt_IR DB - [('1', 0, 1553033574553L, 20190319000002L)]
+DEBUG:2019-03-19 22:12:55,234-lv_IRcur = 10
+DEBUG:2019-03-19 22:12:55,236-gv_IRprec = 11
+DEBUG:2019-03-19 22:12:55,237-Testing IR Paire - 1110
+DEBUG:2019-03-19 22:12:55,239-Non matching Paires (serie not found or not checked) - 1110
+DEBUG:2019-03-19 22:12:55,246-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:12:55,248-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 22:12:55,253-nombre sequentiel pour capteurs IR I/O = 20190319000003
+DEBUG:2019-03-19 22:12:55,255-Write in Capt_IR DB - [('1', 1, 1553033575246L, 20190319000003L)]
+DEBUG:2019-03-19 22:12:55,292-lv_IRcur = 11
+DEBUG:2019-03-19 22:12:55,293-gv_IRprec = 10
+DEBUG:2019-03-19 22:12:55,296-Testing IR Paire - 1011
+DEBUG:2019-03-19 22:12:55,298-Matching Paire - 1011
+DEBUG:2019-03-19 22:12:55,300-Testing IR Serie - 3131
+DEBUG:2019-03-19 22:12:55,302-Non matching Serie (mvt not found) - 3131
+DEBUG:2019-03-19 22:12:55,562-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:12:55,601-sleep 3 secondes
+DEBUG:2019-03-19 22:12:58,607-Iteration boucle courante=5
+DEBUG:2019-03-19 22:12:58,611-Lecture capteur Meteo
+DEBUG:2019-03-19 22:12:58,617-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:12:59,158-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:12:59,695-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:12:59,697-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:12:59,698-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:12:59,707-Lecture capteur Poids
+DEBUG:2019-03-19 22:12:59,709-Lecture capteur de poids
+DEBUG:2019-03-19 22:13:02,090-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:13:02,146-sleep 3 secondes
+DEBUG:2019-03-19 22:13:05,152-Iteration boucle courante=6
+DEBUG:2019-03-19 22:13:05,155-Lecture capteur Meteo
+DEBUG:2019-03-19 22:13:05,157-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:13:05,685-TempOut=22.0C HumidityOut=38.0%
+DEBUG:2019-03-19 22:13:06,214-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:13:06,216-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=38.0%
+DEBUG:2019-03-19 22:13:06,218-Write in meteo DB - [(22.0, 38.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:13:06,223-Lecture capteur Poids
+DEBUG:2019-03-19 22:13:06,224-Lecture capteur de poids
+DEBUG:2019-03-19 22:13:08,188-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:13:08,223-sleep 3 secondes
+DEBUG:2019-03-19 22:13:11,229-Iteration boucle courante=7
+DEBUG:2019-03-19 22:13:11,232-Lecture capteur Meteo
+DEBUG:2019-03-19 22:13:11,234-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:13:11,761-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:12,290-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:13:12,292-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:12,294-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:13:12,301-Lecture capteur Poids
+DEBUG:2019-03-19 22:13:12,304-Lecture capteur de poids
+DEBUG:2019-03-19 22:13:13,872-Write in Balance DB - [22082.782608695652]
+DEBUG:2019-03-19 22:13:13,921-sleep 3 secondes
+DEBUG:2019-03-19 22:13:16,927-Iteration boucle courante=8
+DEBUG:2019-03-19 22:13:16,930-Lecture capteur Meteo
+DEBUG:2019-03-19 22:13:16,931-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:13:17,460-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:17,987-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:13:17,989-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:17,991-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:13:17,995-Lecture capteur Poids
+DEBUG:2019-03-19 22:13:17,997-Lecture capteur de poids
+DEBUG:2019-03-19 22:13:19,526-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:13:19,575-sleep 3 secondes
+DEBUG:2019-03-19 22:13:22,585-Iteration boucle courante=9
+DEBUG:2019-03-19 22:13:22,589-Lecture capteur Meteo
+DEBUG:2019-03-19 22:13:22,591-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:13:23,130-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:23,658-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:13:23,660-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:23,673-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:13:23,680-Lecture capteur Poids
+DEBUG:2019-03-19 22:13:23,689-Lecture capteur de poids
+DEBUG:2019-03-19 22:13:25,667-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:13:25,701-sleep 3 secondes
+DEBUG:2019-03-19 22:13:28,707-Iteration boucle courante=10
+DEBUG:2019-03-19 22:13:28,710-Lecture capteur Meteo
+DEBUG:2019-03-19 22:13:28,711-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:13:29,240-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:29,768-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:13:29,769-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:29,771-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:13:29,777-Lecture capteur Poids
+DEBUG:2019-03-19 22:13:29,779-Lecture capteur de poids
+DEBUG:2019-03-19 22:13:32,143-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:13:32,191-sleep 3 secondes
+DEBUG:2019-03-19 22:13:35,197-Iteration boucle courante=11
+DEBUG:2019-03-19 22:13:35,200-Lecture capteur Meteo
+DEBUG:2019-03-19 22:13:35,202-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:13:35,730-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:36,258-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:13:36,260-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:36,262-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:13:36,269-Lecture capteur Poids
+DEBUG:2019-03-19 22:13:36,271-Lecture capteur de poids
+DEBUG:2019-03-19 22:13:36,986-Write in Balance DB - [26356.869565217392]
+DEBUG:2019-03-19 22:13:37,021-sleep 3 secondes
+DEBUG:2019-03-19 22:13:40,027-Iteration boucle courante=12
+DEBUG:2019-03-19 22:13:40,030-Lecture capteur Meteo
+DEBUG:2019-03-19 22:13:40,032-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:13:40,560-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:41,089-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:13:41,090-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:41,092-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:13:41,097-Lecture capteur Poids
+DEBUG:2019-03-19 22:13:41,099-Lecture capteur de poids
+DEBUG:2019-03-19 22:13:41,914-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:13:41,915-Capteur 1 (OUT) - Status 0
+DEBUG:2019-03-19 22:13:41,924-nombre sequentiel pour capteurs IR I/O = 20190319000004
+DEBUG:2019-03-19 22:13:41,925-Write in Capt_IR DB - [('1', 0, 1553033621913L, 20190319000004L)]
+DEBUG:2019-03-19 22:13:41,967-lv_IRcur = 10
+DEBUG:2019-03-19 22:13:41,969-gv_IRprec = 11
+DEBUG:2019-03-19 22:13:41,982-Testing IR Paire - 1110
+DEBUG:2019-03-19 22:13:41,985-Non matching Paires (serie not found or not checked) - 1110
+DEBUG:2019-03-19 22:13:42,003-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:13:42,005-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 22:13:42,014-nombre sequentiel pour capteurs IR I/O = 20190319000005
+DEBUG:2019-03-19 22:13:42,016-Write in Capt_IR DB - [('1', 1, 1553033622003L, 20190319000005L)]
+DEBUG:2019-03-19 22:13:42,040-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:13:42,041-Capteur 2 (IN) - Status 0
+DEBUG:2019-03-19 22:13:42,054-nombre sequentiel pour capteurs IR I/O = 20190319000006
+DEBUG:2019-03-19 22:13:42,056-Write in Capt_IR DB - [('2', 0, 1553033622039L, 20190319000006L)]
+DEBUG:2019-03-19 22:13:42,069-lv_IRcur = 11
+DEBUG:2019-03-19 22:13:42,075-gv_IRprec = 10
+DEBUG:2019-03-19 22:13:42,090-Testing IR Paire - 1011
+DEBUG:2019-03-19 22:13:42,092-Matching Paire - 1011
+DEBUG:2019-03-19 22:13:42,094-Testing IR Serie - 3131
+DEBUG:2019-03-19 22:13:42,112-Non matching Serie (mvt not found) - 3131
+DEBUG:2019-03-19 22:13:42,130-lv_IRcur = 20
+DEBUG:2019-03-19 22:13:42,131-gv_IRprec = 11
+DEBUG:2019-03-19 22:13:42,162-Testing IR Paire - 1120
+DEBUG:2019-03-19 22:13:42,164-Non matching Paires (serie not found or not checked) - 1120
+DEBUG:2019-03-19 22:13:42,184-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:13:42,186-Capteur 2 (IN) - Status 1
+DEBUG:2019-03-19 22:13:42,204-nombre sequentiel pour capteurs IR I/O = 20190319000007
+DEBUG:2019-03-19 22:13:42,205-Write in Capt_IR DB - [('2', 1, 1553033622184L, 20190319000007L)]
+DEBUG:2019-03-19 22:13:42,269-lv_IRcur = 21
+DEBUG:2019-03-19 22:13:42,270-gv_IRprec = 20
+DEBUG:2019-03-19 22:13:42,282-Testing IR Paire - 2021
+DEBUG:2019-03-19 22:13:42,284-Matching Paire - 2021
+DEBUG:2019-03-19 22:13:42,286-Testing IR Serie - 3132
+DEBUG:2019-03-19 22:13:42,288-Matching Serie (mvt found) - 3132
+DEBUG:2019-03-19 22:13:42,290-Write in InOut_IR DB - [('E2', 1553033622184L)]
+DEBUG:2019-03-19 22:13:43,092-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:13:43,128-sleep 3 secondes
+DEBUG:2019-03-19 22:13:46,132-Iteration boucle courante=13
+DEBUG:2019-03-19 22:13:46,134-Lecture capteur Meteo
+DEBUG:2019-03-19 22:13:46,136-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:13:46,664-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:47,197-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:13:47,199-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:47,201-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:13:47,219-Lecture capteur Poids
+DEBUG:2019-03-19 22:13:47,221-Lecture capteur de poids
+DEBUG:2019-03-19 22:13:49,196-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:13:49,230-sleep 3 secondes
+DEBUG:2019-03-19 22:13:52,236-Iteration boucle courante=14
+DEBUG:2019-03-19 22:13:52,239-Lecture capteur Meteo
+DEBUG:2019-03-19 22:13:52,240-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:13:52,769-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:53,297-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:13:53,298-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:53,300-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:13:53,305-Lecture capteur Poids
+DEBUG:2019-03-19 22:13:53,307-Lecture capteur de poids
+DEBUG:2019-03-19 22:13:54,833-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:13:54,881-sleep 3 secondes
+DEBUG:2019-03-19 22:13:57,887-Iteration boucle courante=15
+DEBUG:2019-03-19 22:13:57,890-Lecture capteur Meteo
+DEBUG:2019-03-19 22:13:57,893-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:13:58,422-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:58,950-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:13:58,952-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:13:58,954-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:13:58,961-Lecture capteur Poids
+DEBUG:2019-03-19 22:13:58,964-Lecture capteur de poids
+DEBUG:2019-03-19 22:14:01,329-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:14:01,361-sleep 3 secondes
+DEBUG:2019-03-19 22:14:04,367-Iteration boucle courante=16
+DEBUG:2019-03-19 22:14:04,370-Lecture capteur Meteo
+DEBUG:2019-03-19 22:14:04,372-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:14:04,900-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:14:05,429-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:14:05,431-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:14:05,433-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:14:05,437-Lecture capteur Poids
+DEBUG:2019-03-19 22:14:05,439-Lecture capteur de poids
+DEBUG:2019-03-19 22:14:07,363-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:14:07,397-sleep 3 secondes
+DEBUG:2019-03-19 22:14:10,402-Iteration boucle courante=17
+DEBUG:2019-03-19 22:14:10,404-Lecture capteur Meteo
+DEBUG:2019-03-19 22:14:10,406-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:14:10,933-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:14:11,461-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:14:11,463-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:14:11,466-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:14:11,473-Lecture capteur Poids
+DEBUG:2019-03-19 22:14:11,475-Lecture capteur de poids
+DEBUG:2019-03-19 22:14:13,046-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:14:14,168-sleep 3 secondes
+DEBUG:2019-03-19 22:14:17,177-Iteration boucle courante=18
+DEBUG:2019-03-19 22:14:17,180-Lecture capteur Meteo
+DEBUG:2019-03-19 22:14:17,187-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:14:17,721-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:14:18,249-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:14:18,281-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:14:18,282-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:14:18,288-Lecture capteur Poids
+DEBUG:2019-03-19 22:14:18,289-Lecture capteur de poids
+DEBUG:2019-03-19 22:14:20,657-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:14:21,744-sleep 3 secondes
+DEBUG:2019-03-19 22:14:24,750-Iteration boucle courante=19
+DEBUG:2019-03-19 22:14:24,753-Lecture capteur Meteo
+DEBUG:2019-03-19 22:14:24,755-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:14:25,283-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:14:25,812-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:14:25,825-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:14:25,827-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:14:25,834-Lecture capteur Poids
+DEBUG:2019-03-19 22:14:25,837-Lecture capteur de poids
+DEBUG:2019-03-19 22:14:27,803-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:14:27,840-sleep 3 secondes
+DEBUG:2019-03-19 22:14:30,846-Iteration boucle courante=20
+DEBUG:2019-03-19 22:14:30,849-Lecture capteur Meteo
+DEBUG:2019-03-19 22:14:30,851-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:14:31,379-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:14:31,906-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:14:31,908-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:14:31,910-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:14:31,916-Lecture capteur Poids
+DEBUG:2019-03-19 22:14:31,918-Lecture capteur de poids
+DEBUG:2019-03-19 22:14:33,092-Write in Balance DB - [122521.04347826086]
+DEBUG:2019-03-19 22:14:33,142-sleep 3 secondes
+DEBUG:2019-03-19 22:14:36,148-Iteration boucle courante=21
+DEBUG:2019-03-19 22:14:36,156-Lecture capteur Meteo
+DEBUG:2019-03-19 22:14:36,159-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:14:36,698-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:14:37,225-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:14:37,227-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:14:37,229-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:14:37,234-Lecture capteur Poids
+DEBUG:2019-03-19 22:14:37,236-Lecture capteur de poids
+DEBUG:2019-03-19 22:14:38,803-Write in Balance DB - [33480.34782608696]
+DEBUG:2019-03-19 22:14:38,853-sleep 3 secondes
+DEBUG:2019-03-19 22:14:41,859-Iteration boucle courante=22
+DEBUG:2019-03-19 22:14:41,861-Lecture capteur Meteo
+DEBUG:2019-03-19 22:14:41,863-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:14:42,390-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:14:42,918-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:14:42,920-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:14:42,921-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:14:42,926-Lecture capteur Poids
+DEBUG:2019-03-19 22:14:42,928-Lecture capteur de poids
+DEBUG:2019-03-19 22:14:43,642-Write in Balance DB - [7123.478260869565]
+DEBUG:2019-03-19 22:14:43,682-sleep 3 secondes
+DEBUG:2019-03-19 22:14:46,692-Iteration boucle courante=23
+DEBUG:2019-03-19 22:14:46,696-Lecture capteur Meteo
+DEBUG:2019-03-19 22:14:46,698-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:14:47,228-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:14:47,756-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:14:47,758-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:14:47,761-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:14:47,768-Lecture capteur Poids
+DEBUG:2019-03-19 22:14:47,770-Lecture capteur de poids
+DEBUG:2019-03-19 22:14:50,134-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:14:50,188-sleep 3 secondes
+DEBUG:2019-03-19 22:14:53,194-Iteration boucle courante=24
+DEBUG:2019-03-19 22:14:53,198-Lecture capteur Meteo
+DEBUG:2019-03-19 22:14:53,200-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:14:53,731-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:14:54,258-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:14:54,260-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:14:54,262-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:14:54,267-Lecture capteur Poids
+DEBUG:2019-03-19 22:14:54,268-Lecture capteur de poids
+DEBUG:2019-03-19 22:14:56,635-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:14:56,672-sleep 3 secondes
+DEBUG:2019-03-19 22:14:59,678-Iteration boucle courante=25
+DEBUG:2019-03-19 22:14:59,680-Lecture capteur Meteo
+DEBUG:2019-03-19 22:14:59,683-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:15:00,211-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:15:00,739-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:15:00,741-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:15:00,744-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:15:00,749-Lecture capteur Poids
+DEBUG:2019-03-19 22:15:00,751-Lecture capteur de poids
+DEBUG:2019-03-19 22:15:03,118-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:15:03,154-sleep 3 secondes
+DEBUG:2019-03-19 22:15:06,162-Iteration boucle courante=26
+DEBUG:2019-03-19 22:15:06,166-Lecture capteur Meteo
+DEBUG:2019-03-19 22:15:06,168-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:15:06,707-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:15:07,235-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:15:07,237-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:15:07,238-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:15:07,244-Lecture capteur Poids
+DEBUG:2019-03-19 22:15:07,245-Lecture capteur de poids
+DEBUG:2019-03-19 22:15:08,755-Write in Balance DB - [92602.434782608689]
+DEBUG:2019-03-19 22:15:08,804-sleep 3 secondes
+DEBUG:2019-03-19 22:15:11,810-Iteration boucle courante=27
+DEBUG:2019-03-19 22:15:11,813-Lecture capteur Meteo
+DEBUG:2019-03-19 22:15:11,814-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:15:14,870-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:15:15,408-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:15:15,409-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:15:15,411-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:15:15,416-Lecture capteur Poids
+DEBUG:2019-03-19 22:15:15,417-Lecture capteur de poids
+DEBUG:2019-03-19 22:15:17,780-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:15:17,815-sleep 3 secondes
+DEBUG:2019-03-19 22:15:20,821-Iteration boucle courante=28
+DEBUG:2019-03-19 22:15:20,823-Lecture capteur Meteo
+DEBUG:2019-03-19 22:15:20,825-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:15:23,881-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:15:24,419-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:15:24,421-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:15:24,422-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:15:24,427-Lecture capteur Poids
+DEBUG:2019-03-19 22:15:24,429-Lecture capteur de poids
+DEBUG:2019-03-19 22:15:26,350-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:15:26,387-sleep 3 secondes
+DEBUG:2019-03-19 22:15:29,393-Iteration boucle courante=29
+DEBUG:2019-03-19 22:15:29,395-Lecture capteur Meteo
+DEBUG:2019-03-19 22:15:29,397-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:15:29,924-TempOut=22.0C HumidityOut=41.0%
+DEBUG:2019-03-19 22:15:30,452-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:15:30,454-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=41.0%
+DEBUG:2019-03-19 22:15:30,456-Write in meteo DB - [(22.0, 41.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:15:30,463-Lecture capteur Poids
+DEBUG:2019-03-19 22:15:30,466-Lecture capteur de poids
+DEBUG:2019-03-19 22:15:32,055-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:15:32,091-sleep 3 secondes
+DEBUG:2019-03-19 22:15:35,097-Iteration boucle courante=30
+DEBUG:2019-03-19 22:15:35,101-Lecture capteur Meteo
+DEBUG:2019-03-19 22:15:35,112-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:15:35,641-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:15:36,169-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:15:36,171-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:15:36,184-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:15:36,190-Lecture capteur Poids
+DEBUG:2019-03-19 22:15:36,203-Lecture capteur de poids
+DEBUG:2019-03-19 22:15:38,169-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:15:38,218-sleep 3 secondes
+DEBUG:2019-03-19 22:15:41,222-Iteration boucle courante=31
+DEBUG:2019-03-19 22:15:41,226-Lecture capteur Meteo
+DEBUG:2019-03-19 22:15:41,228-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:15:41,758-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:15:42,286-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:15:42,288-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:15:42,290-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:15:42,295-Lecture capteur Poids
+DEBUG:2019-03-19 22:15:42,296-Lecture capteur de poids
+DEBUG:2019-03-19 22:15:43,862-Write in Balance DB - [9260.5217391304341]
+DEBUG:2019-03-19 22:15:43,911-sleep 3 secondes
+DEBUG:2019-03-19 22:15:46,918-Iteration boucle courante=32
+DEBUG:2019-03-19 22:15:46,920-Lecture capteur Meteo
+DEBUG:2019-03-19 22:15:46,923-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:15:47,450-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:15:47,978-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:15:47,979-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:15:47,981-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:15:47,986-Lecture capteur Poids
+DEBUG:2019-03-19 22:15:47,988-Lecture capteur de poids
+DEBUG:2019-03-19 22:15:49,505-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:15:49,565-sleep 3 secondes
+DEBUG:2019-03-19 22:15:52,572-Iteration boucle courante=33
+DEBUG:2019-03-19 22:15:52,576-Lecture capteur Meteo
+DEBUG:2019-03-19 22:15:52,579-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:15:53,108-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:15:53,636-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:15:53,638-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:15:53,640-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:15:53,657-Lecture capteur Poids
+DEBUG:2019-03-19 22:15:53,659-Lecture capteur de poids
+DEBUG:2019-03-19 22:15:56,064-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:15:56,100-sleep 3 secondes
+DEBUG:2019-03-19 22:15:59,107-Iteration boucle courante=34
+DEBUG:2019-03-19 22:15:59,109-Lecture capteur Meteo
+DEBUG:2019-03-19 22:15:59,111-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:15:59,643-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:16:00,171-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:16:00,173-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:16:00,175-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:16:00,179-Lecture capteur Poids
+DEBUG:2019-03-19 22:16:00,181-Lecture capteur de poids
+DEBUG:2019-03-19 22:16:02,585-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:16:02,633-sleep 3 secondes
+DEBUG:2019-03-19 22:16:05,639-Iteration boucle courante=35
+DEBUG:2019-03-19 22:16:05,645-Lecture capteur Meteo
+DEBUG:2019-03-19 22:16:05,647-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:16:06,175-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:16:06,702-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:16:06,704-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:16:06,706-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:16:06,710-Lecture capteur Poids
+DEBUG:2019-03-19 22:16:06,712-Lecture capteur de poids
+DEBUG:2019-03-19 22:16:09,105-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:16:09,152-sleep 3 secondes
+DEBUG:2019-03-19 22:16:12,162-Iteration boucle courante=36
+DEBUG:2019-03-19 22:16:12,166-Lecture capteur Meteo
+DEBUG:2019-03-19 22:16:12,168-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:16:12,707-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:16:13,235-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:16:13,236-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:16:13,238-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:16:13,245-Lecture capteur Poids
+DEBUG:2019-03-19 22:16:13,246-Lecture capteur de poids
+DEBUG:2019-03-19 22:16:15,139-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:16:15,175-sleep 3 secondes
+DEBUG:2019-03-19 22:16:18,162-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:16:18,163-Capteur 1 (OUT) - Status 0
+DEBUG:2019-03-19 22:16:18,173-nombre sequentiel pour capteurs IR I/O = 20190319000008
+DEBUG:2019-03-19 22:16:18,174-Write in Capt_IR DB - [('1', 0, 1553033778161L, 20190319000008L)]
+DEBUG:2019-03-19 22:16:18,192-Iteration boucle courante=37
+DEBUG:2019-03-19 22:16:18,195-Lecture capteur Meteo
+DEBUG:2019-03-19 22:16:18,197-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:16:18,725-lv_IRcur = 10
+DEBUG:2019-03-19 22:16:18,727-gv_IRprec = 
+DEBUG:2019-03-19 22:16:18,729-Testing IR Paire - 10
+DEBUG:2019-03-19 22:16:18,730-Non matching Paires (serie not found or not checked) - 10
+DEBUG:2019-03-19 22:16:18,733-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:16:19,262-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:16:19,263-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:16:19,265-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:16:19,270-Lecture capteur Poids
+DEBUG:2019-03-19 22:16:19,273-Reinitialisation de la table des series
+DEBUG:2019-03-19 22:16:19,277-Lecture capteur de poids
+DEBUG:2019-03-19 22:16:19,284-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:16:19,285-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 22:16:19,293-nombre sequentiel pour capteurs IR I/O = 20190319000009
+DEBUG:2019-03-19 22:16:19,295-Write in Capt_IR DB - [('1', 1, 1553033779283L, 20190319000009L)]
+DEBUG:2019-03-19 22:16:19,365-lv_IRcur = 11
+DEBUG:2019-03-19 22:16:19,367-gv_IRprec = 10
+DEBUG:2019-03-19 22:16:19,376-Testing IR Paire - 1011
+DEBUG:2019-03-19 22:16:19,378-Matching Paire - 1011
+DEBUG:2019-03-19 22:16:19,380-Testing IR Serie - 31
+DEBUG:2019-03-19 22:16:19,381-Non matching Serie (mvt not found) - 31
+DEBUG:2019-03-19 22:16:21,175-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:16:21,213-sleep 3 secondes
+DEBUG:2019-03-19 22:16:24,219-Iteration boucle courante=38
+DEBUG:2019-03-19 22:16:24,222-Lecture capteur Meteo
+DEBUG:2019-03-19 22:16:24,224-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:16:24,751-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:16:25,281-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:16:25,283-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:16:25,284-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:16:25,289-Lecture capteur Poids
+DEBUG:2019-03-19 22:16:25,291-Lecture capteur de poids
+DEBUG:2019-03-19 22:16:27,211-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:16:27,248-sleep 3 secondes
+DEBUG:2019-03-19 22:16:30,252-Iteration boucle courante=39
+DEBUG:2019-03-19 22:16:30,256-Lecture capteur Meteo
+DEBUG:2019-03-19 22:16:30,264-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:16:33,320-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:16:33,847-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:16:33,849-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:16:33,850-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:16:33,855-Lecture capteur Poids
+DEBUG:2019-03-19 22:16:33,857-Lecture capteur de poids
+DEBUG:2019-03-19 22:16:34,798-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:16:34,799-Capteur 1 (OUT) - Status 0
+DEBUG:2019-03-19 22:16:34,804-nombre sequentiel pour capteurs IR I/O = 20190319000010
+DEBUG:2019-03-19 22:16:34,805-Write in Capt_IR DB - [('1', 0, 1553033794798L, 20190319000010L)]
+DEBUG:2019-03-19 22:16:34,840-lv_IRcur = 10
+DEBUG:2019-03-19 22:16:34,841-gv_IRprec = 11
+DEBUG:2019-03-19 22:16:34,845-Testing IR Paire - 1110
+DEBUG:2019-03-19 22:16:34,846-Non matching Paires (serie not found or not checked) - 1110
+DEBUG:2019-03-19 22:16:34,894-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:16:34,896-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 22:16:34,900-nombre sequentiel pour capteurs IR I/O = 20190319000011
+DEBUG:2019-03-19 22:16:34,902-Write in Capt_IR DB - [('1', 1, 1553033794894L, 20190319000011L)]
+DEBUG:2019-03-19 22:16:34,939-lv_IRcur = 11
+DEBUG:2019-03-19 22:16:34,940-gv_IRprec = 10
+DEBUG:2019-03-19 22:16:34,944-Testing IR Paire - 1011
+DEBUG:2019-03-19 22:16:34,945-Matching Paire - 1011
+DEBUG:2019-03-19 22:16:34,948-Testing IR Serie - 3131
+DEBUG:2019-03-19 22:16:34,949-Non matching Serie (mvt not found) - 3131
+DEBUG:2019-03-19 22:16:34,985-Write in Balance DB - [3564.521739130435]
+DEBUG:2019-03-19 22:16:34,993-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:16:35,002-Capteur 1 (OUT) - Status 0
+DEBUG:2019-03-19 22:16:35,006-nombre sequentiel pour capteurs IR I/O = 20190319000012
+DEBUG:2019-03-19 22:16:35,008-Write in Capt_IR DB - [('1', 0, 1553033794993L, 20190319000012L)]
+DEBUG:2019-03-19 22:16:35,049-sleep 3 secondes
+DEBUG:2019-03-19 22:16:35,083-lv_IRcur = 10
+DEBUG:2019-03-19 22:16:35,085-gv_IRprec = 11
+DEBUG:2019-03-19 22:16:35,088-Testing IR Paire - 1110
+DEBUG:2019-03-19 22:16:35,090-Non matching Paires (serie not found or not checked) - 1110
+DEBUG:2019-03-19 22:16:35,225-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:16:35,227-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 22:16:35,231-nombre sequentiel pour capteurs IR I/O = 20190319000013
+DEBUG:2019-03-19 22:16:35,233-Write in Capt_IR DB - [('1', 1, 1553033795225L, 20190319000013L)]
+DEBUG:2019-03-19 22:16:35,269-lv_IRcur = 11
+DEBUG:2019-03-19 22:16:35,270-gv_IRprec = 10
+DEBUG:2019-03-19 22:16:35,274-Testing IR Paire - 1011
+DEBUG:2019-03-19 22:16:35,275-Matching Paire - 1011
+DEBUG:2019-03-19 22:16:35,278-Testing IR Serie - 3131
+DEBUG:2019-03-19 22:16:35,279-Non matching Serie (mvt not found) - 3131
+DEBUG:2019-03-19 22:16:38,056-Iteration boucle courante=40
+DEBUG:2019-03-19 22:16:38,058-Lecture capteur Meteo
+DEBUG:2019-03-19 22:16:38,060-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:16:38,588-TempOut=22.0C HumidityOut=41.0%
+DEBUG:2019-03-19 22:16:39,117-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:16:39,119-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=41.0%
+DEBUG:2019-03-19 22:16:39,120-Write in meteo DB - [(22.0, 41.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:16:39,140-Lecture capteur Poids
+DEBUG:2019-03-19 22:16:39,141-Lecture capteur de poids
+DEBUG:2019-03-19 22:16:41,532-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:16:41,569-sleep 3 secondes
+DEBUG:2019-03-19 22:16:44,575-Iteration boucle courante=41
+DEBUG:2019-03-19 22:16:44,579-Lecture capteur Meteo
+DEBUG:2019-03-19 22:16:44,582-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:16:47,641-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:16:48,168-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:16:48,171-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:16:48,183-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:16:48,190-Lecture capteur Poids
+DEBUG:2019-03-19 22:16:48,202-Lecture capteur de poids
+DEBUG:2019-03-19 22:16:48,594-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:16:48,595-Capteur 1 (OUT) - Status 0
+DEBUG:2019-03-19 22:16:48,604-nombre sequentiel pour capteurs IR I/O = 20190319000014
+DEBUG:2019-03-19 22:16:48,606-Write in Capt_IR DB - [('1', 0, 1553033808593L, 20190319000014L)]
+DEBUG:2019-03-19 22:16:48,654-lv_IRcur = 10
+DEBUG:2019-03-19 22:16:48,655-gv_IRprec = 11
+DEBUG:2019-03-19 22:16:48,672-Testing IR Paire - 1110
+DEBUG:2019-03-19 22:16:48,674-Non matching Paires (serie not found or not checked) - 1110
+DEBUG:2019-03-19 22:16:48,714-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:16:48,715-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 22:16:48,734-nombre sequentiel pour capteurs IR I/O = 20190319000015
+DEBUG:2019-03-19 22:16:48,735-Write in Capt_IR DB - [('1', 1, 1553033808714L, 20190319000015L)]
+DEBUG:2019-03-19 22:16:48,786-lv_IRcur = 11
+DEBUG:2019-03-19 22:16:48,787-gv_IRprec = 10
+DEBUG:2019-03-19 22:16:48,802-Testing IR Paire - 1011
+DEBUG:2019-03-19 22:16:48,804-Matching Paire - 1011
+DEBUG:2019-03-19 22:16:48,806-Testing IR Serie - 3131
+DEBUG:2019-03-19 22:16:48,807-Non matching Serie (mvt not found) - 3131
+DEBUG:2019-03-19 22:16:50,595-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:16:50,631-sleep 3 secondes
+DEBUG:2019-03-19 22:16:52,028-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:16:52,030-Capteur 1 (OUT) - Status 0
+DEBUG:2019-03-19 22:16:52,035-nombre sequentiel pour capteurs IR I/O = 20190319000016
+DEBUG:2019-03-19 22:16:52,039-Write in Capt_IR DB - [('1', 0, 1553033812028L, 20190319000016L)]
+DEBUG:2019-03-19 22:16:52,056-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:16:52,059-Capteur 2 (IN) - Status 0
+DEBUG:2019-03-19 22:16:52,067-nombre sequentiel pour capteurs IR I/O = 20190319000017
+DEBUG:2019-03-19 22:16:52,075-Write in Capt_IR DB - [('2', 0, 1553033812055L, 20190319000017L)]
+DEBUG:2019-03-19 22:16:52,092-lv_IRcur = 10
+DEBUG:2019-03-19 22:16:52,094-gv_IRprec = 11
+DEBUG:2019-03-19 22:16:52,102-Testing IR Paire - 1110
+DEBUG:2019-03-19 22:16:52,113-Non matching Paires (serie not found or not checked) - 1110
+DEBUG:2019-03-19 22:16:52,123-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:16:52,128-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 22:16:52,134-nombre sequentiel pour capteurs IR I/O = 20190319000018
+DEBUG:2019-03-19 22:16:52,141-Write in Capt_IR DB - [('1', 1, 1553033812122L, 20190319000018L)]
+DEBUG:2019-03-19 22:16:52,154-lv_IRcur = 20
+DEBUG:2019-03-19 22:16:52,155-gv_IRprec = 10
+DEBUG:2019-03-19 22:16:52,166-Testing IR Paire - 1020
+DEBUG:2019-03-19 22:16:52,167-Matching Paire - 1020
+DEBUG:2019-03-19 22:16:52,169-Testing IR Serie - 3111
+DEBUG:2019-03-19 22:16:52,171-Non matching Serie (mvt not found) - 3111
+DEBUG:2019-03-19 22:16:52,201-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:16:52,209-Capteur 2 (IN) - Status 1
+DEBUG:2019-03-19 22:16:52,217-nombre sequentiel pour capteurs IR I/O = 20190319000019
+DEBUG:2019-03-19 22:16:52,222-Write in Capt_IR DB - [('2', 1, 1553033812201L, 20190319000019L)]
+DEBUG:2019-03-19 22:16:52,242-lv_IRcur = 11
+DEBUG:2019-03-19 22:16:52,244-gv_IRprec = 20
+DEBUG:2019-03-19 22:16:52,251-Testing IR Paire - 2011
+DEBUG:2019-03-19 22:16:52,253-Non matching Paires (serie not found or not checked) - 2011
+DEBUG:2019-03-19 22:16:52,294-lv_IRcur = 21
+DEBUG:2019-03-19 22:16:52,295-gv_IRprec = 11
+DEBUG:2019-03-19 22:16:52,297-Testing IR Paire - 1121
+DEBUG:2019-03-19 22:16:52,298-Matching Paire - 1121
+DEBUG:2019-03-19 22:16:52,300-Testing IR Serie - 1112
+DEBUG:2019-03-19 22:16:52,303-Matching Serie (mvt found) - 1112
+DEBUG:2019-03-19 22:16:52,305-Write in InOut_IR DB - [('E1', 1553033812201L)]
+DEBUG:2019-03-19 22:16:53,635-Iteration boucle courante=42
+DEBUG:2019-03-19 22:16:53,637-Lecture capteur Meteo
+DEBUG:2019-03-19 22:16:53,639-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:16:54,173-TempOut=22.0C HumidityOut=41.0%
+DEBUG:2019-03-19 22:16:57,230-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:16:57,233-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=41.0%
+DEBUG:2019-03-19 22:16:57,235-Write in meteo DB - [(22.0, 41.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:16:57,252-Lecture capteur Poids
+DEBUG:2019-03-19 22:16:57,257-Lecture capteur de poids
+DEBUG:2019-03-19 22:16:59,169-Write in Balance DB - [-27414.934782608696]
+DEBUG:2019-03-19 22:16:59,204-sleep 3 secondes
+DEBUG:2019-03-19 22:17:01,741-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:17:01,744-Capteur 1 (OUT) - Status 0
+DEBUG:2019-03-19 22:17:01,750-nombre sequentiel pour capteurs IR I/O = 20190319000020
+DEBUG:2019-03-19 22:17:01,753-Write in Capt_IR DB - [('1', 0, 1553033821741L, 20190319000020L)]
+DEBUG:2019-03-19 22:17:01,792-lv_IRcur = 10
+DEBUG:2019-03-19 22:17:01,794-gv_IRprec = 
+DEBUG:2019-03-19 22:17:01,796-Testing IR Paire - 10
+DEBUG:2019-03-19 22:17:01,798-Non matching Paires (serie not found or not checked) - 10
+DEBUG:2019-03-19 22:17:01,800-Reinitialisation de la table des series
+DEBUG:2019-03-19 22:17:01,950-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:17:01,957-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 22:17:01,974-nombre sequentiel pour capteurs IR I/O = 20190319000021
+DEBUG:2019-03-19 22:17:01,975-Write in Capt_IR DB - [('1', 1, 1553033821950L, 20190319000021L)]
+DEBUG:2019-03-19 22:17:02,033-lv_IRcur = 11
+DEBUG:2019-03-19 22:17:02,035-gv_IRprec = 10
+DEBUG:2019-03-19 22:17:02,037-Testing IR Paire - 1011
+DEBUG:2019-03-19 22:17:02,038-Matching Paire - 1011
+DEBUG:2019-03-19 22:17:02,040-Testing IR Serie - 31
+DEBUG:2019-03-19 22:17:02,044-Non matching Serie (mvt not found) - 31
+DEBUG:2019-03-19 22:17:02,091-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:17:02,098-Capteur 1 (OUT) - Status 0
+DEBUG:2019-03-19 22:17:02,103-nombre sequentiel pour capteurs IR I/O = 20190319000022
+DEBUG:2019-03-19 22:17:02,104-Write in Capt_IR DB - [('1', 0, 1553033822091L, 20190319000022L)]
+DEBUG:2019-03-19 22:17:02,159-lv_IRcur = 10
+DEBUG:2019-03-19 22:17:02,160-gv_IRprec = 11
+DEBUG:2019-03-19 22:17:02,167-Testing IR Paire - 1110
+DEBUG:2019-03-19 22:17:02,182-Non matching Paires (serie not found or not checked) - 1110
+DEBUG:2019-03-19 22:17:02,210-Iteration boucle courante=43
+DEBUG:2019-03-19 22:17:02,213-Lecture capteur Meteo
+DEBUG:2019-03-19 22:17:02,214-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:17:02,747-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:17:03,277-TempIn=22.0C  HumidityIn=37.0%
+DEBUG:2019-03-19 22:17:03,279-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:17:03,283-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 22:17:03,286-TempIn=22.0C  HumidityIn=37.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:17:03,287-Write in meteo DB - [(22.0, 37.0, 22.0, 37.0)]
+DEBUG:2019-03-19 22:17:03,291-nombre sequentiel pour capteurs IR I/O = 20190319000023
+DEBUG:2019-03-19 22:17:03,293-Write in Capt_IR DB - [('1', 1, 1553033823278L, 20190319000023L)]
+DEBUG:2019-03-19 22:17:03,302-Lecture capteur Poids
+DEBUG:2019-03-19 22:17:03,304-Lecture capteur de poids
+DEBUG:2019-03-19 22:17:03,339-lv_IRcur = 11
+DEBUG:2019-03-19 22:17:03,341-gv_IRprec = 10
+DEBUG:2019-03-19 22:17:03,352-Testing IR Paire - 1011
+DEBUG:2019-03-19 22:17:03,354-Matching Paire - 1011
+DEBUG:2019-03-19 22:17:03,355-Testing IR Serie - 3131
+DEBUG:2019-03-19 22:17:03,357-Non matching Serie (mvt not found) - 3131
+DEBUG:2019-03-19 22:17:04,407-Write in Balance DB - [-17096.347826086956]
+DEBUG:2019-03-19 22:17:04,442-sleep 3 secondes
+DEBUG:2019-03-19 22:17:07,448-Iteration boucle courante=44
+DEBUG:2019-03-19 22:17:07,451-Lecture capteur Meteo
+DEBUG:2019-03-19 22:17:07,453-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:17:07,981-TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:17:08,509-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:17:08,510-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=36.0%
+DEBUG:2019-03-19 22:17:08,512-Write in meteo DB - [(22.0, 36.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:17:08,517-Lecture capteur Poids
+DEBUG:2019-03-19 22:17:08,519-Lecture capteur de poids
+DEBUG:2019-03-19 22:17:09,524-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:17:09,536-Capteur 1 (OUT) - Status 0
+DEBUG:2019-03-19 22:17:09,543-nombre sequentiel pour capteurs IR I/O = 20190319000024
+DEBUG:2019-03-19 22:17:09,545-Write in Capt_IR DB - [('1', 0, 1553033829523L, 20190319000024L)]
+DEBUG:2019-03-19 22:17:10,177-lv_IRcur = 10
+DEBUG:2019-03-19 22:17:10,178-gv_IRprec = 11
+DEBUG:2019-03-19 22:17:10,192-Testing IR Paire - 1110
+DEBUG:2019-03-19 22:17:10,194-Non matching Paires (serie not found or not checked) - 1110
+DEBUG:2019-03-19 22:17:10,234-Lecture capteurs IR entrees/sorties
+DEBUG:2019-03-19 22:17:10,236-Capteur 1 (OUT) - Status 1
+DEBUG:2019-03-19 22:17:10,254-nombre sequentiel pour capteurs IR I/O = 20190319000025
+DEBUG:2019-03-19 22:17:10,257-Write in Capt_IR DB - [('1', 1, 1553033830234L, 20190319000025L)]
+DEBUG:2019-03-19 22:17:10,315-lv_IRcur = 11
+DEBUG:2019-03-19 22:17:10,316-gv_IRprec = 10
+DEBUG:2019-03-19 22:17:10,323-Testing IR Paire - 1011
+DEBUG:2019-03-19 22:17:10,325-Matching Paire - 1011
+DEBUG:2019-03-19 22:17:10,332-Testing IR Serie - 3131
+DEBUG:2019-03-19 22:17:10,333-Non matching Serie (mvt not found) - 3131
+DEBUG:2019-03-19 22:17:10,885-Write in Balance DB - [-27080.347826086956]
+DEBUG:2019-03-19 22:17:10,921-sleep 3 secondes
+DEBUG:2019-03-19 22:17:13,927-Iteration boucle courante=45
+DEBUG:2019-03-19 22:17:13,929-Lecture capteur Meteo
+DEBUG:2019-03-19 22:17:13,931-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:17:14,461-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:17:14,989-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:17:14,992-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:17:14,994-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:17:15,001-Lecture capteur Poids
+DEBUG:2019-03-19 22:17:15,003-Lecture capteur de poids
+DEBUG:2019-03-19 22:17:16,576-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:17:16,626-sleep 3 secondes
+DEBUG:2019-03-19 22:17:19,632-Iteration boucle courante=46
+DEBUG:2019-03-19 22:17:19,634-Lecture capteur Meteo
+DEBUG:2019-03-19 22:17:19,636-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:17:20,164-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:17:20,693-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:17:20,694-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:17:20,696-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:17:20,701-Lecture capteur Poids
+DEBUG:2019-03-19 22:17:20,713-Lecture capteur de poids
+DEBUG:2019-03-19 22:17:23,115-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:17:23,152-sleep 3 secondes
+DEBUG:2019-03-19 22:17:26,157-Iteration boucle courante=47
+DEBUG:2019-03-19 22:17:26,161-Lecture capteur Meteo
+DEBUG:2019-03-19 22:17:26,167-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:17:26,707-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:17:27,234-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:17:27,237-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:17:27,239-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:17:27,257-Lecture capteur Poids
+DEBUG:2019-03-19 22:17:27,259-Lecture capteur de poids
+DEBUG:2019-03-19 22:17:29,652-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:17:29,688-sleep 3 secondes
+DEBUG:2019-03-19 22:17:32,692-Iteration boucle courante=48
+DEBUG:2019-03-19 22:17:32,696-Lecture capteur Meteo
+DEBUG:2019-03-19 22:17:32,698-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:17:33,237-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:17:36,293-TempIn=22.0C  HumidityIn=35.0%
+DEBUG:2019-03-19 22:17:36,295-TempIn=22.0C  HumidityIn=35.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:17:36,296-Write in meteo DB - [(22.0, 37.0, 22.0, 35.0)]
+DEBUG:2019-03-19 22:17:36,301-Lecture capteur Poids
+DEBUG:2019-03-19 22:17:36,303-Lecture capteur de poids
+DEBUG:2019-03-19 22:17:38,676-Write in Balance DB - [-27415.630434782608]
+DEBUG:2019-03-19 22:17:38,736-sleep 3 secondes
+DEBUG:2019-03-19 22:17:41,742-Iteration boucle courante=49
+DEBUG:2019-03-19 22:17:41,744-Lecture capteur Meteo
+DEBUG:2019-03-19 22:17:41,746-Lecture capteur meteo DHT
+DEBUG:2019-03-19 22:17:42,274-TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:17:42,803-TempIn=22.0C  HumidityIn=37.0%
+DEBUG:2019-03-19 22:17:42,805-TempIn=22.0C  HumidityIn=37.0% -- TempOut=22.0C HumidityOut=37.0%
+DEBUG:2019-03-19 22:17:42,806-Write in meteo DB - [(22.0, 37.0, 22.0, 37.0)]
+DEBUG:2019-03-19 22:17:42,811-Lecture capteur Poids
+DEBUG:2019-03-19 22:17:42,813-Lecture capteur de poids
+DEBUG:2019-03-19 22:17:43,914-Write in Balance DB - [5701.565217391304]
+DEBUG:2019-03-19 22:17:43,950-sleep 3 secondes
