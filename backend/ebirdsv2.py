@@ -29,8 +29,13 @@ GPIO.setup(20,GPIO.IN)
 import threading
 
 ## Initialisation du logging
+<<<<<<< HEAD
 #TODO rendre le chemin relatif 
 logging.basicConfig(filename='/var/www/backend/ebirds.log',filemode='a',
+=======
+#TODO rendre le chemin relatif (fonction du user qui ne sera pas specialement 'pi')
+logging.basicConfig(filename='/home/pi/ebirds/ebirds.log',filemode='a',
+>>>>>>> e20228c630cd450e385a29ba0a3d6697e2eaaf62
                     format='%(levelname)s:%(asctime)s-%(message)s')
 logger=logging.getLogger('LoggingEbirds')
 
@@ -53,14 +58,25 @@ if (len(sys.argv) > 1):
         else:
             logger.warning('Unknow parameter : %s' + sys.argv[2])
 
+<<<<<<< HEAD
+=======
+#Travailler dans le repertoire 'eBirds'
+#TODO rendre le chemin relatif (fonction du user qui ne sera pas specialement 'pi')
+>>>>>>> e20228c630cd450e385a29ba0a3d6697e2eaaf62
 # 2 DB necessaires car sqlite ne gere pas les acces concurrents (DB = fichier)
 # hors l'utilisation de Threads implique des acces DB concurrents
 global GV_DBNAME
 global GV_DBNAME2
+<<<<<<< HEAD
 #TODO rendre le chemin relatif 
 #TODO changer le nom en ebirds.db ? --> attention impact du code Front
 GV_DBNAME = '/var/www/nichoir.db'    #DB pour les donnees accedees depuis le Front
 GV_DBNAME2 = '/var/www/captir.db'    #DB pour les donnees accedess uniqument depuis le Back
+=======
+#TODO: changer le nom en ebirds.db ? --> attention impact du code Front
+GV_DBNAME = '/home/pi/ebirds/nichoir.db'    #DB pour les donnees accedees depuis le Front
+GV_DBNAME2 = '/home/pi/ebirds/captir.db'    #DB pour les donnees accedess uniqument depuis le Back
+>>>>>>> e20228c630cd450e385a29ba0a3d6697e2eaaf62
 
 gv_seq_num = 0
 gv_date = '1970-01-01'
@@ -393,7 +409,11 @@ lv_paireDico = {"1020": 11, "1121": 12, "2010": 21, "2111": 22, "1011": 31,
 #     ceci correspond donc à l'événement "E1" qui indique une entrée de type 1
 # "E" pour entrée, "S" pour sortie, "V" pour visite (coupure des capteurs sans pour autant rentrer)
 lv_serieDico = {"1112": 'E1', "2122": 'S1', "3132": 'E2', "3231": 'S2',
+<<<<<<< HEAD
                 "1122" : 'V1', "2112" : 'V2'}
+=======
+                "1122" : 'V1', "1221" : 'V2'}
+>>>>>>> e20228c630cd450e385a29ba0a3d6697e2eaaf62
 gv_IRprec = '00'
 gv_pairePrec = '00'
 lv_originTime = datetime.now()
@@ -478,10 +498,47 @@ while True:
             IR_write(IRCapt,IRStat,int(time.time()*1000))
 
         # Evalation des paires IR I/O toutes les x iterations
+<<<<<<< HEAD
         # TODO a remettre uniquement si on fait une eval basee sur une lecture DB de Capt_IR 
         # et non interrupts sequentiels 
         #if (lv_countIter % 97 == 0):
         #    IR_eval(lv_dataF)
+=======
+        #TODO a remettre uniquement si on fait une eval basee sur une lecture DB de Capt_IR et non interrupts sequentiels 
+        #if (lv_countIter % 97 == 0):
+        #    IR_eval(lv_dataF)
+        IR_eval("10",int(time.time()*1000))
+        IR_eval("20",int(time.time()*1000))
+        IR_eval("11",int(time.time()*1000))
+        IR_eval("21",int(time.time()*1000))
+
+        IR_eval("20",int(time.time()*1000))
+        IR_eval("10",int(time.time()*1000))
+        IR_eval("21",int(time.time()*1000))
+        IR_eval("11",int(time.time()*1000))
+
+        IR_eval("10",int(time.time()*1000))
+        IR_eval("11",int(time.time()*1000))
+        IR_eval("20",int(time.time()*1000))
+        IR_eval("21",int(time.time()*1000))
+
+        IR_eval("20",int(time.time()*1000))
+        IR_eval("21",int(time.time()*1000))
+        IR_eval("10",int(time.time()*1000))
+        IR_eval("11",int(time.time()*1000))
+
+        IR_eval("10",int(time.time()*1000))
+        IR_eval("20",int(time.time()*1000))
+        IR_eval("21",int(time.time()*1000))
+        IR_eval("11",int(time.time()*1000))
+
+        IR_eval("11",int(time.time()*1000))
+        IR_eval("21",int(time.time()*1000))
+        IR_eval("20",int(time.time()*1000))
+        IR_eval("10",int(time.time()*1000))
+
+        cleanAndExit()
+>>>>>>> e20228c630cd450e385a29ba0a3d6697e2eaaf62
 
     except (KeyboardInterrupt, SystemExit):
         cleanAndExit()
