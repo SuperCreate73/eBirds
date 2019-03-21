@@ -14,9 +14,9 @@ import random   # generation aleatoire de nombre
 
 ## Import des fonctions capteurs
 #TODO import generique (pas relatif a une marque de capteur en particulier)
-#import meteo       # import du capteur temp/humidite 
+#import meteo       # import du capteur temp/humidite
 import AdafruitDHT  # import du capteur temp/humidite DHT11
-import balance     # import du capteur de poids 
+import balance     # import du capteur de poids
 #import hx711        # import du capteur de poids HX711
 #import IR_InOut    # import des capteurs IR d'entree/sortie
 
@@ -29,13 +29,8 @@ GPIO.setup(20,GPIO.IN)
 import threading
 
 ## Initialisation du logging
-<<<<<<< HEAD
-#TODO rendre le chemin relatif 
+#TODO rendre le chemin relatif
 logging.basicConfig(filename='/var/www/backend/ebirds.log',filemode='a',
-=======
-#TODO rendre le chemin relatif (fonction du user qui ne sera pas specialement 'pi')
-logging.basicConfig(filename='/home/pi/ebirds/ebirds.log',filemode='a',
->>>>>>> e20228c630cd450e385a29ba0a3d6697e2eaaf62
                     format='%(levelname)s:%(asctime)s-%(message)s')
 logger=logging.getLogger('LoggingEbirds')
 
@@ -58,25 +53,14 @@ if (len(sys.argv) > 1):
         else:
             logger.warning('Unknow parameter : %s' + sys.argv[2])
 
-<<<<<<< HEAD
-=======
-#Travailler dans le repertoire 'eBirds'
-#TODO rendre le chemin relatif (fonction du user qui ne sera pas specialement 'pi')
->>>>>>> e20228c630cd450e385a29ba0a3d6697e2eaaf62
 # 2 DB necessaires car sqlite ne gere pas les acces concurrents (DB = fichier)
 # hors l'utilisation de Threads implique des acces DB concurrents
 global GV_DBNAME
 global GV_DBNAME2
-<<<<<<< HEAD
-#TODO rendre le chemin relatif 
+#TODO rendre le chemin relatif
 #TODO changer le nom en ebirds.db ? --> attention impact du code Front
 GV_DBNAME = '/var/www/nichoir.db'    #DB pour les donnees accedees depuis le Front
 GV_DBNAME2 = '/var/www/captir.db'    #DB pour les donnees accedess uniqument depuis le Back
-=======
-#TODO: changer le nom en ebirds.db ? --> attention impact du code Front
-GV_DBNAME = '/home/pi/ebirds/nichoir.db'    #DB pour les donnees accedees depuis le Front
-GV_DBNAME2 = '/home/pi/ebirds/captir.db'    #DB pour les donnees accedess uniqument depuis le Back
->>>>>>> e20228c630cd450e385a29ba0a3d6697e2eaaf62
 
 gv_seq_num = 0
 gv_date = '1970-01-01'
@@ -87,7 +71,7 @@ gv_id = 0
 ###############################################################################
 
 # Classe utilisee pour les capteurs d'entrees/sorties IR
-# L'utilisation de Threads permet une meilleur gestion de l'interrupt, 
+# L'utilisation de Threads permet une meilleur gestion de l'interrupt,
 # sans pause de celui-ci pdt le bouncetime lors de detection
 class handler(threading.Thread):
     def __init__(self, pin, func, edge='both', bouncetime=200):
@@ -167,7 +151,7 @@ def create_main_DB():
 def create_back_DB():
     lv_conn2 = sqlite3.connect(GV_DBNAME2)
     c2 = lv_conn2.cursor()
-    
+
     # Table Capt_IR - donnees brutes des capteurs IR
     c2.execute('''CREATE TABLE IF NOT EXISTS Capt_IR \
         (FDatim DATETIME DEFAULT CURRENT_TIMESTAMP, FConnector TEXT, \
@@ -189,11 +173,11 @@ def get_next_id(lv_id):
     #print time.strftime('%Y%m%d')
     #today = datetime.today()
     #print today.strftime('%Y%m%d')
-    #todaynow = datetime.now()   
+    #todaynow = datetime.now()
     #print todaynow.strftime('%Y%m%d')
 
     #Definition des variables globales utilisees par le thread concurrent
-    global gv_seq_num 
+    global gv_seq_num
     global gv_date
     lv_id = 0
     lv_datime = time.strftime('%Y%m%d')    # initialisation date et heure
@@ -222,7 +206,7 @@ def IR_interrupt(channel):
     #TODO: move in proper library and set pin as param/config
     #TODO: should be in a try/exception
     #Get number of milliseconds since Epoch (1/1/1970 00:00:00 GMT)
-    IRmillis=int(time.time()*1000)    
+    IRmillis=int(time.time()*1000)
     logger.debug("Lecture capteurs IR entrees/sorties")
     if (int(channel)==16):
 	IRCapt = "2"
@@ -317,13 +301,13 @@ def IR_eval(lv_IRcur,lv_IRmillis):
         print str(gv_IRprec) + lv_IRcur
 
         #TODO pourquoi global ? Pcq sinon on a l'erreur 'used before assignement --> comment eviter ?
-        #TODO si on utilise une var sur plusieurs iteration d'une def on doit d'office utiliser une global ? 
+        #TODO si on utilise une var sur plusieurs iteration d'une def on doit d'office utiliser une global ?
         #TODO a noter qu'on a pas ce probleme si on utilise un tableau initialisé au debut du corps du pgm..
         global gv_foundPaire
         global gv_IRprec
         global gv_pairePrec
         lv_tmpPaire = ""
-        # Concatenation de la lecture capteur precedente avec donnees courantes 
+        # Concatenation de la lecture capteur precedente avec donnees courantes
         # pour rechercher l'existance de la paire dans le dictionnaire
         # gv_IRprec contient le capteur déclenché précédent et la lecture de son statut (10,11,20,21)
         lv_tmpPaire = (str(gv_IRprec) + (str(lv_IRcur)))
@@ -333,7 +317,7 @@ def IR_eval(lv_IRcur,lv_IRmillis):
         if ((not gv_foundPaire) and (lv_tmpPaire in lv_paireDico)):
             logger.debug('Matching Paire - %s', lv_tmpPaire)
             gv_foundPaire = True
-            # Concatenation de la matching paire precedente avec la matching paire courante 
+            # Concatenation de la matching paire precedente avec la matching paire courante
             # pour rechercher l'existance de la serie dans le dictionnaire
             # gv_pairePrec contient l'entree dans le dico des Paires de la matching paire trouvee precedemment
             lv_tmpSerie = (str(gv_pairePrec) + str(lv_paireDico.get(lv_tmpPaire)))
@@ -358,7 +342,7 @@ def IR_eval(lv_IRcur,lv_IRmillis):
                 gv_pairePrec = ''
                 gv_foundPaire = False
             else:
-                # Serie non correspondante a un mouvement/evenement, 
+                # Serie non correspondante a un mouvement/evenement,
                 # on ecrase et on stocke les valeurs courantes pour la prochaine iteration
                 logger.debug('Non matching Serie (mvt not found) - %s', lv_tmpSerie)
                 gv_pairePrec = str(lv_paireDico.get(lv_tmpPaire))
@@ -384,7 +368,7 @@ def IR_eval(lv_IRcur,lv_IRmillis):
 
 logger.warning('begin program eBirds...')
 
-### Declaration des variables locales 
+### Declaration des variables locales
 #TODO a reviewer et rationaliser (noms var, var utilisees ou pas..)
 #TODO quelle est la portee des lv_* par rapport aux defs? Apparemment OK si pas redéclaré dans le def
 # --> où déclarer les lv utilisees uniquement dans les defs? Vraiment ici ?? ou plutôt dans le def IR_eval ?
@@ -402,18 +386,14 @@ gv_foundPaire = False
 # ex: "1121" signifie capteur 1 allumé suivi de capteur 2 allumé
 # (capteur 1 -> exterieur)
 lv_paireDico = {"1020": 11, "1121": 12, "2010": 21, "2111": 22, "1011": 31,
-                "2021": 32}    
+                "2021": 32}
 # Ensuite chaque couple/doublet est associé (concaténé) pour donner une serie (quadruplet)
 # La serie est ensuite analysée pour déterminer le type d'événement
 # ex: "1112" correpond au doublon "capteur 1 éteint suivi de capteur 2 éteint" lui même suivi de "capteur 1 allumé suivi de capteur 2 allumé"
 #     ceci correspond donc à l'événement "E1" qui indique une entrée de type 1
 # "E" pour entrée, "S" pour sortie, "V" pour visite (coupure des capteurs sans pour autant rentrer)
 lv_serieDico = {"1112": 'E1', "2122": 'S1', "3132": 'E2', "3231": 'S2',
-<<<<<<< HEAD
                 "1122" : 'V1', "2112" : 'V2'}
-=======
-                "1122" : 'V1', "1221" : 'V2'}
->>>>>>> e20228c630cd450e385a29ba0a3d6697e2eaaf62
 gv_IRprec = '00'
 gv_pairePrec = '00'
 lv_originTime = datetime.now()
@@ -448,13 +428,13 @@ try:
    capt1 = handler(16, IR_interrupt, bouncetime=1)
    capt1.start()
    GPIO.add_event_detect(16, GPIO.BOTH, callback=capt1)
-   
+
    #Thread pour capteur 2
    capt2 = handler(20, IR_interrupt, bouncetime=1)
    capt2.start()
    GPIO.add_event_detect(20, GPIO.BOTH, callback=capt2)
 
-   
+
    #GPIO.add_event_detect(16, GPIO.BOTH, callback=IR_interrupt, bouncetime=300)
    #GPIO.add_event_detect(20, GPIO.BOTH, callback=IR_interrupt, bouncetime=300)
 
@@ -498,47 +478,10 @@ while True:
             IR_write(IRCapt,IRStat,int(time.time()*1000))
 
         # Evalation des paires IR I/O toutes les x iterations
-<<<<<<< HEAD
-        # TODO a remettre uniquement si on fait une eval basee sur une lecture DB de Capt_IR 
-        # et non interrupts sequentiels 
+        # TODO a remettre uniquement si on fait une eval basee sur une lecture DB de Capt_IR
+        # et non interrupts sequentiels
         #if (lv_countIter % 97 == 0):
         #    IR_eval(lv_dataF)
-=======
-        #TODO a remettre uniquement si on fait une eval basee sur une lecture DB de Capt_IR et non interrupts sequentiels 
-        #if (lv_countIter % 97 == 0):
-        #    IR_eval(lv_dataF)
-        IR_eval("10",int(time.time()*1000))
-        IR_eval("20",int(time.time()*1000))
-        IR_eval("11",int(time.time()*1000))
-        IR_eval("21",int(time.time()*1000))
-
-        IR_eval("20",int(time.time()*1000))
-        IR_eval("10",int(time.time()*1000))
-        IR_eval("21",int(time.time()*1000))
-        IR_eval("11",int(time.time()*1000))
-
-        IR_eval("10",int(time.time()*1000))
-        IR_eval("11",int(time.time()*1000))
-        IR_eval("20",int(time.time()*1000))
-        IR_eval("21",int(time.time()*1000))
-
-        IR_eval("20",int(time.time()*1000))
-        IR_eval("21",int(time.time()*1000))
-        IR_eval("10",int(time.time()*1000))
-        IR_eval("11",int(time.time()*1000))
-
-        IR_eval("10",int(time.time()*1000))
-        IR_eval("20",int(time.time()*1000))
-        IR_eval("21",int(time.time()*1000))
-        IR_eval("11",int(time.time()*1000))
-
-        IR_eval("11",int(time.time()*1000))
-        IR_eval("21",int(time.time()*1000))
-        IR_eval("20",int(time.time()*1000))
-        IR_eval("10",int(time.time()*1000))
-
-        cleanAndExit()
->>>>>>> e20228c630cd450e385a29ba0a3d6697e2eaaf62
 
     except (KeyboardInterrupt, SystemExit):
         cleanAndExit()
@@ -577,7 +520,7 @@ while True:
     try:
        logger.debug("Lecture capteur Poids")
        # result est retourné dans le format (poidsNich)
-       result = balance.getPoids(gv_simu,logger) #retour fonction capteur poids 
+       result = balance.getPoids(gv_simu,logger) #retour fonction capteur poids
        if result is None:
           logger.warning("Capteur meteo disfonctionnel (pas de données)")
        else:
@@ -585,7 +528,7 @@ while True:
           #TODO: changer la methode ? --> insert DB uniquement si different ? Cmt faire niveau front pour l'affichage des donnees alors ? (graphiques)
           logger.debug('Write in Balance DB - %s', [result])
           #VALUES (?) only takes string as parameter
-          #and it must be an array, hence giving the string in a tuple 
+          #and it must be an array, hence giving the string in a tuple
           #otherwise it will consider each letter of the string as an array entry..
           c.execute('INSERT INTO balance (poidsNich) VALUES (?)', [str(result),])
 
@@ -605,7 +548,3 @@ while True:
     logger.debug("sleep 3 secondes")
     print("sleep 3 secondes")
     time.sleep(3)
-
-
-
-
