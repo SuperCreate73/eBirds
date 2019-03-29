@@ -6,7 +6,7 @@
 ## Declaration des bibliotheques
 import sqlite3  # lecture et ecriture de la DB
 import sys      # systeme standart de python
-sys.path.append('./capteurs') # inclus le repertoire 'capteurs' dans le system path
+sys.path.append('/var/www/backend/capteurs') # inclus le repertoire 'capteurs' dans le system path
 import logging  # ecriture de messages d'etat dans un fichier log
 import time     # outils de gestion du temps (pause/sleep)
 from datetime import datetime   # date et heure
@@ -16,8 +16,8 @@ import random   # generation aleatoire de nombre
 #TODO import generique (pas relatif a une marque de capteur en particulier)
 #import meteo       # import du capteur temp/humidite
 import AdafruitDHT  # import du capteur temp/humidite DHT11
-import balance     # import du capteur de poids
-#import hx711        # import du capteur de poids HX711
+import balance      # import du capteur de poids
+#import hx711       # import du capteur de poids HX711
 #import IR_InOut    # import des capteurs IR d'entree/sortie
 
 import RPi.GPIO as GPIO
@@ -30,6 +30,7 @@ import threading
 
 ## Initialisation du logging
 #TODO rendre le chemin relatif
+#EDIT Laisser chemin absolu pour le mode Daemon
 logging.basicConfig(filename='/var/www/backend/ebirds.log',filemode='a',
                     format='%(levelname)s:%(asctime)s-%(message)s')
 logger=logging.getLogger('LoggingEbirds')
@@ -70,13 +71,14 @@ gv_id = 0
 # Definitions des classes
 ###############################################################################
 
-# Classe utilisee pour les capteurs d'entrees/sorties IR
-# L'utilisation de Threads permet une meilleur gestion de l'interrupt,
-# sans pause de celui-ci pdt le bouncetime lors de detection
 class handler(threading.Thread):
+    """ Classe utilisee pour les capteurs d'entrees/sorties IR
+    L'utilisation de Threads permet une meilleur gestion de l'interrupt,
+    sans pause de celui-ci pdt le bouncetime lors de detection """
+
     def __init__(self, pin, func, edge='both', bouncetime=200):
         super(handler, self).__init__()
-	super(handler, self).setDaemon(True)
+        super(handler, self).setDaemon(True)
 
         self.edge = edge
         self.func = func
@@ -99,10 +101,10 @@ class handler(threading.Thread):
         pinval = GPIO.input(self.pin)
 
         if (
-                ((pinval == 0 and self.lastpinval == 1) and
-                 (self.edge in ['falling', 'both'])) or
-                ((pinval == 1 and self.lastpinval == 0) and
-                 (self.edge in ['rising', 'both']))
+            ((pinval == 0 and self.lastpinval == 1) and
+            (self.edge in ['falling', 'both'])) or
+            ((pinval == 1 and self.lastpinval == 0) and
+            (self.edge in ['rising', 'both']))
         ):
             self.func(*args)
 
@@ -124,6 +126,10 @@ def cleanAndExit():
 
 ### Creation des bases de donnees si non existantes
 def create_main_DB():
+    """ Creation de la base de données principale - nichoir.db si elle n'existe pas.
+
+    """
+
     lv_conn = sqlite3.connect(GV_DBNAME)
     c = lv_conn.cursor()
 
@@ -149,6 +155,11 @@ def create_main_DB():
 
 ### Creation des bases de donnees si non existantes
 def create_back_DB():
+    """ Creation de la table Capt_IR dans la dB des capteurs IR.
+    (ne crée la table que si elle n'existe pas)
+
+    """
+
     lv_conn2 = sqlite3.connect(GV_DBNAME2)
     c2 = lv_conn2.cursor()
 
@@ -166,6 +177,9 @@ def create_back_DB():
 ### Creation d'un ID unique incremental a partir de la date ('2017-04-27 14:05:02.628289')
 #TODO id uniquement pour capteurs IR ? --> A renommer
 def get_next_id(lv_id):
+    """ Creation d'un ID unique incremental a partir de la date ('2017-04-27 14:05:02.628289')
+
+    """
     ### TODO -> a revoir pour recuperer l'ID max en DB (utile en cas de redemarrage du pgm)
     ### pour l'instant a chaque redemarrage on repars à zero..
 
@@ -203,6 +217,10 @@ def get_next_id(lv_id):
 
 
 def IR_interrupt(channel):
+    """ Changement d'état des capteurs IR
+
+    """
+
     #TODO: move in proper library and set pin as param/config
     #TODO: should be in a try/exception
     #Get number of milliseconds since Epoch (1/1/1970 00:00:00 GMT)
@@ -221,6 +239,10 @@ def IR_interrupt(channel):
 
 
 def IR_write(wCapt,wStat,wMillis):
+    """ Ecriture des états des capteurs IR dans la dB 'GV_DBNAME2'
+
+    """
+
     #TODO: should be in a try/exception
 
     # re-ouverture de la DBIR et acquisition du curseur
@@ -242,7 +264,8 @@ def IR_write(wCapt,wStat,wMillis):
 
 
 def IR_eval(lv_IRcur,lv_IRmillis):
-    # Test des series d'interruptions
+    """ Test des series d'interruptions pour repérer les séquences
+    de mouvements -> entrées, sorties ou visites """
 
 ## Repérer les séquences
 ##
@@ -294,11 +317,6 @@ def IR_eval(lv_IRcur,lv_IRmillis):
 ##                    son ID
 
 
-        #TODO enlever les prints
-        print(lv_IRcur)
-        logger.debug("lv_IRcur = {0}".format(lv_IRcur))
-        logger.debug("gv_IRprec = {0}".format(gv_IRprec))
-        print str(gv_IRprec) + lv_IRcur
 
         #TODO pourquoi global ? Pcq sinon on a l'erreur 'used before assignement --> comment eviter ?
         #TODO si on utilise une var sur plusieurs iteration d'une def on doit d'office utiliser une global ?
@@ -307,6 +325,13 @@ def IR_eval(lv_IRcur,lv_IRmillis):
         global gv_IRprec
         global gv_pairePrec
         lv_tmpPaire = ""
+
+        #TODO enlever les prints
+        print(lv_IRcur)
+        logger.debug("lv_IRcur = {0}".format(lv_IRcur))
+        logger.debug("gv_IRprec = {0}".format(gv_IRprec))
+        print str(gv_IRprec) + lv_IRcur
+
         # Concatenation de la lecture capteur precedente avec donnees courantes
         # pour rechercher l'existance de la paire dans le dictionnaire
         # gv_IRprec contient le capteur déclenché précédent et la lecture de son statut (10,11,20,21)
