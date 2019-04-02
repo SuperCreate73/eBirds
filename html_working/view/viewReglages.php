@@ -18,7 +18,7 @@
 						<h2>Système</h2>
 					</div>
 
-					<div class="eight columns">
+					<div class="offset-by-four eight columns">
 						<div id="btn_shutdown" class='my_button' value="Shutdown" title="Shutdown" onclick="shutdown()"></div>
 						<div id="btn_restart" class='my_button' value="Redémarrer" title="Reboot" onclick="reboot()"></div>
 						<div id="btn_update" class='my_button' value="Mise à jour logiciels" title="Software update" onclick="upgrade()"></div>
