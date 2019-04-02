@@ -131,18 +131,7 @@
 				</div>
 			</div> <!--    FIN CADRE III -->
 
-			<div class="cadre">
-				<div class="row">
-					<div class="two columns">
-						<h2>Variables composants</h2>
-					</div>
-
-					<div class="five columns">
-						<label for="capacitance">Valeur seuil capacitance:</label>
-						<input class="u-full-width" type="text" placeholder="Valeur" name="capacitance">
-					</div>
-				</div>
-			</div> <!--    FIN CADRE IV -->
+			<!--    FIN CADRE IV -->
 
 
 			<div class="cadre">
