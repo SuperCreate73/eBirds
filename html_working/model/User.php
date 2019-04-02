@@ -4,18 +4,29 @@ require_once("model/DbManager.php");
 
 class User extends DbManager {
 
-	public function setUser () {
+	public function setUser ($login,$password) {
 		// Création d'un nouvel utilisateur
 		//
-
-
+		echo $login.$password;
+		$password= md5(htmlspecialchars($password));
+		if ($this->checkUser($login)) {
+			$this->modifyUser($login,$password);
+		}
+		else {
+			$db = $this->dbConnect();
+			$sql=("INSERT INTO users (login, password) VALUES ('$login','$password');");
+			$resultat = $db->query($sql);
+			//			$resultat->execute(array($this->clean($login),$password));
+//			$resultat->execute(array($this->clean($login),$password));
+		}
 	}
 
-	public function modifyUser () {
+	public function modifyUser ($login,$password) {
 		// Modification d'un utilisateur
 		//
-
-
+			$db = $this->dbConnect();
+			$resultat=$db->prepare("UPDATE users SET password = ? WHERE (user=?)");
+			$resultat->execute(array($this->clean($login),$password));
 	}
 
 	public function getUsers () {
@@ -41,13 +52,18 @@ class User extends DbManager {
 		unset($_SESSION['nom']);
 	}
 
-	public function checkUser($login,$password) {
+	public function checkUser($login,$password = NULL) {
 		// Vérification du login et du mot de passe de l'utilisateur dans la table Users
 
 		$db=$this->dbConnect();
 		// On "hashe" en md5 (type d'encryption) le mot de passe avant de faire la requête.
   		// En effet, les mots de passe sont stockés encryptés dans la DB.
-		$password= md5(htmlspecialchars($password));
+		if($password) {
+			$password= md5(htmlspecialchars($password));
+		}
+		else {
+			$password = '*';
+		}
 		$resultat=$db->prepare("SELECT count(*) as nbres FROM users WHERE login=? AND password=?");
   		// On utilise la fonction "clean" définie dans la classe mère pour filtrer et éventuellement ajouter des caractères
 		// d'échappement dans les informations transmises par le formulaire (pour éviter un problèmede sécurité appelé "injection SQL")

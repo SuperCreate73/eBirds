@@ -7,6 +7,7 @@ try
 	session_start();
 	$action = (isset($_GET['action'])) ? htmlspecialchars($_GET['action']) : '';
 	$parameter1 = (isset($_GET['param1'])) ? htmlspecialchars($_GET['param1']) : '';
+	$parameter2 = (isset($_GET['param2'])) ? htmlspecialchars($_GET['param2']) : '';
 
 	$actionArray = array (
 		'shutdown' => 'shutdown',
@@ -17,9 +18,10 @@ try
 		'download' => 'zipUpload',
 		'changeName'=>'changeName',
 		'viewselection'=>'viewSelection',
+		'saveUser' => 'saveUser',
 	);
 
-	if ( ! array_key_exists($action, $actionArray)) { 
+	if ( ! array_key_exists($action, $actionArray)) {
 		throw new Exception('Action non valide !');
 	}
 
@@ -30,7 +32,7 @@ try
 		$actionArray[$action]('selectionArray');
 	}
 	else {
-		$actionArray[$action]();
+		$actionArray[$action]($parameter1=NULL,$parameter2=NULL);
 	}
 }
 
@@ -38,5 +40,3 @@ catch(Exception $e) {
    	// S'il y a eu une erreur, alors...
     echo 'Erreur : ' . $e->getMessage();
 }
-
-

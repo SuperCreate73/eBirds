@@ -2,6 +2,7 @@
 
 require_once('model/PiManager.php');
 require_once('model/FileManager.php');
+require_once('model/User.php');
 //require_once('model/ImageFileManager.php');
 
 function shutdown() {
@@ -50,4 +51,10 @@ function zipUpload() {
 	$fileManager = new FileManager();
 	$archive = $fileManager->zipFiles(explode(",",$_POST['selectionArray']));
 	return($archive);
+}
+
+function saveUser($login,$password) {
+	// crée un fichier zip des photos et les uploade
+	$user = new User();
+	$user->setUser($login, $password);
 }

@@ -51,10 +51,69 @@ function distupgrade(){
 }
 
 function addUser(){
-  document.getElementById("FenetreContenu").innerHTML="<br><div class='row'><div class='offset-by-three columns'><div class='six columns'><label>Nom:</label><input class='u-full-width' type='text' placeholder='Nom' name='nom'></div></div></div><div class='row'><div class='offset-by-three columns'><div class='six columns'><label>mot de passe</label><input class='u-full-width' type='password' placeholder='mot de passe' name='passwd'></div></div></div>";
+  document.getElementById("FenetreContenu").innerHTML="\
+    <br>\
+      <div class='row'>\
+      <div class='offset-by-three columns'>\
+        <div class='six columns'><label>Nom:</label> \
+          <input id='nameUser' class='u-full-width' type='text' placeholder='Nom' name='nom'>\
+        </div> \
+      </div> \
+    </div> \
+    <div class='row'>\
+      <div class='offset-by-three columns'>\
+        <div class='six columns'><label>mot de passe</label>\
+          <input id='passwdUser' class='u-full-width' type='password' placeholder='mot de passe' name='passwd'>\
+    </div></div></div>\
+    <div class='offset-by-seven columns'>\
+      <div class='five columns'>\
+        <input class='button u-full-width boutonLogin' value='Enregistrer les modifications' onclick='saveUser();'>\
+      </div>\
+    </div>\
+";
   document.getElementById("FenetreMessage").classList.remove('cache');
   document.getElementById("FenetreMessage").classList.add('montre');
 
+}
+
+function saveUser() {
+  var nameUser = document.getElementById("nameUser").value;
+  var passwdUser = document.getElementById("passwdUser").value;
+  console.log(nameUser, passwdUser);
+  if (nameUser.length < 3 || passwdUser.length < 6){
+    document.getElementById("FenetreContenu").innerHTML="\
+      <br>\
+      <div class='row'>\
+      <div class='offset-by-three columns'>\
+        <div class='six columns'>\
+          <div class='u-full-width' type='text'>Le nom d'utilisateur ou le mot de passe ne sont pas valides\
+        </div> \
+      </div> \
+    </div> \
+        <div class='row'>\
+        <div class='offset-by-three columns'>\
+          <div class='six columns'><label>Nom:</label> \
+            <input id='nameUser' class='u-full-width' type='text' placeholder='Nom' name='nom'>\
+          </div> \
+        </div> \
+      </div> \
+      <div class='row'>\
+        <div class='offset-by-three columns'>\
+          <div class='six columns'><label>mot de passe</label>\
+            <input id='passwdUser' class='u-full-width' type='password' placeholder='mot de passe' name='passwd'>\
+      </div></div></div>\
+      <div class='offset-by-seven columns'>\
+        <div class='five columns'>\
+          <input class='button u-full-width boutonLogin' value='Enregistrer les modifications' onclick='saveUser();'>\
+        </div>\
+      </div>\
+  ";
+
+    return;
+  }
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET", "jsRouter.php?action=saveUser&param1="+nameUser+"&param2="+passwdUser, true);
+  xmlhttp.send();
 }
 
 function changerNom(){
@@ -63,5 +122,5 @@ function changerNom(){
   	var xmlhttp = new XMLHttpRequest();
   	xmlhttp.open("GET", "jsRouter.php?action=changeName&param1="+nom, true);
 	xmlhttp.send();
-      
+
 }
