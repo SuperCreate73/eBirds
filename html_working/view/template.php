@@ -17,7 +17,7 @@
 		<link rel="stylesheet" type="text/css" href="public/css/skeleton.css">
 		<link rel="stylesheet" type="text/css" href="public/css/styleGeneral.css">
 		<?= $styles ?>
-		
+
 		<link rel="icon" type="image/png" href="public/images/favicon.png">	 <!--	Chargement de l'icone "favicon"    -->
 
 
@@ -27,16 +27,16 @@
 	<body>
 		<div class="container">
 
-			<header><?php include('view/header.php'); ?></header> <!-- Chargement de l'en-tête : fichier 'header.php' -->  
+			<header><?php include('view/header.php'); ?></header> <!-- Chargement de l'en-tête : fichier 'header.php' -->
 
-			<div id="content"><?= $content ?></div>   <!-- Chargement du corps de page contenu dans la variable $content -->  
+			<div id="content"><?= $content ?></div>   <!-- Chargement du corps de page contenu dans la variable $content -->
 
-			<footer><?php include('view/footer.php'); ?></footer> <!-- Chargement du pied de page : fichier 'footer.php' -->  
+			<footer><?php include('view/footer.php'); ?></footer> <!-- Chargement du pied de page : fichier 'footer.php' -->
 
 		</div>
 
 		<div id="FenetreMessage" class="cache">
-			<div id="btn_cancel" class="my_button" onclick="fermerFenetre()">x</div>
+			<div id="btn_cancel" class="my_button" onclick="fermerFenetre()"></div>
 			<div id="FenetreContenu"></div>
 		</div>
 
@@ -45,4 +45,3 @@
 
 	</body>
 </html>
-
