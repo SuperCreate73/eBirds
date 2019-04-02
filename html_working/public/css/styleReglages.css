@@ -35,6 +35,15 @@
     cursor: pointer;
 }
 
+.my_button.deleteUser{
+	background-image: url(../images/btn_remove.png);
+	float:none;
+	margin-left: 40px;
+}
+.my_button.deleteUser:hover{
+	background-position: 0 -40px;
+	cursor: pointer;
+}
 
 #btn_shutdown{
 	background-image: url(../images/btn_shutdown3.png);
