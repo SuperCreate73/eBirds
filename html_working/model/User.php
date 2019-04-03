@@ -14,10 +14,13 @@ class User extends DbManager {
 		}
 		else {
 			$db = $this->dbConnect();
-			$sql=("INSERT INTO users (login, password) VALUES ('$login','$password');");
-			$resultat = $db->query($sql);
-			//			$resultat->execute(array($this->clean($login),$password));
-//			$resultat->execute(array($this->clean($login),$password));
+			// $sql=("INSERT INTO users (login, password) VALUES ('$login','$password');");
+			// $resultat = $db->query($sql);
+			$stmt=$db->prepare("INSERT INTO users (login, password) VALUES (:Login, :Password)");
+			$result=$stmt->execute(array(
+					'Login' => $login,
+					'Password' => $password));
+			// $resultat->execute(array($this->clean($login),$password));
 		}
 	}
 

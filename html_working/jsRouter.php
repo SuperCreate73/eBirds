@@ -7,7 +7,7 @@ try
 	session_start();
 	$action = (isset($_GET['action'])) ? htmlspecialchars($_GET['action']) : '';
 	$parameter1 = (isset($_GET['param1'])) ? htmlspecialchars($_GET['param1']) : '';
-	$parameter2 = (isset($_GET['param2'])) ? htmlspecialchars($_GET['param2']) : '';
+	$parameter2 = (isset($_GET['param2'])) ? htmlspecialchars($_GET['param2']) : NULL;
 
 	$actionArray = array (
 		'shutdown' => 'shutdown',
@@ -32,7 +32,7 @@ try
 		$actionArray[$action]('selectionArray');
 	}
 	else {
-		$actionArray[$action]($parameter1=NULL,$parameter2=NULL);
+		$actionArray[$action]($parameter1,$parameter2);
 	}
 }
 
