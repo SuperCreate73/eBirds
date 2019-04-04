@@ -41,5 +41,9 @@ abstract class DbManager {
  		$str = str_replace($search, $replace, $str);
   		return $str;
 	}
-} 
 
+	protected function md5Hash($str) {
+			// MD5 hash of input String
+			return md5(htmlspecialchars($str));
+	}
+}
