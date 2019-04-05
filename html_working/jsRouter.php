@@ -19,6 +19,7 @@ try
 		'changeName'=>'changeName',
 		'viewselection'=>'viewSelection',
 		'saveUser' => 'saveUser',
+		'delUser' => 'delUser',
 	);
 
 	if ( ! array_key_exists($action, $actionArray)) {
@@ -38,5 +39,6 @@ try
 
 catch(Exception $e) {
    	// S'il y a eu une erreur, alors...
-    echo 'Erreur : ' . $e->getMessage();
+		echo "<h3>Runtime error</h3>";
+    echo "<p>Error message: " . $e->getMessage() . "</p>";
 }
