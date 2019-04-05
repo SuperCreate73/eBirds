@@ -42,10 +42,8 @@ class User extends DbManager {
 			$resultat=$stmt->execute(array(
 				'Login'	=>	$this->clean($login),
 				));
-			## TODO cette condition ne fonctionne pas
-			## Changer la fonction checkUser par une fonction qui compte le nombre
-			## d'occurances
-			if (!($this->checkUser('*'))) {
+			// If no more users, create default one admin admin
+			if ($this->countUser() == 0) {
 				$this->setUser('admin','admin');
 			}
 	}
@@ -83,7 +81,7 @@ class User extends DbManager {
 			$passmd5 = $this->md5Hash($password);
 		}
 		else {
-			$passmd5 = '*';
+			$passmd5 = '%';
 		}
 		$stmt=$db->prepare("SELECT count(*) as nbres FROM users WHERE login=? AND password=?");
   		// On utilise la fonction "clean" définie dans la classe mère pour filtrer et éventuellement ajouter des caractères
@@ -99,5 +97,24 @@ class User extends DbManager {
 		else { // Autrement (à priori nbre == 0), il n'y a pas de ligne avec ce login et mot de passe
     	return FALSE; // la fonction renvoie "FALSE"
 		}
+	}
+
+	public function countUser($login = NULL) {
+		// compte le nombre d'utilisteurs dans la table Users
+		//
+		$db=$this->dbConnect();
+
+		if ($login) {
+				$stmt=$db->prepare("SELECT count(*) as nbres FROM users WHERE (login=:Login)");
+				$resultat=$stmt->execute(array(
+					'Login'	=>	$this->clean($login),
+					));
+		}
+		else {
+			$stmt=$db->prepare("SELECT count(*) as nbres FROM users");
+			$resultat=$stmt->execute();
+		}
+  	$row = $stmt->fetch();
+		return $row['nbres']; // La fonction de vérification renvoie "TRUE"
 	}
 }
