@@ -83,7 +83,7 @@
 
 				<?php foreach ($users as $key => $userItem) { ?>
 					<div class='row'>
-						<div class='offset-by-four columns'>
+						<div class='offset-by-four columns' id='<?= $userItem[0] ; ?>' >
 							<div class='seven columns'><?= $userItem[0] ; ?></div><div class="my_button deleteUser" onclick="removeUser('<?= $userItem[0]; ?>');">
 						</div>
 					</div>
@@ -106,7 +106,7 @@
 					</div>
 
 					<div class="five columns">
-						<label>Email(s) à contacter en cas d'occupation:</label>
+						<label>Contact en cas de détection de mouvement:</label>
 						<input class="u-full-width" type="text" placeholder="email(s)" name="emails">
 					</div>
 				</div>

@@ -114,6 +114,9 @@ function saveUser() {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.open("GET", "jsRouter.php?action=saveUser&param1="+nameUser+"&param2="+passwdUser, true);
   xmlhttp.send();
+  fermerFenetre();
+  document.location.reload();
+
 }
 
 function changerNom(){
@@ -122,5 +125,12 @@ function changerNom(){
   	var xmlhttp = new XMLHttpRequest();
   	xmlhttp.open("GET", "jsRouter.php?action=changeName&param1="+nom, true);
 	xmlhttp.send();
+
+}
+function removeUser(nom){
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET", "jsRouter.php?action=delUser&param1="+nom, true);
+  xmlhttp.send();
+  document.getElementById(nom).innerHTML="";
 
 }
