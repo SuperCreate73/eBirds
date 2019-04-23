@@ -78,7 +78,7 @@
 				<?php foreach ($users as $key => $userItem) { ?>
 					<div class='row'>
 						<div class='offset-by-four columns'>
-							<div class='five columns'><?= $userItem[0] ; ?></div>
+							<div class='seven columns'><?= $userItem[0] ; ?></div><div class="my_button deleteUser" onclick="removeUser('<?= $userItem[0]; ?>');">
 						</div>
 					</div>
 				<?php } ?>
