@@ -44,6 +44,9 @@
 					</div>
 				</div>
 
+				<!-- ############################# -->
+				<!-- identifiant -->
+				<!-- ############################# -->
 				<div class="row">
 					<div class="offset-by-two columns">
 						<div class="two columns">
@@ -62,6 +65,9 @@
 					</div>
 				</div>
 
+				<!-- ############################# -->
+				<!-- gestion des utilisateurs -->
+				<!-- ############################# -->
 				<div class="row">
 					<div class="offset-by-two columns">
 						<div class="seven columns">

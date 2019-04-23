@@ -2,6 +2,7 @@
 
 require_once('model/PiManager.php');
 require_once('model/FileManager.php');
+require_once('model/User.php');
 //require_once('model/ImageFileManager.php');
 
 function shutdown() {
@@ -50,4 +51,29 @@ function zipUpload() {
 	$fileManager = new FileManager();
 	$archive = $fileManager->zipFiles(explode(",",$_POST['selectionArray']));
 	return($archive);
+}
+
+function saveUser($login,$password) {
+	// Create new user or update existing one
+	//
+	// Validation of input parameters
+	if (strlen(trim($login)) < 3){
+		throw new Exception("Invalid user name ! ");
+		return;
+	}
+	if (strlen(trim($password)) < 5){
+		throw new Exception("Invalid password ! ");
+		return;
+	}
+
+	//saveUser
+	$user = new User();
+	$user->setUser($login, $password);
+}
+
+function delUser($login) {
+	// Revoque user from DB
+	// If no more connection login, create default one (admin, admin)
+	$user = new User();
+	$user->delUser($login);
 }
