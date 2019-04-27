@@ -73,25 +73,28 @@ class User extends DbManager {
 
 	public function checkUser($login,$password = NULL) {
 		// Vérification du login et du mot de passe de l'utilisateur dans la table Users
+		//
 
 		$db=$this->dbConnect();
 		// On "hashe" en md5 (type d'encryption) le mot de passe avant de faire la requête.
-  		// En effet, les mots de passe sont stockés encryptés dans la DB.
+  	// En effet, les mots de passe sont stockés encryptés dans la DB.
 		if($password) {
-			$passmd5 = $this->md5Hash($password);
+			$stmt=$db->prepare("SELECT count(*) as nbres FROM users WHERE login=? AND password=?");
+			$stmt->execute(array($this->clean($login), $this->md5Hash($password)));
+
 		}
 		else {
-			$passmd5 = '%';
+			$stmt=$db->prepare("SELECT count(*) as nbres FROM users WHERE login=?");
+			$stmt->execute(array($this->clean($login), ));
 		}
-		$stmt=$db->prepare("SELECT count(*) as nbres FROM users WHERE login=? AND password=?");
-  		// On utilise la fonction "clean" définie dans la classe mère pour filtrer et éventuellement ajouter des caractères
+		// On utilise la fonction "clean" définie dans la classe mère pour filtrer et éventuellement ajouter des caractères
 		// d'échappement dans les informations transmises par le formulaire (pour éviter un problèmede sécurité appelé "injection SQL")
 		$stmt->execute(array($this->clean($login), $passmd5));
 
   	$row = $stmt->fetch();
 
-  		// Si nbres contient "1" c'est qu'il y a bien une ligne avec mot de passe et identifiant associés
-  	if($row['nbres'] == 1) {
+  	// Si nbres contient "1" c'est qu'il y a bien une ligne avec mot de passe et identifiant associés
+  	if($row['nbres'] > 0 ) {
   		return TRUE; // La fonction de vérification renvoie "TRUE"
 		}
 		else { // Autrement (à priori nbre == 0), il n'y a pas de ligne avec ce login et mot de passe

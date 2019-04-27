@@ -33,7 +33,7 @@ function graphique($nom) {
 
 function photoList($nom, $none ,$mvtPage) {
 	$listMax=25;
-	$fileManager= new FileManager();
+	$fileManager= new FileManager('jpg');
 	$fileList=$fileManager -> setFileList();
 	$numberOfPage = numberOfPage($fileList,$listMax*3);
 	$page=(isset($_SESSION['listeCourante'])) ? $_SESSION['listeCourante'] : 1;

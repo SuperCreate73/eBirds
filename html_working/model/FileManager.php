@@ -6,13 +6,13 @@ class FileManager {
 
 //Attributs:
 	private $_filePath = 'public/cameraShots/' ; //
-	private $_fileMask = '.'; // expression Regex
+	private $_fileMask;
 	private $_fileCount;
 	private $_fileList;
 //---------------------------------------------
 
 //Méthodes:
-	public function __construct($inputMask = '.') {
+	public function __construct($inputMask = NULL) {
 	// méthode appelée lorsque la classe est instanciée (= un objet est créé à partir de cette classe)
 		// chequer et enregistrer le filePath
 		//
@@ -35,10 +35,23 @@ class FileManager {
   	// Autres méthodes de la classe
 
 	public function setFileList() {
-		//Initialise la liste de fichiers correspondant au 'inputMask' dans le répertoire donné
+		//Initialise la liste de fichiers correspondant au 'inputMask' dans le répertoire1 donné
 		$inputPath=$this->_filePath;
-		$fileMask=$this->_fileMask; // not used for the moment ...
-		return array_filter(scandir($inputPath), function($fileTest) { return ($fileTest !="." && $fileTest != ".."); });
+		$fileMask=$this->_fileMask; // unable to pass the mask to the function
+		if (isset($fileMask)) {
+			return array_filter(scandir($inputPath),
+				function($fileTest) {
+					return ($fileTest !="." && $fileTest != ".." && $fileTest  != ".ini" && pathinfo($fileTest)['extension']== 'jpg');
+				}
+			);
+		}
+		else {
+			return array_filter(scandir($inputPath),
+				function($fileTest) {
+					return ($fileTest !="." && $fileTest != ".." && $fileTest  != ".ini");
+				}
+			);
+		}
 	}
 
 	public function deleteFiles($fileList) {
