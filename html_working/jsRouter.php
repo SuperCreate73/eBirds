@@ -20,6 +20,7 @@ try
 		'viewselection'=>'viewSelection',
 		'saveUser' => 'saveUser',
 		'delUser' => 'delUser',
+		'motionDetect' => 'motionDetect',
 	);
 
 	if ( ! array_key_exists($action, $actionArray)) {

@@ -6,17 +6,11 @@ class DbMngSettings extends DbManager {
 	// 'setting' table management : add, remove, modify, get records from table
 	//
 
-	public function modifySetting ($setting,$value,$testExist=True) {
+	private function modifySetting ($setting,$value) {
 		// Modify setting
 		// If already checked if record exist in DB, $testExist is set to False
 		//
-		// check if setting exist already in DB
-		if ($testExist) {
-			if (!$this->existSetting ($setting)) {
-				$this->addSetting($setting,$value,False);
-				return ;
-			}
-		}
+
 		// update existing setting
 		$db = $this->dbConnect();
 		$stmt=$db->prepare("UPDATE config SET value = :Value WHERE (setting = :Setting)");
@@ -25,16 +19,14 @@ class DbMngSettings extends DbManager {
 			'Value' => $value));
 	}
 
-	public function addSetting ($setting,$value,$testExist=True) {
+	public function addSetting ($setting,$value) {
 		// insert new setting
 		// If already checked if record exist in DB, $testExist is set to False
 		//
 		// check if setting exist already in DB
-		if ($testExist) {
-			if ($this->existSetting ($setting)) {
-				$this->modifySetting($setting,$value,False);
-				return ;
-			}
+		if ($this->existSetting ($setting)) {
+			$this->modifySetting($setting,$value,False);
+			return ;
 		}
 		// add new setting
 		$db = $this->dbConnect();

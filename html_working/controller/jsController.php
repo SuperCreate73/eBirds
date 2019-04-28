@@ -77,3 +77,20 @@ function delUser($login) {
 	$user = new User();
 	$user->delUser($login);
 }
+
+function motionDetect($email) {
+	// configure mail send on movement detection
+	//
+	require_once('model/DbMngSettings.php');
+	require_once('model/MotionManager.php');
+
+	// ecriture dans la table des settings
+	$config = new DbMngSettings();
+	$config -> addSetting ("motionEmail", $email)
+
+	// configuration de motion
+	$motion = new MotionManager();
+	$motion -> backUpMotion();
+	$motion -> setSendMail($email);
+	$motion -> restartMotion();
+}
