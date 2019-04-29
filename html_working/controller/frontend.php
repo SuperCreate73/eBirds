@@ -127,7 +127,7 @@ function loginVerify($nom, $password) {
 	if ($user->checkUser($nom,$password)) {
 		//Si l'utilisateur est trouvé On recharge la page précédant le login
 		$user->logUser($nom);
-		header('Location: index.php?page='.$_SESSION['pageCourante']);
+		header('Location: index.php?page=reglages');
 		// On recharge la page précédant le login.
 	}
 	else {
@@ -139,7 +139,7 @@ function loginVerify($nom, $password) {
 function logOut() {
 	$user = new User();
 	$user->unlogUser();
-	header('Location: index.php?page='.$_SESSION['pageCourante']);
+	header('Location: index.php?page=homepage');
 
 	// On supprime la variable de session 'nom' pour déconnecter l'usager et on redirige vers la dernière page consultée
 }
