@@ -4,6 +4,10 @@ require_once("model/DbManager.php");
 
 class User extends DbManager {
 
+	public function __construct() {
+		$this->_table = "users";
+	}
+
 	public function setUser ($login,$password) {
 		// Create new user or update existing one if already nown in DB
 		//
@@ -11,7 +15,7 @@ class User extends DbManager {
 		$passmd5 = $this->md5Hash($password);
 		// If user nown, modifying password
 
-		$result=$this->checkUser($login);
+		$result=$this->checkLogin($login);
 		if ($result) {
 			$this->modifyUser($login,$passmd5);
 		}
@@ -52,10 +56,7 @@ class User extends DbManager {
 	public function getUsers () {
 		// Donne la liste des utilisateurs du nichoir
 		//
-			$db = $this->dbConnect();
-			$sql = "SELECT login FROM users;";
-			$resultat = $db->query($sql);
-			$list = $resultat->fetchall();
+			$list = $this->getAll('login');
 			return($list);
 	}
 
@@ -72,32 +73,24 @@ class User extends DbManager {
 		unset($_SESSION['nom']);
 	}
 
-	public function checkUser($login,$password = NULL) {
+	public function checkUser($login,$password) {
 		// Vérification du login et du mot de passe de l'utilisateur dans la table Users
 		//
-		$db=$this->dbConnect();
 		// On "hashe" en md5 (type d'encryption) le mot de passe avant de faire la requête.
   	// En effet, les mots de passe sont stockés encryptés dans la DB.
 		// On utilise la fonction "clean" définie dans la classe mère pour filtrer et éventuellement ajouter des caractères
 		// d'échappement dans les informations transmises par le formulaire (pour éviter un problèmede sécurité appelé "injection SQL")
-		if($password) {
-			$stmt=$db->prepare("SELECT count(*) as nbres FROM users WHERE login=? AND password=?");
-			$stmt->execute(array($this->clean($login), $this->md5Hash($password)));
-		}
-		else {
-			$stmt=$db->prepare("SELECT count(*) as nbres FROM users WHERE login=?");
-			$stmt->execute(array($this->clean($login), ));
-		}
+		$where = "login = '".$this->clean($login)."' AND password = '".$this->md5Hash($password)."'" ;
+		$result = $this-> keyExist($where);
+		return $result;
+	}
 
-  	$row = $stmt->fetch();
-
-  	// Si nbres contient "1" c'est qu'il y a bien une ligne avec mot de passe et identifiant associés
-  	if($row['nbres'] == 1 ) {
-  		return TRUE; // La fonction de vérification renvoie "TRUE"
-		}
-		else { // Autrement (à priori nbre == 0), il n'y a pas de ligne avec ce login et mot de passe
-    	return FALSE; // la fonction renvoie "FALSE"
-		}
+	public function checkLogin($login) {
+		// Vérification del'existance du login dans la table Users
+		//
+		$where = "login = '".$login."'" ;
+		$result = $this-> keyExist($where);
+		return $result;
 	}
 
 	public function countUser($login = NULL) {
@@ -105,7 +98,7 @@ class User extends DbManager {
 		//
 		$db=$this->dbConnect();
 
-		if ($login) {
+		if (!is_null($login)) {
 				$stmt=$db->prepare("SELECT count(*) as nbres FROM users WHERE (login=:Login)");
 				$resultat=$stmt->execute(array(
 					'Login'	=>	$this->clean($login),

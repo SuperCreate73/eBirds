@@ -3,6 +3,7 @@
 abstract class DbManager {
 
 	protected $_sql=false;
+	protected $_table;
 
 	protected function dbConnect() {
 
@@ -24,26 +25,64 @@ abstract class DbManager {
 			return $db;
 		}
 		catch (PDOException $e) {
-	  		$dbhote = "localhost";
-    		$dbuser = "nichoir";
-    		$dbpass = "";
-    		$dbbase = "nichoir";
+  		$dbhote = "localhost";
+  		$dbuser = "nichoir";
+  		$dbpass = "";
+  		$dbbase = "nichoir";
 			$db = new PDO('mysql:host=localhost;dbname=nichoir', 'nichoir');
 			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->_sql=true;
 			return $db;
 		}
-    }
+  }
 
 	protected function clean($str) {
-  		$search  = array('&'    , '"'     , "'"    , '<'   , '>'    );
-  		$replace = array('&amp;', '&quot;', '&#39;', '&lt;', '&gt;' );
+  	$search  = array('&'    , '"'     , "'"    , '<'   , '>'    );
+  	$replace = array('&amp;', '&quot;', '&#39;', '&lt;', '&gt;' );
  		$str = str_replace($search, $replace, $str);
-  		return $str;
+  	return $str;
 	}
 
 	protected function md5Hash($str) {
-			// MD5 hash of input String
-			return md5(htmlspecialchars($str));
+		// MD5 hash of input String
+		return md5(htmlspecialchars($str));
+	}
+
+	protected function getAll($columns = NULL) {
+		// Get all records from $_table
+		//
+		if (is_null($columns)) {
+			$sqlColumns="*";
+		}
+		elseif (is_array($columns)) {
+			foreach ($columns as $values) {
+				$sqlColumns=$sqlColumns.$values.", ";
+			}
+			$sqlColumns = substr($sqlColumns, 0, -2);
+		}
+		else {
+			$sqlColumns = $columns;
+		}
+		$db = $this->dbConnect();
+		$sql = "SELECT ".$sqlColumns." FROM ".$this->_table.";";
+		$stmt = $db->query($sql);
+		$list = $stmt->fetchall();
+		return($list);
+	}
+
+	public function keyExist ($whereClause) {
+		// Test exitence of key
+		// return (boolean)
+		//
+		$db = $this->dbConnect();
+		$sql = "SELECT EXISTS(SELECT 1 FROM ".$this->_table." WHERE (".$whereClause.")) AS returnVal ;";
+		$stmt = $db->query($sql);
+		$result = $stmt->fetch();
+		if ($result['returnVal'] > 0) {
+			return True;
+		}
+		else {
+			return False;
+		}
 	}
 }

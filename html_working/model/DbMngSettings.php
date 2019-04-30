@@ -6,6 +6,10 @@ class DbMngSettings extends DbManager {
 	// 'setting' table management : add, remove, modify, get records from table
 	//
 
+	public function __construct() {
+		$this->_table = "config";
+	}
+
 	private function modifySetting ($setting,$value) {
 		// Modify setting
 		// If already checked if record exist in DB, $testExist is set to False
