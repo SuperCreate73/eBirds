@@ -7,33 +7,11 @@ abstract class DbManager {
 
 	protected function dbConnect() {
 
-	// Pour une connexion à une db mySQL, pour tester en local...
-	// On attribue à des variables les différentes informations permettant de se connecter à la DB :
-	/*  $dbhote = "localhost";
-    	$dbuser = "root";
-    	$dbpass = "root";
-    	$dbbase = "nichoir";
-	*/
-	// On utilise l'objet PHP PDO qui doit permettre une portabilité facile du code pour changer de DB.
-	/*	$dsn = "mysql:dbname=$dbbase; host=$dbhote";
-      	$fichier_db = new PDO($dsn, $dbuser, $dbpass);
-	*/
+		// On utilise l'objet PHP PDO qui doit permettre une portabilité facile du code pour changer de DB.
 		// Pour une connexion à la db SQLite du nichoir...
-		try {
-			$db = new PDO('sqlite:/var/www/nichoir.db');
-			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			return $db;
-		}
-		catch (PDOException $e) {
-  		$dbhote = "localhost";
-  		$dbuser = "nichoir";
-  		$dbpass = "";
-  		$dbbase = "nichoir";
-			$db = new PDO('mysql:host=localhost;dbname=nichoir', 'nichoir');
-			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$this->_sql=true;
-			return $db;
-		}
+		$db = new PDO('sqlite:/var/www/nichoir.db');
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		return $db;
   }
 
 	protected function clean($str) {
@@ -70,7 +48,7 @@ abstract class DbManager {
 		return($list);
 	}
 
-	public function keyExist ($whereClause) {
+	protected function keyExist ($whereClause) {
 		// Test exitence of key
 		// return (boolean)
 		//
@@ -78,11 +56,23 @@ abstract class DbManager {
 		$sql = "SELECT EXISTS(SELECT 1 FROM ".$this->_table." WHERE (".$whereClause.")) AS returnVal ;";
 		$stmt = $db->query($sql);
 		$result = $stmt->fetch();
-		if ($result['returnVal'] > 0) {
+		if ($result['returnVal'] == 1) {
 			return True;
 		}
 		else {
 			return False;
 		}
+	}
+
+	protected function countRecords ($whereClause = NULL) {
+		// Get number of rows
+		// return (integer)
+		//
+		$where = (is_null($whereClause)) ? "" : " WHERE (".$whereClause.")";
+		$db = $this->dbConnect();
+		$sql = "SELECT count(*) as nbres FROM ".$this->_table.$where." ;";
+		$stmt = $db->query($sql);
+		$result = $stmt->fetch();
+		return $result['nbres'];
 	}
 }

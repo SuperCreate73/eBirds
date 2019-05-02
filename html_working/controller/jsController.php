@@ -86,7 +86,7 @@ function motionDetect($email) {
 
 	// ecriture dans la table des settings
 	$config = new DbMngSettings();
-	$config -> addSetting ("motionEmail", $email)
+	$config -> addSetting ("motionEmail", $email);
 
 	// configuration de motion
 	$motion = new MotionManager();

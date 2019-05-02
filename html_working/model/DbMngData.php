@@ -48,26 +48,16 @@ class DbMngData extends DbManager {
 	private function setEntrees() {
 
 		$_db=$this->dbConnect();
-		if ($this->_sql) {
-			$sql = "SELECT count(*) FROM InOut_IR  WHERE FStatus like 'E%';";
-		}
-		else {
-			$sql = "SELECT count(*) FROM InOut_IR  WHERE FDatim >= date('now', 'start of day') AND FStatus like 'E%';";
-		}
-  		$resultat = $_db->query($sql);
+		$sql = "SELECT count(*) FROM InOut_IR  WHERE FDatim >= date('now', 'start of day') AND FStatus like 'E%';";
+		$resultat = $_db->query($sql);
 		$tableauResultat = $resultat->fetch();
-  		$this->_entrees = $tableauResultat[0];
+  	$this->_entrees = $tableauResultat[0];
 	}
 
 	private function setSorties() {
 
 		$_db=$this->dbConnect();
-		if ($this->_sql) {
-			$sql = "SELECT count(*) FROM InOut_IR  WHERE FStatus like 'S%';";
-		}
-		else {
-			$sql = "SELECT count(*) from InOut_IR  where FDatim >= date('now','start of day') and FStatus like 'S%';";
-		}
+		$sql = "SELECT count(*) from InOut_IR  where FDatim >= date('now','start of day') and FStatus like 'S%';";
 		$resultat = $_db->query($sql);
 		$tableauResultat = $resultat->fetch();
 		$this->_sorties = $tableauResultat[0];
@@ -77,12 +67,7 @@ class DbMngData extends DbManager {
 	private function setVisites() {
 
 		$_db=$this->dbConnect();
-		if ($this->_sql) {
-			$sql = "SELECT count(*) FROM InOut_IR  WHERE FStatus like 'V%';";
-		}
-		else {
-			$sql = "SELECT count(*) from InOut_IR  where FDatim >= date('now','start of day') and FStatus like 'V%';";
-		}
+		$sql = "SELECT count(*) from InOut_IR  where FDatim >= date('now','start of day') and FStatus like 'V%';";
 		$resultat = $_db->query($sql);
 		$tableauResultat = $resultat->fetch();
 		$this->_visites = $tableauResultat[0];
@@ -99,12 +84,7 @@ class DbMngData extends DbManager {
 		if ($maxDay > 0) {
 			// A tester, ne semble pas fonctionner
 			//			$sql = "SELECT * FROM meteo WHERE dateHeure >= DATE_SUB(NOW(), INTERVAL " .$maxDay. " DAY) ORDER BY dateHeure ;";
-			if ($this->_sql){
-				$sql = "SELECT * FROM meteo ORDER BY dateHeure DESC ;";
-			}
-			else {
-				$sql = "SELECT * FROM meteo WHERE dateHeure >= date('now','-" .$maxDay. " days') ORDER BY dateHeure DESC ;";
-			}
+			$sql = "SELECT * FROM meteo WHERE dateHeure >= date('now','-" .$maxDay. " days') ORDER BY dateHeure DESC ;";
 		}
 		else {
 			$sql = "SELECT * FROM meteo ORDER BY dateHeure DESC ;";
@@ -124,12 +104,7 @@ class DbMngData extends DbManager {
 		}
 		// Sélection du nombre de jours définit par $maxDay dans la BD ou sélection de tout si $maxDay=0
 		if ($maxDay > 0) {
-			if ($this->_sql){
-				$sql = "SELECT * FROM meteo ORDER BY dateHeure ;";
-			}
-			else {
-				$sql = "SELECT * FROM meteo WHERE dateHeure >= date('now','-" .$maxDay. " days') ORDER BY dateHeure ;";
-			}
+			$sql = "SELECT * FROM meteo WHERE dateHeure >= date('now','-" .$maxDay. " days') ORDER BY dateHeure ;";
 		}
 		else {
 			$sql = "SELECT * FROM meteo ORDER BY dateHeure ;";

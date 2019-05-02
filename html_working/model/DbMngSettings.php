@@ -29,7 +29,7 @@ class DbMngSettings extends DbManager {
 		//
 		// check if setting exist already in DB
 		if ($this->existSetting ($setting)) {
-			$this->modifySetting($setting,$value,False);
+			$this->modifySetting($setting,$value);
 			return ;
 		}
 		// add new setting
@@ -54,19 +54,9 @@ class DbMngSettings extends DbManager {
 		// Test exitence of key
 		// return (boolean)
 		//
-		$db = $this->dbConnect();
-		$stmt=$db->prepare("SELECT EXISTS(SELECT 1 FROM config WHERE (setting= :Setting)) AS returnVal");
-		//$stmt=$db->prepare("SELECT EXISTS(SELECT 1 FROM config WHERE (setting= :Setting) AND value IS NOT NULL) as returnVal");
-		$stmt->execute(array(
-				'Setting' => $setting,
-				));
-		$result = $stmt->fetch();
-		if ($result['returnVal'] > 0) {
-			return True;
-		}
-		else {
-			return False;
-		}
+		$where = "setting = '".$setting."'" ;
+		$result = $this-> keyExist($where);
+		return $result;
 	}
 
 	public function getSetting ($setting) {

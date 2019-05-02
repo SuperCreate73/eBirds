@@ -16,14 +16,26 @@ class MotionManager {
 		//		$output = shell_exec('sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?on_motion_detected *:on_motion_detected /home/pi/.motion/motion.pid:g"');
 
 		//modification du fichier 'motionSendMail.sh' -> ajout de l'adresse mail
-		$shellCmd='sudo sed "/var/www/html/public/bash/motionSendMail.sh" -i -e "s:^\(#\|;\)\? \?varMail *:varMail='.$email.':g"';
+		$shellCmd='sudo sed "/var/www/html/public/bash/motionSendMail.sh" -i -e "s:^\(#\|;\)\? \?varMail \?.*$:varMail='.$email.':g"';
 		$output = shell_exec($shellCmd);
 
 		//modification du fichier 'motion.conf'
-		$shellCmd='sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?on_motion_detected *:on_motion_detected /var/www/html/public/bash/motionSendMail.sh:g"';
+		$shellCmd='sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?on_motion_detected .*$:on_motion_detected /var/www/html/public/bash/motionSendMail.sh:g"';
 		$output = shell_exec($shellCmd);
 	}
 
+	public function clearSendMail($email) {
+		// annule l'envoi d'e-mail en cas de détection de mouvements
+		//
+
+		$shellCmd='sudo sed "/var/www/html/public/bash/motionSendMail.sh" -i -e "s:^\(#\|;\)\? \?varMail \?.*$:# varMail=eMailAContacter:g"';
+		$output = shell_exec($shellCmd);
+
+		//modification du fichier 'motion.conf'
+		$shellCmd='sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?on_motion_detected .*$:; on_motion_detected value:g"';
+		$output = shell_exec($shellCmd);
+	}
+	
 	public function restartMotion() {
 		// redémarrage du daemon motion pour prendre en compte les modifySetting
 		//
@@ -45,7 +57,7 @@ class MotionManager {
 	public function restoreMotion($origin=False) {
 		// restaure les paramètres précédents du fichier motion.conf
 		// ou du fichier original si $origin=True
-		
+
 		if ($origin) {
 			copy ("/etc/motion/motion.conf.original", "/etc/motion/motion.conf");
 		}
