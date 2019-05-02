@@ -134,3 +134,22 @@ function removeUser(nom){
   document.getElementById(nom).innerHTML="";
 
 }
+function changeEmail(){
+  var newMail = document.getElementById('email').value;
+
+
+  //xmlhttp.open("")
+
+}
+function changeMode(e){
+  var mode = e.target.value;
+  alert(mode);
+}
+function changeModeCamera(e){
+  var mode = e.target.value;
+  alert(mode);
+}
+function changeDefinitionCamera(e){
+  var mode = e.target.value;
+  alert(mode);
+}

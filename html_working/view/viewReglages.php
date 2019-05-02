@@ -99,15 +99,15 @@
 
 					<div class="five columns">
 						<label for="modeNichoir">Mode de fonctionnement du nichoir:</label>
-						<select class="u-full-width" id="modeNichoir">
-							<option value="Option 1">Découverte</option>
-							<option value="Option 2">Occupation</option>
+						<select class="u-full-width" id="modeNichoir" onchange="changeMode(event);">
+							<option value="Découverte">Découverte</option>
+							<option value="Occupation">Occupation</option>
 						</select>
 					</div>
 
 					<div class="five columns">
 						<label>Contact en cas de détection de mouvement:</label>
-						<input class="u-full-width" type="text" placeholder="email(s)" name="emails">
+						<input class="u-full-width" type="text" placeholder="email(s)" name="emails" id="email" onchange="changeEmail();">
 					</div>
 				</div>
 			</div> <!--    FIN CADRE II -->
@@ -120,18 +120,19 @@
 
 					<div class="five columns">
 						<label for="modeCamera">Mode d'enregistrement images:</label>
-						<select class="u-full-width" id="modeCamera">
-							<option value="Option 1">Photo</option>
-							<option value="Option 2">Video</option>
+						<select class="u-full-width" id="modeCamera" onchange="changeModeCamera(event);">
+							<option value="Detection">Photo - Détection mouvement</option>
+							<option value="Timelapse">Photo - Timelapse</option>
+							<option value="Video">Video</option>
 						</select>
 					</div>
 
 					<div class="five columns">
 						<label for="definitionCamera">Définition de l'image:</label>
-						<select class="u-full-width" id="definitionCamera">
-							<option value="Option 1">High</option>
-							<option value="Option 2">Medium</option>
-							<option value="Option 2">Low</option>
+						<select class="u-full-width" id="definitionCamera" onchange = "changeDefinitionCamera(event);">
+							<option value="High">High</option>
+							<option value="Medium">Medium</option>
+							<option value="Low">Low</option>
 						</select>
 					</div>
 				</div>
@@ -181,15 +182,19 @@
 						</div>
 					</div>
 				</div>
-			</div> <!--    FIN CADRE V -->
 
-			<div class="row">
-				<div class="offset-by-seven columns">
-					<div class="five columns">
-						<input class="button u-full-width boutonLogin" value="Enregistrer les modifications" type="submit">
+				<div class="row">
+					<div class="offset-by-seven columns">
+						<div class="five columns">
+							<input class="button u-full-width boutonLogin" value="Enregistrer les modifications" type="submit">
+						</div>
 					</div>
 				</div>
-			</div>
+
+
+			</div> <!--    FIN CADRE V -->
+
+
 		</form>
 	</div>
 
