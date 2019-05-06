@@ -135,12 +135,13 @@ function removeUser(nom){
 
 }
 function changeEmail(){
+  // changer la fnction pour éviter un redémarrage intempestif du daemon
   var newMail = document.getElementById('email').value;
-
-
-  //xmlhttp.open("")
-
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET", "jsRouter.php?action=motionDetect&param1="+newMail, true);
+  xmlhttp.send();
 }
+
 function changeMode(e){
   var mode = e.target.value;
   alert(mode);

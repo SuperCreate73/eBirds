@@ -84,7 +84,7 @@ function motionDetect($email) {
 	require_once('model/DbMngSettings.php');
 	require_once('model/MotionManager.php');
 
-	// ecriture dans la table des settings
+	// ecriture dans la DB, table des settings
 	$config = new DbMngSettings();
 	$config -> addSetting ("motionEmail", $email);
 
