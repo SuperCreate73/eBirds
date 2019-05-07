@@ -86,6 +86,10 @@ function motionDetect($email) {
 
 	// ecriture dans la DB, table des settings
 	$config = new DbMngSettings();
+	$oldMail = $config -> getSetting ("motionEmail");
+	if ($oldmail == $email || $email == "") {
+		return ;
+	}
 	$config -> addSetting ("motionEmail", $email);
 
 	// configuration de motion

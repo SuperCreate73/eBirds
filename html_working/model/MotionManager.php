@@ -67,3 +67,42 @@ class MotionManager {
 	}
 
 }
+// medium    		high		low
+//-------------------------
+// width 640 -> 1280		480
+// height 480 -> 960		360
+//
+// compression
+// -----------
+// 0 à 100
+// quality 75 -> 0-100
+//
+// sensibilité (nbre de pixels qui doivent bouger pour détecter l'image)
+//------------
+// threshold 1500 -> en pourcentage 1-99 changer en même temps que les dimensions
+//
+// event_gap 60 -> temps en seconde entre 2 événements
+//
+//  a inverser pour switch photo - video/Timelapse
+// -----------------------------------------------
+//	output_pictures on
+//  ffmpeg_output_movies off
+//
+// time lapse -> activer la video
+// ----------
+// # Use ffmpeg to encode a timelapse movie
+// # Default value 0 = off - else save frame every Nth second
+// ffmpeg_timelapse 0
+
+// # The file rollover mode of the timelapse video
+// # Valid values: hourly, daily (default), weekly-sunday, weekly-monday, monthly, manual
+// ffmpeg_timelapse_mode daily
+//
+// a faire par défaut
+// ------------------
+// # Output frames at 1 fps when no motion is detected and increase to the
+// # rate given by stream_maxrate when motion is detected (default: off)
+// stream_motion off	-> on
+// # Maximum framerate for stream streams (default: 1)
+// stream_maxrate 1 -> 12 sur le nichoir 1
+//
