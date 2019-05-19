@@ -4,77 +4,150 @@ require_once("model/DbManager.php");
 
 class DbMngSettings extends DbManager {
 	// 'setting' table management : add, remove, modify, get records from table
-	//
+	// table 'config': setting, value, default value (or comment), value type: (discreet, range, file)
+	// linked table 'configRange' : setting, allowValue
+	//			--> one row for each value or (min or max)
+	// 			--> multiple row for each setting
+	$configTable = "config";
+	$configRange = "configRange";
 
-	public function __construct() {
-		$this->_table = "config";
+// ##################################################################
+	public function getSettingFromAlias ($alias, $value) {
+		// Get all records from $configAlias
+		// where alias = $alias and aliasValue = $value
+		//
+		$this->_table = 'configAlias'
+		$db = $this->dbConnect();
+		$sql = "SELECT setting, settingValue FROM configAlias WHERE alias = '".$alias."' AND aliasValue = '".$value."' ;";
+		$stmt = $db->query($sql);
+		$list = $stmt->fetchall(PDO::FETCH_KEY_PAIR);
+		return($list);
 	}
 
-	private function modifySetting ($setting,$value) {
-		// Modify setting
-		// If already checked if record exist in DB, $testExist is set to False
-		//
+// ##################################################################
+	private function getSettingRange ($setting, $sorted = False) {
+		// get possible range for setting -> return list
+		$this->_table = $configRange;
+		if ($sorted) {
+			return sort($this -> getKey('setting', $setting, 'rangeValue'));
+		}
+		else {
+			return $this -> getKey('setting', $setting, 'rangeValue');
+		}
+	}
 
-		// update existing setting
+// ##################################################################
+	public function getSettingValue ($setting) {
+		// Return current value from setting
+		$this->_table = $configTable;
+		$result= $this->getKey('setting', $setting, 'value')
+		return ($result['value']);
+	}
+
+// ##################################################################
+	public function validateValue ($setting, $value) {
+		// get type of value to validate - discreet, range or file
+		$this->_table = $configTable;
+		$valueType = $this -> getKey('setting', $setting, 'valueType')
+
+		// validate value
+		$this->_table = $configRange;
+		if ($valueType == 'discreet') {
+			return (in_array($value, $this -> getSettingRange ($setting)) ? True : False) ;
+		}
+		elseif($valueType == 'range')  {
+			$range = $this -> getSettingRange ($setting, True)
+			return (($value >= $range[0] && $value <= $range[1]) ? True : False) ;
+		}
+		elseif ($valueType == 'email') {
+			$atom   = '[-a-z0-9!#$%&\'*+\\/=?^_`{|}~]';   // caractères autorisés avant l'arobase
+			$domain = '([a-z0-9]([-a-z0-9]*[a-z0-9]+)?)'; // caractères autorisés après l'arobase (nom de domaine)
+
+			$regex = '/^' . $atom . '+' .   // Une ou plusieurs fois les caractères autorisés avant l'arobase
+			'(\.' . $atom . '+)*' .         // Suivis par zéro point ou plus
+			                                // séparés par des caractères autorisés avant l'arobase
+			'@' .                           // Suivis d'un arobase
+			'(' . $domain . '{1,63}\.)+' .  // Suivis par 1 à 63 caractères autorisés pour le nom de domaine
+			                                // séparés par des points
+			$domain . '{2,63}$/i';          // Suivi de 2 à 63 caractères autorisés pour le nom de domaine
+
+			// test de l'adresse e-mail
+			if (preg_match($regex, $value)) {
+			    return True;
+			} else {
+			    return False;
+			}
+			return True;
+		}
+		else {
+			return False;
+		}
+	}
+
+// ##################################################################
+	public function modifySetting ($setting,$value) {
+		// modify value
+		$this->_table = $configTable;
 		$db = $this->dbConnect();
 		$stmt=$db->prepare("UPDATE config SET value = :Value WHERE (setting = :Setting)");
 		$resultat=$stmt->execute(array(
 			'Setting'	=>	$setting,
 			'Value' => $value));
+		return $resultat;
 	}
 
-	public function addSetting ($setting,$value) {
-		// insert new setting
-		// If already checked if record exist in DB, $testExist is set to False
-		//
-		// check if setting exist already in DB
-		if ($this->existSetting ($setting)) {
-			$this->modifySetting($setting,$value);
-			return ;
-		}
-		// add new setting
-		$db = $this->dbConnect();
-		$stmt=$db->prepare("INSERT INTO config (setting, value) VALUES (:Setting, :Value)");
-		$result=$stmt->execute(array(
-				'Setting' => $setting,
-				'Value' => $value));
-	}
+		// public function getSettingFromAlias ($alias, $value) {
+			// get corresponding list of settings from alias
+		// 	$this->_table = $configAlias;
+		// 	return array_unique($this -> getKey('alias', $alias, 'setting'));
+		// }
 
-	public function removeSetting ($setting) {
+
+
+	// public function addSetting ($setting,$value) {
+	// 	// insert new setting
+	// 	//
+	// 	// check if setting exist already in DB
+	// 	if ($this->existSetting ($setting)) {
+	// 		$this->modifySetting($setting,$value);
+	// 		return ;
+	// 	}
+	// 	// add new setting
+	// 	$db = $this->dbConnect();
+	// 	$stmt=$db->prepare("INSERT INTO config (setting, value) VALUES (:Setting, :Value)");
+	// 	$result=$stmt->execute(array(
+	// 			'Setting' => $setting,
+	// 			'Value' => $value));
+	// }
+
+// ##################################################################
+// TODO ##################################################################
+// ##################################################################
+	public function clearSetting ($setting) {
 		// Remove completely a pair setting/value
-		//
-		$db = $this->dbConnect();
-		$stmt=$db->prepare("DELETE FROM config WHERE (setting= :Setting)");
-		$result=$stmt->execute(array(
-				'Setting' => $setting,
-				));
-	}
-
-	public function existSetting ($setting) {
-		// Test exitence of key
-		// return (boolean)
-		//
-		$where = "setting = '".$setting."'" ;
-		$result = $this-> keyExist($where);
-		return $result;
-	}
-
-	public function getSetting ($setting) {
-		// Return value from key
-		// return (value)
-		//
-		// if non existing setting, return NULL
-		if (!$this->existSetting($setting)) {
-			return NULL;
+		$this->_table = $configTable;
+		$defautValue = $this -> getKey('setting', $setting, 'defautValue')
+		if  ($defautValue == 'comment') {
+			// TODO comment
 		}
-		// get setting value
-		$db = $this->dbConnect();
-		$stmt=$db->prepare("SELECT value FROM config WHERE setting=:Setting");
-		$stmt->execute(array(
-				'Setting' => $setting,
-				));
-		$result = $stmt->fetch();
-		return ($result['value']);
+		else {
+			$db = $this->dbConnect();
+			$stmt=$db->prepare("UPDATE config SET value = defautValue WHERE (setting = :Setting)");
+			$result=$stmt->execute(array(
+					'Setting' => $setting,
+					));
+		}
 	}
+
+	// public function existSetting ($setting) {
+	// 	// Test exitence of key
+	// 	// return (boolean)
+	// 	//
+	// 	$this->_table = $configTable;
+	// 	$where = "setting = '".$setting."'" ;
+	// 	$result = $this-> keyExist($where);
+	// 	return $result;
+	// }
+  //
 
 }

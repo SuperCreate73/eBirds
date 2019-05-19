@@ -1,9 +1,9 @@
 <?php
-
-require_once('model/PiManager.php');
-require_once('model/FileManager.php');
-require_once('model/User.php');
+require_once('controller/fonctions.php');
+//require_once('model/PiManager.php');
+//require_once('model/FileManager.php');
 //require_once('model/ImageFileManager.php');
+//require_once('model/User.php');
 
 function shutdown() {
 	// éteint le raspberri
@@ -78,23 +78,61 @@ function delUser($login) {
 	$user->delUser($login);
 }
 
-function motionDetect($email) {
-	// configure mail send on movement detection
-	//
-	require_once('model/DbMngSettings.php');
-	require_once('model/MotionManager.php');
-
-	// ecriture dans la DB, table des settings
-	$config = new DbMngSettings();
-	$oldMail = $config -> getSetting ("motionEmail");
-	if ($oldmail == $email || $email == "") {
-		return ;
-	}
-	$config -> addSetting ("motionEmail", $email);
-
-	// configuration de motion
+function motionSettings () {
+	// intermediate function for recursive use of doMotionSettings
 	$motion = new MotionManager();
 	$motion -> backUpMotion();
-	$motion -> setSendMail($email);
+	doMotionSettings($_POST);
 	$motion -> restartMotion();
 }
+
+function doMotionSettings ($inputList) {
+	// TODO
+	// general function for manage motion settings
+	$sendMailPath = '/var/www/html/public/bash/motionSendMail.sh';
+	$config = new DbMngSettings();
+	$motion = new MotionManager();
+	$config->_table = 'configAlias';
+	foreach ($inputList as $key => $value) {
+		if ($config->keyExist('alias = "'.$key.'" AND aliasValue = "'.$value.'"')) {
+			doMotionSettings($config -> getSettingFromAlias($key, $value));
+			continue ;
+		}
+		// check validity of $value
+		if (! $config-> validateValue($key, $value)) {
+			continue ;
+		}
+		if ($value == $config-> getSettingValue($key))	{
+			continue ;
+		}
+		$config-> modifySetting ($key, $value);
+		if ($key = 'on_motion_detected'){
+			$motion-> setSendMail($key, $value);
+			$motion-> setSetting($key, $sendMailPath);
+		}
+		else {
+			$motion-> setSetting ($key, $value);
+		}
+	}
+}
+
+// function motionDetect($email) {
+// 	// configure mail send on movement detection
+// 	// TODO to delete, no more used
+// 	//require_once('model/DbMngSettings.php');
+// 	//require_once('model/MotionManager.php');
+//
+// 	// ecriture dans la DB, table des settings
+// 	$config = new DbMngSettings();
+// 	$oldMail = $config -> getSettingValue ("motionEmail");
+// 	if ($oldmail == $email || $email == "") {
+// 		return ;
+// 	}
+// 	$config -> addSetting ("motionEmail", $email);
+//
+// 	// configuration de motion
+// 	$motion = new MotionManager();
+// 	$motion -> backUpMotion();
+// 	$motion -> setSendMail($email);
+// 	$motion -> restartMotion();
+// }

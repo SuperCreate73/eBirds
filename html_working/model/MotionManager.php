@@ -6,35 +6,62 @@ class MotionManager {
 
 //Attributs:
 	private $_script = 'public/bash/sendMail.sh' ; //
+	// private $_settingsTable = array(
+	// 	on_motion_detected => array('string', '/var/www/html/public/bash/motionSendMail.sh', 'comment'),
+	// 	width => array('discreet', array(480, 640, 1280), 640),
+	// 	threshold => array('range', array(0, 100), 10), //pourcentage - valeur à modifier avec la définition de l'image
+	// 	height => array('discreet', array(360, 480, 960), 480),
+	// 	quality => array('range', array(0, 100), 75),
+	// 	ffmpeg_timelapse => array('range', array(0, 3600), 0),
+	// 	ffmpeg_timelapse_mode => array('discreet', array('hourly', 'daily', 'weekly-sunday', 'weekly-monday', 'monthly'), 'daily'),
+	// );
 
-	public function setSendMail($email) {
+	public function setSetting ($setting, $value) {
+		// fonction générique pour valider et changer les settings de motion
+		//
+		$shellCmd='sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?'.$setting.'.*$:'.$setting.' '.$value.':g"';
+		$output = shell_exec($shellCmd);
+	}
+
+	public function setSendMail($key, $email) {
 		// configure l'envoi d'e-mail en cas de détection de mouvements
 		//
-		//TODO ne fonctionne pas-> envoyer une requête en BASH (CURL) pour
-		//		lancer la commande au serveur central d'envoyer un mail
 		// 		Mail envoyé depuis l'adresse info@ebirds.be
 		//		$output = shell_exec('sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?on_motion_detected *:on_motion_detected /home/pi/.motion/motion.pid:g"');
 
 		//modification du fichier 'motionSendMail.sh' -> ajout de l'adresse mail
-		$shellCmd='sudo sed "/var/www/html/public/bash/motionSendMail.sh" -i -e "s:^varMail=.*$:varMail='.$email.':g"';
+		$shellCmd='sudo sed "/var/www/html/public/bash/motionSendMail.sh" -i -e "s:^\(#\|;\)\? \?varMail=.*$:varMail='.$email.':g"';
 		$output = shell_exec($shellCmd);
 
 		//modification du fichier 'motion.conf'
-		$shellCmd='sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?on_motion_detected .*$:on_motion_detected /var/www/html/public/bash/motionSendMail.sh:g"';
-		$output = shell_exec($shellCmd);
+		// $shellCmd='sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?'.$key.'.*$:'.$key.' /var/www/html/public/bash/motionSendMail.sh:g"';
+		// $output = shell_exec($shellCmd);
 	}
 
 	public function clearSendMail($email) {
 		// annule l'envoi d'e-mail en cas de détection de mouvements
 		//
 
-		$shellCmd='sudo sed "/var/www/html/public/bash/motionSendMail.sh" -i -e "s:^varMail=.*$:varMail=\"\":g"';
+		$shellCmd='sudo sed "/var/www/html/public/bash/motionSendMail.sh" -i -e "s:^\(#\|;\)\? \?varMail=.*$:varMail=\"\":g"';
 		$output = shell_exec($shellCmd);
 
 		//modification du fichier 'motion.conf'
 		$shellCmd='sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?on_motion_detected .*$:; on_motion_detected value:g"';
 		$output = shell_exec($shellCmd);
 	}
+
+	private function modifyConfig($file, $parameter, $value="", $comment=False) {
+		// annule l'envoi d'e-mail en cas de détection de mouvements
+		//
+
+		$shellCmd='sudo sed "'. $file .'" -i -e "s:^\(#\|;\)\? \?'.$parameter.'.*$:'.$parameter.'='.$value.':g"';
+		$output = shell_exec($shellCmd);
+
+		//modification du fichier 'motion.conf'
+		$shellCmd='sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?on_motion_detected .*$:; on_motion_detected value:g"';
+		$output = shell_exec($shellCmd);
+	}
+
 
 	public function restartMotion() {
 		// redémarrage du daemon motion pour prendre en compte les modifySetting
@@ -98,7 +125,8 @@ class MotionManager {
 // # Valid values: hourly, daily (default), weekly-sunday, weekly-monday, monthly, manual
 // ffmpeg_timelapse_mode daily
 //
-// a faire par défaut
+//
+// a faire par défaut -->> Done
 // ------------------
 // # Output frames at 1 fps when no motion is detected and increase to the
 // # rate given by stream_maxrate when motion is detected (default: off)

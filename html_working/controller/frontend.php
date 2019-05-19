@@ -1,10 +1,10 @@
 <?php
 
 require_once('controller/fonctions.php');
-require_once('model/DbMngData.php');
-require_once('model/User.php');
-require_once('model/FileManager.php');
-require_once('model/ImageFileManager.php');
+//require_once('model/DbMngData.php');
+//require_once('model/User.php');
+//require_once('model/FileManager.php');
+//require_once('model/ImageFileManager.php');
 
 function homePage($nom) {
 	// Contrôleur de la HomePage du site

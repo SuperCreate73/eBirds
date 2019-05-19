@@ -48,6 +48,28 @@ abstract class DbManager {
 		return($list);
 	}
 
+	protected function getKey($key, $value, $columns = NULL) {
+		// Get all records from $_table where $key = $value
+		//
+		if (is_null($columns)) {
+			$sqlColumns="*";
+		}
+		elseif (is_array($columns)) {
+			foreach ($columns as $values) {
+				$sqlColumns=$sqlColumns.$values.", ";
+			}
+			$sqlColumns = substr($sqlColumns, 0, -2);
+		}
+		else {
+			$sqlColumns = $columns;
+		}
+		$db = $this->dbConnect();
+		$sql = "SELECT ".$sqlColumns." FROM ".$this->_table." WHERE ".$key." = '".$value."' ;";
+		$stmt = $db->query($sql);
+		$list = $stmt->fetchall();
+		return($list);
+	}
+
 	protected function keyExist ($whereClause) {
 		// Test exitence of key
 		// return (boolean)

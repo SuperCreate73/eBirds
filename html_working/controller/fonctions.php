@@ -1,9 +1,16 @@
 <?php
 
+function classLoad ($classe) {
+	//Automatic class load -> drived by spl_autoload_register('classLoad')
+	require 'model/'.$classe.'.php';
+}
+
+spl_autoload_register('classLoad');
+
 function setFocus($position) {
 	// Gère la page ayant le focus dans le menu principal en complétant le tableau tabFocus
 	// avec la classe 'selected' à la position de liste correspondant à la position de page
-	// 
+	//
 	// TODO - changer le paramètre: on envoie le nom de la page active à la fonction
 	// 		- on crée un dictionnaire avec le nom des pages et l'index désiré
 	// 		- on compte le nombre d'entrées pour la limite max de la boucle
@@ -37,7 +44,7 @@ function layoutPane($allArrayData,$page,$limit=10,$colnum=3){
 	for ($iter=0; $iter<$colnum; $iter++) {
 		$arrayDataByCol[$iter]=array_slice($allArrayData,($limit*$colnum*($page-1)+($iter*$limit)),$limit);
 	}
-	
+
 	return $arrayDataByCol;
 }
 
@@ -86,4 +93,3 @@ function convertirTimezone($time, $deTz = "GMT", $versTz = "Europe/Brussels") {
     $time= $date->format('Y-m-d H:i:s');
     return $time;
 }
-
