@@ -106,8 +106,44 @@
 					</div>
 
 					<div class="five columns">
+						<label for="imageSize">Dimensions de l'image:</label>
+						<select class="u-full-width" id="imageSize" name="imageSize">
+							<option value="low" <?php ($imageSize[0]=='low') ? selected : "" ?> >Petite</option>
+							<option value="medium" <?php ($imageSize[0]=='medium') ? selected : "" ?> >Moyenne</option>
+							<option value="high" <?php ($imageSize[0]=='high') ? selected : "" ?> >Grande</option>
+						</select>
+					</div>
+
+					<div class="five columns">
+						<label for="ffmpeg_timelapse_mode">fréquence de sauvegarde (timelapse):</label>
+						<select class="u-full-width" id="ffmpeg_timelapse_mode" name="ffmpeg_timelapse_mode">
+							<option value="hourly" <?php ($ffmpeg_timelapse_mode[0][0]=='hourly') ? 'selected' : "" ?> >Toute les heures</option>
+							<option value="daily" <?php ($ffmpeg_timelapse_mode[0][0]=='daily') ? 'selected' : "" ?> >Tous les jours</option>
+							<option value="weekly-sunday" <?php ($ffmpeg_timelapse_mode[0][0]=='weekly-sunday') ? 'selected' : "" ?> >Toutes les semaines (dimanche)</option>
+							<option value="weekly-monday" <?php ($ffmpeg_timelapse_mode[0][0]=='weekly-monday') ? 'selected' : "" ?> >Toutes les semaines (lundi)</option>
+							<option value="monthly" <?php ($ffmpeg_timelapse_mode[0][0]=='monthly') ? 'selected' : "" ?> >Tous les mois</option>
+						</select>
+					</div>
+
+					<div class="five columns">
+						<label>Intervalle en seconde entre les photos (0-3200):</label>
+						<input class="u-full-width" type="number" min="0" max="3200" placeholder="<?= $ffmpeg_timelapse[0][0] ; ?>" name="ffmpeg_timelapse" id="ffmpeg_timelapse" onchange="">
+					</div>
+
+					<div class="five columns">
+						<label>Qualité de l'image (0-100):</label>
+						<input class="u-full-width" type="number" min="0" max="100" placeholder="<?= $quality[0][0] ; ?>" name="quality" id="quality" onchange="">
+					</div>
+
+					<div class="five columns">
+						<label>Seuil de détection en % (5-50):</label>
+						<input class="u-full-width" type="number" min="5" max="50" placeholder=<?= $threshold[0][0] ; ?> name="threshold" id="threshold" onchange="">
+					</div>
+
+
+					<div class="five columns">
 						<label>Contact en cas de détection de mouvement:</label>
-						<input class="u-full-width" type="text" placeholder="email(s)" name="emails" id="email" onchange="changeEmail();">
+						<input class="u-full-width" type="text" placeholder="<?= $on_motion_detected[0][0] ; ?>" name="on_motion_detected" id="on_motion_detected" onchange="">
 					</div>
 				</div>
 			</div> <!--    FIN CADRE II -->

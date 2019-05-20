@@ -106,7 +106,14 @@ function reglages($nom) {
 		//impossible de charger les utilisateurs
 		$users="Unable to load users";
 	}
-		require('view/viewReglages.php');
+	$config = new DbMngSettings();
+	$on_motion_detected = $config->getSettingValue('on_motion_detected');
+	$threshold = $config->getSettingValue('threshold');
+	$quality = $config->getSettingValue('quality');
+	$ffmpeg_timelapse = $config->getSettingValue('ffmpeg_timelapse');
+	$ffmpeg_timelapse_mode = $config->getSettingValue('ffmpeg_timelapse_mode');
+	$imageSize = $config->getAliasValue('imageSize');
+	require('view/viewReglages.php');
 }
 
 function login($message) {

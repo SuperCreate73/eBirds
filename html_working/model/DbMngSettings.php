@@ -8,17 +8,20 @@ class DbMngSettings extends DbManager {
 	// linked table 'configRange' : setting, allowValue
 	//			--> one row for each value or (min or max)
 	// 			--> multiple row for each setting
-	$configTable = "config";
-	$configRange = "configRange";
-
+//	public function __construct() {
+		public $config = "config";
+		public $configRange = "configRange";
+//	}
 // ##################################################################
 	public function getSettingFromAlias ($alias, $value) {
 		// Get all records from $configAlias
 		// where alias = $alias and aliasValue = $value
 		//
-		$this->_table = 'configAlias'
+		$this->_table = 'configAlias';
 		$db = $this->dbConnect();
-		$sql = "SELECT setting, settingValue FROM configAlias WHERE alias = '".$alias."' AND aliasValue = '".$value."' ;";
+		$sql = "SELECT setting, settingValue
+						FROM configAlias
+						WHERE alias = '".$alias."' AND aliasValue = '".$value."' ;";
 		$stmt = $db->query($sql);
 		$list = $stmt->fetchall(PDO::FETCH_KEY_PAIR);
 		return($list);
@@ -27,7 +30,7 @@ class DbMngSettings extends DbManager {
 // ##################################################################
 	private function getSettingRange ($setting, $sorted = False) {
 		// get possible range for setting -> return list
-		$this->_table = $configRange;
+		$this->_table = $this->configRange;
 		if ($sorted) {
 			return sort($this -> getKey('setting', $setting, 'rangeValue'));
 		}
@@ -39,24 +42,39 @@ class DbMngSettings extends DbManager {
 // ##################################################################
 	public function getSettingValue ($setting) {
 		// Return current value from setting
-		$this->_table = $configTable;
-		$result= $this->getKey('setting', $setting, 'value')
-		return ($result['value']);
+		$this->_table = $this->config ;
+		$result= $this->getKey('setting', $setting, 'value');
+		return ($result);
+	}
+
+// ##################################################################
+	public function getAliasValue ($alias) {
+		// Return current value from alias
+		$db = $this->dbConnect();
+		$sql = "SELECT aliasValue FROM configAlias
+						INNER JOIN config
+						ON (configAlias.setting = config.setting
+							AND configAlias.settingValue = config.value)
+						WHERE configAlias.alias = '".$alias."'
+						LIMIT 1 ;";
+		$stmt = $db->query($sql);
+		$list = $stmt->fetchall();
+		return($list);
 	}
 
 // ##################################################################
 	public function validateValue ($setting, $value) {
 		// get type of value to validate - discreet, range or file
-		$this->_table = $configTable;
-		$valueType = $this -> getKey('setting', $setting, 'valueType')
+		$this->_table = $this->config;
+		$valueType = $this -> getKey('setting', $setting, 'valueType');
 
 		// validate value
-		$this->_table = $configRange;
+		$this->_table = $this->configRange;
 		if ($valueType == 'discreet') {
 			return (in_array($value, $this -> getSettingRange ($setting)) ? True : False) ;
 		}
 		elseif($valueType == 'range')  {
-			$range = $this -> getSettingRange ($setting, True)
+			$range = $this -> getSettingRange ($setting, True);
 			return (($value >= $range[0] && $value <= $range[1]) ? True : False) ;
 		}
 		elseif ($valueType == 'email') {
@@ -87,7 +105,7 @@ class DbMngSettings extends DbManager {
 // ##################################################################
 	public function modifySetting ($setting,$value) {
 		// modify value
-		$this->_table = $configTable;
+		$this->_table = $this->config;
 		$db = $this->dbConnect();
 		$stmt=$db->prepare("UPDATE config SET value = :Value WHERE (setting = :Setting)");
 		$resultat=$stmt->execute(array(
@@ -125,8 +143,8 @@ class DbMngSettings extends DbManager {
 // ##################################################################
 	public function clearSetting ($setting) {
 		// Remove completely a pair setting/value
-		$this->_table = $configTable;
-		$defautValue = $this -> getKey('setting', $setting, 'defautValue')
+		$this->_table = $this->config;
+		$defautValue = $this -> getKey('setting', $setting, 'defautValue');
 		if  ($defautValue == 'comment') {
 			// TODO comment
 		}
@@ -143,7 +161,7 @@ class DbMngSettings extends DbManager {
 	// 	// Test exitence of key
 	// 	// return (boolean)
 	// 	//
-	// 	$this->_table = $configTable;
+	// 	$this->_table = $config;
 	// 	$where = "setting = '".$setting."'" ;
 	// 	$result = $this-> keyExist($where);
 	// 	return $result;
