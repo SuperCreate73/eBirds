@@ -554,16 +554,24 @@ printMessage "envoi de l'adresse IP au serveur central" "curlIP"
 MACaddress=$(sudo ifconfig | grep -i -m 1  ether | cut -f 10 -d ' ')
 IPlocale=$(sudo ifconfig | grep -i -m 1  "netmask 255.255.255.0" | cut -f 10 -d ' ')
 IPexterne=$(dig TXT +short -4 o-o.myaddr.1.google @ns1.google.com | cut -f 2 -d '"')
+Name=$(hostname)
 
-curl --data "ID=$MACaddress&IPEXT=$IPexterne&IPINT=$IPlocale" https://ebirds.be/donnees/identify
+curl --data "ID=$MACaddress&IPEXT=$IPexterne&IPINT=$IPlocale&NAME=$Name" https://ebirds.be/donnees/identify
 printError "$?"
 
-printMessage "config envoi de l'IP au serveur central" "sendIP"
-crontab -u pi - <<FIN
-0 */6 * * * /var/www/html/public/bash/sendIP.sh
-@reboot /var/www/html/public/bash/sendIP.sh
-FIN
+printMessage "config envoi de l'IP au serveur central" "crontab"
+# crontab -u pi - <<FIN
+# 00 */06 * * * /var/www/html/public/bash/sendIP.sh
+# @reboot /var/www/html/public/bash/sendIP.sh
+# FIN
+#
 # crontab < <(crontab -l ; echo "0 */6 * * * /var/www/html/public/bash/sendIP.sh > /dev/null 2>&1")
+
+sudo touch /etc/cron.d/sendIP
+sudo chmod 777 /etc/cron.d/sendIP
+sudo echo "00 */06 * * * pi /var/www/html/public/bash/sendIP.sh" >> /etc/cron.d/sendIP
+sudo echo "@reboot pi /var/www/html/public/bash/sendIP.sh" >> /etc/cron.d/sendIP
+
 printError "$?"
 
 #######################################################################

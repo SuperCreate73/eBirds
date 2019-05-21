@@ -156,7 +156,7 @@
 
 					<div class="five columns">
 						<label for="modeCamera">Mode d'enregistrement images:</label>
-						<select class="u-full-width" id="modeCamera" onchange="changeModeCamera(event);">
+						<select class="u-full-width" id="modeCamera" onchange="">
 							<option value="Detection">Photo - Détection mouvement</option>
 							<option value="Timelapse">Photo - Timelapse</option>
 							<option value="Video">Video</option>
@@ -165,7 +165,7 @@
 
 					<div class="five columns">
 						<label for="definitionCamera">Définition de l'image:</label>
-						<select class="u-full-width" id="definitionCamera" onchange = "changeDefinitionCamera(event);">
+						<select class="u-full-width" id="definitionCamera" onchange = "">
 							<option value="High">High</option>
 							<option value="Medium">Medium</option>
 							<option value="Low">Low</option>
