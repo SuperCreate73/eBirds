@@ -11,7 +11,7 @@
 
 	<h1>Réglages</h1>
 	<div id="accordion">
-		<form method="POST" action="index.php?action=doreglages">
+		<form method="POST" action="index.php?page=reglages&action=doreglages">
 			<div class="cadre systeme">
 				<div class="row spaced">
 					<div class="eight columns">

@@ -559,7 +559,11 @@ curl --data "ID=$MACaddress&IPEXT=$IPexterne&IPINT=$IPlocale" https://ebirds.be/
 printError "$?"
 
 printMessage "config envoi de l'IP au serveur central" "sendIP"
-crontab < <(crontab -l ; echo "0 */6 * * * /var/www/html/public/bash/sendIP.sh > /dev/null 2>&1")
+crontab -u pi - <<FIN
+0 */6 * * * /var/www/html/public/bash/sendIP.sh
+@reboot /var/www/html/public/bash/sendIP.sh
+FIN
+# crontab < <(crontab -l ; echo "0 */6 * * * /var/www/html/public/bash/sendIP.sh > /dev/null 2>&1")
 printError "$?"
 
 #######################################################################

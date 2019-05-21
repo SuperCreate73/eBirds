@@ -151,8 +151,35 @@ function logOut() {
 	// On supprime la variable de session 'nom' pour déconnecter l'usager et on redirige vers la dernière page consultée
 }
 
-function doReglages() {
-
+function doReglages($nom, $action) {
+	// TODO
+	// general function for manage motion settings
+	$sendMailPath = '/var/www/html/public/bash/motionSendMail.sh';
+	$config = new DbMngSettings();
+	$motion = new MotionManager();
+	$config->_table = 'configAlias';
+	$inputList = $_POST;
+ 	foreach ($inputList as $key => $value) {
+		if ($config->keyExist('alias = "'.$key.'" AND aliasValue = "'.$value.'"')) {
+			doMotionSettings($config -> getSettingFromAlias($key, $value));
+			continue ;
+		}
+		// check validity of $value
+		if (! $config-> validateValue($key, $value)) {
+			continue ;
+		}
+		if ($value == $config-> getSettingValue($key))	{
+			continue ;
+		}
+		$config-> modifySetting ($key, $value);
+		if ($key = 'on_motion_detected'){
+			$motion-> setSendMail($key, $value);
+			$motion-> setSetting($key, $sendMailPath);
+		}
+		else {
+			$motion-> setSetting ($key, $value);
+		}
+	}
 	if (htmlspecialchars($_POST['nom'])=='') {
 		//update parameters
 	}
