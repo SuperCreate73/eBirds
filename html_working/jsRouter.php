@@ -21,6 +21,7 @@ try
 		'saveUser' => 'saveUser',
 		'delUser' => 'delUser',
 		'motionSettings' => 'motionSettings',
+		'doReglages' => 'doReglages',
 	);
 
 	if ( ! array_key_exists($action, $actionArray)) {

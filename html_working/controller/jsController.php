@@ -86,34 +86,34 @@ function motionSettings () {
 	$motion -> restartMotion();
 }
 
-function doMotionSettings ($inputList) {
-	// TODO
-	// general function for manage motion settings
-	$sendMailPath = '/var/www/html/public/bash/motionSendMail.sh';
-	$config = new DbMngSettings();
-	$motion = new MotionManager();
-	$config->_table = 'configAlias';
-	foreach ($inputList as $key => $value) {
-		if ($config->keyExist('alias = "'.$key.'" AND aliasValue = "'.$value.'"')) {
-			doMotionSettings($config -> getSettingFromAlias($key, $value));
-			continue ;
-		}
-		// check validity of $value
-		if (! $config-> validateValue($key, $value)) {
-			continue ;
-		}
-		if ($value == $config-> getSettingValue($key))	{
-			continue ;
-		}
-		$config-> modifySetting ($key, $value);
-		if ($key = 'on_motion_detected'){
-			$motion-> setSendMail($key, $value);
-			$motion-> setSetting($key, $sendMailPath);
-		}
-		else {
-			$motion-> setSetting ($key, $value);
-		}
-	}
+// function doMotionSettings () {
+// 	// TODO
+// 	// general function for manage motion settings
+// 	$sendMailPath = '/var/www/html/public/bash/motionSendMail.sh';
+// 	$motion = new MotionManager();
+// 	$config = new DbMngSettings();
+// 	$config->_table = 'configAlias';
+// 	foreach ($_POST as $key => $value) {
+// 		if ($config->keyExist('alias = "'.$key.'" AND aliasValue = "'.$value.'"')) {
+// 			doMotionSettings($config -> getSettingFromAlias($key, $value));
+// 			continue ;
+// 		}
+// 		// check validity of $value
+// 		if (! $config-> validateValue($key, $value)) {
+// 			continue ;
+// 		}
+// 		if ($value == $config-> getSettingValue($key))	{
+// 			continue ;
+// 		}
+// 		$config-> modifySetting ($key, $value);
+// 		if ($key = 'on_motion_detected'){
+// 			$motion-> setSendMail($key, $value);
+// 			$motion-> setSetting($key, $sendMailPath);
+// 		}
+// 		else {
+// 			$motion-> setSetting ($key, $value);
+// 		}
+// 	}
 }
 
 // function motionDetect($email) {

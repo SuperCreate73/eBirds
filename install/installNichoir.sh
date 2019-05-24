@@ -455,14 +455,51 @@ fi
 #######################################################################
 printMessage "creation de la base de données" "nichoir.db"
 sqlite3 /var/www/nichoir.db << EOS
-	CREATE TABLE IF NOT EXISTS users (login TINY TEXT PRIMARY KEY, password TEXT);
-	CREATE TABLE IF NOT EXISTS Capt_IR (FDatim DATETIME DEFAULT CURRENT_TIMESTAMP, FConnector TEXT, FStatus TEXT, FTime LONG, FTreated INTEGER DEFAULT 0, FID_Pair LONG);
-	CREATE TABLE IF NOT EXISTS meteo (dateHeure DATETIME DEFAULT CURRENT_TIMESTAMP, tempExt TEXT, humExt TEXT, tempInt TEXT, humInt TEXT);
-	CREATE TABLE IF NOT EXISTS InOut_IR (FDatim DATETIME DEFAULT CURRENT_TIMESTAMP, FStatus TEXT, FTime LONG);
-	CREATE TABLE IF NOT EXISTS Capt_cap (dateHeure DATETIME DEFAULT CURRENT_TIMESTAMP, connecteur TEXT, valeur LONG);
-	CREATE TABLE IF NOT EXISTS config (setting TINY TEXT PRIMARY KEY, value TINY TEXT, defautValue TINY TEXT, valueType);
-	CREATE TABLE IF NOT EXISTS configRange (setting TINY TEXT, rangeValue TINY TEXT);
-	CREATE TABLE IF NOT EXISTS configAlias (alias TINY TEXT, aliasValue TINY TEXT, setting TINY TEXT, settingValue TINY TEXT);
+	CREATE TABLE IF NOT EXISTS
+		users
+			(	login TINY TEXT PRIMARY KEY,
+			 	password TEXT);
+	CREATE TABLE IF NOT EXISTS
+		Capt_IR
+			(	FDatim DATETIME DEFAULT CURRENT_TIMESTAMP,
+				FConnector TEXT,
+				FStatus TEXT,
+				FTime LONG,
+				FTreated INTEGER DEFAULT 0,
+				FID_Pair LONG);
+	CREATE TABLE IF NOT EXISTS
+		meteo
+			(	dateHeure DATETIME DEFAULT CURRENT_TIMESTAMP,
+				tempExt TEXT,
+				humExt TEXT,
+				tempInt TEXT,
+				humInt TEXT);
+	CREATE TABLE IF NOT EXISTS
+		InOut_IR
+			(	FDatim DATETIME DEFAULT CURRENT_TIMESTAMP,
+				FStatus TEXT,
+				FTime LONG);
+	CREATE TABLE IF NOT EXISTS
+		Capt_cap
+			(	dateHeure DATETIME DEFAULT CURRENT_TIMESTAMP,
+				connecteur TEXT,
+				valeur LONG);
+	CREATE TABLE IF NOT EXISTS
+		config
+			(	setting TINY TEXT PRIMARY KEY,
+				value TINY TEXT,
+				defautValue TINY TEXT,
+				valueType);
+	CREATE TABLE IF NOT EXISTS
+		configRange
+			(	setting TINY TEXT,
+				rangeValue TINY TEXT);
+	CREATE TABLE IF NOT EXISTS
+		configAlias
+			(	alias TINY TEXT,
+				aliasValue TINY TEXT,
+				setting TINY TEXT,
+				settingValue TINY TEXT);
 EOS
 printError "$?"
 #######################################################################
@@ -471,7 +508,11 @@ printError "$?"
 printMessage "insertion de l'utilisateur admin (password = admin)" "nichoir.db"
 adminPwd=$(printf '%s' "admin" | md5sum | cut -d ' ' -f 1)
 sqlite3 /var/www/nichoir.db << EOS
-	INSERT INTO users ('login', 'password') VALUES ('admin', '$adminPwd');
+	INSERT INTO
+		users
+			('login', 'password')
+		VALUES
+			('admin', '$adminPwd');
 EOS
 printError "$?"
 
@@ -480,8 +521,16 @@ printError "$?"
 #######################################################################
 printMessage "insertion des paramètres" "nichoir.db"
 sqlite3 /var/www/nichoir.db << EOS
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('on_motion_detected', 'email', 'comment', 'email');
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('width', '640', '640', 'discreet');
+	INSERT INTO
+		config
+			('setting', 'value', 'defautValue', 'valueType')
+		VALUES
+			('on_motion_detected', 'email', 'comment', 'email');
+	INSERT INTO
+		config
+			('setting', 'value', 'defautValue', 'valueType')
+		VALUES
+			('width', '640', '640', 'discreet');
 	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('height', '480', '480', 'discreet');
 	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('threshold', '10', '10', 'range');
 	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('quality', '75', '75', 'range');

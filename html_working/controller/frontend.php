@@ -37,18 +37,24 @@ function photoList($nom, $none ,$mvtPage) {
 	$fileList=$fileManager -> setFileList();
 	$numberOfPage = numberOfPage($fileList,$listMax*3);
 	$page=(isset($_SESSION['listeCourante'])) ? $_SESSION['listeCourante'] : 1;
-	if ($mvtPage == 'next') {
+
+	if ($mvtPage == 'next')
+	{
 		$page=($page==$numberOfPage) ? $page : ($page+1);
 	}
-	elseif ($mvtPage == 'previous') {
+	elseif ($mvtPage == 'previous')
+	{
 		$page=($page==1) ? $page : ($page-1);
 	}
-	elseif ($mvtPage == 'first') {
+	elseif ($mvtPage == 'first')
+	{
 		$page=1;
 	}
-	elseif ($mvtPage == 'last'){
+	elseif ($mvtPage == 'last')
+	{
 		$page=$numberOfPage;
 	}
+
 	$_SESSION['listeCourante'] = $page;
 	$explorerPane = layoutPane($fileList,$page,$listMax);
 	if (isset($_SESSION['selectionCourante'])) {
@@ -97,7 +103,11 @@ function information($nom) {
 	require('view/viewInformations.php');
 }
 
-function reglages($nom) {
+function reglages($nom, $action=null) {
+	if (! is_null($action)) {
+		// debug_to_console( "test 2" );
+		motionSettings();
+	}
 	$tabFocus=setFocus(3);
 
 	$user = new User();
@@ -151,36 +161,48 @@ function logOut() {
 	// On supprime la variable de session 'nom' pour déconnecter l'usager et on redirige vers la dernière page consultée
 }
 
-function doReglages($nom, $action) {
-	// TODO
-	// general function for manage motion settings
-	$sendMailPath = '/var/www/html/public/bash/motionSendMail.sh';
-	$config = new DbMngSettings();
-	$motion = new MotionManager();
-	$config->_table = 'configAlias';
-	$inputList = $_POST;
- 	foreach ($inputList as $key => $value) {
-		if ($config->keyExist('alias = "'.$key.'" AND aliasValue = "'.$value.'"')) {
-			doMotionSettings($config -> getSettingFromAlias($key, $value));
-			continue ;
-		}
-		// check validity of $value
-		if (! $config-> validateValue($key, $value)) {
-			continue ;
-		}
-		if ($value == $config-> getSettingValue($key))	{
-			continue ;
-		}
-		$config-> modifySetting ($key, $value);
-		if ($key = 'on_motion_detected'){
-			$motion-> setSendMail($key, $value);
-			$motion-> setSetting($key, $sendMailPath);
-		}
-		else {
-			$motion-> setSetting ($key, $value);
-		}
-	}
-	if (htmlspecialchars($_POST['nom'])=='') {
-		//update parameters
-	}
-}
+// function doReglages() {
+// 	// TODO
+// 	// general function for manage motion settings
+// 	debug_to_console( "test 2" );
+// 	$sendMailPath = '/var/www/html/public/bash/motionSendMail.sh';
+// 	$config = new DbMngSettings();
+// 	$motion = new MotionManager();
+// 	// $config->_table = 'configAlias';
+// 	$inputList = $_POST;
+//  	foreach ($inputList as $key => $value) {
+//
+// 		if ($config->keyTest('configAlias', 'alias = "'.$key.'" AND aliasValue = "'.$value.'"'))
+// 		{
+// 			debug_to_console( "1 doMotionSettings" );
+// 			doMotionSettings($config -> getSettingFromAlias($key, $value));
+// 			continue ;
+// 		}
+// 		// check validity of $value
+// 		if (! $config-> validateValue($key, $value))
+// 		{
+// 			debug_to_console( "2 validateValue" );
+// 			continue ;
+// 		}
+// 		// check if same values in DB
+// 		if ($value == $config-> getSettingValue($key))
+// 		{
+// 			debug_to_console( "3 sameValues" );
+// 			continue ;
+// 		}
+// 		debug_to_console( "4 modifySetting" );
+// 		$config-> modifySetting ($key, $value);
+//
+// 		if ($key = 'on_motion_detected')
+// 		{
+// 			debug_to_console( "5 send mail" );
+// 			$motion-> setSendMail($key, $value);
+// 			$motion-> setSetting($key, $sendMailPath);
+// 		}
+// 		else
+// 		{
+// 			debug_to_console( "6 setSetting" );
+// 			$motion-> setSetting ($key, $value);
+// 		}
+// 	}
+// }

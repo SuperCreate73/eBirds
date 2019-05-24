@@ -60,6 +60,14 @@ function numberOfPage($allArrayData,$listMax) {
 	}
 }
 
+function debug_to_console( $data ) {
+    $output = $data;
+    if ( is_array( $output ) )
+        $output = implode( ',', $output);
+
+    echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
+}
+
 function resetSelection ($fileTable) {
 
 //	$strScript='<script type="text/javascript">';
@@ -92,4 +100,57 @@ function convertirTimezone($time, $deTz = "GMT", $versTz = "Europe/Brussels") {
     $date->setTimezone(new DateTimeZone($versTz));
     $time= $date->format('Y-m-d H:i:s');
     return $time;
+}
+
+function motionSettings () {
+	// intermediate function for recursive use of doMotionSettings
+	$motion = new MotionManager();
+	$motion -> backUpMotion();
+	doMotionSettings($_POST);
+	$motion -> restartMotion();
+}
+
+function doMotionSettings ($inputList) {
+	// TODO
+	// general function for manage motion settings
+	$sendMailPath = '/var/www/html/public/bash/motionSendMail.sh';
+	$config = new DbMngSettings();
+	$motion = new MotionManager();
+	// $config->_table = 'configAlias';
+
+ 	foreach ($inputList as $key => $value) {
+
+		if ($config->keyTest('configAlias', 'alias = "'.$key.'" AND aliasValue = "'.$value.'"'))
+		{
+			debug_to_console( "1 doMotionSettings" );
+			doMotionSettings($config -> getSettingFromAlias($key, $value));
+			continue ;
+		}
+		// check validity of $value
+		if (! $config-> validateValue($key, $value))
+		{
+			debug_to_console( "2 validateValue ".$key." - ".$value );
+			continue ;
+		}
+		// check if same values in DB
+		if ($value == $config-> getSettingValue($key))
+		{
+			debug_to_console( "3 sameValues" );
+			continue ;
+		}
+		debug_to_console( "4 modifySetting" );
+		$config-> modifySetting ($key, $value);
+
+		if ($key = 'on_motion_detected')
+		{
+			debug_to_console( "5 send mail" );
+			$motion-> setSendMail($key, $value);
+			$motion-> setSetting($key, $sendMailPath);
+		}
+		else
+		{
+			debug_to_console( "6 setSetting" );
+			$motion-> setSetting ($key, $value);
+		}
+	}
 }

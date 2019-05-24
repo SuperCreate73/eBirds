@@ -36,16 +36,17 @@ try	{	// instruction permettant de récupérer les erreurs éventuelles dans l'i
 		'login' => 'login', //tomodify with test is already connected
 		'logout'=> 'logout',
 		'loginVerify' => 'loginVerify',
-		'doreglages' => 'doReglages',
+		'doReglages' => 'doReglages',
 		'homepage' => 'homePage',
 	);
 
+	// debug_to_console( "test1" );
 	// renvoie une erreur si la page n'est pas dans pagesArray
 	//if ( ! in_array ($page, $pagesArray) ) {
 	if ( ! array_key_exists($page, $pagesArray)) {
 		throw new Exception('Page non valide !');
 	}
-		
+
 	if ($page == 'reglages' && $nom == '' ) {
 		//
 		//	if ($nom == '') {
@@ -73,8 +74,10 @@ try	{	// instruction permettant de récupérer les erreurs éventuelles dans l'i
 		// appel de la fonction adhoc
 		$pagesArray[$page]($nom, $action, $parameter1);
 	}
+
 }
 
+// debug_to_console( $page.' - '.$action.' - '.$nom );
 
 catch(Exception $e) {
    	// S'il y a eu une erreur, alors...

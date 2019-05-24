@@ -31,11 +31,15 @@ class DbMngSettings extends DbManager {
 	private function getSettingRange ($setting, $sorted = False) {
 		// get possible range for setting -> return list
 		$this->_table = $this->configRange;
-		if ($sorted) {
-			return sort($this -> getKey('setting', $setting, 'rangeValue'));
+
+		if ($sorted)
+		{
+			$returnValue = $this -> getKey('setting', $setting, 'rangeValue');
+			return (asort($returnValue));
 		}
-		else {
-			return $this -> getKey('setting', $setting, 'rangeValue');
+		else
+		{
+			return ($this -> getKey('setting', $setting, 'rangeValue'));
 		}
 	}
 
@@ -65,15 +69,20 @@ class DbMngSettings extends DbManager {
 // ##################################################################
 	public function validateValue ($setting, $value) {
 		// get type of value to validate - discreet, range or file
+		debug_to_console( "1 validateValue" );
 		$this->_table = $this->config;
-		$valueType = $this -> getKey('setting', $setting, 'valueType');
-
+		$valueTypeArr = $this -> getKey('setting', $setting, 'valueType');
+		$valueType = $valueTypeArr[0];
+		debug_to_console( "2 getKey - ".$setting." - ".$value." - ".json_encode($valueTypeArr)) ;
 		// validate value
 		$this->_table = $this->configRange;
-		if ($valueType == 'discreet') {
+
+		if ($valueType == 'discreet')
+		{
 			return (in_array($value, $this -> getSettingRange ($setting)) ? True : False) ;
 		}
-		elseif($valueType == 'range')  {
+		elseif($valueType == 'range')
+		{
 			$range = $this -> getSettingRange ($setting, True);
 			return (($value >= $range[0] && $value <= $range[1]) ? True : False) ;
 		}
@@ -120,6 +129,11 @@ class DbMngSettings extends DbManager {
 		// 	return array_unique($this -> getKey('alias', $alias, 'setting'));
 		// }
 
+		public function keyTest ($table, $where) {
+			// modify value
+			$this->_table = $table ;
+			return ($this->keyExist($where)) ;
+		}
 
 
 	// public function addSetting ($setting,$value) {

@@ -66,8 +66,8 @@ abstract class DbManager {
 		$db = $this->dbConnect();
 		$sql = "SELECT ".$sqlColumns." FROM ".$this->_table." WHERE ".$key." = '".$value."' ;";
 		$stmt = $db->query($sql);
-		$list = $stmt->fetchall();
-		return($list);
+		$list = $stmt->fetchall(PDO::FETCH_BOTH);
+		return(array_shift($list));
 	}
 
 	protected function keyExist ($whereClause) {

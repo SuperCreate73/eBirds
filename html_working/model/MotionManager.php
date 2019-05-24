@@ -66,7 +66,6 @@ class MotionManager {
 	public function restartMotion() {
 		// redémarrage du daemon motion pour prendre en compte les modifySetting
 		//
-
 		$shellCmd='sudo /etc/init.d/motion restart';
 		$output = shell_exec($shellCmd);
 	}
@@ -76,9 +75,13 @@ class MotionManager {
 		// teste également la présence du fichier de backup initial
 
 		if ( ! file_exists ("/etc/motion/motion.conf.original")) {
-			copy ("/etc/motion/motion.conf", "/etc/motion/motion.conf.original");
+			$shellCmd='sudo cp /etc/motion/motion.conf /etc/motion/motion.conf.original';
+			$output = shell_exec($shellCmd);
+			// copy ("/etc/motion/motion.conf", "/etc/motion/motion.conf.original");
 		}
-		copy ("/etc/motion/motion.conf", "/etc/motion/motion.conf.back");
+		$shellCmd='sudo cp /etc/motion/motion.conf /etc/motion/motion.conf.back';
+		$output = shell_exec($shellCmd);
+		// copy ("/etc/motion/motion.conf", "/etc/motion/motion.conf.back");
 	}
 
 	public function restoreMotion($origin=False) {
@@ -86,10 +89,14 @@ class MotionManager {
 		// ou du fichier original si $origin=True
 
 		if ($origin) {
-			copy ("/etc/motion/motion.conf.original", "/etc/motion/motion.conf");
+			$shellCmd='sudo cp /etc/motion/motion.conf.original /etc/motion/motion.conf';
+			$output = shell_exec($shellCmd);
+			// copy ("/etc/motion/motion.conf.original", "/etc/motion/motion.conf");
 		}
 		else {
-			copy ("/etc/motion/motion.conf.back", "/etc/motion/motion.conf");
+			$shellCmd='sudo cp /etc/motion/motion.conf.back /etc/motion/motion.conf';
+			$output = shell_exec($shellCmd);
+			// copy ("/etc/motion/motion.conf.back", "/etc/motion/motion.conf");
 		}
 	}
 
