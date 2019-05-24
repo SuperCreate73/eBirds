@@ -67,7 +67,7 @@ function addUser(){
     </div></div></div>\
     <div class='offset-by-seven columns'>\
       <div class='five columns'>\
-        <input class='button u-full-width boutonLogin' value='Enregistrer les modifications' onclick='saveUser()'>\
+        <input class='button u-full-width boutonLogin' value='Enregistrer les modifications' onclick='saveUser();'>\
       </div>\
     </div>\
 ";
@@ -79,7 +79,7 @@ function addUser(){
 function saveUser() {
   var nameUser = document.getElementById("nameUser").value;
   var passwdUser = document.getElementById("passwdUser").value;
-
+  console.log(nameUser, passwdUser);
   if (nameUser.length < 3 || passwdUser.length < 6){
     document.getElementById("FenetreContenu").innerHTML="\
       <br>\
@@ -120,10 +120,10 @@ function saveUser() {
 }
 
 function changerNom(){
-  var nom = document.getElementById("nom_nichoir").value;
+        var nom = document.getElementById("nom_nichoir").value;
 	console.log(nom);
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET", "jsRouter.php?action=changeName&param1="+nom, true);
+  	var xmlhttp = new XMLHttpRequest();
+  	xmlhttp.open("GET", "jsRouter.php?action=changeName&param1="+nom, true);
 	xmlhttp.send();
 
 }
@@ -135,13 +135,12 @@ function removeUser(nom){
 
 }
 function changeEmail(){
-  // changer la fnction pour éviter un redémarrage intempestif du daemon
   var newMail = document.getElementById('email').value;
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET", "jsRouter.php?action=motionDetect&param1="+newMail, true);
-  xmlhttp.send();
-}
 
+
+  //xmlhttp.open("")
+
+}
 function changeMode(e){
   var mode = e.target.value;
   alert(mode);
@@ -154,3 +153,13 @@ function changeDefinitionCamera(e){
   var mode = e.target.value;
   alert(mode);
 }
+
+function updateQualite(val) {
+          document.getElementById('texteQualite').innerHTML=val;
+        }
+function updateIntervalle(val) {
+          document.getElementById('texteIntervalle').innerHTML=val;
+      }
+function updateDetection(val) {
+          document.getElementById('texteDetection').innerHTML=val;
+    }
