@@ -110,8 +110,8 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 					</div>
 
 					<div class="five columns">
-						<label>Qualité de l'image (0-100):</label><div id="texteQualite" >00</div>
-						<input class="u-full-width" type="range" min="0" max="100" placeholder="<?= $quality[0][0] ; ?>" name="quality" id="quality" oninput="updateQualite(this.value);">
+						<label>Qualité de l'image (0-100):</label><div id="texteQualite" ><?php print_r($quality[0]) ; ?></div>
+						<input class="u-full-width" type="range" min="0" max="100" placeholder="<?= $quality[0] ; ?>" name="quality" id="quality" oninput="updateQualite(this.value);">
 
 
 					</div>
@@ -119,18 +119,18 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 					<div class="five columns offset-by-two">
 						<label for="ffmpeg_timelapse_mode">fréquence de sauvegarde (timelapse):</label>
 						<select class="u-full-width" id="ffmpeg_timelapse_mode" name="ffmpeg_timelapse_mode">
-							<option value="none" <?php ($ffmpeg_timelapse_mode[0][0]=='none') ? 'selected' : "" ?> >Pas de timelapse</option>
-							<option value="hourly" <?php ($ffmpeg_timelapse_mode[0][0]=='hourly') ? 'selected' : "" ?> >Toute les heures</option>
-							<option value="daily" <?php ($ffmpeg_timelapse_mode[0][0]=='daily') ? 'selected' : "" ?> >Tous les jours</option>
-							<option value="weekly-sunday" <?php ($ffmpeg_timelapse_mode[0][0]=='weekly-sunday') ? 'selected' : "" ?> >Toutes les semaines (dimanche)</option>
-							<option value="weekly-monday" <?php ($ffmpeg_timelapse_mode[0][0]=='weekly-monday') ? 'selected' : "" ?> >Toutes les semaines (lundi)</option>
-							<option value="monthly" <?php ($ffmpeg_timelapse_mode[0][0]=='monthly') ? 'selected' : "" ?> >Tous les mois</option>
+							<option value="none" <?php ($ffmpeg_timelapse_mode[0]=='none') ? 'selected' : "" ?> >Pas de timelapse</option>
+							<option value="hourly" <?php ($ffmpeg_timelapse_mode[0]=='hourly') ? 'selected' : "" ?> >Toute les heures</option>
+							<option value="daily" <?php ($ffmpeg_timelapse_mode[0]=='daily') ? 'selected' : "" ?> >Tous les jours</option>
+							<option value="weekly-sunday" <?php ($ffmpeg_timelapse_mode[0]=='weekly-sunday') ? 'selected' : "" ?> >Toutes les semaines (dimanche)</option>
+							<option value="weekly-monday" <?php ($ffmpeg_timelapse_mode[0]=='weekly-monday') ? 'selected' : "" ?> >Toutes les semaines (lundi)</option>
+							<option value="monthly" <?php ($ffmpeg_timelapse_mode[0]=='monthly') ? 'selected' : "" ?> >Tous les mois</option>
 						</select>
 					</div>
 
 					<div class="five columns">
 						<label>Intervalle en seconde entre les photos (0-3600):</label><div id="texteIntervalle" >00</div>
-						<input class="u-full-width" type="range" min="0" max="3600" placeholder="<?= $ffmpeg_timelapse[0][0] ; ?>" name="ffmpeg_timelapse" id="ffmpeg_timelapse" oninput="updateIntervalle(this.value);">
+						<input class="u-full-width" type="range" min="0" max="3600" placeholder="<?= $ffmpeg_timelapse[0] ; ?>" name="ffmpeg_timelapse" id="ffmpeg_timelapse" oninput="updateIntervalle(this.value);">
 					</div>
 
 					<div class="five columns offset-by-two">
@@ -146,13 +146,13 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 
 					<div class="five columns">
 						<label>Seuil de détection en % (5-50):</label><div id="texteDetection" >00</div>
-						<input class="u-full-width" type="range" min="5" max="50" placeholder=<?= $threshold[0][0] ; ?> name="threshold" id="threshold" oninput="updateDetection(this.value);">
+						<input class="u-full-width" type="range" min="5" max="50" placeholder=<?= $threshold[0] ; ?> name="threshold" id="threshold" oninput="updateDetection(this.value);">
 					</div>
 
 
 					<div class="five columns">
 						<label>Contact en cas de détection de mouvement:</label>
-						<input class="u-full-width" type="text" placeholder="<?= $on_motion_detected[0][0] ; ?>" name="on_motion_detected" id="on_motion_detected" onchange="">
+						<input class="u-full-width" type="text" placeholder="<?= $on_motion_detected[0] ; ?>" name="on_motion_detected" id="on_motion_detected" onchange="">
 					</div>
 				</div>
 			</div> <!--    FIN CADRE II -->

@@ -67,6 +67,7 @@ abstract class DbManager {
 		$sql = "SELECT ".$sqlColumns." FROM ".$this->_table." WHERE ".$key." = '".$value."' ;";
 		$stmt = $db->query($sql);
 		$list = $stmt->fetchall(PDO::FETCH_BOTH);
+		debug_to_console('texte : '.json_encode(array_shift($list)));
 		return(array_shift($list));
 	}
 
