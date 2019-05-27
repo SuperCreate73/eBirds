@@ -1,17 +1,25 @@
 #!/bin/bash
 # coding:UTF-8
 
-# date : 21/11/2018
+# date : 27/05/2019
 # créateur : bibi
 # license : dwyw (do what you want)
 
 #
-# Le script doit être copié dans le répertoire /home/pi (ou votre nom de user si vous l'avez modifié).
-# S'assurer que le script est bien exécutable
-# Lancer le script en sudo : $ sudo ./instalNichoir.sh avec les options éventuelles.
-# Pour plus d'informations, lancer ./instalNichoir.sh avec l'option -h ou -?
+# Le script doit être copié dans le répertoire /home/pi (ou votre nom de user si
+# vous l'avez modifié).
+# S'assurer que le script est bien exécutable (sudo chmod 766 installnichoir.sh)
+# Lancer le script en sudo : $ sudo ./installNichoir.sh avec les options
+# éventuelles.
+# Pour plus d'informations, lancer ./installNichoir.sh avec l'option -h ou -?
 #
-
+#######################################################################
+# vérifie que l'utilisateur est superUser
+#######################################################################
+if [[ $EUID -ne 0 ]] ; then
+	echo -e "Ce script doit être exécuté avec les droits de SuperUser." 1>&2
+	exit 1
+fi
 #######################################################################
 # initialisation des variables
 #######################################################################
@@ -21,7 +29,8 @@ varVerbose=false
 varReset=false
 varError=false
 varLocal=false
-varGit=false
+varGit=true
+varServer=false
 
 # messages à afficher ou imprimer dans le log
 varMessage=""
@@ -124,6 +133,7 @@ function installProgram()
 	printError "$?"
 }
 
+
 #######################################################################
 # corps du programme
 #######################################################################
@@ -222,11 +232,9 @@ printError "$?"
 installProgram "installation du serveur web" "lighttpd"
 installProgram "installation du gestionnaire de base de données" "sqlite3"
 installProgram "installation" "git"
-#installProgram "installation" "build-essential" -- déjà inclus dans l'installation de base
 installProgram "installation de bibliothèque python" "python-pip"
 installProgram "installation de bibliothèque python" "python-numpy"
 installProgram "installation de PHP" "php-cgi"
-#installProgram "installation de PHP" "php-common" -- déjà inclus dans php-cgi
 installProgram "installation de PHP" "php-sqlite3"
 installProgram "installation de PHP" "php-json"
 installProgram "installation de PHP" "php7.0"
@@ -234,7 +242,6 @@ installProgram "installation du gestionnaire de flux video" "ffmpeg"
 installProgram "installation de dnsutils pour transmission IP" "dnsutils"
 installProgram "installation de dépendances de motion" "libmariadbclient18"
 installProgram "installation de dépendances de motion" "libpq5"
-#installProgram "installation de dépendances de motion" "mysql-common" -- déjà inclus dans libmariadbclient18
 installProgram "installation de l'utilitaire de décompression" "xz-utils"
 
 # installation de motion
@@ -508,8 +515,7 @@ printError "$?"
 printMessage "insertion de l'utilisateur admin (password = admin)" "nichoir.db"
 adminPwd=$(printf '%s' "admin" | md5sum | cut -d ' ' -f 1)
 sqlite3 /var/www/nichoir.db << EOS
-	INSERT INTO
-		users
+	INSERT INTO users
 			('login', 'password')
 		VALUES
 			('admin', '$adminPwd');
@@ -521,44 +527,125 @@ printError "$?"
 #######################################################################
 printMessage "insertion des paramètres" "nichoir.db"
 sqlite3 /var/www/nichoir.db << EOS
-	INSERT INTO
-		config
+	INSERT INTO config
 			('setting', 'value', 'defautValue', 'valueType')
 		VALUES
 			('on_motion_detected', 'email', 'comment', 'email');
-	INSERT INTO
-		config
+	INSERT INTO config
 			('setting', 'value', 'defautValue', 'valueType')
 		VALUES
 			('width', '640', '640', 'discreet');
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('height', '480', '480', 'discreet');
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('threshold', '10', '10', 'range');
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('quality', '75', '75', 'range');
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('ffmpeg_timelapse', '0', '0', 'range');
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('ffmpeg_timelapse_mode', 'daily', 'daily', 'discreet');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('width', '480');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('width', '640');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('width', '1280');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('height', '360');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('height', '480');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('height', '960');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('threshold', '5');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('threshold', '50');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('quality', '0');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('quality', '100');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse', '0');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse', '3200');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse_mode', 'hourly');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse_mode', 'daily');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse_mode', 'weekly-sunday');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse_mode', 'weekly-monday');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse_mode', 'monthly');
-	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageSize', 'low', 'width', '480') ;
-	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageSize', 'low', 'height', '360') ;
-	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageSize', 'medium', 'width', '640') ;
-	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageSize', 'medium', 'height', '480') ;
-	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageSize', 'high', 'width', '1280') ;
-	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageSize', 'high', 'height', '960') ;
+	INSERT INTO config
+			('setting', 'value', 'defautValue', 'valueType')
+		VALUES
+			('height', '480', '480', 'discreet');
+	INSERT INTO config
+			('setting', 'value', 'defautValue', 'valueType')
+		VALUES
+			('threshold', '10', '10', 'range');
+	INSERT INTO config
+			('setting', 'value', 'defautValue', 'valueType')
+		VALUES
+			('quality', '75', '75', 'range');
+	INSERT INTO config
+			('setting', 'value', 'defautValue', 'valueType')
+		VALUES
+			('ffmpeg_timelapse', '0', '0', 'range');
+	INSERT INTO config
+			('setting', 'value', 'defautValue', 'valueType')
+		VALUES
+			('ffmpeg_timelapse_mode', 'daily', 'daily', 'discreet');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('width', '480');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('width', '640');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('width', '1280');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('height', '360');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('height', '480');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES ('height', '960');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('threshold', '5');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('threshold', '50');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('quality', '0');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('quality', '100');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('ffmpeg_timelapse', '0');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('ffmpeg_timelapse', '3200');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('ffmpeg_timelapse_mode', 'hourly');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('ffmpeg_timelapse_mode', 'daily');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('ffmpeg_timelapse_mode', 'weekly-sunday');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('ffmpeg_timelapse_mode', 'weekly-monday');
+	INSERT INTO configRange
+			('setting', 'rangeValue')
+		VALUES
+			('ffmpeg_timelapse_mode', 'monthly');
+	INSERT INTO configAlias
+			('alias', 'aliasValue', 'setting', 'settingValue')
+		VALUES
+			('imageSize', 'low', 'width', '480') ;
+	INSERT INTO configAlias
+			('alias', 'aliasValue', 'setting', 'settingValue')
+		VALUES
+			('imageSize', 'low', 'height', '360') ;
+	INSERT INTO configAlias
+			('alias', 'aliasValue', 'setting', 'settingValue')
+		VALUES
+			('imageSize', 'medium', 'width', '640') ;
+	INSERT INTO configAlias
+			('alias', 'aliasValue', 'setting', 'settingValue')
+		VALUES
+			('imageSize', 'medium', 'height', '480') ;
+	INSERT INTO configAlias
+			('alias', 'aliasValue', 'setting', 'settingValue')
+		VALUES
+			('imageSize', 'high', 'width', '1280') ;
+	INSERT INTO configAlias
+			('alias', 'aliasValue', 'setting', 'settingValue')
+		VALUES
+			('imageSize', 'high', 'height', '960') ;
 EOS
 printError "$?"
 
@@ -576,9 +663,6 @@ printError "$?"
 sudo adduser www-data w3
 printError "$?"
 
-# TODO adduser to SudoUser : adduser www-data sudo
-# alternative : www-data ALL=(ALL) NOPASSWD:ALL
-# à ajouter dans /etc/sudoers à la dernière ligne
 sudo echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 sudo chgrp -R w3 /var/www/
@@ -636,15 +720,6 @@ if [ "$varUpgrade" == true ] ; then
 	printError "$?"
 fi
 
-# TODO - configurer CRONTAB pour envoyer l'adresse IP
-#		 possible avec la commande curl en bash (IP en post ou en get)
-# 		 log de la réponse ??
-#	   - script à créer sur le serveur pour stocker l'adresse IP
-#	   - ID unique à créer pour le nichoir
-#
-# TODO - validation finale
-
-#
 
 #######################################################################
 # sortie du script
