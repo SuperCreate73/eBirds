@@ -7,7 +7,8 @@ function classLoad ($classe) {
 
 spl_autoload_register('classLoad');
 
-function setFocus($position) {
+function setFocus($position)
+{
 	// Gère la page ayant le focus dans le menu principal en complétant le tableau tabFocus
 	// avec la classe 'selected' à la position de liste correspondant à la position de page
 	//
@@ -18,49 +19,61 @@ function setFocus($position) {
 	// 		- assignation du nom de classe ou seulement du bon index ? Idéalement, le nom
 	// 		   de classe est donnée dans la vue
 	//
-	for ($nbre = 0; $nbre<=3; $nbre++) {
+	for ($nbre = 0; $nbre<=3; $nbre++)
+	{
 		$tabFocus[$nbre]='';
 	}
+
 	$tabFocus[$position]='selected';
 	return $tabFocus;
 }
 
-function setFocusMen2($position) {
+function setFocusMen2($position)
+{
 
-	for ($nbre = 0; $nbre<=3; $nbre++) {
+	for ($nbre = 0; $nbre<=3; $nbre++)
+	{
 		$tabFocus[$nbre]='menu2Item';
 	}
+
 	$tabFocus[$position]='menu2ItemSelect '.$tabFocus[$position];
-	for ($nbre = 0; $nbre<=3; $nbre++) {
+	for ($nbre = 0; $nbre<=3; $nbre++)
+	{
 		$tabFocus[$nbre]="'".$tabFocus[$nbre]."'";
 	}
 	return $tabFocus;
 }
 
-function layoutPane($allArrayData,$page,$limit=10,$colnum=3){
+function layoutPane($allArrayData,$page,$limit=10,$colnum=3)
+{
 	// fonction de mise en forme en '$colnum' nombre de colonne
 	//
 	// initialisation des variables
-	for ($iter=0; $iter<$colnum; $iter++) {
+	for ($iter=0; $iter<$colnum; $iter++)
+	{
 		$arrayDataByCol[$iter]=array_slice($allArrayData,($limit*$colnum*($page-1)+($iter*$limit)),$limit);
 	}
 
 	return $arrayDataByCol;
 }
 
-function numberOfPage($allArrayData,$listMax) {
+function numberOfPage($allArrayData,$listMax)
+{
 	// Calcule le nombre de page à prévoir pour l'affichage des fichiers photos
 	// allArrayData = Array des fichiers à compter
 	// listMax = Nombre max d'item par page (taille des colonnes x nombre de colonnes)
-	if (count($allArrayData) % $listMax == 0) {
+	if (count($allArrayData) % $listMax == 0)
+	{
 		return intdiv(count($allArrayData),$listMax);
 	}
-	else {
+	else
+	{
 		return (intdiv(count($allArrayData),$listMax)+1);
 	}
 }
 
-function debug_to_console( $data ) {
+function debug_to_console($data)
+{
     $output = $data;
     if ( is_array( $output ) )
         $output = implode( ',', $output);
@@ -70,6 +83,7 @@ function debug_to_console( $data ) {
 
 function resetSelection ($fileTable) {
 
+}
 //	$strScript='<script type="text/javascript">';
 //	foreach ($fileTable as $key => $value){
 //
@@ -86,7 +100,6 @@ function resetSelection ($fileTable) {
 //	})
 //	document.getElementById(fileTable.length-1).classlist.add('highSelected');
 //	document.getElementById(fileTable.length-1).classlist.remove('selected');
-}
 
 //function layoutDisplayThumb($strInput,$addString) {
 //	$strInput .= PHP_EOL;
@@ -94,7 +107,8 @@ function resetSelection ($fileTable) {
 //}
 
 
-function convertirTimezone($time, $deTz = "GMT", $versTz = "Europe/Brussels") {
+function convertirTimezone($time, $deTz = "GMT", $versTz = "Europe/Brussels")
+{
 // timezone by php friendly values
 	$date = new DateTime($time, new DateTimeZone($deTz));
     $date->setTimezone(new DateTimeZone($versTz));
@@ -102,7 +116,8 @@ function convertirTimezone($time, $deTz = "GMT", $versTz = "Europe/Brussels") {
     return $time;
 }
 
-function motionSettings () {
+function motionSettings ()
+{
 	// intermediate function for recursive use of doMotionSettings
 	$motion = new MotionManager();
 	$motion -> backUpMotion();
@@ -110,7 +125,8 @@ function motionSettings () {
 	$motion -> restartMotion();
 }
 
-function doMotionSettings ($inputList) {
+function doMotionSettings ($inputList)
+{
 	// TODO
 	// general function for manage motion settings
 	$sendMailPath = '/var/www/html/public/bash/motionSendMail.sh';
@@ -118,7 +134,8 @@ function doMotionSettings ($inputList) {
 	$motion = new MotionManager();
 	// $config->_table = 'configAlias';
 
- 	foreach ($inputList as $key => $value) {
+ 	foreach ($inputList as $key => $value)
+	{
 
 		if ($config->keyTest('configAlias', 'alias = "'.$key.'" AND aliasValue = "'.$value.'"'))
 		{
@@ -132,6 +149,7 @@ function doMotionSettings ($inputList) {
 			debug_to_console( "2 validateValue ".$key." - ".$value );
 			continue ;
 		}
+
 		// check if same values in DB
 		if ($value == $config-> getSettingValue($key))
 		{

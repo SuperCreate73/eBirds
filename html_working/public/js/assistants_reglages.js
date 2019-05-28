@@ -2,9 +2,9 @@ function logout() {
   // On utilise l'objet XMLHttpRequest pour faire une déconnexion en ajax.
   // Càd qu'on utilise Javascript pour appeler le script php de déconnexion
   // sans quitter ou recharger la page.
-    var xmlhttp = new XMLHttpRequest(); // On crée une instance de l'objet
-    xmlhttp.open("GET", "jsRouter.php", true); // On ouvre la connexion vers le script php
-    xmlhttp.send();// On envoie la requête et le script php est exécuté.
+  fetch ("jsRouter.php",{
+    method:'GET'
+  });
     document.getElementById("logout").innerHTML=""; // On trouve l'élément html qui contient le lien
     //de déconnexion et on supprime le contenu de la balise en question. De la sorte on enlève le lien de la page.
     location.reload();
@@ -12,28 +12,28 @@ function logout() {
 
 function shutdown(){
 	var condition = true
-  	var xmlhttp = new XMLHttpRequest();
-  	xmlhttp.open("GET", "jsRouter.php?action=shutdown", true);
-  	xmlhttp.send();
-  	document.getElementById("FenetreContenu").innerHTML="<br><div class='row'><div class ='offset-by-three columns'><div class='six columns'>L'ordinateur Raspberry Pi de votre nichoir est en train de s'éteindre.<br><br>Vous pourrez le débrancher en toute sécurité dans quelques instants.</div></div></div>";
+  fetch ("jsRouter.php?action=shutdown",{
+    method:'GET'
+  });
+    	document.getElementById("FenetreContenu").innerHTML="<br><div class='row'><div class ='offset-by-three columns'><div class='six columns'>L'ordinateur Raspberry Pi de votre nichoir est en train de s'éteindre.<br><br>Vous pourrez le débrancher en toute sécurité dans quelques instants.</div></div></div>";
   	document.getElementById("FenetreMessage").classList.remove('cache');
   	document.getElementById("FenetreMessage").classList.add('montre');
 }
 
 function reboot(){
 	var condition = true
-  	var xmlhttp = new XMLHttpRequest();
-  	xmlhttp.open("GET", "jsRouter.php?action=reboot", true);
-  	xmlhttp.send();
+  fetch ("jsRouter.php?action=reboot",{
+    method:'GET'
+  });
   	document.getElementById("FenetreContenu").innerHTML="<br><div class='row'><div class ='offset-by-three columns'><div class='six columns'>L'ordinateur Raspberry Pi de votre nichoir est en train de redémarrer...<br><br>Veuillez patienter quelques instants ...</div></div></div>";
   	document.getElementById("FenetreMessage").classList.remove('cache');
   	document.getElementById("FenetreMessage").classList.add('montre');
 }
 
 function upgrade(){
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET", "jsRouter.php?action=upgrade", true);
-  xmlhttp.send();
+  fetch ("jsRouter.php?action=upgrade",{
+    method:'GET'
+  });
   document.getElementById("FenetreContenu").innerHTML="<br><div class='row'><div class ='offset-by-three columns'><div class='six columns'>L'ordinateur Raspberry Pi de votre nichoir est en train de se mettre à jour ...<br><br>Veuillez patienter quelques instants et rafraichir cette page.</div></div></div>";
   document.getElementById("FenetreMessage").classList.remove('cache');
   document.getElementById("FenetreMessage").classList.add('montre');
@@ -41,10 +41,10 @@ function upgrade(){
 }
 
 function distupgrade(){
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET", "jsRouter.php?action=distupgrade", true);
-  xmlhttp.send();
-  document.getElementById("FenetreContenu").innerHTML="<br><div class='row'><div class ='offset-by-three columns'><div class='six columns'>Le système d'exploitation du Raspberry Pi de votre nichoir est en train de se mettre à jour ...<br><br>Veuillez patienter quelques instants et rafraichir cette page.</div></div></div>";
+  fetch ("jsRouter.php?action=distupgrade",{
+    method:'GET'
+  });
+    document.getElementById("FenetreContenu").innerHTML="<br><div class='row'><div class ='offset-by-three columns'><div class='six columns'>Le système d'exploitation du Raspberry Pi de votre nichoir est en train de se mettre à jour ...<br><br>Veuillez patienter quelques instants et rafraichir cette page.</div></div></div>";
   document.getElementById("FenetreMessage").classList.remove('cache');
   document.getElementById("FenetreMessage").classList.add('montre');
 
@@ -70,17 +70,26 @@ function addUser(){
         <input class='button u-full-width boutonLogin' value='Enregistrer les modifications' onclick='saveUser();'>\
       </div>\
     </div>\
-";
+    ";
   document.getElementById("FenetreMessage").classList.remove('cache');
   document.getElementById("FenetreMessage").classList.add('montre');
 
 }
 
 function saveUser() {
+
+  // recherche des login et password de l'utilisateur à créer
   var nameUser = document.getElementById("nameUser").value;
   var passwdUser = document.getElementById("passwdUser").value;
-  console.log(nameUser, passwdUser);
-  if (nameUser.length < 3 || passwdUser.length < 6){
+
+  // vérification en console
+  if ($HTTP_DEBUG_MODE = 3) {
+    console.log(nameUser, passwdUser);
+  }
+
+  // contrôle de validité du login et password
+  if (nameUser.length < 3 || passwdUser.length < 6)
+  {
     document.getElementById("FenetreContenu").innerHTML="\
       <br>\
       <div class='row'>\
@@ -111,34 +120,40 @@ function saveUser() {
 
     return;
   }
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET", "jsRouter.php?action=saveUser&param1="+nameUser+"&param2="+passwdUser, true);
-  xmlhttp.send();
+  if ($HTTP_DEBUG_MODE = 3) {
+    console.log('before fetch');
+  }
+  fetch ("jsRouter.php?action=saveUser&param1="+nameUser+"&param2="+passwdUser,{method:'GET'});
+    // .then(function(response) { console.log(response)}) ;
+
   fermerFenetre();
   document.location.reload();
 
 }
 
 function changerNom(){
-        var nom = document.getElementById("nom_nichoir").value;
+  var nom = document.getElementById("nom_nichoir").value;
 	console.log(nom);
-  	var xmlhttp = new XMLHttpRequest();
-  	xmlhttp.open("GET", "jsRouter.php?action=changeName&param1="+nom, true);
-	xmlhttp.send();
-
+  fetch ("jsRouter.php?action=changeName&param1="+nom,{
+    method:'GET'
+  });
 }
+
 function removeUser(nom){
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET", "jsRouter.php?action=delUser&param1="+nom, true);
-  xmlhttp.send();
+
+  fetch ("jsRouter.php?action=delUser&param1="+nom,{
+    method:'GET'
+  });
   document.getElementById(nom).innerHTML="";
 
 }
 function changeEmail(){
+
+  // changer la fnction pour éviter un redémarrage intempestif du daemon
   var newMail = document.getElementById('email').value;
-
-
-  //xmlhttp.open("")
+  fetch ("jsRouter.php?action=motionDetect&param1="+newMail,{
+    method:'GET'
+  });
 
 }
 function changeMode(e){

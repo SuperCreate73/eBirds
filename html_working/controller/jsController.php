@@ -5,55 +5,64 @@ require_once('controller/fonctions.php');
 //require_once('model/ImageFileManager.php');
 //require_once('model/User.php');
 
-function shutdown() {
+function shutdown()
+{
 	// éteint le raspberri
 	$piManager = new PiManager();
 	$piManager->shutdown();
 }
 
-function reboot() {
+function reboot()
+{
 	// redémarre le raspberri
 	$piManager = new PiManager();
 	$piManager->reboot();
 }
 
-function upgrade() {
+function upgrade()
+{
 	//upgrade du système linux
 	$piManager = new PiManager();
 	$piManager->upgrade();
 }
 
-function distUpgrade() {
+function distUpgrade()
+{
 	// upgrade de la distribution linux du raspberry
 	$piManager = new PiManager();
 	$piManager->distUpgrade();
 }
 
-function changeName($nom){
+function changeName($nom)
+{
 	// change le nom du raspberry
 	$piManager = new PiManager();
 	$piManager->changeName($nom);
 }
 
-function deleteFiles() {
+function deleteFiles()
+{
 	// efface les fichiers contenu dans la variable _POST selectionArray
 	$fileManager = new FileManager();
 	$fileManager->deleteFiles(explode(",",$_POST['selectionArray']));
 }
 
-function viewSelection($varName) {
+function viewSelection($varName)
+{
 	// met la liste POST dans la variable de session
 	$_SESSION[$varName]=$_POST[$varName];
 }
 
-function zipUpload() {
+function zipUpload()
+{
 	// crée un fichier zip des photos et les uploade
 	$fileManager = new FileManager();
 	$archive = $fileManager->zipFiles(explode(",",$_POST['selectionArray']));
 	return($archive);
 }
 
-function saveUser($login,$password) {
+function saveUser($login,$password)
+{
 	// Create new user or update existing one
 	//
 	// Validation of input parameters
@@ -65,27 +74,35 @@ function saveUser($login,$password) {
 		throw new Exception("Invalid password ! ");
 		return;
 	}
+	debug_to_console("JSCONTROLEUR_saveUser : before User call");
+	if (true)
+	// if (§HTTP_DEBUG_MODE == 3)
+	{
+		debug_to_console("JSCONTROLEUR_saveUser : before User call");
+	}
 
 	//saveUser
 	$user = new User();
 	$user->setUser($login, $password);
 }
 
-function delUser($login) {
+function delUser($login)
+{
 	// Revoque user from DB
 	// If no more connection login, create default one (admin, admin)
 	$user = new User();
 	$user->delUser($login);
 }
 
-function motionSettings () {
-	// intermediate function for recursive use of doMotionSettings
-	$motion = new MotionManager();
-	$motion -> backUpMotion();
-	doMotionSettings($_POST);
-	$motion -> restartMotion();
-}
-
+// function motionSettings ()
+// {
+// 	// intermediate function for recursive use of doMotionSettings
+// 	$motion = new MotionManager();
+// 	$motion -> backUpMotion();
+// 	doMotionSettings($_POST);
+// 	$motion -> restartMotion();
+// }
+//
 // function doMotionSettings () {
 // 	// TODO
 // 	// general function for manage motion settings
@@ -114,7 +131,7 @@ function motionSettings () {
 // 			$motion-> setSetting ($key, $value);
 // 		}
 // 	}
-}
+//
 
 // function motionDetect($email) {
 // 	// configure mail send on movement detection

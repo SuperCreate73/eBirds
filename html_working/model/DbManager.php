@@ -2,10 +2,10 @@
 
 abstract class DbManager {
 
-	protected $_sql=false;
 	protected $_table;
 
-	protected function dbConnect() {
+	protected function dbConnect()
+	{
 
 		// On utilise l'objet PHP PDO qui doit permettre une portabilité facile du code pour changer de DB.
 		// Pour une connexion à la db SQLite du nichoir...
@@ -14,38 +14,48 @@ abstract class DbManager {
 		return $db;
   }
 
-	protected function clean($str) {
+	protected function clean($str)
+	{
   	$search  = array('&'    , '"'     , "'"    , '<'   , '>'    );
   	$replace = array('&amp;', '&quot;', '&#39;', '&lt;', '&gt;' );
  		$str = str_replace($search, $replace, $str);
   	return $str;
 	}
 
-	protected function md5Hash($str) {
+	protected function md5Hash($str)
+	{
 		// MD5 hash of input String
 		return md5(htmlspecialchars($str));
 	}
 
-	protected function getAll($columns = NULL) {
+	protected function getAll($columns = NULL)
+	{
 		// Get all records from $_table
 		//
-		if (is_null($columns)) {
+		if (is_null($columns))
+		{
 			$sqlColumns="*";
 		}
-		elseif (is_array($columns)) {
-			foreach ($columns as $values) {
+		elseif (is_array($columns))
+		{
+			foreach ($columns as $values)
+			{
 				$sqlColumns=$sqlColumns.$values.", ";
 			}
+
 			$sqlColumns = substr($sqlColumns, 0, -2);
 		}
-		else {
+
+		else
+		{
 			$sqlColumns = $columns;
 		}
+
 		$db = $this->dbConnect();
 		$sql = "SELECT ".$sqlColumns." FROM ".$this->_table.";";
 		$stmt = $db->query($sql);
 		$list = $stmt->fetchall();
-		return($list);
+		return ($list);
 	}
 
 	protected function getKey($key, $value, $columns = NULL) {
@@ -79,7 +89,9 @@ abstract class DbManager {
 		$sql = "SELECT EXISTS(SELECT 1 FROM ".$this->_table." WHERE (".$whereClause.")) AS returnVal ;";
 		$stmt = $db->query($sql);
 		$result = $stmt->fetch();
-		if ($result['returnVal'] == 1) {
+
+		if ($result['returnVal'] == 1)
+		{
 			return True;
 		}
 		else {

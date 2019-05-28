@@ -6,7 +6,8 @@ require_once('controller/fonctions.php');
 //require_once('model/FileManager.php');
 //require_once('model/ImageFileManager.php');
 
-function homePage($nom) {
+function homePage($nom)
+{
 	// Contrôleur de la HomePage du site
 	$dbMngData = new DbMngData();
 	$tempExt = $dbMngData -> tempExt();
@@ -31,7 +32,8 @@ function graphique($nom) {
 	require('view/viewGraphique.php');
 }
 
-function photoList($nom, $none ,$mvtPage) {
+function photoList($nom, $none ,$mvtPage)
+{
 	$listMax=25;
 	$fileManager= new FileManager('jpg');
 	$fileList=$fileManager -> setFileList();

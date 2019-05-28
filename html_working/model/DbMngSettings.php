@@ -69,11 +69,19 @@ class DbMngSettings extends DbManager {
 // ##################################################################
 	public function validateValue ($setting, $value) {
 		// get type of value to validate - discreet, range or file
-		debug_to_console( "1 validateValue" );
 		$this->_table = $this->config;
+
+		if (§HTTP_DEBUG_MODE == 3)
+		{
+			debug_to_console( "1 validateValue" );
+		}
+
 		$valueTypeArr = $this -> getKey('setting', $setting, 'valueType');
 		$valueType = $valueTypeArr[0];
-		debug_to_console( "2 getKey - ".$setting." - ".$value." - ".json_encode($valueTypeArr)) ;
+		if (§HTTP_DEBUG_MODE == 3)
+		{
+			debug_to_console("2 getKey - ".$setting." - ".$value." - ".json_encode($valueTypeArr));
+		}
 		// validate value
 		$this->_table = $this->configRange;
 

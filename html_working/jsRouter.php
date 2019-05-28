@@ -23,6 +23,10 @@ try
 		'motionSettings' => 'motionSettings',
 		'doReglages' => 'doReglages',
 	);
+	// debug_to_console('JSROUTER_Paramètres '.$action." ".$parameter1." ".$parameter2);
+	// if (getenv("HTTP_DEBUG_MODE") == 3) {
+  //   debug_to_console('JSROUTER_Paramètres '.$action." ".$parameter1." ".$parameter2);
+  // }
 
 	if ( ! array_key_exists($action, $actionArray)) {
 		throw new Exception('Action non valide !');

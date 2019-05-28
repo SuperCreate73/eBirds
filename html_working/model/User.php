@@ -21,6 +21,11 @@ class User extends DbManager {
 
 		// check if user already registred
 		$result=$this->checkLogin($login);
+		// if (getenv('HTTP_DEBUG_MODE') == 3)
+		// {
+		// 	debug_to_console("USER_setUser : checkLogin result - ".$result);
+		// }
+
 		if ($result) {
 			// If user already registred, modifying password
 			$this->modifyUser($login,$passmd5);
