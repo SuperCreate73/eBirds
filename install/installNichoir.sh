@@ -601,7 +601,7 @@ sqlite3 /var/www/nichoir.db << EOS
 	INSERT INTO configRange
 			('setting', 'rangeValue')
 		VALUES
-			('ffmpeg_timelapse', '3200');
+			('ffmpeg_timelapse', '3600');
 	INSERT INTO configRange
 			('setting', 'rangeValue')
 		VALUES

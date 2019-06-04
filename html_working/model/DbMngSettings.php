@@ -8,6 +8,10 @@ class DbMngSettings extends DbManager {
 	// linked table 'configRange' : setting, allowValue
 	//			--> one row for each value or (min or max)
 	// 			--> multiple row for each setting
+
+	// TODO gestion de l'option 'none' pour le Timelapse
+	// TODO gestion du mode d'enregistrement de l'image
+
 //	public function __construct() {
 		public $config = "config";
 		public $configRange = "configRange";
@@ -24,6 +28,7 @@ class DbMngSettings extends DbManager {
 						WHERE alias = '".$alias."' AND aliasValue = '".$value."' ;";
 		$stmt = $db->query($sql);
 		$list = $stmt->fetchall(PDO::FETCH_KEY_PAIR);
+
 		return($list);
 	}
 
@@ -32,15 +37,21 @@ class DbMngSettings extends DbManager {
 		// get possible range for setting -> return list
 		$this->_table = $this->configRange;
 
+		// get values : list of dict with key = '0' or 'rangeValue'
+		$getArray = $this -> getKey('setting', $setting, 'rangeValue');
+
+		$returnList = array();
+		// rearrange in list of values
+		foreach ($getArray as $value) {
+				array_push($returnList, $value['rangeValue']);
+		}
+
 		if ($sorted)
 		{
-			$returnValue = $this -> getKey('setting', $setting, 'rangeValue');
-			return (asort($returnValue));
+			asort($returnList);
 		}
-		else
-		{
-			return ($this -> getKey('setting', $setting, 'rangeValue'));
-		}
+
+		return ($returnList);
 	}
 
 // ##################################################################
@@ -48,7 +59,8 @@ class DbMngSettings extends DbManager {
 		// Return current value from setting
 		$this->_table = $this->config ;
 		$result= $this->getKey('setting', $setting, 'value');
-		return ($result);
+
+		return ($result['value']);
 	}
 
 // ##################################################################
@@ -63,38 +75,45 @@ class DbMngSettings extends DbManager {
 						LIMIT 1 ;";
 		$stmt = $db->query($sql);
 		$list = $stmt->fetchall();
-		return($list);
+		$list = array_shift($list);
+
+		return($list['aliasValue']);
 	}
 
 // ##################################################################
 	public function validateValue ($setting, $value) {
 		// get type of value to validate - discreet, range or file
+
 		$this->_table = $this->config;
-
-		if (§HTTP_DEBUG_MODE == 3)
-		{
-			debug_to_console( "1 validateValue" );
-		}
-
 		$valueTypeArr = $this -> getKey('setting', $setting, 'valueType');
-		$valueType = $valueTypeArr[0];
-		if (§HTTP_DEBUG_MODE == 3)
+		if (count($valueTypeArr) == 0)
 		{
-			debug_to_console("2 getKey - ".$setting." - ".$value." - ".json_encode($valueTypeArr));
+			return False;
 		}
+		$valueType = $valueTypeArr['0'];
+
+
 		// validate value
 		$this->_table = $this->configRange;
 
 		if ($valueType == 'discreet')
 		{
-			return (in_array($value, $this -> getSettingRange ($setting)) ? True : False) ;
+			$tempValue = $this -> getSettingRange ($setting);
+			$returnValue = in_array($value, $tempValue) ? True : False ;
+
+			return $returnValue;
 		}
+
 		elseif($valueType == 'range')
 		{
 			$range = $this -> getSettingRange ($setting, True);
-			return (($value >= $range[0] && $value <= $range[1]) ? True : False) ;
+			$returnValue = ($value >= $range[0] && $value <= $range[1]) ? True : False ;
+
+			return $returnValue;
 		}
-		elseif ($valueType == 'email') {
+
+		elseif ($valueType == 'email')
+		{
 			$atom   = '[-a-z0-9!#$%&\'*+\\/=?^_`{|}~]';   // caractères autorisés avant l'arobase
 			$domain = '([a-z0-9]([-a-z0-9]*[a-z0-9]+)?)'; // caractères autorisés après l'arobase (nom de domaine)
 
@@ -107,14 +126,17 @@ class DbMngSettings extends DbManager {
 			$domain . '{2,63}$/i';          // Suivi de 2 à 63 caractères autorisés pour le nom de domaine
 
 			// test de l'adresse e-mail
-			if (preg_match($regex, $value)) {
-			    return True;
-			} else {
-			    return False;
+			if (preg_match($regex, $value))
+			{
+				return True;
 			}
-			return True;
+			else
+			{
+				return False;
+			}
 		}
-		else {
+		else
+		{
 			return False;
 		}
 	}
@@ -131,18 +153,37 @@ class DbMngSettings extends DbManager {
 		return $resultat;
 	}
 
-		// public function getSettingFromAlias ($alias, $value) {
-			// get corresponding list of settings from alias
-		// 	$this->_table = $configAlias;
-		// 	return array_unique($this -> getKey('alias', $alias, 'setting'));
-		// }
+	public function keyTest ($table, $where) {
+		// modify value
+		$this->_table = $table ;
+		return ($this->keyExist($where)) ;
+	}
 
-		public function keyTest ($table, $where) {
-			// modify value
-			$this->_table = $table ;
-			return ($this->keyExist($where)) ;
+	// ##################################################################
+	// TODO ##################################################################
+	// ##################################################################
+	public function clearSetting ($setting) {
+		// Remove completely a pair setting/value
+		$this->_table = $this->config;
+		$defautValue = $this -> getKey('setting', $setting, 'defautValue');
+		if  ($defautValue == 'comment') {
+			// TODO comment
 		}
+		else {
+			$db = $this->dbConnect();
+			$stmt=$db->prepare("UPDATE config SET value = defautValue WHERE (setting = :Setting)");
+			$result=$stmt->execute(array(
+				'Setting' => $setting,
+			));
+		}
+	}
+}
 
+	// public function getSettingFromAlias ($alias, $value) {
+	// get corresponding list of settings from alias
+	// 	$this->_table = $configAlias;
+	// 	return array_unique($this -> getKey('alias', $alias, 'setting'));
+	// }
 
 	// public function addSetting ($setting,$value) {
 	// 	// insert new setting
@@ -160,24 +201,6 @@ class DbMngSettings extends DbManager {
 	// 			'Value' => $value));
 	// }
 
-// ##################################################################
-// TODO ##################################################################
-// ##################################################################
-	public function clearSetting ($setting) {
-		// Remove completely a pair setting/value
-		$this->_table = $this->config;
-		$defautValue = $this -> getKey('setting', $setting, 'defautValue');
-		if  ($defautValue == 'comment') {
-			// TODO comment
-		}
-		else {
-			$db = $this->dbConnect();
-			$stmt=$db->prepare("UPDATE config SET value = defautValue WHERE (setting = :Setting)");
-			$result=$stmt->execute(array(
-					'Setting' => $setting,
-					));
-		}
-	}
 
 	// public function existSetting ($setting) {
 	// 	// Test exitence of key
@@ -190,4 +213,8 @@ class DbMngSettings extends DbManager {
 	// }
   //
 
-}
+// if (getenv("HTTP_DEBUG_MODE") == 4)
+// {
+// 	$output = shell_exec('echo "DbMngSetting_validateValue_getKey-returnValueArray : '. json_encode($valueTypeArr) .'" >> /var/www/debug.log');
+// 	$output = shell_exec('echo "DbMngSetting_validateValue_getKey-returnValue : '. $valueType .'" >> /var/www/debug.log');
+// }

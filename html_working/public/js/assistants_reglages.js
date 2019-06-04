@@ -82,11 +82,6 @@ function saveUser() {
   var nameUser = document.getElementById("nameUser").value;
   var passwdUser = document.getElementById("passwdUser").value;
 
-  // vérification en console
-  if ($HTTP_DEBUG_MODE = 3) {
-    console.log(nameUser, passwdUser);
-  }
-
   // contrôle de validité du login et password
   if (nameUser.length < 3 || passwdUser.length < 6)
   {
@@ -120,11 +115,9 @@ function saveUser() {
 
     return;
   }
-  if ($HTTP_DEBUG_MODE = 3) {
-    console.log('before fetch');
-  }
-  fetch ("jsRouter.php?action=saveUser&param1="+nameUser+"&param2="+passwdUser,{method:'GET'});
-    // .then(function(response) { console.log(response)}) ;
+  fetch ("jsRouter.php?action=saveUser&param1="+nameUser+"&param2="+passwdUser,{
+    method:'GET'
+  });
 
   fermerFenetre();
   document.location.reload();
@@ -133,7 +126,7 @@ function saveUser() {
 
 function changerNom(){
   var nom = document.getElementById("nom_nichoir").value;
-	console.log(nom);
+
   fetch ("jsRouter.php?action=changeName&param1="+nom,{
     method:'GET'
   });

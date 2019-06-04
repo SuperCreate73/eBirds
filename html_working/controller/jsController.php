@@ -70,15 +70,10 @@ function saveUser($login,$password)
 		throw new Exception("Invalid user name ! ");
 		return;
 	}
+
 	if (strlen(trim($password)) < 5){
 		throw new Exception("Invalid password ! ");
 		return;
-	}
-	debug_to_console("JSCONTROLEUR_saveUser : before User call");
-	if (true)
-	// if (§HTTP_DEBUG_MODE == 3)
-	{
-		debug_to_console("JSCONTROLEUR_saveUser : before User call");
 	}
 
 	//saveUser

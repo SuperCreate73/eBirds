@@ -30,11 +30,41 @@ abstract class DbManager {
 
 	protected function getAll($columns = NULL)
 	{
-		// Get all records from $_table
+		// Get all records for $columns from $_table
 		//
 		if (is_null($columns))
 		{
-			$sqlColumns="*";
+			$sqlColumns = "*";
+		}
+		elseif (is_array($columns))
+		{
+			foreach ($columns as $values)
+			{
+				$sqlColumns = $sqlColumns.$values.", ";
+			}
+			// remove last ', ' from $sqlColumns
+			$sqlColumns = substr($sqlColumns, 0, -2);
+		}
+		else
+		{
+			$sqlColumns = $columns;
+		}
+		// SQL query
+		$db = $this->dbConnect();
+		$sql = "SELECT ". $sqlColumns ." FROM ". $this->_table .";";
+		$stmt = $db->query($sql);
+		$list = $stmt->fetchall();
+
+		return $list;
+	}
+
+	protected function getKey($key, $value, $columns = NULL) {
+		// Get all records from $_table where $key = $value
+		//
+		// $column formating
+		if (is_null($columns))
+		{
+			$sqlColumns = "*";
 		}
 		elseif (is_array($columns))
 		{
@@ -42,43 +72,25 @@ abstract class DbManager {
 			{
 				$sqlColumns=$sqlColumns.$values.", ";
 			}
-
 			$sqlColumns = substr($sqlColumns, 0, -2);
 		}
-
 		else
 		{
 			$sqlColumns = $columns;
 		}
 
-		$db = $this->dbConnect();
-		$sql = "SELECT ".$sqlColumns." FROM ".$this->_table.";";
-		$stmt = $db->query($sql);
-		$list = $stmt->fetchall();
-		return ($list);
-	}
-
-	protected function getKey($key, $value, $columns = NULL) {
-		// Get all records from $_table where $key = $value
-		//
-		if (is_null($columns)) {
-			$sqlColumns="*";
-		}
-		elseif (is_array($columns)) {
-			foreach ($columns as $values) {
-				$sqlColumns=$sqlColumns.$values.", ";
-			}
-			$sqlColumns = substr($sqlColumns, 0, -2);
-		}
-		else {
-			$sqlColumns = $columns;
-		}
+		// sql request
 		$db = $this->dbConnect();
 		$sql = "SELECT ".$sqlColumns." FROM ".$this->_table." WHERE ".$key." = '".$value."' ;";
 		$stmt = $db->query($sql);
 		$list = $stmt->fetchall(PDO::FETCH_BOTH);
-		debug_to_console('texte : '.json_encode(array_shift($list)));
-		return(array_shift($list));
+
+		if (count($list) == 1)
+		{
+			$list = array_shift($list);
+		}
+
+		return $list ;
 	}
 
 	protected function keyExist ($whereClause) {
@@ -108,6 +120,7 @@ abstract class DbManager {
 		$sql = "SELECT count(*) as nbres FROM ".$this->_table.$where." ;";
 		$stmt = $db->query($sql);
 		$result = $stmt->fetch();
+
 		return $result['nbres'];
 	}
 }
