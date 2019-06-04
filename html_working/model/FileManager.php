@@ -82,10 +82,12 @@ class FileManager {
 		$zip = new ZipArchive();
 
 		if ($zip -> open('Archive.zip', ZipArchive::CREATE) == True) {
-			if (count($fileList) == 0) {$fileList = $this->setFileList();}
+			if (count($fileList) == 0) {
+				$fileList = $this->setFileList();
+			}
 			foreach ($fileList as $file) {
-				if (!$zip->addFile($this->_filePath.$file,$file)) {
-					throw new Exception ('Unable to add file "'.$this->_filePath.$file.'" to archive');
+				if (!$zip->addFile($this->_filePath.$file.'.jpg', $file.'.jpeg')) {
+					throw new Exception ('Unable to add file "'.$this->_filePath.$file.'.jpg" to archive');
 				}
 			}
 			$zip->close();

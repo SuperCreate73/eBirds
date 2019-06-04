@@ -1,0 +1,42 @@
+Corriger le download des photos
+  Vérifier la fonction zip
+  Vérifier les permissions d'écriture
+  Vérifier la localisation du fichier zip
+
+sauvegarde des utilisateurs sous firefox
+  semble ne pas supporter correctement fetch
+
+installscript
+  ajouter la balise UTF-8 dans le fichier log
+  dB - nouvelle table avec les données utilisateur / nichoir
+  installation de php-zip - à valider
+
+implémentation des fonctions de réglages dans la db
+  traitement du 'none' dans les états Timelapse
+    si 'none' alors assigner la valeur zéro à la durée, mais sans l'inscrire en db
+  ajouter une entrée dans la db avec le none
+  permettre le stockage time-lapse en photo et/ou vidéo (checkbox ?)
+
+données utilisateur
+  nouveau modèle user
+  stockage des valeurs dans la db
+  fonction de téléchargement des coordonnées gps
+
+
+
+
+AMELIORATIONS
+-------------
+Fonction de Tag / commentaires / journal
+  stockage des infos dans les fichiers jpeg
+  vérification à l'ouverture pour activer un flag
+  état d'une icône par fichier en fonction du flag (true/false)
+  fonction d'ajout / de suppression
+  fonction de publication sur le serveur
+
+Gestion dynamique des capteurs
+  installation dynamique des biliothèques des capteurs
+
+DB
+  simplification des tables capteurs
+  

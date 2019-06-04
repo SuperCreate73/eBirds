@@ -55,9 +55,9 @@ function addUser(){
       <div class='offset-by-three columns'>\
         <div class='six columns'><label>Nom:</label> \
           <input id='nameUser' class='u-full-width' type='text' placeholder='Nom' name='nom'>\
-        </div> \
-      </div> \
-    </div> \
+        </div>\
+      </div>\
+    </div>\
     <div class='row'>\
       <div class='offset-by-three columns'>\
         <div class='six columns'><label>mot de passe</label>\
@@ -89,16 +89,16 @@ function saveUser() {
       <div class='offset-by-three columns'>\
         <div class='six columns'>\
           <div class='u-full-width' type='text'>Le nom d'utilisateur ou le mot de passe ne sont pas valides\
-        </div> \
-      </div> \
-    </div> \
+        </div>\
+      </div>\
+    </div>\
         <div class='row'>\
         <div class='offset-by-three columns'>\
           <div class='six columns'><label>Nom:</label> \
             <input id='nameUser' class='u-full-width' type='text' placeholder='Nom' name='nom'>\
-          </div> \
-        </div> \
-      </div> \
+          </div>\
+        </div>\
+      </div>\
       <div class='row'>\
         <div class='offset-by-three columns'>\
           <div class='six columns'><label>mot de passe</label>\

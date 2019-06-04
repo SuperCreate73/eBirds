@@ -103,8 +103,7 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 					<div class="five columns">
 						<label for="modeCamera">Mode d'enregistrement images:</label>
 						<select class="u-full-width" id="modeCamera" onchange="">
-							<option value="Detection">Photo - Détection mouvement</option>
-							<option value="Timelapse">Photo - Timelapse</option>
+							<option value="Detection">Photo</option>
 							<option value="Video">Video</option>
 						</select>
 					</div>

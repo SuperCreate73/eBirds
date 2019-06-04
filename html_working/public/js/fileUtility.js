@@ -265,6 +265,7 @@ function resetSelection () {
 function downloadFiles () {
 	// Télécharge la sélection sous forme de fichier zip créé à la volée par le serveur
 	//
+	
 	$.ajax({
 		data: 'selectionArray=' + selectionArray,
 		method: 'POST',
