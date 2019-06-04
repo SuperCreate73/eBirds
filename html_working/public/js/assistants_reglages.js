@@ -11,7 +11,6 @@ function logout() {
 }
 
 function shutdown(){
-	var condition = true
   fetch ("jsRouter.php?action=shutdown",{
     method:'GET'
   });
@@ -21,7 +20,6 @@ function shutdown(){
 }
 
 function reboot(){
-	var condition = true
   fetch ("jsRouter.php?action=reboot",{
     method:'GET'
   });
