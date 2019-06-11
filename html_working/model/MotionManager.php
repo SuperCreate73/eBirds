@@ -28,7 +28,11 @@ class MotionManager {
 	public function setAllSettings($inputArray) {
 		foreach ($inputArray as $key => $value)
 		{
-			$this->setSetting($key, $value);
+			if ($key == 'on_motion_detected')
+			{
+				$this -> setSendMail($value)
+			}
+			$this -> setSetting($key, $value);
 		}
 	}
 
@@ -39,7 +43,7 @@ class MotionManager {
 		$output = shell_exec($shellCmd);
 	}
 
-	public function setSendMail($key, $email) {
+	public function setSendMail($email) {
 		// configure l'envoi d'e-mail en cas de détection de mouvements
 		//
 		// 		Mail envoyé depuis l'adresse info@ebirds.be

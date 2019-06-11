@@ -27,11 +27,15 @@ class MotionInterface extends DbManager {
 
   private $width;
 	private $heigth;
-	private $on_motion_detect;
+	private $on_motion_detected;
 	private $threshold;
   private $quality;
   private $ffmpeg_timelapse;
   private $ffmpeg_timelapse_mode;
+
+  // private $imageTypeDetection;
+  // private $imageTypeInterval;
+
 //  private $acceptedList=array();
   public function __construct($inputSettings) {
     // filtre la liste de paramètres en entrée et lance l'hydratation des
@@ -62,7 +66,18 @@ class MotionInterface extends DbManager {
   {
 
     $motionOnlyArray = array_filter($inputSettings, function($key) {
-        $acceptedList = array('on_motion_detected', 'imageSize', 'threshold', 'quality', 'ffmpeg_timelapse','ffmpeg_timelapse_mode' );
+        $acceptedList = array('on_motion_detected',
+                              'imageSize',
+                              'imageTypeDetection',
+                              'imageTypeInterval',
+                              'threshold',
+                              'quality',
+                              'ffmpeg_timelapse',
+                              'ffmpeg_timelapse_mode');
+                              // 'snapshots_interval',
+                              // 'snapshot_on_off',
+                              // 'output_pictures',
+                              // 'ffmpeg_output_movies' );
         $this->filterArray($key, $acceptedList, false);
       }, ARRAY_FILTER_USE_KEY);
 

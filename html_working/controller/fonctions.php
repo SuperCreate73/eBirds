@@ -134,37 +134,37 @@ function motionSettings ()
 	$motionMng -> restartMotion();
 }
 
-function doMotionSettings ($inputList)
-{
-	// TODO
-	// general function for manage motion settings
-	$sendMailPath = '/var/www/html/public/bash/motionSendMail.sh';
-	$dbMngSettings = new DbMngSettings();
-	$motionMng = new MotionManager();
-	// $dbMngSettings->_table = 'configAlias';
-
- 	foreach ($inputList as $key => $value)
-	{
-		// check validity of $value
-		if (! $dbMngSettings-> validateValue($key, $value))
-		{
-			// continue ;
-			throw new Exception('Paramètre non valide : '. $key .' - valeur : '.$value);
-		}
-
-
-		$dbMngSettings-> modifySetting ($key, $value);
-
-		if ($key == 'on_motion_detected')
-		{
-			$tmpStr =  '" send '.$key .' - '. $value.'"';
-			$output = shell_exec('echo '. $tmpStr .' >> /var/www/debug.log');
-			$motionMng-> setSendMail($key, $value);
-			$motionMng-> setSetting($key, $sendMailPath);
-		}
-		else
-		{
-			$motionMng-> setSetting ($key, $value);
-		}
-	}
-}
+// function doMotionSettings ($inputList)
+// {
+// 	// TODO
+// 	// general function for manage motion settings
+// 	$sendMailPath = '/var/www/html/public/bash/motionSendMail.sh';
+// 	$dbMngSettings = new DbMngSettings();
+// 	$motionMng = new MotionManager();
+// 	// $dbMngSettings->_table = 'configAlias';
+//
+//  	foreach ($inputList as $key => $value)
+// 	{
+// 		// check validity of $value
+// 		if (! $dbMngSettings-> validateValue($key, $value))
+// 		{
+// 			// continue ;
+// 			throw new Exception('Paramètre non valide : '. $key .' - valeur : '.$value);
+// 		}
+//
+//
+// 		$dbMngSettings-> modifySetting ($key, $value);
+//
+// 		if ($key == 'on_motion_detected')
+// 		{
+// 			$tmpStr =  '" send '.$key .' - '. $value.'"';
+// 			$output = shell_exec('echo '. $tmpStr .' >> /var/www/debug.log');
+// 			$motionMng-> setSendMail($key, $value);
+// 			$motionMng-> setSetting($key, $sendMailPath);
+// 		}
+// 		else
+// 		{
+// 			$motionMng-> setSetting ($key, $value);
+// 		}
+// 	}
+// }

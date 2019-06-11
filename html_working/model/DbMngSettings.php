@@ -82,75 +82,84 @@ class DbMngSettings extends DbManager {
 
 // ##################################################################
 //	public function validateValue ($setting, $value) {
-	public function validateValues ($inputArray) {
+	public function validateValues ($inputArray)
+	{
 		// get type of value to validate - discreet, range or file
-		foreach($inputArray as $setting => $value) {
+		foreach($inputArray as $setting => $value)
+		{
 			// get config data
 			$this->_table = $this->config;
 			$valueTypeArr = $this -> getKey('setting', $setting, 'valueType');
 			// if no setting found, throw exception
-			if (count($valueTypeArr) == 0)
+			if (! count($valueTypeArr) == 0)
 			{
+				$this -> validateSettings($setting, $value, $valueTypeArr['0'])
 				// TODO activate when tests are done
-				continue;
 				//throw new Exception('Paramètre inconnu : '. $setting);
 			}
-			$valueType = $valueTypeArr['0'];
+		}
+	}
+// ##################################################################
+private function validateSettings ($setting, $value, $valueType) {
+	// get type of value to validate - discreet, range or file
 
-			// validate value
-			$this->_table = $this->configRange;
+				// validate value
+		$this->_table = $this->configRange;
 
-			if ($valueType == 'discreet')
-			{
-				$tempValue = $this -> getSettingRange ($setting);
-				if (! in_array($value, $tempValue))
-				{
-					throw new Exception('Paramètre non valide : '. $setting .' - valeur : '.$value);
-				}
-			}
-
-			elseif($valueType == 'range')
-			{
-				$range = $this -> getSettingRange ($setting, True);
-				if (!($value >= $range[0] && $value <= $range[1]))
-				{
-					throw new Exception('Range non valide : '. $setting .' - valeur : '.$value .'('.$range[0].'  - '.$range[1].' )');
-				}
-			}
-
-			elseif ($valueType == 'email')
-			{
-				$atom   = '[-a-z0-9!#$%&\'*+\\/=?^_`{|}~]';   // caractères autorisés avant l'arobase
-				$domain = '([a-z0-9]([-a-z0-9]*[a-z0-9]+)?)'; // caractères autorisés après l'arobase (nom de domaine)
-
-				$regex = '/^' . $atom . '+' .   // Une ou plusieurs fois les caractères autorisés avant l'arobase
-				'(\.' . $atom . '+)*' .         // Suivis par zéro point ou plus
-				// séparés par des caractères autorisés avant l'arobase
-				'@' .                           // Suivis d'un arobase
-				'(' . $domain . '{1,63}\.)+' .  // Suivis par 1 à 63 caractères autorisés pour le nom de domaine
-				// séparés par des points
-				$domain . '{2,63}$/i';          // Suivi de 2 à 63 caractères autorisés pour le nom de domaine
-
-				// test de l'adresse e-mail
-				if (!preg_match($regex, $value) && !$value == "" )
-				{
-					throw new Exception('Paramètre non valide : '. $setting .' - valeur : '.$value);
-				}
-			}
-			elseif ($valueType == 'text')
-			{
-				if (!is_string($value))
-				{
-					throw new Exception('Paramètre non valide : '. $setting .' - valeur : '.$value);
-				}
-			}
-
-			else
+		if ($valueType == 'discreet')
+		{
+			$tempValue = $this -> getSettingRange ($setting);
+			if (! in_array($value, $tempValue))
 			{
 				throw new Exception('Paramètre non valide : '. $setting .' - valeur : '.$value);
 			}
 		}
+
+		elseif($valueType == 'range')
+		{
+			$range = $this -> getSettingRange ($setting, True);
+			if (!($value >= $range[0] && $value <= $range[1]))
+			{
+				throw new Exception('Range non valide : '. $setting .' - valeur : '.$value .'('.$range[0].'  - '.$range[1].' )');
+			}
+		}
+
+		elseif ($valueType == 'email')
+		{
+			$atom   = '[-a-z0-9!#$%&\'*+\\/=?^_`{|}~]';   // caractères autorisés avant l'arobase
+			$domain = '([a-z0-9]([-a-z0-9]*[a-z0-9]+)?)'; // caractères autorisés après l'arobase (nom de domaine)
+
+			$regex = '/^' . $atom . '+' .   // Une ou plusieurs fois les caractères autorisés avant l'arobase
+			'(\.' . $atom . '+)*' .         // Suivis par zéro point ou plus
+			// séparés par des caractères autorisés avant l'arobase
+			'@' .                           // Suivis d'un arobase
+			'(' . $domain . '{1,63}\.)+' .  // Suivis par 1 à 63 caractères autorisés pour le nom de domaine
+			// séparés par des points
+			$domain . '{2,63}$/i';          // Suivi de 2 à 63 caractères autorisés pour le nom de domaine
+
+			// test de l'adresse e-mail
+			if (!preg_match($regex, $value) && !$value == "" )
+			{
+				throw new Exception('Paramètre non valide : '. $setting .' - valeur : '.$value);
+			}
+		}
+		elseif ($valueType == 'text')
+		{
+			if (!is_string($value))
+			{
+				throw new Exception('Paramètre non valide : '. $setting .' - valeur : '.$value);
+			}
+		}
+
+		else
+		{
+			throw new Exception('Paramètre non valide : '. $setting .' - valeur : '.$value);
+		}
 	}
+}
+
+
+
 
 // ##################################################################
 	public function modifySetting ($setting,$value) {
