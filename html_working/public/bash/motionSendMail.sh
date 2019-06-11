@@ -20,24 +20,24 @@ if [ $varMail = "" ] ; then
   exit 0
 fi
 
-if [ -f .lastrun ] ; then
-    last=$(cat .lastrun)
+if [ -f /var/www/html/public/bash/.lastrun ] ; then
+    last=$(cat /var/www/html/public/bash/.lastrun)
 else
     last=0
 fi
 
 curr=$(date '+%s')
+
 diff=$(($curr - $last))
+
 if [ $diff -lt $varInterval ]; then
     exit 0
 fi
 
-echo "$curr" >.lastrun
-
+echo $curr > /var/www/html/public/bash/.lastrun
 
 # la variable varMail est complétée automatiquement lorsqu'une nouvelle adresse
 # mail est encodée dans l'interface web
-
-content=$(cat motionMailContent.txt)
+content=$(cat /var/www/html/public/bash/motionMailContent.txt)
 
 curl --data "EMAIL=$varMail" --data "CONTENT=$content" https://ebirds.be/data/motionSendMail

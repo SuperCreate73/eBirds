@@ -202,6 +202,14 @@ if [ "$varReset" = true ] ; then
 	printError "$?"
 fi
 
+# écriture de l'encodage du fichier log si pas encore existant
+#-------------------------------------------------------
+if [ ! -e "$varLogFile" ] ; then
+	printMessage "Création et paramétrage du fichier log" "$varLogFile"
+	echo -e "# coding:UTF-8 \n\n" >> $varLogFile
+	printError "$?"
+fi
+
 # vérification de la présence des fichiers sources en local ou sur le serveur
 #----------------------------------------------------------------------------
 if [ ! "$varGit" == "true" ] ; then
@@ -508,6 +516,16 @@ sqlite3 /var/www/nichoir.db << EOS
 				aliasValue TINY TEXT,
 				setting TINY TEXT,
 				settingValue TINY TEXT);
+	CREATE TABLE IF NOT EXISTS
+		location
+			(	street TINY TEXT,
+				houseNumber TINY TEXT,
+				postalCode TINY TEXT,
+				city TINY TEXT,
+				country TINY TEXT,
+				xCoord LONG,
+				yCoord LONG,
+				zCoord LONG);
 EOS
 printError "$?"
 #######################################################################
@@ -526,127 +544,68 @@ printError "$?"
 #######################################################################
 # crée les settings dans la base de données
 #######################################################################
-printMessage "insertion des paramètres" "nichoir.db"
+# output_pictures on/off
+# ffmpeg_output_movies on/off -> movie OU timelapse
+# snapshot_interval 0 -> length in sec
+printMessage "insertion des paramètres - table 'config'" "nichoir.db"
 sqlite3 /var/www/nichoir.db << EOS
-	INSERT INTO config
-			('setting', 'value', 'defautValue', 'valueType')
-		VALUES
-			('on_motion_detected', 'email', 'comment', 'email');
-	INSERT INTO config
-			('setting', 'value', 'defautValue', 'valueType')
-		VALUES
-			('width', '640', '640', 'discreet');
-	INSERT INTO config
-			('setting', 'value', 'defautValue', 'valueType')
-		VALUES
-			('height', '480', '480', 'discreet');
-	INSERT INTO config
-			('setting', 'value', 'defautValue', 'valueType')
-		VALUES
-			('threshold', '10', '10', 'range');
-	INSERT INTO config
-			('setting', 'value', 'defautValue', 'valueType')
-		VALUES
-			('quality', '75', '75', 'range');
-	INSERT INTO config
-			('setting', 'value', 'defautValue', 'valueType')
-		VALUES
-			('ffmpeg_timelapse', '0', '0', 'range');
-	INSERT INTO config
-			('setting', 'value', 'defautValue', 'valueType')
-		VALUES
-			('ffmpeg_timelapse_mode', 'daily', 'daily', 'discreet');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('width', '480');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('width', '640');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('width', '1280');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('height', '360');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('height', '480');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES ('height', '960');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('threshold', '5');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('threshold', '50');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('quality', '0');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('quality', '100');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('ffmpeg_timelapse', '0');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('ffmpeg_timelapse', '3600');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('ffmpeg_timelapse_mode', 'hourly');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('ffmpeg_timelapse_mode', 'daily');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('ffmpeg_timelapse_mode', 'weekly-sunday');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('ffmpeg_timelapse_mode', 'weekly-monday');
-	INSERT INTO configRange
-			('setting', 'rangeValue')
-		VALUES
-			('ffmpeg_timelapse_mode', 'monthly');
-	INSERT INTO configAlias
-			('alias', 'aliasValue', 'setting', 'settingValue')
-		VALUES
-			('imageSize', 'low', 'width', '480') ;
-	INSERT INTO configAlias
-			('alias', 'aliasValue', 'setting', 'settingValue')
-		VALUES
-			('imageSize', 'low', 'height', '360') ;
-	INSERT INTO configAlias
-			('alias', 'aliasValue', 'setting', 'settingValue')
-		VALUES
-			('imageSize', 'medium', 'width', '640') ;
-	INSERT INTO configAlias
-			('alias', 'aliasValue', 'setting', 'settingValue')
-		VALUES
-			('imageSize', 'medium', 'height', '480') ;
-	INSERT INTO configAlias
-			('alias', 'aliasValue', 'setting', 'settingValue')
-		VALUES
-			('imageSize', 'high', 'width', '1280') ;
-	INSERT INTO configAlias
-			('alias', 'aliasValue', 'setting', 'settingValue')
-		VALUES
-			('imageSize', 'high', 'height', '960') ;
+	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('on_motion_detected', 'email', 'comment', 'email');
+	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType')	VALUES ('imageSize', 'medium', 'medium', 'discreet');
+	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType')	VALUES ('threshold', '10', '10', 'range');
+	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('quality', '75', '75', 'range');
+	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('ffmpeg_timelapse', '0', '0', 'range');
+	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('ffmpeg_timelapse_mode', 'daily', 'daily', 'discreet');
+	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('snapshot_interval', '0', '0', 'range');
+	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('snapshot_on_off', 'off', 'off', 'discreet');
+	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('output_pictures', 'on', 'on', 'discreet');
+	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('ffmpeg_output_movies', 'off', 'off', 'discreet');
+EOS
+printError "$?"
+
+printMessage "insertion des paramètres - table 'configRange'" "nichoir.db"
+sqlite3 /var/www/nichoir.db << EOS
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('imageSize', 'low');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('imageSize', 'medium');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('imageSize', 'high');
+
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('threshold', '5');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('threshold', '99');
+
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('quality', '0');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('quality', '100');
+
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse', '0');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse', '3600');
+
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse_mode', 'none');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse_mode', 'hourly');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse_mode', 'daily');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse_mode', 'weekly-sunday');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse_mode', 'weekly-monday');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse_mode', 'monthly');
+
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshot_interval', '0');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshot_interval', '3600');
+
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshot_on_off', 'on');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshot_on_off', 'off');
+
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('output_pictures', 'on');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('output_pictures', 'off');
+
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_output_movies', 'on');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_output_movies', 'off');
+EOS
+printError "$?"
+
+printMessage "insertion des paramètres - table 'configAlias'" "nichoir.db"
+sqlite3 /var/www/nichoir.db << EOS
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageSize', 'low', 'width', '480') ;
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageSize', 'low', 'height', '360') ;
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageSize', 'medium', 'width', '640') ;
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageSize', 'medium', 'height', '480') ;
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageSize', 'high', 'width', '1280') ;
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageSize', 'high', 'height', '960') ;
 EOS
 printError "$?"
 
@@ -685,6 +644,7 @@ printError "$?"
 # configuration de l'envoi de l'adresse IP au serveur
 #######################################################################
 printMessage "envoi de l'adresse IP au serveur central" "curlIP"
+
 MACaddress=$(sudo ifconfig | grep -i -m 1  ether | cut -f 10 -d ' ')
 IPlocale=$(sudo ifconfig | grep -i -m 1  "netmask 255.255.255.0" | cut -f 10 -d ' ')
 IPexterne=$(dig TXT +short -4 o-o.myaddr.1.google @ns1.google.com | cut -f 2 -d '"')

@@ -14,8 +14,10 @@ abstract class DbManager {
 		return $db;
   }
 
-	protected function clean($str)
+	protected function cleanString($str)
 	{
+		// clean input string from special characters that could cause problem with DB
+		//
   	$search  = array('&'    , '"'     , "'"    , '<'   , '>'    );
   	$replace = array('&amp;', '&quot;', '&#39;', '&lt;', '&gt;' );
  		$str = str_replace($search, $replace, $str);

@@ -119,12 +119,15 @@ function reglages($nom, $action=null) {
 		$users="Unable to load users";
 	}
 	$config = new DbMngSettings();
+	// TODO
+	// mettre les settings dans un tableau et les charger en une fois
+	// ou laisser les valeurs dans l'objet qui sera accessible depuis la vue
 	$on_motion_detected = $config->getSettingValue('on_motion_detected');
 	$threshold = $config->getSettingValue('threshold');
 	$quality = $config->getSettingValue('quality');
 	$ffmpeg_timelapse = $config->getSettingValue('ffmpeg_timelapse');
 	$ffmpeg_timelapse_mode = $config->getSettingValue('ffmpeg_timelapse_mode');
-	$imageSize = $config->getAliasValue('imageSize');
+	$imageSize = $config->getSettingValue('imageSize');
 	require('view/viewReglages.php');
 }
 

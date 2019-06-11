@@ -118,11 +118,20 @@ function convertirTimezone($time, $deTz = "GMT", $versTz = "Europe/Brussels")
 
 function motionSettings ()
 {
-	// intermediate function for recursive use of doMotionSettings
-	$motion = new MotionManager();
-	$motion -> backUpMotion();
-	doMotionSettings($_POST);
-	$motion -> restartMotion();
+	//
+	$dbMngSettings = new DbMngSettings();
+	$dbMngSettings->validateValues($_POST);
+	foreach ($_POST as $key => $value)
+	{
+		$dbMngSettings-> modifySetting ($key, $value);
+	}
+
+	$motionInterface = new MotionInterface($_POST);
+
+	$motionMng = new MotionManager();
+	$motionMng -> backUpMotion();
+	$motionMng -> setAllSettings($motionInterface -> getAllSettings());
+	$motionMng -> restartMotion();
 }
 
 function doMotionSettings ($inputList)
@@ -130,40 +139,32 @@ function doMotionSettings ($inputList)
 	// TODO
 	// general function for manage motion settings
 	$sendMailPath = '/var/www/html/public/bash/motionSendMail.sh';
-	$config = new DbMngSettings();
-	$motion = new MotionManager();
-	// $config->_table = 'configAlias';
+	$dbMngSettings = new DbMngSettings();
+	$motionMng = new MotionManager();
+	// $dbMngSettings->_table = 'configAlias';
 
  	foreach ($inputList as $key => $value)
 	{
-		// if $key is an alias, recursif call with correponding parameters
-		if ($config->keyTest('configAlias', 'alias = "'.$key.'" AND aliasValue = "'.$value.'"'))
-		{
-			doMotionSettings($config -> getSettingFromAlias($key, $value));
-			continue ;
-		}
-
 		// check validity of $value
-		if (! $config-> validateValue($key, $value))
+		if (! $dbMngSettings-> validateValue($key, $value))
 		{
-			continue ;
+			// continue ;
+			throw new Exception('Paramètre non valide : '. $key .' - valeur : '.$value);
 		}
 
-		// check if same values in DB
-		if ($value == $config-> getSettingValue($key))
-		{
-			continue ;
-		}
-		$config-> modifySetting ($key, $value);
 
-		if ($key = 'on_motion_detected')
+		$dbMngSettings-> modifySetting ($key, $value);
+
+		if ($key == 'on_motion_detected')
 		{
-			$motion-> setSendMail($key, $value);
-			$motion-> setSetting($key, $sendMailPath);
+			$tmpStr =  '" send '.$key .' - '. $value.'"';
+			$output = shell_exec('echo '. $tmpStr .' >> /var/www/debug.log');
+			$motionMng-> setSendMail($key, $value);
+			$motionMng-> setSetting($key, $sendMailPath);
 		}
 		else
 		{
-			$motion-> setSetting ($key, $value);
+			$motionMng-> setSetting ($key, $value);
 		}
 	}
 }

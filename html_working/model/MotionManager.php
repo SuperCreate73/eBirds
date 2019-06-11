@@ -1,10 +1,19 @@
 <?php
+require_once("model/MotionInterface.php");
 
 class MotionManager {
 	// Classe qui gère le software Motion : configuration, restart du  daemon
 	//
-
-//Attributs:
+	// A tester:
+	// les droits d'écriture dans les fichiers. Fonctionne sans le SUDO sous DEBIAN
+	// mais pas les droits de modifier 'motion.conf'.
+	// Cause probable : sudo requiert
+	// Solution : modifier le fichier sudoers pour autoriser le sudo sans mot de passe
+	//	ou modifier l'inclusion d'un fichier dans le répertoire sudoers.d
+	//		et y ajouter un fichier avec les bons droits
+	//	ou modifier les droits du répertoire /etc/motion
+	//
+	//Attributs:
 	private $_script = 'public/bash/sendMail.sh' ; //
 	// private $_settingsTable = array(
 	// 	on_motion_detected => array('string', '/var/www/html/public/bash/motionSendMail.sh', 'comment'),
@@ -16,10 +25,17 @@ class MotionManager {
 	// 	ffmpeg_timelapse_mode => array('discreet', array('hourly', 'daily', 'weekly-sunday', 'weekly-monday', 'monthly'), 'daily'),
 	// );
 
+	public function setAllSettings($inputArray) {
+		foreach ($inputArray as $key => $value)
+		{
+			$this->setSetting($key, $value);
+		}
+	}
+
 	public function setSetting ($setting, $value) {
 		// fonction générique pour valider et changer les settings de motion
 		//
-		$shellCmd='sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?'.$setting.'.*$:'.$setting.' '.$value.':g"';
+		$shellCmd = 'sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?'.$setting.' .*$:'.$setting.' '.$value.':g"';
 		$output = shell_exec($shellCmd);
 	}
 
@@ -30,9 +46,8 @@ class MotionManager {
 		//		$output = shell_exec('sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?on_motion_detected *:on_motion_detected /home/pi/.motion/motion.pid:g"');
 
 		//modification du fichier 'motionSendMail.sh' -> ajout de l'adresse mail
-		$shellCmd='sudo sed "/var/www/html/public/bash/motionSendMail.sh" -i -e "s:^\(#\|;\)\? \?varMail=.*$:varMail='.$email.':g"';
+		$shellCmd = 'sudo sed "/var/www/html/public/bash/motionSendMail.sh" -i -e "s:^\(#\|;\)\? \?varMail=.*$:varMail='.$email.':g" ';
 		$output = shell_exec($shellCmd);
-
 		//modification du fichier 'motion.conf'
 		// $shellCmd='sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?'.$key.'.*$:'.$key.' /var/www/html/public/bash/motionSendMail.sh:g"';
 		// $output = shell_exec($shellCmd);
@@ -54,11 +69,11 @@ class MotionManager {
 		// annule l'envoi d'e-mail en cas de détection de mouvements
 		//
 
-		$shellCmd='sudo sed "'. $file .'" -i -e "s:^\(#\|;\)\? \?'.$parameter.'.*$:'.$parameter.'='.$value.':g"';
+		$shellCmd = 'sudo sed "'. $file .'" -i -e "s:^\(#\|;\)\? \?'.$parameter.'.*$:'.$parameter.'='.$value.':g" ';
 		$output = shell_exec($shellCmd);
 
 		//modification du fichier 'motion.conf'
-		$shellCmd='sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?on_motion_detected .*$:; on_motion_detected value:g"';
+		$shellCmd = 'sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?on_motion_detected .*$:; on_motion_detected value:g"';
 		$output = shell_exec($shellCmd);
 	}
 
@@ -66,7 +81,7 @@ class MotionManager {
 	public function restartMotion() {
 		// redémarrage du daemon motion pour prendre en compte les modifySetting
 		//
-		$shellCmd='sudo /etc/init.d/motion restart';
+		$shellCmd = 'sudo /etc/init.d/motion restart';
 		$output = shell_exec($shellCmd);
 	}
 
@@ -75,11 +90,11 @@ class MotionManager {
 		// teste également la présence du fichier de backup initial
 
 		if ( ! file_exists ("/etc/motion/motion.conf.original")) {
-			$shellCmd='sudo cp /etc/motion/motion.conf /etc/motion/motion.conf.original';
+			$shellCmd = 'sudo cp /etc/motion/motion.conf /etc/motion/motion.conf.original';
 			$output = shell_exec($shellCmd);
 			// copy ("/etc/motion/motion.conf", "/etc/motion/motion.conf.original");
 		}
-		$shellCmd='sudo cp /etc/motion/motion.conf /etc/motion/motion.conf.back';
+		$shellCmd = 'sudo cp /etc/motion/motion.conf /etc/motion/motion.conf.back';
 		$output = shell_exec($shellCmd);
 		// copy ("/etc/motion/motion.conf", "/etc/motion/motion.conf.back");
 	}
@@ -89,12 +104,12 @@ class MotionManager {
 		// ou du fichier original si $origin=True
 
 		if ($origin) {
-			$shellCmd='sudo cp /etc/motion/motion.conf.original /etc/motion/motion.conf';
+			$shellCmd = 'sudo cp /etc/motion/motion.conf.original /etc/motion/motion.conf';
 			$output = shell_exec($shellCmd);
 			// copy ("/etc/motion/motion.conf.original", "/etc/motion/motion.conf");
 		}
 		else {
-			$shellCmd='sudo cp /etc/motion/motion.conf.back /etc/motion/motion.conf';
+			$shellCmd = 'sudo cp /etc/motion/motion.conf.back /etc/motion/motion.conf';
 			$output = shell_exec($shellCmd);
 			// copy ("/etc/motion/motion.conf.back", "/etc/motion/motion.conf");
 		}

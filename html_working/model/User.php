@@ -17,7 +17,7 @@ class User extends DbManager {
 		//
 		// password hash (MD5)
 		$passmd5 = $this->md5Hash($password);
-		$login=$this->clean($login);
+		$login=$this->cleanString($login);
 
 		// check if user already registred
 		$result=$this->checkLogin($login);
@@ -44,7 +44,7 @@ class User extends DbManager {
 			$db = $this->dbConnect();
 			$stmt=$db->prepare("UPDATE users SET password = :Password WHERE (login = :Login)");
 			$resultat=$stmt->execute(array(
-				'Login'	=>	$this->clean($login),
+				'Login'	=>	$this->cleanString($login),
 				'Password' => $password));
 	}
 
@@ -54,7 +54,7 @@ class User extends DbManager {
 			$db = $this->dbConnect();
 			$stmt=$db->prepare("DELETE FROM users WHERE (login = :Login) ");
 			$resultat=$stmt->execute(array(
-				'Login'	=>	$this->clean($login),
+				'Login'	=>	$this->cleanString($login),
 				));
 			// If no more users, create default user : admin admin
 			if ($this->countUser() == 0) {
@@ -89,7 +89,7 @@ class User extends DbManager {
 		// cryptés dans la DB. On utilise la fonction "clean" définie dans la classe mère
 		// pour filtrer et éventuellement ajouter des caractères d'échappement (pour
 		// éviter un problèmede sécurité appelé "injection SQL")
-		$where = "login = '".$this->clean($login)."' AND password = '".$this->md5Hash($password)."'" ;
+		$where = "login = '".$this->cleanString($login)."' AND password = '".$this->md5Hash($password)."'" ;
 		$result = $this-> keyExist($where);
 		return $result;
 	}
