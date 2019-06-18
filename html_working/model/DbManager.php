@@ -4,6 +4,11 @@ abstract class DbManager {
 
 	protected $_table;
 
+	public function setTable($tableName)
+	{
+		$this->_table = $tableName ;
+	}
+
 	protected function dbConnect()
 	{
 
@@ -40,12 +45,15 @@ abstract class DbManager {
 		}
 		elseif (is_array($columns))
 		{
+			$sqlColumns = "";
 			foreach ($columns as $values)
 			{
 				$sqlColumns = $sqlColumns.$values.", ";
 			}
 			// remove last ', ' from $sqlColumns
 			$sqlColumns = substr($sqlColumns, 0, -2);
+
+
 		}
 		else
 		{

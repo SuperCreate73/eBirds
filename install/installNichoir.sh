@@ -504,7 +504,7 @@ sqlite3 /var/www/nichoir.db << EOS
 		config
 			(	setting TINY TEXT PRIMARY KEY,
 				value TINY TEXT,
-				defautValue TINY TEXT,
+				priority INTEGER,
 				valueType);
 	CREATE TABLE IF NOT EXISTS
 		configRange
@@ -549,17 +549,21 @@ printError "$?"
 # snapshot_interval 0 -> length in sec
 printMessage "insertion des paramètres - table 'config'" "nichoir.db"
 sqlite3 /var/www/nichoir.db << EOS
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('on_motion_detected', 'email', 'comment', 'email');
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType')	VALUES ('imageSize', 'medium', 'medium', 'discreet');
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType')	VALUES ('threshold', '10', '10', 'range');
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('quality', '75', '75', 'range');
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('ffmpeg_timelapse', '0', '0', 'range');
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('ffmpeg_timelapse_mode', 'daily', 'daily', 'discreet');
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('snapshot_interval', '0', '0', 'range');
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('snapshot_on_off', 'off', 'off', 'discreet');
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('output_pictures', 'on', 'on', 'discreet');
-	INSERT INTO config ('setting', 'value', 'defautValue', 'valueType') VALUES ('ffmpeg_output_movies', 'off', 'off', 'discreet');
+	INSERT INTO config ('setting', 'value', 'priority', 'valueType')	VALUES ('imageSize', 'medium', 0, 'discreet');
+	INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('quality', '75', 0, 'range');
+	INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('imageTypeDetection', 'picture', 5, 'discreet');
+	INSERT INTO config ('setting', 'value', 'priority', 'valueType')	VALUES ('threshold', '10', 6, 'range');
+	INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('on_motion_detected', 'email', 0, 'email');
+	INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('imageTypeInterval', 'off', 3, 'discreet');
+	INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('ffmpeg_timelapse_mode', 'daily', 4, 'discreet');
+	INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('snapshotInterval', '0', 4, 'range');
+
+
 EOS
+# INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('snapshot_interval', '0', '0', 'range');
+# INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('output_pictures', 'on', 'on', 'discreet');
+# INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('snapshot_on_off', 'off', 'off', 'discreet');
+# INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('ffmpeg_output_movies', 'off', 'off', 'discreet');
 printError "$?"
 
 printMessage "insertion des paramètres - table 'configRange'" "nichoir.db"
@@ -568,14 +572,18 @@ sqlite3 /var/www/nichoir.db << EOS
 	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('imageSize', 'medium');
 	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('imageSize', 'high');
 
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('threshold', '5');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('threshold', '99');
-
 	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('quality', '0');
 	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('quality', '100');
 
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse', '0');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse', '3600');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('imageTypeDetection', 'off');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('imageTypeDetection', 'picture');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('imageTypeDetection', 'video');
+
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('threshold', '5');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('threshold', '99');
+
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshotInterval', '0');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshotInterval', '3600');
 
 	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse_mode', 'none');
 	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse_mode', 'hourly');
@@ -584,18 +592,21 @@ sqlite3 /var/www/nichoir.db << EOS
 	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse_mode', 'weekly-monday');
 	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_timelapse_mode', 'monthly');
 
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshot_interval', '0');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshot_interval', '3600');
-
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshot_on_off', 'on');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshot_on_off', 'off');
-
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('output_pictures', 'on');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('output_pictures', 'off');
-
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_output_movies', 'on');
-	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_output_movies', 'off');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('imageTypeInterval', 'off');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('imageTypeInterval', 'picture');
+	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('imageTypeInterval', 'video');
 EOS
+# INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshot_interval', '0');
+# INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshot_interval', '3600');
+#
+# INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshot_on_off', 'on');
+# INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshot_on_off', 'off');
+#
+# INSERT INTO configRange ('setting', 'rangeValue') VALUES ('output_pictures', 'on');
+# INSERT INTO configRange ('setting', 'rangeValue') VALUES ('output_pictures', 'off');
+#
+# INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_output_movies', 'on');
+# INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_output_movies', 'off');
 printError "$?"
 
 printMessage "insertion des paramètres - table 'configAlias'" "nichoir.db"
@@ -606,6 +617,13 @@ sqlite3 /var/www/nichoir.db << EOS
 	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageSize', 'medium', 'height', '480') ;
 	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageSize', 'high', 'width', '1280') ;
 	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageSize', 'high', 'height', '960') ;
+
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeDetection', 'off', 'output_pictures', 'off') ;
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeDetection', 'off', 'ffmpeg_output_movies', 'off') ;
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeDetection', 'picture', 'output_pictures', 'on') ;
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeDetection', 'picture', 'ffmpeg_output_movies', 'off') ;
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeDetection', 'video', 'output_pictures', 'off') ;
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeDetection', 'video', 'ffmpeg_output_movies', 'on') ;
 EOS
 printError "$?"
 

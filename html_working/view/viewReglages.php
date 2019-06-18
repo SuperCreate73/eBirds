@@ -132,8 +132,8 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 				<label for="modeCamera">Mode d'enregistrement images:</label>
 				<select class="u-full-width" id="modeCamera" onchange="" name="imageTypeDetection">
 					<option value="off">Off</option>
-					<option value="Detection">Photo</option>
-					<option value="Video">Video</option>
+					<option value="picture">Photo</option>
+					<option value="video">Video</option>
 				</select>
 			</div>
 			<div class="five columns">
@@ -164,7 +164,7 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 				<label for="modeCamera_tl">Mode d'enregistrement images:</label>
 				<select class="u-full-width" id="modeCamera_tl" onchange="" name="imageTypeInterval">
 					<option value="off">Off</option>
-					<option value="snapshot">Photo</option>
+					<option value="picture">Photo</option>
 					<option value="video">Video</option>
 				</select>
 			</div>
@@ -172,7 +172,6 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 		<div class="five columns">
 			<label for="ffmpeg_timelapse_mode">fréquence de sauvegarde du film:</label>
 			<select class="u-full-width" id="ffmpeg_timelapse_mode" name="ffmpeg_timelapse_mode">
-				<option value="none" <?= ($ffmpeg_timelapse_mode=='none') ? 'selected' : "" ?> >Pas de timelapse</option>
 				<option value="hourly" <?= ($ffmpeg_timelapse_mode=='hourly') ? 'selected' : "" ?> >Toute les heures</option>
 				<option value="daily" <?= ($ffmpeg_timelapse_mode=='daily') ? 'selected' : "" ?> >Tous les jours</option>
 				<option value="weekly-sunday" <?= ($ffmpeg_timelapse_mode=='weekly-sunday') ? 'selected' : "" ?> >Toutes les semaines (dimanche)</option>
@@ -182,8 +181,8 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 		</div>
 
 		<div class="five columns offset-by-two">
-			<label>Intervalle en seconde entre les prises de vue (0-3600):</label><div id="texteIntervalle" ><?= $ffmpeg_timelapse ?></div>
-			<input class="u-full-width" type="range" min="0" max="3600" value="<?= $ffmpeg_timelapse ?>" placeholder="<?= $ffmpeg_timelapse ?>" name="ffmpeg_timelapse" id="ffmpeg_timelapse" oninput="updateIntervalle(this.value);">
+			<label>Intervalle en seconde entre les prises de vue (0-3600):</label><div id="texteIntervalle" ><?= $snapshotInterval ?></div>
+			<input class="u-full-width" type="range" min="0" max="3600" value="<?= $snapshotInterval ?>" placeholder="<?= $snapshotInterval ?>" name="snapshotInterval" id="snapshotInterval" oninput="updateIntervalle(this.value);">
 		</div>
 	</div>
 
@@ -228,29 +227,29 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 			<div class="offset-by-two columns">
 				<div class="seven columns">
 					<label>Rue et numéro</label>
-					<input class="u-full-width" type="text" placeholder="Rue" name="rue">
+					<input class="u-full-width" type="text" placeholder="Rue" name="street">
 					<div class="row">
 						<div class="four columns">
 							<label>C.P.</label>
-							<input class="u-full-width" type="text" placeholder="Code postal" name="CP">
+							<input class="u-full-width" type="text" placeholder="Code postal" name="postalCode">
 						</div>
 
 						<div class="eight columns">
 							<label>Localité</label>
-							<input class="u-full-width" type="text" placeholder="Localité" name="localite">
+							<input class="u-full-width" type="text" placeholder="Localité" name="city">
 						</div>
 					</div>
 					<label>Pays</label>
-					<input class="u-full-width" type="text" placeholder="Pays" name="pays">
+					<input class="u-full-width" type="text" placeholder="Pays" name="country">
 				</div>
 
 				<div class="three columns">
 					<label>Latitude</label>
-					<input class="u-full-width" type="text" placeholder="Latitude" name="latitude">
+					<input class="u-full-width" type="text" placeholder="Latitude" name="xCoord">
 					<label>Longitude</label>
-					<input class="u-full-width" type="text" placeholder="Longitude" name="longitude">
+					<input class="u-full-width" type="text" placeholder="Longitude" name="yCoord">
 					<label>Altitude</label>
-					<input class="u-full-width" type="text" placeholder="Altitude" name="altitude">
+					<input class="u-full-width" type="text" placeholder="Altitude" name="zCoord">
 				</div>
 			</div>
 		</div>

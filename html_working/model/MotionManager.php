@@ -30,7 +30,7 @@ class MotionManager {
 		{
 			if ($key == 'on_motion_detected')
 			{
-				$this -> setSendMail($value)
+				$this -> setSendMail($value);
 			}
 			$this -> setSetting($key, $value);
 		}

@@ -125,7 +125,7 @@ function reglages($nom, $action=null) {
 	$on_motion_detected = $config->getSettingValue('on_motion_detected');
 	$threshold = $config->getSettingValue('threshold');
 	$quality = $config->getSettingValue('quality');
-	$ffmpeg_timelapse = $config->getSettingValue('ffmpeg_timelapse');
+	$snapshotInterval = $config->getSettingValue('snapshotInterval');
 	$ffmpeg_timelapse_mode = $config->getSettingValue('ffmpeg_timelapse_mode');
 	$imageSize = $config->getSettingValue('imageSize');
 	require('view/viewReglages.php');

@@ -16,8 +16,32 @@ class DbMngSettings extends DbManager {
 		public $config = "config";
 		public $configRange = "configRange";
 //	}
+
+public function getSettingList ()
+	// get a list of all settings as key and array of value, priority and valueType as value
+	{
+		function cmp($a, $b)
+		{
+  		if ($a[1] == $b[1])
+			{
+        return 0;
+    	}
+    	return ($a[1] < $b[1]) ? -1 : 1;
+		}
+
+		$this->_table = $this->config;
+		$unformatedList = $this -> getAll(['setting', 'value', 'priority', 'valueType']);
+		foreach ($unformatedList as $key => $row)
+		{
+			$formatedList[$row[0]] = [$row[1], $row[2], $row[3]];
+		}
+		uasort($formatedList, 'cmp');
+		return $formatedList;
+	}
+
 // ##################################################################
-	public function getSettingFromAlias ($alias, $value) {
+	public function getSettingFromAlias ($alias, $value)
+	{
 		// Get all records from $configAlias
 		// where alias = $alias and aliasValue = $value
 		//
@@ -33,7 +57,8 @@ class DbMngSettings extends DbManager {
 	}
 
 // ##################################################################
-	private function getSettingRange ($setting, $sorted = False) {
+	private function getSettingRange ($setting, $sorted = False)
+	{
 		// get possible range for setting -> return list
 		$this->_table = $this->configRange;
 
@@ -55,7 +80,8 @@ class DbMngSettings extends DbManager {
 	}
 
 // ##################################################################
-	public function getSettingValue ($setting) {
+	public function getSettingValue ($setting)
+	{
 		// Return current value from setting
 		$this->_table = $this->config ;
 		$result= $this->getKey('setting', $setting, 'value');
@@ -64,7 +90,8 @@ class DbMngSettings extends DbManager {
 	}
 
 // ##################################################################
-	public function getAliasValue ($alias) {
+	public function getAliasValue ($alias)
+	{
 		// Return current value from alias
 		$db = $this->dbConnect();
 		$sql = "SELECT aliasValue FROM configAlias
@@ -80,30 +107,45 @@ class DbMngSettings extends DbManager {
 		return($list['aliasValue']);
 	}
 
+	//	public function validateValue ($setting, $value) {
 // ##################################################################
-//	public function validateValue ($setting, $value) {
-	public function validateValues ($inputArray)
-	{
-		// get type of value to validate - discreet, range or file
-		foreach($inputArray as $setting => $value)
+	public function updateValues ($inputArray)
+	{ // primary function used to update settings
+		//
+
+		// variable Réinitialisation
+		$changedSettings = array();
+		// get all motion settings and parameters from config table
+		$listSettings = $this-> getSettingList();
+		// input array treatment
+		foreach ($inputArray as $setting => $value)
 		{
-			// get config data
-			$this->_table = $this->config;
-			$valueTypeArr = $this -> getKey('setting', $setting, 'valueType');
-			// if no setting found, throw exception
-			if (! count($valueTypeArr) == 0)
+			// if motion setting
+			if (array_key_exists($setting, $listSettings))
 			{
-				$this -> validateSettings($setting, $value, $valueTypeArr['0'])
-				// TODO activate when tests are done
-				//throw new Exception('Paramètre inconnu : '. $setting);
+				// if value altered, check validity and store in new table
+				if ( $value != $listSettings[$setting][0])
+				{
+					$this -> validateSettings($setting, $value, $listSettings[$setting][2]);
+					$changedSettings[$setting] = $value;
+				}
 			}
 		}
+		// if values are altered, modify in DB
+		if (count($changedSettings) > 0) {
+			$this -> modifySettings ($changedSettings);
+		}
+		// return list of settings for further usage (motion_Interface)
+		return $listSettings;
+		// TODO activate when tests are done
+		//throw new Exception('Paramètre inconnu : '. $setting);
 	}
 // ##################################################################
-private function validateSettings ($setting, $value, $valueType) {
-	// get type of value to validate - discreet, range or file
+	private function validateSettings ($setting, $value, $valueType)
+	{ // validate input data before updating DB
+		//
 
-				// validate value
+		// query table initialisation -> to get range values for settings
 		$this->_table = $this->configRange;
 
 		if ($valueType == 'discreet')
@@ -156,23 +198,34 @@ private function validateSettings ($setting, $value, $valueType) {
 			throw new Exception('Paramètre non valide : '. $setting .' - valeur : '.$value);
 		}
 	}
-}
-
-
-
 
 // ##################################################################
-	public function modifySetting ($setting,$value) {
-		// modify value
-		$this->_table = $this->config;
-		$db = $this->dbConnect();
-		$stmt=$db->prepare("UPDATE config SET value = :Value WHERE (setting = :Setting)");
-		$resultat=$stmt->execute(array(
-			'Setting'	=>	$setting,
-			'Value' => $value));
-		return $resultat;
+	public function modifySettings ($listSettings)
+	{
+		// modify values of altered settings
+		foreach($listSettings as $setting => $value)
+		{
+			$this->_table = $this->config;
+			$db = $this->dbConnect();
+			$stmt=$db->prepare("UPDATE config SET value = :Value WHERE (setting = :Setting)");
+			$resultat=$stmt->execute(array(
+				'Setting'	=>	$setting,
+				'Value' => $value));
+		}
 	}
 
+	public function getAliasArray()
+	{ // get list of all alias name
+		// Return current value from alias
+		$db = $this->dbConnect();
+		$sql = "SELECT DISTINCT alias FROM configAlias ;";
+		$stmt = $db->query($sql);
+		$list = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+		return($list);
+	}
+
+	// ##################################################################
 	public function keyTest ($table, $where) {
 		// modify value
 		$this->_table = $table ;

@@ -120,13 +120,11 @@ function motionSettings ()
 {
 	//
 	$dbMngSettings = new DbMngSettings();
-	$dbMngSettings->validateValues($_POST);
-	foreach ($_POST as $key => $value)
-	{
-		$dbMngSettings-> modifySetting ($key, $value);
-	}
+	$allSettingsList = $dbMngSettings->updateValues($_POST);
 
-	$motionInterface = new MotionInterface($_POST);
+	$aliasArray = $dbMngSettings->getAliasArray();
+//TODO add the two arrays to automatise treatment of settings
+	$motionInterface = new MotionInterface($_POST, $allSettingsList, $aliasArray);
 
 	$motionMng = new MotionManager();
 	$motionMng -> backUpMotion();
