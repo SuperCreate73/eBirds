@@ -109,15 +109,15 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 			<div class="five columns">
 				<label for="imageSize">Dimensions de l'image:</label>
 				<select class="u-full-width" id="imageSize" name="imageSize">
-					<option value="low" <?= ($imageSize=='low') ? 'selected' : "" ?> >Petite</option>
-					<option value="medium" <?= ($imageSize=='medium') ? 'selected' : "" ?> >Moyenne</option>
-					<option value="high" <?= ($imageSize=='high') ? 'selected' : "" ?> >Grande</option>
+					<option value="low" <?= ($settingsInterface -> imageSize == 'low') ? 'selected' : "" ?> >Petite</option>
+					<option value="medium" <?= ($settingsInterface -> imageSize=='medium') ? 'selected' : "" ?> >Moyenne</option>
+					<option value="high" <?= ($settingsInterface -> imageSize=='high') ? 'selected' : "" ?> >Grande</option>
 				</select>
 			</div>
 
 			<div class="five columns">
-				<label>Qualité de l'image (0-100):</label><div id="texteQualite" ><?= $quality ?></div>
-				<input class="u-full-width" type="range" min="0" max="100" value="<?= $quality ?>" placeholder="<?= $quality ?>" name="quality" id="quality" oninput="updateQualite(this.value);">
+				<label>Qualité de l'image (0-100):</label><div id="texteQualite" ><?= $settingsInterface -> quality ?></div>
+				<input class="u-full-width" type="range" min="0" max="100" value="<?= $settingsInterface -> quality ?>" placeholder="<?= $settingsInterface -> quality ?>" name="quality" id="quality" oninput="updateQualite(this.value);">
 			</div>
 		</div>
 		<hr style="border: .5px solid white;" />
@@ -131,19 +131,19 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 			<div class="five columns">
 				<label for="modeCamera">Mode d'enregistrement images:</label>
 				<select class="u-full-width" id="modeCamera" onchange="" name="imageTypeDetection">
-					<option value="off">Off</option>
-					<option value="picture">Photo</option>
-					<option value="video">Video</option>
+					<option value="off" <?= ($settingsInterface -> imageTypeDetection=='off') ? 'selected' : "" ?> >Off</option>
+					<option value="picture" <?= ($settingsInterface -> imageTypeDetection=='picture') ? 'selected' : "" ?> >Photo</option>
+					<option value="video" <?= ($settingsInterface -> imageTypeDetection=='video') ? 'selected' : "" ?> >Video</option>
 				</select>
 			</div>
 			<div class="five columns">
-				<label>Quel pourcentage de l'image doit changer pour détecter un mouvement (5-99):</label><div id="texteDetection" ><?= $threshold ?></div>
-				<input class="u-full-width" type="range" min="5" max="99" value="<?= $threshold ?>" placeholder="<?= $threshold ?>" name="threshold" id="threshold" oninput="updateDetection(this.value);">
+				<label>Quel pourcentage de l'image doit changer pour détecter un mouvement (5-99):</label><div id="texteDetection" ><?= $settingsInterface -> threshold ?></div>
+				<input class="u-full-width" type="range" min="5" max="99" value="<?= $settingsInterface -> threshold ?>" placeholder="<?= $settingsInterface -> threshold ?>" name="threshold" id="threshold" oninput="updateDetection(this.value);">
 			</div>
 
 			<div class="five columns offset-by-seven">
 				<label>Email de contact en cas de détection de mouvement:</label>
-				<input class="u-full-width" type="text" placeholder="<?= $on_motion_detected ?>" name="on_motion_detected" id="on_motion_detected" onchange="">
+				<input class="u-full-width" type="text" placeholder="<?= $settingsInterface -> on_motion_detected ?>" name="on_motion_detected" id="on_motion_detected" onchange="">
 			</div>
 		</div>
 
@@ -163,26 +163,26 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 			<div class="five columns">
 				<label for="modeCamera_tl">Mode d'enregistrement images:</label>
 				<select class="u-full-width" id="modeCamera_tl" onchange="" name="imageTypeInterval">
-					<option value="off">Off</option>
-					<option value="picture">Photo</option>
-					<option value="video">Video</option>
+					<option value="off" <?= ($settingsInterface -> imageTypeInterval=='off') ? 'selected' : "" ?> >Off</option>
+					<option value="picture" <?= ($settingsInterface -> imageTypeInterval=='picture') ? 'selected' : "" ?> >Photo</option>
+					<option value="video" <?= ($settingsInterface -> imageTypeInterval=='video') ? 'selected' : "" ?> >Video</option>
 				</select>
 			</div>
 
 		<div class="five columns">
 			<label for="ffmpeg_timelapse_mode">fréquence de sauvegarde du film:</label>
 			<select class="u-full-width" id="ffmpeg_timelapse_mode" name="ffmpeg_timelapse_mode">
-				<option value="hourly" <?= ($ffmpeg_timelapse_mode=='hourly') ? 'selected' : "" ?> >Toute les heures</option>
-				<option value="daily" <?= ($ffmpeg_timelapse_mode=='daily') ? 'selected' : "" ?> >Tous les jours</option>
-				<option value="weekly-sunday" <?= ($ffmpeg_timelapse_mode=='weekly-sunday') ? 'selected' : "" ?> >Toutes les semaines (dimanche)</option>
-				<option value="weekly-monday" <?= ($ffmpeg_timelapse_mode=='weekly-monday') ? 'selected' : "" ?> >Toutes les semaines (lundi)</option>
-				<option value="monthly" <?= ($ffmpeg_timelapse_mode=='monthly') ? 'selected' : "" ?> >Tous les mois</option>
+				<option value="hourly" <?= ($settingsInterface -> ffmpeg_timelapse_mode=='hourly') ? 'selected' : "" ?> >Toute les heures</option>
+				<option value="daily" <?= ($settingsInterface -> ffmpeg_timelapse_mode=='daily') ? 'selected' : "" ?> >Tous les jours</option>
+				<option value="weekly-sunday" <?= ($settingsInterface -> ffmpeg_timelapse_mode=='weekly-sunday') ? 'selected' : "" ?> >Toutes les semaines (dimanche)</option>
+				<option value="weekly-monday" <?= ($settingsInterface -> ffmpeg_timelapse_mode=='weekly-monday') ? 'selected' : "" ?> >Toutes les semaines (lundi)</option>
+				<option value="monthly" <?= ($settingsInterface -> ffmpeg_timelapse_mode=='monthly') ? 'selected' : "" ?> >Tous les mois</option>
 			</select>
 		</div>
 
 		<div class="five columns offset-by-two">
-			<label>Intervalle en seconde entre les prises de vue (0-3600):</label><div id="texteIntervalle" ><?= $snapshotInterval ?></div>
-			<input class="u-full-width" type="range" min="0" max="3600" value="<?= $snapshotInterval ?>" placeholder="<?= $snapshotInterval ?>" name="snapshotInterval" id="snapshotInterval" oninput="updateIntervalle(this.value);">
+			<label>Intervalle en seconde entre les prises de vue (0-3600):</label><div id="texteIntervalle" ><?= $settingsInterface -> snapshotInterval ?></div>
+			<input class="u-full-width" type="range" min="0" max="3600" value="<?= $settingsInterface -> snapshotInterval ?>" placeholder="<?= $settingsInterface -> snapshotInterval ?>" name="snapshotInterval" id="snapshotInterval" oninput="">
 		</div>
 	</div>
 

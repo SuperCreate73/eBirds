@@ -556,7 +556,7 @@ sqlite3 /var/www/nichoir.db << EOS
 	INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('on_motion_detected', 'email', 0, 'email');
 	INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('imageTypeInterval', 'off', 3, 'discreet');
 	INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('ffmpeg_timelapse_mode', 'daily', 4, 'discreet');
-	INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('snapshotInterval', '0', 4, 'range');
+	INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('snapshotInterval', '0', 0, 'range');
 
 
 EOS
@@ -624,6 +624,11 @@ sqlite3 /var/www/nichoir.db << EOS
 	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeDetection', 'picture', 'ffmpeg_output_movies', 'off') ;
 	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeDetection', 'video', 'output_pictures', 'off') ;
 	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeDetection', 'video', 'ffmpeg_output_movies', 'on') ;
+
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeInterval', 'off', 'snapshot_interval', '0') ;
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeInterval', 'off', 'ffmpeg_timelapse', '0') ;
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeInterval', 'picture', ffmpeg_timelapse', '0') ;
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeInterval', 'video', 'snapshot_interval', '0') ;
 EOS
 printError "$?"
 

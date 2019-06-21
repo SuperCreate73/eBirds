@@ -4,26 +4,8 @@ require_once("model/MotionInterface.php");
 class MotionManager {
 	// Classe qui gère le software Motion : configuration, restart du  daemon
 	//
-	// A tester:
-	// les droits d'écriture dans les fichiers. Fonctionne sans le SUDO sous DEBIAN
-	// mais pas les droits de modifier 'motion.conf'.
-	// Cause probable : sudo requiert
-	// Solution : modifier le fichier sudoers pour autoriser le sudo sans mot de passe
-	//	ou modifier l'inclusion d'un fichier dans le répertoire sudoers.d
-	//		et y ajouter un fichier avec les bons droits
-	//	ou modifier les droits du répertoire /etc/motion
-	//
-	//Attributs:
-	private $_script = 'public/bash/sendMail.sh' ; //
-	// private $_settingsTable = array(
-	// 	on_motion_detected => array('string', '/var/www/html/public/bash/motionSendMail.sh', 'comment'),
-	// 	width => array('discreet', array(480, 640, 1280), 640),
-	// 	threshold => array('range', array(0, 100), 10), //pourcentage - valeur à modifier avec la définition de l'image
-	// 	height => array('discreet', array(360, 480, 960), 480),
-	// 	quality => array('range', array(0, 100), 75),
-	// 	ffmpeg_timelapse => array('range', array(0, 3600), 0),
-	// 	ffmpeg_timelapse_mode => array('discreet', array('hourly', 'daily', 'weekly-sunday', 'weekly-monday', 'monthly'), 'daily'),
-	// );
+	private $_script = 'public/bash/sendMail.sh' ;
+
 
 	public function setAllSettings($inputArray) {
 		foreach ($inputArray as $key => $value)
@@ -32,7 +14,10 @@ class MotionManager {
 			{
 				$this -> setSendMail($value);
 			}
-			$this -> setSetting($key, $value);
+			else
+			{
+				$this -> setSetting($key, $value);
+			}
 		}
 	}
 
@@ -43,42 +28,27 @@ class MotionManager {
 		$output = shell_exec($shellCmd);
 	}
 
-	public function setSendMail($email) {
-		// configure l'envoi d'e-mail en cas de détection de mouvements
-		//
-		// 		Mail envoyé depuis l'adresse info@ebirds.be
-		//		$output = shell_exec('sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?on_motion_detected *:on_motion_detected /home/pi/.motion/motion.pid:g"');
 
-		//modification du fichier 'motionSendMail.sh' -> ajout de l'adresse mail
-		$shellCmd = 'sudo sed "/var/www/html/public/bash/motionSendMail.sh" -i -e "s:^\(#\|;\)\? \?varMail=.*$:varMail='.$email.':g" ';
-		$output = shell_exec($shellCmd);
-		//modification du fichier 'motion.conf'
-		// $shellCmd='sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?'.$key.'.*$:'.$key.' /var/www/html/public/bash/motionSendMail.sh:g"';
-		// $output = shell_exec($shellCmd);
-	}
-
-	public function clearSendMail($email) {
-		// annule l'envoi d'e-mail en cas de détection de mouvements
-		//
-
-		$shellCmd='sudo sed "/var/www/html/public/bash/motionSendMail.sh" -i -e "s:^\(#\|;\)\? \?varMail=.*$:varMail=\"\":g"';
-		$output = shell_exec($shellCmd);
-
-		//modification du fichier 'motion.conf'
-		$shellCmd='sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?on_motion_detected .*$:; on_motion_detected value:g"';
-		$output = shell_exec($shellCmd);
-	}
-
-	private function modifyConfig($file, $parameter, $value="", $comment=False) {
-		// annule l'envoi d'e-mail en cas de détection de mouvements
-		//
-
-		$shellCmd = 'sudo sed "'. $file .'" -i -e "s:^\(#\|;\)\? \?'.$parameter.'.*$:'.$parameter.'='.$value.':g" ';
-		$output = shell_exec($shellCmd);
-
-		//modification du fichier 'motion.conf'
-		$shellCmd = 'sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?on_motion_detected .*$:; on_motion_detected value:g"';
-		$output = shell_exec($shellCmd);
+	public function setSendMail($email)
+	// configure l'envoi d'e-mail en cas de détection de mouvements
+	// Mail envoyé depuis l'adresse info@ebirds.be
+	{
+		if (! isset($email) || $email == "")
+		// réinitialisation de l'adresse mail
+		{
+			$shellCmd = 'sudo sed "/var/www/html/public/bash/motionSendMail.sh" -i -e "s:^\(#\|;\)\? \?varMail=.*$:varMail= :g" ';
+			$output = shell_exec($shellCmd);
+			$shellCmd = 'sudo sed "/etc/motion/motion.conf" -i -e "s:^\(#\|;\)\? \?on_motion_detected .*$:; on_motion_detected email:g"';
+			$output = shell_exec($shellCmd);
+		}
+		else
+		{
+			// modification du fichier 'motionSendMail.sh' -> ajout de l'adresse mail
+			$shellCmd = 'sudo sed "/var/www/html/public/bash/motionSendMail.sh" -i -e "s:^\(#\|;\)\? \?varMail=.*$:varMail='.$email.':g" ';
+			$output = shell_exec($shellCmd);
+			// modification de motion
+			$this -> setSetting('on_motion_detected', $email);
+		}
 	}
 
 
@@ -88,6 +58,7 @@ class MotionManager {
 		$shellCmd = 'sudo /etc/init.d/motion restart';
 		$output = shell_exec($shellCmd);
 	}
+
 
 	public function backUpMotion() {
 		// copie du fichier motion.conf avant modification
@@ -102,6 +73,7 @@ class MotionManager {
 		$output = shell_exec($shellCmd);
 		// copy ("/etc/motion/motion.conf", "/etc/motion/motion.conf.back");
 	}
+
 
 	public function restoreMotion($origin=False) {
 		// restaure les paramètres précédents du fichier motion.conf

@@ -9,7 +9,8 @@ installscript
 
 implémentation des fonctions de réglages dans la db
   -done- traitement du 'none' dans les états Timelapse
-  permettre le stockage time-lapse en photo et/ou vidéo (checkbox ?)
+  -done- permettre le stockage time-lapse en photo et/ou vidéo
+  vérifier la taille minimale que peut donner la caméra
 
 données utilisateur
   nouveau modèle user

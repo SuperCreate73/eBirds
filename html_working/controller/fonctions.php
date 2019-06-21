@@ -116,19 +116,22 @@ function convertirTimezone($time, $deTz = "GMT", $versTz = "Europe/Brussels")
     return $time;
 }
 
-function motionSettings ()
+function motionSettings ($post, $dbMngSettings)
 {
 	//
-	$dbMngSettings = new DbMngSettings();
-	$allSettingsList = $dbMngSettings->updateValues($_POST);
-
-	$aliasArray = $dbMngSettings->getAliasArray();
-//TODO add the two arrays to automatise treatment of settings
-	$motionInterface = new MotionInterface($_POST, $allSettingsList, $aliasArray);
-
+	// // validate settings and store it as properties
+	// $settingsInterface = new SettingsInterface($post, $dbMngSettings);
+	// // update DB with new values
+	// $dbMngSettings -> updateValues($settingsInterface -> getAllSettings());
+	// transpose view settings in Motion settings and store it as properties
+	$motionInterface = new MotionInterface($post, $dbMngSettings);
+	// create object for managing motion.conf
 	$motionMng = new MotionManager();
+	// back-up motion config file (motion.conf.back)
 	$motionMng -> backUpMotion();
+	// update settings in config file (motion.conf)
 	$motionMng -> setAllSettings($motionInterface -> getAllSettings());
+	// restart motion daemon for applying settings
 	$motionMng -> restartMotion();
 }
 

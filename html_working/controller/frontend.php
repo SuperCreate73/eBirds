@@ -106,10 +106,9 @@ function information($nom) {
 }
 
 function reglages($nom, $action=null) {
-	if (! is_null($action)) {
-		// debug_to_console( "test 2" );
-		motionSettings();
-	}
+	// if (! is_null($action) || $action == "") {
+	// 	motionSettings();
+	// }
 	$tabFocus=setFocus(3);
 
 	$user = new User();
@@ -118,16 +117,26 @@ function reglages($nom, $action=null) {
 		//impossible de charger les utilisateurs
 		$users="Unable to load users";
 	}
-	$config = new DbMngSettings();
-	// TODO
-	// mettre les settings dans un tableau et les charger en une fois
-	// ou laisser les valeurs dans l'objet qui sera accessible depuis la vue
-	$on_motion_detected = $config->getSettingValue('on_motion_detected');
-	$threshold = $config->getSettingValue('threshold');
-	$quality = $config->getSettingValue('quality');
-	$snapshotInterval = $config->getSettingValue('snapshotInterval');
-	$ffmpeg_timelapse_mode = $config->getSettingValue('ffmpeg_timelapse_mode');
-	$imageSize = $config->getSettingValue('imageSize');
+
+	$dbMngSettings = new DbMngSettings();
+
+
+	if (! is_null($action) || $action != "")
+	// if update via a 'submit' button
+	{
+		// validate settings and store it as properties
+		$settingsInterface = new SettingsInterface($_POST, $dbMngSettings);
+		// update DB with new values
+		$dbMngSettings -> updateValues($settingsInterface -> getAllSettings());
+		// update motion settings
+		motionSettings($_POST, $dbMngSettings);
+	}
+	// normal display
+	else
+	{
+		$settingsInterface = new SettingsInterface($dbMngSettings -> settingsList, $dbMngSettings);
+	}
+
 	require('view/viewReglages.php');
 }
 
