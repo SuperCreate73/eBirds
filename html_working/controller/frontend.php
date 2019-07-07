@@ -118,24 +118,50 @@ function reglages($nom, $action=null) {
 		$users="Unable to load users";
 	}
 
-	$dbMngSettings = new DbMngSettings();
-
-
-	if (! is_null($action) || $action != "")
 	// if update via a 'submit' button
+	if (! (is_null($action) || $action == ""))
 	{
+		// $output = shell_exec('echo "not empty : '. $action .'" >> /var/www/debug.log');
 		// validate settings and store it as properties
-		$settingsInterface = new SettingsInterface($_POST, $dbMngSettings);
+		$settingsInterface = new SettingsInterface($_POST);
 		// update DB with new values
-		$dbMngSettings -> updateValues($settingsInterface -> getAllSettings());
+		$settingsInterface -> updateValues();
+
+		$locationInterface = new LocationInterface($_POST);
+		$output = shell_exec('echo "frontEnd LocationInterface : '. json_encode($_POST).'" >> /var/www/debug.log');
+		$locationInterface -> updateValues();
 		// update motion settings
-		motionSettings($_POST, $dbMngSettings);
+
+		$motionInterface = new MotionInterface(	$_POST,
+																						$settingsInterface->allSettingsArray);
+		$motionInterface -> updateMotion();
 	}
 	// normal display
 	else
 	{
-		$settingsInterface = new SettingsInterface($dbMngSettings -> settingsList, $dbMngSettings);
+		// $output = shell_exec('echo "empty : '. $action .'" >> /var/www/debug.log');
+		$settingsInterface = new SettingsInterface();
+		$locationInterface = new LocationInterface();
 	}
+	// $dbMngLocation = new DbMngLocation();
+  //
+	// if (! (empty($_POST) || $_POST == ""))
+	// // if update via a 'submit' button
+	// {
+	// 	$output = shell_exec('echo "not empty : '. $action .'" >> /var/www/debug.log');
+	// 			// validate settings and store it as properties
+	// 	$locationInterface = new LocationInterface($_POST, $dbMngLocation);
+	// 	// update DB with new values
+	// 	$dbMngLocation -> updateValues($locationInterface -> getAllSettings());
+	// 	// update motion settings
+	// }
+	// // normal display
+	// else
+	// {
+	// 	// $output = shell_exec('echo "empty : '. json_encode($dbMngLocation -> locationArray) .'" >> /var/www/debug.log');
+  //
+	// 	$locationInterface = new LocationInterface($dbMngLocation -> locationList, $dbMngLocation);
+	// }
 
 	require('view/viewReglages.php');
 }

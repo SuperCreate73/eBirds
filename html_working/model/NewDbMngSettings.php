@@ -1,8 +1,6 @@
 <?php
 
-//require_once("model/DbManager.php");
-
-class DbMngSettings extends DbManager {
+class NewDbMngSettings extends DbManager {
 	// 'setting' table management : add, remove, modify, get records from table
 	// table 'config': setting, value, priority, value type: (discreet, range, file)
 	// linked table 'configRange' : setting, allowValue
@@ -15,7 +13,7 @@ class DbMngSettings extends DbManager {
 //	public function __construct() {
 		// public $config ;
 		// public $configRange ;
-		public $allSettingsArray = [];
+
 		public $aliasArray = [];
 		public $settingsList = [];
 		public $allLocationArray = [];
@@ -23,51 +21,41 @@ class DbMngSettings extends DbManager {
 
 //	}
 
-public function __construct()
+public function __construct($table)
 {
-	$this -> config = "config";
-	$this -> configRange = "configRange";
-	$this -> location = "location";
-	$this -> allSettingsArray = $this -> getSettingList($this -> config, 'setting');
-	$this -> allLocationArray = $this -> getSettingList($this -> location, 'location');
-	$this -> aliasArray = $this ->getAliasArray();
-	foreach ($this -> allSettingsArray as $key => $array)
-	{
-		$this -> settingsList[$key] = $array[0];
-	}
-	foreach ($this -> allLocationArray as $key => $array)
-	{
-		$this -> locationList[$key] = $array[0];
-	}
+	$this -> _table = $table;
+	// $this -> config = "config";
+	// $this -> configRange = "configRange";
+	// $this -> location = "location";
+	// $this -> allSettingsArray = $this -> getSettingList($this -> config, 'setting');
+	// $this -> allLocationArray = $this -> getSettingList($this -> location, 'location');
+	// $this -> aliasArray = $this ->getAliasArray();
+	// foreach ($this -> allSettingsArray as $key => $array)
+	// {
+	// 	$this -> settingsList[$key] = $array[0];
+	// }
+	// foreach ($this -> allLocationArray as $key => $array)
+	// {
+	// 	$this -> locationList[$key] = $array[0];
+	// }
 
 }
 
 
-private function getSettingList ($table, $key)
-	// get a list of all settings as key and array of value, priority and valueType as value
-	{
-		if (!function_exists('cmp'))
-		{
-			function cmp($a, $b)
-			{
-	  		if ($a[1] == $b[1])
-				{
-	        return 0;
-	    	}
-	    	return ($a[1] < $b[1]) ? -1 : 1;
-			}
-		}
-
-		$this->_table = $table;
-		$unformatedList = $this -> getAll([$key , 'value', 'priority', 'valueType']);
-		foreach ($unformatedList as $key => $row)
-		{
-			$formatedList[$row[0]] = [$row[1], $row[2], $row[3]];
-		}
-		uasort($formatedList, 'cmp');
-
-		return $formatedList;
-	}
+// private function getSettingList ($table, $key)
+// 	// get a list of all settings as key and array of value, priority and valueType as value
+// 	{
+//
+// 		$this->_table = $table;
+// 		$unformatedList = $this -> getAll();
+// 		foreach ($unformatedList as $key => $row)
+// 		{
+// 			$formatedList[$row[0]] = [$row[1], $row[2], $row[3]];
+// 		}
+// 		uasort($formatedList, 'cmp');
+//
+// 		return $formatedList;
+// 	}
 
 
 // ##################################################################
@@ -135,25 +123,26 @@ private function getSettingList ($table, $key)
 	}
 
 // ##################################################################
-	public function updateValues ($inputArray, $table)
+	public function updateValues ($inputArray)
 	// update settings in DB
 	{
 		if (count($inputArray) == 0)
 		{
 			return ;
 		}
-		$this->_table = $table;
-		if ($table = 'config')
+
+		if ($this->_table == 'config')
 		{
 			$column = 'setting';
 		}
 		else {
-			$column = $table;
+			$column = $this->_table;
 		}
+
 		foreach ($inputArray as $key => $value)
 		{
 			$db = $this->dbConnect();
-			$stmt=$db->prepare("UPDATE ". $table ." SET value = :Value WHERE (". $column ." = :Key)");
+			$stmt=$db->prepare("UPDATE ". $this->_table ." SET value = :Value WHERE (". $column ." = :Key)");
 			$resultat=$stmt->execute(array(
 				'Key'	=>	$key,
 				'Value' => $value));

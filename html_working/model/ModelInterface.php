@@ -7,6 +7,8 @@ abstract class ModelInterface
   // The goal is to have all variables stored as properties in the Interface class
   //
 
+  protected $_properties = [];
+
   // getters
   //###################################
   public function getAllSettings()
@@ -37,11 +39,15 @@ abstract class ModelInterface
     }
   }
 
+  public function __get($key)
+  {
+    return $this->_properties[$key];
+  }
 
   protected function setGeneral($key, $value)
   // general setter - create a property with MotionSettingsName ($key) as name
   // and $value as value
   {
-    $this -> $key = $value;
+    $this->_properties[$key] = $value;
   }
 }

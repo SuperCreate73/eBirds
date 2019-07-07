@@ -35,7 +35,7 @@ abstract class DbManager {
 		return md5(htmlspecialchars($str));
 	}
 
-	protected function getAll($columns = NULL)
+	public function getAll($columns = NULL)
 	{
 		// Get all records for $columns from $_table
 		//
@@ -64,7 +64,7 @@ abstract class DbManager {
 		$sql = "SELECT ". $sqlColumns ." FROM ". $this->_table .";";
 		$stmt = $db->query($sql);
 		$list = $stmt->fetchall();
-
+		$output = shell_exec('echo "list getAll : '. json_encode($list) .'" >> /var/www/debug.log');
 		return $list;
 	}
 

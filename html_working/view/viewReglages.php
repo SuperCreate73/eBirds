@@ -109,9 +109,9 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 			<div class="five columns">
 				<label for="imageSize">Dimensions de l'image:</label>
 				<select class="u-full-width" id="imageSize" name="imageSize">
-					<option value="low" <?= ($settingsInterface -> imageSize == 'low') ? 'selected' : "" ?> >Petite</option>
-					<option value="medium" <?= ($settingsInterface -> imageSize=='medium') ? 'selected' : "" ?> >Moyenne</option>
-					<option value="high" <?= ($settingsInterface -> imageSize=='high') ? 'selected' : "" ?> >Grande</option>
+					<option value="low" <?= ($settingsInterface->imageSize == 'low') ? 'selected' : "" ?> >Petite</option>
+					<option value="medium" <?= ($settingsInterface->imageSize == 'medium') ? 'selected' : "" ?> >Moyenne</option>
+					<option value="high" <?= ($settingsInterface->imageSize == 'high') ? 'selected' : "" ?> >Grande</option>
 				</select>
 			</div>
 
@@ -218,38 +218,48 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 				<h2>Général</h2>
 			</div>
 
-			<div class="ten columns">
-				<h3>Localisation</h3><input type="button" value="Me géolocaliser">
+			<div class="offset-by-nine three columns">
+				<h3>Localisation</h3><input class="button" type="button" value="Me géolocaliser" onclick="geolocaliser();">
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="offset-by-two columns">
 				<div class="seven columns">
+
 					<label>Rue et numéro</label>
-					<input class="u-full-width" type="text" placeholder="Rue" name="street">
+					<div class="row">
+						<div class="nine columns">
+							<input class="u-full-width" type="text" value="<?= ($locationInterface -> street) ?>" name="street">
+						</div>
+						<div class="three columns">
+							<input class="u-full-width" type="text" value="<?= ($locationInterface -> houseNumber) ?>" name="houseNumber">
+						</div>
+
+
+				</div>
 					<div class="row">
 						<div class="four columns">
 							<label>C.P.</label>
-							<input class="u-full-width" type="text" placeholder="Code postal" name="postalCode">
+							<input class="u-full-width" type="text" value="<?= ($locationInterface -> postalCode) ?>" name="postalCode">
 						</div>
 
 						<div class="eight columns">
 							<label>Localité</label>
-							<input class="u-full-width" type="text" placeholder="Localité" name="city">
+							<input class="u-full-width" type="text" value="<?= ($locationInterface -> city) ?>" name="city">
 						</div>
 					</div>
 					<label>Pays</label>
-					<input class="u-full-width" type="text" placeholder="Pays" name="country">
+					<input class="u-full-width" type="text" value="<?= ($locationInterface -> country) ?>" name="country">
 				</div>
 
 				<div class="three columns">
 					<label>Latitude</label>
-					<input class="u-full-width" type="text" placeholder="Latitude" name="xCoord">
+					<input id="latitude" class="u-full-width" type="text" value="<?= ($locationInterface -> xCoord) ?>" name="xCoord">
 					<label>Longitude</label>
-					<input class="u-full-width" type="text" placeholder="Longitude" name="yCoord">
+					<input id="longitude" class="u-full-width" type="text" value="<?= ($locationInterface -> yCoord) ?>" name="yCoord">
 					<label>Altitude</label>
-					<input class="u-full-width" type="text" placeholder="Altitude" name="zCoord">
+					<input class="u-full-width" type="text" value="<?= ($locationInterface -> zCoord) ?>" name="zCoord">
 				</div>
 			</div>
 		</div>
@@ -269,3 +279,14 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 <?php $content = ob_get_clean(); ?>
 
 <?php require('view/template.php'); ?>
+<script>
+	function geolocaliser(){
+		navigator.geolocation.getCurrentPosition(function(position) {
+  	inscrirePosition(position.coords.latitude, position.coords.longitude);
+		});
+	}
+	function inscrirePosition (latitude, longitude){
+		var lat = getElementByID("latitude");
+		var long= getElementByID("longitude";)
+	}
+</script>

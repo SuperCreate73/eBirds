@@ -1,5 +1,4 @@
 <?php
-require_once("model/MotionInterface.php");
 
 class MotionManager {
 	// Classe qui gère le software Motion : configuration, restart du  daemon
@@ -8,6 +7,7 @@ class MotionManager {
 
 
 	public function setAllSettings($inputArray) {
+		$output = shell_exec('echo "MotionManager : '. json_encode($inputArray) .'" >> /var/www/debug.log');
 		foreach ($inputArray as $key => $value)
 		{
 			if ($key == 'on_motion_detected')

@@ -11,7 +11,7 @@ class SettingsInterface extends ModelInterface
 	private $dbMngSettings;
 	public $allSettingsArray = [];
 
-	public function __construct($inputArray = NULL)
+	public function __construct($inputArray)
 	// filtre la liste de paramètres en entrée et lance l'hydratation des
 	// variables
 	{
@@ -21,7 +21,7 @@ class SettingsInterface extends ModelInterface
 		// if inputArray is empty, fill it with DB values
 		if (!isset($inputArray) || $inputArray == "")
 		{
-			foreach ($this->allSettingsArray as $key => $row) {
+			foreach ($this->allSettingsArraythis as $key => $row) {
 				$inputArray[$key] = $row[0];
 			}
 		}
@@ -39,7 +39,7 @@ class SettingsInterface extends ModelInterface
 				{
 					$this -> validateSettings($setting,
 																		$value,
-																		$settingsRangeInterface);
+																		$settingRangesInterface);
 				}
 				$this -> setHydrate ($setting, $value);
 			}
@@ -56,18 +56,6 @@ class SettingsInterface extends ModelInterface
 
 	private function sortArray($unformatedList)
 	{
-		if (!function_exists('cmp'))
-		{
-			function cmp($a, $b)
-			{
-				if ($a[1] == $b[1])
-				{
-					return 0;
-				}
-				return ($a[1] < $b[1]) ? -1 : 1;
-			}
-		}
-
 		foreach ($unformatedList as $row)
 		{
 			$formatedList[$row[0]] = [$row[1], $row[2], $row[3]];
@@ -79,6 +67,17 @@ class SettingsInterface extends ModelInterface
 
 
 
+	// if (!function_exists('cmp'))
+	// {
+	// }
+	private function cmp($a, $b)
+	{
+		if ($a[1] == $b[1])
+		{
+			return 0;
+		}
+		return ($a[1] < $b[1]) ? -1 : 1;
+	}
 
 
 // ##################################################################
@@ -97,10 +96,9 @@ class SettingsInterface extends ModelInterface
 
 		elseif($valueType == 'range')
 		{
-			if (!($value >= $settingsRangeInterface->allRangesArray[$setting][0] &&
-						$value <= $settingsRangeInterface->allRangesArray[$setting][1]))
+			if (!($value >= $settingRangesInterface->allRangesArray[$setting][0] &&
+						$value <= $settingRangesInterface->allRangesArray[$setting][1]))
 			{
-				$output = shell_exec('echo "RangeNonValide : '.$value.' - '. json_encode($settingsRangeInterface->allRangesArray) .' - '. json_encode($settingsRangeInterface->allRangesArray[$setting][1]) .'" >> /var/www/debug.log');
 				throw new Exception('Range non valide : '. $setting .' - valeur : '. $value);
 			}
 		}

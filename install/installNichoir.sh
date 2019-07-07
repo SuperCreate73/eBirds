@@ -505,7 +505,7 @@ sqlite3 /var/www/nichoir.db << EOS
 			(	setting TINY TEXT PRIMARY KEY,
 				value TINY TEXT,
 				priority INTEGER,
-				valueType);
+				valueType TINY TEXT);
 	CREATE TABLE IF NOT EXISTS
 		configRange
 			(	setting TINY TEXT,
@@ -518,14 +518,10 @@ sqlite3 /var/www/nichoir.db << EOS
 				settingValue TINY TEXT);
 	CREATE TABLE IF NOT EXISTS
 		location
-			(	street TINY TEXT,
-				houseNumber TINY TEXT,
-				postalCode TINY TEXT,
-				city TINY TEXT,
-				country TINY TEXT,
-				xCoord LONG,
-				yCoord LONG,
-				zCoord LONG);
+			(	location TINY TEXT PRIMARY KEY,
+				value TINY TEXT,
+				priority INTEGER,
+				valueType TINY TEXT);
 EOS
 printError "$?"
 #######################################################################
@@ -539,6 +535,7 @@ sqlite3 /var/www/nichoir.db << EOS
 		VALUES
 			('admin', '$adminPwd');
 EOS
+
 printError "$?"
 
 #######################################################################
@@ -557,13 +554,12 @@ sqlite3 /var/www/nichoir.db << EOS
 	INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('imageTypeInterval', 'off', 3, 'discreet');
 	INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('ffmpeg_timelapse_mode', 'daily', 4, 'discreet');
 	INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('snapshotInterval', '0', 0, 'range');
-
-
 EOS
 # INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('snapshot_interval', '0', '0', 'range');
 # INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('output_pictures', 'on', 'on', 'discreet');
 # INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('snapshot_on_off', 'off', 'off', 'discreet');
 # INSERT INTO config ('setting', 'value', 'priority', 'valueType') VALUES ('ffmpeg_output_movies', 'off', 'off', 'discreet');
+
 printError "$?"
 
 printMessage "insertion des paramètres - table 'configRange'" "nichoir.db"
@@ -596,6 +592,7 @@ sqlite3 /var/www/nichoir.db << EOS
 	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('imageTypeInterval', 'picture');
 	INSERT INTO configRange ('setting', 'rangeValue') VALUES ('imageTypeInterval', 'video');
 EOS
+printError "$?"
 # INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshot_interval', '0');
 # INSERT INTO configRange ('setting', 'rangeValue') VALUES ('snapshot_interval', '3600');
 #
@@ -607,7 +604,6 @@ EOS
 #
 # INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_output_movies', 'on');
 # INSERT INTO configRange ('setting', 'rangeValue') VALUES ('ffmpeg_output_movies', 'off');
-printError "$?"
 
 printMessage "insertion des paramètres - table 'configAlias'" "nichoir.db"
 sqlite3 /var/www/nichoir.db << EOS
@@ -631,6 +627,21 @@ sqlite3 /var/www/nichoir.db << EOS
 	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeInterval', 'video', 'snapshot_interval', '0') ;
 EOS
 printError "$?"
+
+
+printMessage "insertion des paramètres - table 'location'" "nichoir.db"
+sqlite3 /var/www/nichoir.db << EOS
+	INSERT INTO location ('location', 'value', 'priority', 'valueType')	VALUES ('street', '', 0, 'text');
+	INSERT INTO location ('location', 'value', 'priority', 'valueType') VALUES ('houseNumber', '', 0, 'text');
+	INSERT INTO location ('location', 'value', 'priority', 'valueType') VALUES ('postalCode', '', 0, 'integer');
+	INSERT INTO location ('location', 'value', 'priority', 'valueType')	VALUES ('city', '', 0, 'text');
+	INSERT INTO location ('location', 'value', 'priority', 'valueType') VALUES ('country', '', 0, 'text');
+	INSERT INTO location ('location', 'value', 'priority', 'valueType') VALUES ('xCoord', '', 0, 'long');
+	INSERT INTO location ('location', 'value', 'priority', 'valueType') VALUES ('yCoord', '', 0, 'long');
+	INSERT INTO location ('location', 'value', 'priority', 'valueType') VALUES ('zCoord', '', 0, 'long');
+EOS
+printError "$?"
+
 
 ########################################################################
 printMessage "gestion des permissions des répertoires" ".motion & /var/www"
