@@ -1,7 +1,5 @@
 <?php
 
-require_once("model/DbManager.php");
-
 class DbMngData extends DbManager {
 
 	private $_tempExt;

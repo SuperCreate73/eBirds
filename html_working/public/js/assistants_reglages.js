@@ -161,11 +161,37 @@ function changeDefinitionCamera(e){
 }
 
 function updateQualite(val) {
-          document.getElementById('texteQualite').innerHTML=val;
-        }
+  document.getElementById('texteQualite').innerHTML=val;
+}
+
 function updateIntervalle(val) {
-          document.getElementById('texteIntervalle').innerHTML=val;
-      }
+  document.getElementById('texteIntervalle').innerHTML=val;
+}
+
 function updateDetection(val) {
-          document.getElementById('texteDetection').innerHTML=val;
-    }
+  document.getElementById('texteDetection').innerHTML=val;
+}
+
+function updateSnapInterval(val) {
+  document.getElementById('texteIntervalle').innerHTML=val;
+}
+
+function geolocaliser(){
+// geolocalisation API from address
+
+  var leString =  document.getElementById("houseNumber").value + "," +
+                  document.getElementById("street").value + "," +
+                  document.getElementById("postalCode").value + "," +
+                  document.getElementById("city").value  + "," +
+                  document.getElementById("country").value;
+
+  fetch('http://www.mapquestapi.com/geocoding/v1/address?key=EDQkmUI1MxxjUm3TV3m6VLhbSUUDjHXq&location='+leString)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(myJson) {
+      document.getElementById("latitude").value= myJson.results[0].locations[0].latLng.lat;
+      document.getElementById("longitude").value = myJson.results[0].locations[0].latLng.lng;
+    });
+
+}

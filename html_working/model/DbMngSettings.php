@@ -1,173 +1,48 @@
 <?php
 
-//require_once("model/DbManager.php");
-
 class DbMngSettings extends DbManager {
-	// 'setting' table management : add, remove, modify, get records from table
-	// table 'config': setting, value, priority, value type: (discreet, range, file)
-	// linked table 'configRange' : setting, allowValue
-	//			--> one row for each value or (min or max)
-	// 			--> multiple row for each setting
+  // Specific methods for table Settings
+  //
 
-	// TODO gestion de l'option 'none' pour le Timelapse
-	// TODO gestion du mode d'enregistrement de l'image
-
-//	public function __construct() {
-		// public $config ;
-		// public $configRange ;
-		public $allSettingsArray = [];
-		public $aliasArray = [];
-		public $settingsList = [];
-		public $allLocationArray = [];
-		public $locationList = [];
-
-//	}
-
-public function __construct()
-{
-	$this -> config = "config";
-	$this -> configRange = "configRange";
-	$this -> location = "location";
-	$this -> allSettingsArray = $this -> getSettingList($this -> config, 'setting');
-	$this -> allLocationArray = $this -> getSettingList($this -> location, 'location');
-	$this -> aliasArray = $this ->getAliasArray();
-	foreach ($this -> allSettingsArray as $key => $array)
-	{
-		$this -> settingsList[$key] = $array[0];
-	}
-	foreach ($this -> allLocationArray as $key => $array)
-	{
-		$this -> locationList[$key] = $array[0];
-	}
-
-}
-
-
-private function getSettingList ($table, $key)
-	// get a list of all settings as key and array of value, priority and valueType as value
-	{
-		if (!function_exists('cmp'))
-		{
-			function cmp($a, $b)
-			{
-	  		if ($a[1] == $b[1])
-				{
-	        return 0;
-	    	}
-	    	return ($a[1] < $b[1]) ? -1 : 1;
-			}
-		}
-
-		$this->_table = $table;
-		$unformatedList = $this -> getAll([$key , 'value', 'priority', 'valueType']);
-		foreach ($unformatedList as $key => $row)
-		{
-			$formatedList[$row[0]] = [$row[1], $row[2], $row[3]];
-		}
-		uasort($formatedList, 'cmp');
-
-		return $formatedList;
+	public function __construct($table) {
+		// initialize the table name (property of DbManager)
+		$this -> _table = $table;
 	}
 
 
 // ##################################################################
-	public function getSettingFromAlias ($alias, $value)
-	{
-		// Get all records from $configAlias
-		// where alias = $alias and aliasValue = $value
-		//
-		$this->_table = 'configAlias';
-		$db = $this->dbConnect();
-		$sql = "SELECT setting, settingValue
-						FROM configAlias
-						WHERE alias = '".$alias."' AND aliasValue = '".$value."' ;";
-		$stmt = $db->query($sql);
-		$list = $stmt->fetchall(PDO::FETCH_KEY_PAIR);
-
-		return($list);
-	}
-
-
-// ##################################################################
-	public function getSettingRange ($setting, $sorted = False)
-	{
-		// get possible range for setting -> return list
-		$this->_table = $this->configRange;
-
-		// get values : list of dict with key = '0' or 'rangeValue'
-		$getArray = $this -> getKey('setting', $setting, 'rangeValue');
-
-		$returnList = array();
-		// rearrange in list of values
-		foreach ($getArray as $value) {
-				array_push($returnList, $value['rangeValue']);
-		}
-
-		if ($sorted)
-		{
-			asort($returnList);
-		}
-
-		return ($returnList);
-	}
-
-
-// ##################################################################
-	public function getSettingValue ($setting)
-	{
-		// Return current value from setting
-		$this->_table = $this->config ;
-		$result= $this->getKey('setting', $setting, 'value');
-
-		return ($result['value']);
-	}
-
-// ##################################################################
-	private function getAliasArray()
-	{ // get list of all alias name
-		// Return current value from alias
-		$db = $this->dbConnect();
-		$sql = "SELECT DISTINCT alias FROM configAlias ;";
-		$stmt = $db->query($sql);
-		$list = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-
-		return($list);
-	}
-
-// ##################################################################
-	public function updateValues ($inputArray, $table)
+	public function updateValues ($inputArray) {
 	// update settings in DB
-	{
-		if (count($inputArray) == 0)
-		{
+
+		if (count($inputArray) == 0) {
 			return ;
 		}
-		$this->_table = $table;
-		if ($table = 'config')
-		{
+
+    // config of column names
+		if ($this->_table == 'config') {
 			$column = 'setting';
 		}
+
 		else {
-			$column = $table;
+			$column = $this->_table;
 		}
+
+		// SQL query
 		foreach ($inputArray as $key => $value)
 		{
 			$db = $this->dbConnect();
-			$stmt=$db->prepare("UPDATE ". $table ." SET value = :Value WHERE (". $column ." = :Key)");
+			$stmt=$db->prepare("UPDATE ". $this->_table ." SET value = :Value WHERE (". $column ." = :Key)");
 			$resultat=$stmt->execute(array(
 				'Key'	=>	$key,
 				'Value' => $value));
 		}
 	}
 
-	// ##################################################################
-	public function keyTest ($table, $where) {
-		// modify value
-		$this->_table = $table ;
-		return ($this->keyExist($where)) ;
-	}
 }
 
+// TODO : Debug string: shell_exec('echo "DbMngSetting_validateValue_getKey-returnValueArray : '. json_encode($valueTypeArr) .'" >> /var/www/debug.log');
+// TODO : shell_exec('echo "DbMngSetting_validateValue_getKey-returnValue : '. $valueType .'" >> /var/www/debug.log');
+//
 // if (getenv("HTTP_DEBUG_MODE") == 4)
 // {
 // 	$output = shell_exec('echo "DbMngSetting_validateValue_getKey-returnValueArray : '. json_encode($valueTypeArr) .'" >> /var/www/debug.log');

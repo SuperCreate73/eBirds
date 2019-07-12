@@ -106,11 +106,12 @@ function information($nom) {
 }
 
 function reglages($nom, $action=null) {
-	// if (! is_null($action) || $action == "") {
-	// 	motionSettings();
-	// }
+// viewReglages controller
+
+	// menu highlight
 	$tabFocus=setFocus(3);
 
+	// get user data from DB
 	$user = new User();
 	$users = $user->getUsers();
 	if (! $users) {
@@ -118,50 +119,33 @@ function reglages($nom, $action=null) {
 		$users="Unable to load users";
 	}
 
-	// if update via a 'submit' button
-	if (! (is_null($action) || $action == ""))
-	{
-		// $output = shell_exec('echo "not empty : '. $action .'" >> /var/www/debug.log');
+	// if call via a 'submit' button
+	if (! (is_null($action) || $action == ""))  {
+
 		// validate settings and store it as properties
 		$settingsInterface = new SettingsInterface($_POST);
 		// update DB with new values
 		$settingsInterface -> updateValues();
 
+		// validate location and store it as properties
 		$locationInterface = new LocationInterface($_POST);
-		$output = shell_exec('echo "frontEnd LocationInterface : '. json_encode($_POST).'" >> /var/www/debug.log');
+		// update DB with new values
 		$locationInterface -> updateValues();
-		// update motion settings
 
+		// translate viewSettings in motionSettings and store it as properties
 		$motionInterface = new MotionInterface(	$_POST,
 																						$settingsInterface->allSettingsArray);
+		// update motion settings
 		$motionInterface -> updateMotion();
 	}
-	// normal display
-	else
-	{
-		// $output = shell_exec('echo "empty : '. $action .'" >> /var/www/debug.log');
+
+	// first call (no $_POST variable)
+	else  {
+		// initialize settings with DB values
 		$settingsInterface = new SettingsInterface();
+		// initialize location with DB values
 		$locationInterface = new LocationInterface();
 	}
-	// $dbMngLocation = new DbMngLocation();
-  //
-	// if (! (empty($_POST) || $_POST == ""))
-	// // if update via a 'submit' button
-	// {
-	// 	$output = shell_exec('echo "not empty : '. $action .'" >> /var/www/debug.log');
-	// 			// validate settings and store it as properties
-	// 	$locationInterface = new LocationInterface($_POST, $dbMngLocation);
-	// 	// update DB with new values
-	// 	$dbMngLocation -> updateValues($locationInterface -> getAllSettings());
-	// 	// update motion settings
-	// }
-	// // normal display
-	// else
-	// {
-	// 	// $output = shell_exec('echo "empty : '. json_encode($dbMngLocation -> locationArray) .'" >> /var/www/debug.log');
-  //
-	// 	$locationInterface = new LocationInterface($dbMngLocation -> locationList, $dbMngLocation);
-	// }
 
 	require('view/viewReglages.php');
 }

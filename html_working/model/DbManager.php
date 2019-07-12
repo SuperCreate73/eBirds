@@ -2,25 +2,26 @@
 
 abstract class DbManager {
 
+
 	protected $_table;
 
-	public function setTable($tableName)
-	{
+
+	public function setTable($tableName) {
 		$this->_table = $tableName ;
 	}
 
-	protected function dbConnect()
-	{
 
+	protected function dbConnect() {
 		// On utilise l'objet PHP PDO qui doit permettre une portabilité facile du code pour changer de DB.
 		// Pour une connexion à la db SQLite du nichoir...
+
 		$db = new PDO('sqlite:/var/www/nichoir.db');
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		return $db;
   }
 
-	protected function cleanString($str)
-	{
+
+	protected function cleanString($str) {
 		// clean input string from special characters that could cause problem with DB
 		//
   	$search  = array('&'    , '"'     , "'"    , '<'   , '>'    );
@@ -29,42 +30,38 @@ abstract class DbManager {
   	return $str;
 	}
 
-	protected function md5Hash($str)
-	{
+
+	protected function md5Hash($str) {
 		// MD5 hash of input String
 		return md5(htmlspecialchars($str));
 	}
 
-	public function getAll($columns = NULL)
-	{
+
+	public function getAll($columns = NULL) {
 		// Get all records for $columns from $_table
 		//
-		if (is_null($columns))
-		{
+		if (is_null($columns)) {
 			$sqlColumns = "*";
 		}
-		elseif (is_array($columns))
-		{
+
+		elseif (is_array($columns)) {
 			$sqlColumns = "";
-			foreach ($columns as $values)
-			{
+			foreach ($columns as $values) {
 				$sqlColumns = $sqlColumns.$values.", ";
 			}
 			// remove last ', ' from $sqlColumns
 			$sqlColumns = substr($sqlColumns, 0, -2);
-
-
 		}
-		else
-		{
+
+		else {
 			$sqlColumns = $columns;
 		}
+
 		// SQL query
 		$db = $this->dbConnect();
 		$sql = "SELECT ". $sqlColumns ." FROM ". $this->_table .";";
 		$stmt = $db->query($sql);
 		$list = $stmt->fetchall();
-		$output = shell_exec('echo "list getAll : '. json_encode($list) .'" >> /var/www/debug.log');
 		return $list;
 	}
 
@@ -72,20 +69,18 @@ abstract class DbManager {
 		// Get all records from $_table where $key = $value
 		//
 		// $column formating
-		if (is_null($columns))
-		{
+		if (is_null($columns)) {
 			$sqlColumns = "*";
 		}
-		elseif (is_array($columns))
-		{
-			foreach ($columns as $values)
-			{
+
+		elseif (is_array($columns)) {
+			foreach ($columns as $values) {
 				$sqlColumns=$sqlColumns.$values.", ";
 			}
 			$sqlColumns = substr($sqlColumns, 0, -2);
 		}
-		else
-		{
+
+		else {
 			$sqlColumns = $columns;
 		}
 
@@ -95,8 +90,7 @@ abstract class DbManager {
 		$stmt = $db->query($sql);
 		$list = $stmt->fetchall(PDO::FETCH_BOTH);
 
-		if (count($list) == 1)
-		{
+		if (count($list) == 1) {
 			$list = array_shift($list);
 		}
 
@@ -112,8 +106,7 @@ abstract class DbManager {
 		$stmt = $db->query($sql);
 		$result = $stmt->fetch();
 
-		if ($result['returnVal'] == 1)
-		{
+		if ($result['returnVal'] == 1) {
 			return True;
 		}
 		else {

@@ -13,9 +13,9 @@ implémentation des fonctions de réglages dans la db
   vérifier la taille minimale que peut donner la caméra
 
 données utilisateur
-  nouveau modèle user
-  stockage des valeurs dans la db
-  fonction de téléchargement des coordonnées gps
+  -done- nouveau modèle user
+  -done- stockage des valeurs dans la db
+  -done- fonction de téléchargement des coordonnées gps
 
 
 

@@ -230,10 +230,10 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 					<label>Rue et numéro</label>
 					<div class="row">
 						<div class="nine columns">
-							<input class="u-full-width" type="text" value="<?= ($locationInterface -> street) ?>" name="street">
+							<input id="street" class="u-full-width" type="text" value="<?= ($locationInterface -> street) ?>" name="street">
 						</div>
 						<div class="three columns">
-							<input class="u-full-width" type="text" value="<?= ($locationInterface -> houseNumber) ?>" name="houseNumber">
+							<input id="houseNumber" class="u-full-width" type="text" value="<?= ($locationInterface -> houseNumber) ?>" name="houseNumber">
 						</div>
 
 
@@ -241,16 +241,16 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 					<div class="row">
 						<div class="four columns">
 							<label>C.P.</label>
-							<input class="u-full-width" type="text" value="<?= ($locationInterface -> postalCode) ?>" name="postalCode">
+							<input id="postalCode" class="u-full-width" type="text" value="<?= ($locationInterface -> postalCode) ?>" name="postalCode">
 						</div>
 
 						<div class="eight columns">
 							<label>Localité</label>
-							<input class="u-full-width" type="text" value="<?= ($locationInterface -> city) ?>" name="city">
+							<input id="city" class="u-full-width" type="text" value="<?= ($locationInterface -> city) ?>" name="city">
 						</div>
 					</div>
 					<label>Pays</label>
-					<input class="u-full-width" type="text" value="<?= ($locationInterface -> country) ?>" name="country">
+					<input id="country" class="u-full-width" type="text" value="<?= ($locationInterface -> country) ?>" name="country">
 				</div>
 
 				<div class="three columns">
@@ -279,14 +279,3 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 <?php $content = ob_get_clean(); ?>
 
 <?php require('view/template.php'); ?>
-<script>
-	function geolocaliser(){
-		navigator.geolocation.getCurrentPosition(function(position) {
-  	inscrirePosition(position.coords.latitude, position.coords.longitude);
-		});
-	}
-	function inscrirePosition (latitude, longitude){
-		var lat = getElementByID("latitude");
-		var long= getElementByID("longitude";)
-	}
-</script>
