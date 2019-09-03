@@ -120,10 +120,11 @@ abstract class DbManager {
 		//
 		$where = (is_null($whereClause)) ? "" : " WHERE (".$whereClause.")";
 		$db = $this->dbConnect();
-		$sql = "SELECT count(*) as nbres FROM ".$this->_table.$where." ;";
-		$stmt = $db->query($sql);
-		$result = $stmt->fetch();
-
-		return $result['nbres'];
+		$sql = "SELECT count(*) FROM ".$this->_table.$where." ;";
+		return $db->query($sql)->fetchColumn();
+		// $stmt = $db->query($sql);
+		// $result = $stmt->fetch();
+    //
+		// return $result['nbres'];
 	}
 }

@@ -182,7 +182,7 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 
 		<div class="five columns offset-by-two">
 			<label>Intervalle en seconde entre les prises de vue (0-3600):</label><div id="texteIntervalle" ><?= $settingsInterface -> snapshotInterval ?></div>
-			<input class="u-full-width" type="range" min="0" max="3600" value="<?= $settingsInterface -> snapshotInterval ?>" placeholder="<?= $settingsInterface -> snapshotInterval ?>" name="snapshotInterval" id="snapshotInterval" oninput="">
+			<input class="u-full-width" type="range" min="0" max="3600" value="<?= $settingsInterface -> snapshotInterval ?>" placeholder="<?= $settingsInterface -> snapshotInterval ?>" name="snapshotInterval" id="snapshotInterval" oninput="updateSnapInterval(this.value);">
 		</div>
 	</div>
 

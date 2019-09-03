@@ -32,38 +32,42 @@ function graphique($nom) {
 	require('view/viewGraphique.php');
 }
 
-function photoList($nom, $none ,$mvtPage)
-{
+function photoList($nom, $none ,$mvtPage) {
 	$listMax=25;
 	$fileManager= new FileManager('jpg');
 	$fileList=$fileManager -> setFileList();
+
 	$numberOfPage = numberOfPage($fileList,$listMax*3);
 	$page=(isset($_SESSION['listeCourante'])) ? $_SESSION['listeCourante'] : 1;
 
-	if ($mvtPage == 'next')
-	{
+	if ($mvtPage == 'next') {
 		$page=($page==$numberOfPage) ? $page : ($page+1);
 	}
-	elseif ($mvtPage == 'previous')
-	{
+
+	elseif ($mvtPage == 'previous') {
 		$page=($page==1) ? $page : ($page-1);
 	}
-	elseif ($mvtPage == 'first')
-	{
+
+	elseif ($mvtPage == 'first') {
 		$page=1;
 	}
-	elseif ($mvtPage == 'last')
-	{
+
+	elseif ($mvtPage == 'last') {
 		$page=$numberOfPage;
 	}
 
 	$_SESSION['listeCourante'] = $page;
 	$explorerPane = layoutPane($fileList,$page,$listMax);
+
 	if (isset($_SESSION['selectionCourante'])) {
-		$selectionCourante=$_SESSION['selectionCourante'];
+		$selectionCourante = $_SESSION['selectionCourante'];
 		unset($_SESSION['selectionCourante']);
 	}
-	else { $selectionCourante='';}
+
+	else {
+		$selectionCourante = '';
+	}
+
 	$tabFocus=setFocus(1);
 	$tabFocusMen2=setFocusMen2(2);
 
@@ -94,8 +98,9 @@ function photoThumb($nom, $action) {
 function tableData($nom) {
 	$dbMngData = new DbMngData();
 	$tableau = $dbMngData -> setDataTable(100);
-	$tabFocus=setFocus(1);
-	$tabFocusMen2=setFocusMen2(1);
+	$tabFocus = setFocus(1);
+	$tabFocusMen2 = setFocusMen2(1);
+
 	require('view/viewTable.php');
 }
 
@@ -114,37 +119,29 @@ function reglages($nom, $action=null) {
 	// get user data from DB
 	$user = new User();
 	$users = $user->getUsers();
+
 	if (! $users) {
-		//impossible de charger les utilisateurs
-		$users="Unable to load users";
+		$users = "Unable to load users"; //impossible de charger les utilisateurs
 	}
 
 	// if call via a 'submit' button
 	if (! (is_null($action) || $action == ""))  {
+		$settingsInterface = new SettingsInterface($_POST); 	// validate settings and store it as properties
+		$settingsInterface -> updateValues();  	// update DB with new values
 
-		// validate settings and store it as properties
-		$settingsInterface = new SettingsInterface($_POST);
-		// update DB with new values
-		$settingsInterface -> updateValues();
-
-		// validate location and store it as properties
-		$locationInterface = new LocationInterface($_POST);
-		// update DB with new values
-		$locationInterface -> updateValues();
+		$locationInterface = new LocationInterface($_POST);  // validate location and store it as properties
+		$locationInterface -> updateValues();  // update DB with new values
 
 		// translate viewSettings in motionSettings and store it as properties
 		$motionInterface = new MotionInterface(	$_POST,
 																						$settingsInterface->allSettingsArray);
-		// update motion settings
-		$motionInterface -> updateMotion();
+		$motionInterface -> updateMotion();  // update motion settings
 	}
 
 	// first call (no $_POST variable)
 	else  {
-		// initialize settings with DB values
-		$settingsInterface = new SettingsInterface();
-		// initialize location with DB values
-		$locationInterface = new LocationInterface();
+		$settingsInterface = new SettingsInterface(); // initialize settings with DB values
+		$locationInterface = new LocationInterface(); // initialize location with DB values
 	}
 
 	require('view/viewReglages.php');
