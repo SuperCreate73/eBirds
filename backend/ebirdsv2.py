@@ -15,7 +15,7 @@ import random   # generation aleatoire de nombre
 ## Import des fonctions capteurs
 #TODO import generique (pas relatif a une marque de capteur en particulier)
 #import meteo       # import du capteur temp/humidite
-import AdafruitDHT  # import du capteur temp/humidite DHT11
+import Adafruit_DHT  # import du capteur temp/humidite DHT11
 import balance     # import du capteur de poids
 #import hx711        # import du capteur de poids HX711
 #import IR_InOut    # import des capteurs IR d'entree/sortie
@@ -75,7 +75,7 @@ gv_id = 0
 class handler(threading.Thread):
     def __init__(self, pin, func, edge='both', bouncetime=200):
         super(handler, self).__init__()
-	super(handler, self).setDaemon(True)
+        super(handler, self).setDaemon(True)
 
         self.edge = edge
         self.func = func
@@ -194,13 +194,14 @@ def get_next_id(lv_id):
 def IR_detection(channel):
     #TODO: move in proper library and set pin as param/config
     if (int(channel)==16):
-	IRCapt = "2"
-	IRStat = GPIO.input(16)
+        IRCapt = "2"
+        IRStat = GPIO.input(16)
         print ("Capteur {0} (IN) - Status {1}".format(IRCapt,IRStat))
     else:
-	IRCapt = "1"
-	IRStat = GPIO.input(20)
+        IRCapt = "1"
+        IRStat = GPIO.input(20)
         print ("Capteur {0} (OUT) - Status {1}".format(IRCapt,IRStat))
+
     #Get number of milliseconds since Epoch (1/1/1970 00:00:00 GMT)
     lv_millis=int(time.time()*1000)
 
@@ -460,7 +461,7 @@ while True:
        print ("")
        print ("Lecture capteur Meteo")
        # result est retourné dans le format (tempExt,humExt,tempInt,humInt)
-       result = AdafruitDHT.getTempHum(lv_simu) #retour fonction capteur meteo
+       result = AdafruitDHT.getTempHum(lv_simu, logger) #retour fonction capteur meteo
        print (result)
        # Ecriture des infos des capteurs Meteo
        #TODO: changer la methode ? --> insert DB uniquement si different ? Cmt faire niveau front pour l'affichage des donnees alors ? (graphiques)

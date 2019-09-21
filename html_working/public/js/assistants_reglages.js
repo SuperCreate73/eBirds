@@ -113,13 +113,14 @@ function saveUser() {
 
     return;
   }
-  fetch ("jsRouter.php?action=saveUser&param1="+nameUser+"&param2="+passwdUser,{
-    method:'GET'
-  });
+  var testFetch = fetch ("jsRouter.php?action=saveUser&param1="+nameUser+"&param2="+passwdUser,
+    {
+      method:'GET'
+    });
 
-  fermerFenetre();
+  testFetch.then(fermerFenetre());
+  //fermerFenetre();
   document.location.reload();
-
 }
 
 function changerNom(){

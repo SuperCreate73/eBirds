@@ -284,23 +284,24 @@ printError "$?"
 # installation des bibliothèques de capteurs : DHT11
 #---------------------------------------------------
 printMessage "import de bibliothèques de capteur" "DHT11"
-git clone --quiet https://github.com/adafruit/Adafruit_Python_DHT >> $varLogFile 2>&1
+python -m pip install Adafruit-DHT
+#git clone --quiet https://github.com/adafruit/Adafruit_Python_DHT >> $varLogFile 2>&1
 printError "$?"
 
 # configuration de PYTHON
 #------------------------
 # Bibliothèque DHT11
-printMessage "modification du répertoire actif" "DHT11"
-cd Adafruit_Python_DHT
-(( locError=$? ))
-printError "$locError"
-
-printMessage "configuration des bibliothèques python" "DHT11"
-if [ ! $locError -gt 0 ] ; then
-	sudo python setup.py install >> $varLogFile 2>&1
-	printError "$?"
-	cd ..
-fi
+# printMessage "modification du répertoire actif" "DHT11"
+# cd Adafruit_Python_DHT
+# (( locError=$? ))
+# printError "$locError"
+#
+# printMessage "configuration des bibliothèques python" "DHT11"
+# if [ ! $locError -gt 0 ] ; then
+# 	sudo python setup.py install >> $varLogFile 2>&1
+# 	printError "$?"
+# 	cd ..
+# fi
 
 # Bibliothèque HX711
 printMessage "modification du répertoire actif" "HX711"
@@ -429,25 +430,27 @@ if [ "$varGit" == "true" ] ; then
 	sudo mv --force eBirds/backend /var/www/ >> $varLogFile 2>&1
 	printError "$?"
 
-	printMessage "mise en place du daemon - python" "/usr/bin/ebirdsDaemon"
-	sudo cp /var/www/backend/ebirdsv2.py /usr/bin/ebirdsDaemon >> $varLogFile 2>&1
-	printError "$?"
-
-	printMessage "mise en place du daemon - bash" "/etc/init.d/ebirdsDaemon"
-	sudo cp /var/www/backend/ebirdsDaemon /etc/init.d/ebirdsDaemon >> $varLogFile 2>&1
-	printError "$?"
-
-	printMessage "mise en place du daemon - permissions" "/etc/init.d/ebirdsDaemon"
-	sudo chmod +x /etc/init.d/ebirdsDaemon >> $varLogFile 2>&1
-	printError "$?" >> $varLogFile 2>&1
-
-	printMessage "mise en place du daemon - permissions" "/usr/bin/ebirdsDaemon"
-	sudo chmod +x /usr/bin/ebirdsDaemon >> $varLogFile 2>&1
-	printError "$?" >> $varLogFile 2>&1
-
-	printMessage "mise en place du daemon - activation" "update-rc.d"
-	update-rc.d ebirdsDaemon defaults
-	printError "$?" >> $varLogFile 2>&1
+# # TODO permet juste de rendre la commande ebirdsDaemon visible de partout
+# 	printMessage "mise en place du daemon - python" "/usr/bin/ebirdsDaemon"
+# 	sudo ln -s /var/www/backend/ebirdsv2.py /usr/bin/ebirdsDaemon >> $varLogFile 2>&1
+# 	printError "$?"
+#
+# #TODO tentative pour créer le démon -> ne fonctionne pas, modifier à la place le crontab
+# 	printMessage "mise en place du daemon - bash" "/etc/init.d/ebirdsDaemon"
+# 	sudo cp /var/www/backend/ebirdsDaemon /etc/init.d/ebirdsDaemon >> $varLogFile 2>&1
+# 	printError "$?"
+#
+# 	printMessage "mise en place du daemon - permissions" "/etc/init.d/ebirdsDaemon"
+# 	sudo chmod +x /etc/init.d/ebirdsDaemon >> $varLogFile 2>&1
+# 	printError "$?" >> $varLogFile 2>&1
+#
+# 	printMessage "mise en place du daemon - permissions" "/usr/bin/ebirdsDaemon"
+# 	sudo chmod +x /usr/bin/ebirdsDaemon >> $varLogFile 2>&1
+# 	printError "$?" >> $varLogFile 2>&1
+#
+# 	printMessage "mise en place du daemon - activation" "update-rc.d"
+# 	update-rc.d ebirdsDaemon defaults
+# 	printError "$?" >> $varLogFile 2>&1
 
 	printMessage "nettoyage des fichiers résiduels" "rm -r eBirds"
 	sudo rm -r eBirds
@@ -467,7 +470,7 @@ else
 fi
 
 #######################################################################
-# création de la basede donnée vide
+# création de la base de donnée vide
 #######################################################################
 printMessage "creation de la base de données" "nichoir.db"
 sqlite3 /var/www/nichoir.db << EOS
@@ -539,7 +542,7 @@ EOS
 printError "$?"
 
 #######################################################################
-# crée les settings dans la base de données
+# insertion des paramètres dans la base de données
 #######################################################################
 # output_pictures on/off
 # ffmpeg_output_movies on/off -> movie OU timelapse
@@ -687,18 +690,17 @@ Name=$(hostname)
 curl --data "ID=$MACaddress&IPEXT=$IPexterne&IPINT=$IPlocale&NAME=$Name" https://ebirds.be/donnees/identify
 printError "$?"
 
-printMessage "config envoi de l'IP au serveur central" "crontab"
-# crontab -u pi - <<FIN
-# 00 */06 * * * /var/www/html/public/bash/sendIP.sh
-# @reboot /var/www/html/public/bash/sendIP.sh
-# FIN
-#
-# crontab < <(crontab -l ; echo "0 */6 * * * /var/www/html/public/bash/sendIP.sh > /dev/null 2>&1")
+#######################################################################
+# configuration des actions planifiées - cron
+#######################################################################
+printMessage "config des actions planifiées" "crontab"
 
-sudo touch /etc/cron.d/sendIP
-sudo chmod 777 /etc/cron.d/sendIP
-sudo echo "00 */06 * * * pi /var/www/html/public/bash/sendIP.sh" >> /etc/cron.d/sendIP
-sudo echo "@reboot pi /var/www/html/public/bash/sendIP.sh" >> /etc/cron.d/sendIP
+sudo touch /etc/cron.d/ebirdsTask
+sudo chmod 644 /etc/cron.d/ebirdsTask
+sudo chown root:root /etc/cron.d/ebirdsTask
+sudo echo "0 */6 * * *  root  /var/www/html/public/bash/sendIP.sh >> /dev/null 2>&1" >> /etc/cron.d/ebirdsTask
+sudo echo "@reboot      root  /var/www/html/public/bash/sendIP.sh --delay >> /dev/null 2>&1" >> /etc/cron.d/ebirdsTask
+sudo echo "@reboot      root  /var/www/backend/ebirds_start.sh --delay >> /dev/null 2>&1" >> /etc/cron.d/ebirdsTask
 
 printError "$?"
 
