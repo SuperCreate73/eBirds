@@ -15,7 +15,7 @@ import random   # generation aleatoire de nombre
 ## Import des fonctions capteurs
 #TODO import generique (pas relatif a une marque de capteur en particulier)
 #import meteo       # import du capteur temp/humidite
-import Adafruit_DHT  # import du capteur temp/humidite DHT11
+import Adafruit-DHT  # import du capteur temp/humidite DHT11
 import balance     # import du capteur de poids
 #import hx711        # import du capteur de poids HX711
 #import IR_InOut    # import des capteurs IR d'entree/sortie
