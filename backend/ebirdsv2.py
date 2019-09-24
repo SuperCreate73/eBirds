@@ -15,7 +15,7 @@ import random   # generation aleatoire de nombre
 ## Import des fonctions capteurs
 #TODO import generique (pas relatif a une marque de capteur en particulier)
 #import meteo       # import du capteur temp/humidite
-import Adafruit-DHT  # import du capteur temp/humidite DHT11
+import Adafruit_DHT  # import du capteur temp/humidite DHT11
 import balance     # import du capteur de poids
 #import hx711        # import du capteur de poids HX711
 #import IR_InOut    # import des capteurs IR d'entree/sortie
@@ -355,24 +355,24 @@ create_back_DB()    # appel de la procedure pour creer la BD utilisee uniquement
 ###############################################################################
 ### Creation de Thread pour gestion Interrupt pour les capteurs IR d'entrees/sorties
 
-try:
-   print ("Lecture capteur IR")
-   #Thread pour capteur 1
-   capt1 = handler(16, IR_detection, bouncetime=1)
-   capt1.start()
-   GPIO.add_event_detect(16, GPIO.BOTH, callback=capt1)
-
-   #Thread pour capteur 2
-   capt2 = handler(20, IR_detection, bouncetime=1)
-   capt2.start()
-   GPIO.add_event_detect(20, GPIO.BOTH, callback=capt2)
-
-
-   #GPIO.add_event_detect(16, GPIO.BOTH, callback=detection, bouncetime=300)
-   #GPIO.add_event_detect(20, GPIO.BOTH, callback=detection, bouncetime=300)
-
-except (KeyboardInterrupt, SystemExit):
-   cleanAndExit()
+# try:
+#    print ("Lecture capteur IR")
+#    #Thread pour capteur 1
+#    capt1 = handler(16, IR_detection, bouncetime=1)
+#    capt1.start()
+#    GPIO.add_event_detect(16, GPIO.BOTH, callback=capt1)
+#
+#    #Thread pour capteur 2
+#    capt2 = handler(20, IR_detection, bouncetime=1)
+#    capt2.start()
+#    GPIO.add_event_detect(20, GPIO.BOTH, callback=capt2)
+#
+#
+#    #GPIO.add_event_detect(16, GPIO.BOTH, callback=detection, bouncetime=300)
+#    #GPIO.add_event_detect(20, GPIO.BOTH, callback=detection, bouncetime=300)
+#
+# except (KeyboardInterrupt, SystemExit):
+#    cleanAndExit()
 
 ###############################################################################
 ###############################################################################
@@ -401,51 +401,51 @@ while True:
 ##    "S"; 1C - capteur ; 1C - Status Ouvert/ferme ;  xC - Millisecondes
 ##
 
-    try:
-        lv_countIter = lv_countIter +1
-        print (lv_countIter)
-        #TODO virer les print
-        print ("")
-        print ("Lecture capteurs IR entrees/sorties")
-        if (lv_simu == "Y"):
-            IRCapt = random.randint(1,2) # 1 ou 2
-            IRStat = random.randint(0,1) # 0 ou 1
-        else:
-            #TODO to remove --> mettre write DB en def ?  ou utiliser IR_detection avec simu en param plutot
-            # fait par la fonction callback IR_detection
-            print ("Capteurs I/O TODO")
-            IRCapt = 0
-            IRStat = 0
-        print ("Capteur {0} - Status {1}".format(IRCapt,IRStat))
-
-        # re-ouverture de la DBIR et acquisition du curseur
-        # (le commit se fait en fin d'iteration)
-        lv_conn2 = sqlite3.connect(GV_DBNAME2)
-        c2 = lv_conn2.cursor()
-
-        #Get number of milliseconds since Epoch (1/1/1970 00:00:00 GMT)
-        lv_millis=int(time.time()*1000)
-        #lv_date = "2018-10-05"
-        #Definition des variables globales utilisees par le thread concurrent
-        global gv_id
-        gv_id = get_next_id(gv_id)
-        # Ecriture des infos des capteurs IR
-        dataTble = [(IRCapt,IRStat,lv_millis,gv_id)]
-        logger.debug('Write in Capt_IR DB - %s', dataTble)
-        print ("capteur IR I/O => DB")
-        c2.executemany('''INSERT INTO Capt_IR (FConnector,FStatus,FTime,FID_Pair)
-                         VALUES (?,?,?,?)''', dataTble)
-
-        lv_conn2.commit()
-        lv_conn2.close()
-
-        # Evalation des paires IR I/O toutes les x iterations
-        #if (lv_countIter % 1 == 0):
-        #    IR_eval(lv_dataF)
-#        IR_eval(lv_dataF)
-
-    except (KeyboardInterrupt, SystemExit):
-        cleanAndExit()
+#     try:
+#         lv_countIter = lv_countIter +1
+#         print (lv_countIter)
+#         #TODO virer les print
+#         print ("")
+#         print ("Lecture capteurs IR entrees/sorties")
+#         if (lv_simu == "Y"):
+#             IRCapt = random.randint(1,2) # 1 ou 2
+#             IRStat = random.randint(0,1) # 0 ou 1
+#         else:
+#             #TODO to remove --> mettre write DB en def ?  ou utiliser IR_detection avec simu en param plutot
+#             # fait par la fonction callback IR_detection
+#             print ("Capteurs I/O TODO")
+#             IRCapt = 0
+#             IRStat = 0
+#         print ("Capteur {0} - Status {1}".format(IRCapt,IRStat))
+#
+#         # re-ouverture de la DBIR et acquisition du curseur
+#         # (le commit se fait en fin d'iteration)
+#         lv_conn2 = sqlite3.connect(GV_DBNAME2)
+#         c2 = lv_conn2.cursor()
+#
+#         #Get number of milliseconds since Epoch (1/1/1970 00:00:00 GMT)
+#         lv_millis=int(time.time()*1000)
+#         #lv_date = "2018-10-05"
+#         #Definition des variables globales utilisees par le thread concurrent
+#         global gv_id
+#         gv_id = get_next_id(gv_id)
+#         # Ecriture des infos des capteurs IR
+#         dataTble = [(IRCapt,IRStat,lv_millis,gv_id)]
+#         logger.debug('Write in Capt_IR DB - %s', dataTble)
+#         print ("capteur IR I/O => DB")
+#         c2.executemany('''INSERT INTO Capt_IR (FConnector,FStatus,FTime,FID_Pair)
+#                          VALUES (?,?,?,?)''', dataTble)
+#
+#         lv_conn2.commit()
+#         lv_conn2.close()
+#
+#         # Evalation des paires IR I/O toutes les x iterations
+#         #if (lv_countIter % 1 == 0):
+#         #    IR_eval(lv_dataF)
+# #        IR_eval(lv_dataF)
+#
+#     except (KeyboardInterrupt, SystemExit):
+#         cleanAndExit()
 
 
 # re-ouverture de la DB et acquisition du curseur
@@ -461,15 +461,15 @@ while True:
        print ("")
        print ("Lecture capteur Meteo")
        # result est retourné dans le format (tempExt,humExt,tempInt,humInt)
-       result = AdafruitDHT.getTempHum(lv_simu, logger) #retour fonction capteur meteo
+       result = Adafruit_DHT.common.read(Adafruit_DHT.common.DHT11, 11) #retour fonction capteur meteo
        print (result)
        # Ecriture des infos des capteurs Meteo
        #TODO: changer la methode ? --> insert DB uniquement si different ? Cmt faire niveau front pour l'affichage des donnees alors ? (graphiques)
        logger.debug('Write in meteo DB - %s', [result])
        print ("capteur Meteo => DB")
        #dataTble = [(tempExt,humExt,tempInt,humInt)]
-       c.executemany('''INSERT INTO meteo (tempExt,humExt,tempInt,humInt)
-                       VALUES (?,?,?,?)''',[result])
+       c.executemany('''INSERT INTO meteo (humExt,tempExt)
+                       VALUES (?,?)''',[result])
 
     except (KeyboardInterrupt, SystemExit):
        cleanAndExit()
@@ -478,24 +478,24 @@ while True:
 ###############################################################################
 ### Capteur Poids
 
-    try:
-       #TODO virer les print
-       print ("")
-       print ("Lecture capteur Poids")
-       # result est retourné dans le format (poidsNich)
-       result = balance.getPoids(lv_simu) #retour fonction capteur poids
-       print (result)
-       # Ecriture des infos des capteurs Meteo
-       #TODO: changer la methode ? --> insert DB uniquement si different ? Cmt faire niveau front pour l'affichage des donnees alors ? (graphiques)
-       logger.debug('Write in Balance DB - %s', [result])
-       print ("capteur Poids => DB")
-       #VALUES (?) only takes string as parameter
-       #and it must be an array, hence giving the string in a tuple
-       #otherwise it will consider each letter of the string as an array entry..
-       c.execute('INSERT INTO balance (poidsNich) VALUES (?)', [str(result),])
-
-    except (KeyboardInterrupt, SystemExit):
-       cleanAndExit()
+    # try:
+    #    #TODO virer les print
+    #    print ("")
+    #    print ("Lecture capteur Poids")
+    #    # result est retourné dans le format (poidsNich)
+    #    result = balance.getPoids(lv_simu) #retour fonction capteur poids
+    #    print (result)
+    #    # Ecriture des infos des capteurs Meteo
+    #    #TODO: changer la methode ? --> insert DB uniquement si different ? Cmt faire niveau front pour l'affichage des donnees alors ? (graphiques)
+    #    logger.debug('Write in Balance DB - %s', [result])
+    #    print ("capteur Poids => DB")
+    #    #VALUES (?) only takes string as parameter
+    #    #and it must be an array, hence giving the string in a tuple
+    #    #otherwise it will consider each letter of the string as an array entry..
+    #    c.execute('INSERT INTO balance (poidsNich) VALUES (?)', [str(result),])
+    #
+    # except (KeyboardInterrupt, SystemExit):
+    #    cleanAndExit()
 
 
 ###############################################################################
