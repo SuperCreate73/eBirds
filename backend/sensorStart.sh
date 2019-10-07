@@ -9,10 +9,10 @@ if [ $# -gt 0 ] ; then
 #TODO to check if the ampersand is mandatory
   if [ $param == "--delay" ] ; then
     sleep 120
-    python ebirdsIO.py &
+    python ebirdsSensor.py &
   else
-    python ebirdsIO.py $param &
+    python ebirdsSensor.py $param &
   fi
 else
-  python ebirdsIO.py &
+  python ebirdsSensor.py &
 fi

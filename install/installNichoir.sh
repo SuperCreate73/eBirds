@@ -42,6 +42,25 @@ varMessage=""
 varLogFile="logInstalNichoir.log"
 varSourceWeb="web.tar.xz"
 #varSourcePrg="prg.tar.gz"
+# TODO prévoir un mode update :
+#			IF [fichier .info existe ] ; THEN
+#				lecture du fichier
+#				IF [version courante > version installée] ; THEN
+#					update
+#				else
+#					instal
+#				fi
+#			else
+#				instal
+#			fi
+# TODO créer le fichier .info
+# TODO lire un fichier avec la configuration d'installation :
+# 			Quels capteurs ?
+# 			Quels types ?
+# 			Fonction 'read' à utiliser (propre à chaque capteur)
+# 			Paramètres et format à donner à la fonction 'read' (pin, ?)
+# TODO modifier la BD pour faire une seule table capteur
+# 			table de correspondance ID - label, unité (degré, %, ?), fonction read et paramètres
 
 
 #######################################################################
@@ -474,59 +493,60 @@ fi
 #######################################################################
 printMessage "creation de la base de données" "nichoir.db"
 sqlite3 /var/www/nichoir.db << EOS
-	CREATE TABLE IF NOT EXISTS
-		users
+	CREATE TABLE IF NOT EXISTS users
 			(	login TINY TEXT PRIMARY KEY,
 			 	password TEXT);
-	CREATE TABLE IF NOT EXISTS
-		Capt_IR
+
+	CREATE TABLE IF NOT EXISTS Capt_IR
 			(	FDatim DATETIME DEFAULT CURRENT_TIMESTAMP,
 				FConnector TEXT,
 				FStatus TEXT,
 				FTime LONG,
 				FTreated INTEGER DEFAULT 0,
 				FID_Pair LONG);
-	CREATE TABLE IF NOT EXISTS
-		meteo
+
+	CREATE TABLE IF NOT EXISTS meteo
 			(	dateHeure DATETIME DEFAULT CURRENT_TIMESTAMP,
 				tempExt TEXT,
 				humExt TEXT,
 				tempInt TEXT,
 				humInt TEXT);
-	CREATE TABLE IF NOT EXISTS
-		InOut_IR
+
+	CREATE TABLE IF NOT EXISTS InOut_IR
 			(	FDatim DATETIME DEFAULT CURRENT_TIMESTAMP,
 				FStatus TEXT,
 				FTime LONG);
-	CREATE TABLE IF NOT EXISTS
-		Capt_cap
-			(	dateHeure DATETIME DEFAULT CURRENT_TIMESTAMP,
-				connecteur TEXT,
-				valeur LONG);
-	CREATE TABLE IF NOT EXISTS
-		config
+
+	CREATE TABLE IF NOT EXISTS config
 			(	setting TINY TEXT PRIMARY KEY,
 				value TINY TEXT,
 				priority INTEGER,
 				valueType TINY TEXT);
-	CREATE TABLE IF NOT EXISTS
-		configRange
+
+	CREATE TABLE IF NOT EXISTS configRange
 			(	setting TINY TEXT,
 				rangeValue TINY TEXT);
-	CREATE TABLE IF NOT EXISTS
-		configAlias
+
+	CREATE TABLE IF NOT EXISTS configAlias
 			(	alias TINY TEXT,
 				aliasValue TINY TEXT,
 				setting TINY TEXT,
 				settingValue TINY TEXT);
-	CREATE TABLE IF NOT EXISTS
-		location
+
+	CREATE TABLE IF NOT EXISTS location
 			(	location TINY TEXT PRIMARY KEY,
 				value TINY TEXT,
 				priority INTEGER,
 				valueType TINY TEXT);
 EOS
 printError "$?"
+
+# CREATE TABLE IF NOT EXISTS Capt_cap
+# 		(	dateHeure DATETIME DEFAULT CURRENT_TIMESTAMP,
+# 			connecteur TEXT,
+# 			valeur LONG);
+#
+
 #######################################################################
 # crée un utilisateur par défaut - admin - dans la base de donnée
 #######################################################################
@@ -687,7 +707,7 @@ IPlocale=$(sudo ifconfig | grep -i -m 1  "netmask 255.255.255.0" | cut -f 10 -d 
 IPexterne=$(dig TXT +short -4 o-o.myaddr.1.google @ns1.google.com | cut -f 2 -d '"')
 Name=$(hostname)
 
-curl --data "ID=$MACaddress&IPEXT=$IPexterne&IPINT=$IPlocale&NAME=$Name" https://ebirds.be/donnees/identify
+curl --data "ID=$MACaddress&IPEXT=$IPexterne&IPINT=$IPlocale&NAME=$Name" https://ebirds.be/data/identify
 printError "$?"
 
 #######################################################################
@@ -695,12 +715,22 @@ printError "$?"
 #######################################################################
 printMessage "config des actions planifiées" "crontab"
 
-sudo touch /etc/cron.d/ebirdsTask
-sudo chmod 644 /etc/cron.d/ebirdsTask
-sudo chown root:root /etc/cron.d/ebirdsTask
-sudo echo "0 */6 * * *  root  /var/www/html/public/bash/sendIP.sh >> /dev/null 2>&1" >> /etc/cron.d/ebirdsTask
-sudo echo "@reboot      root  /var/www/html/public/bash/sendIP.sh --delay >> /dev/null 2>&1" >> /etc/cron.d/ebirdsTask
-sudo echo "@reboot      root  /var/www/backend/ebirds_start.sh --delay >> /dev/null 2>&1" >> /etc/cron.d/ebirdsTask
+sudo touch /etc/cron.d/ebirdsIP
+sudo chmod 644 /etc/cron.d/ebirdsIP
+sudo chown root:root /etc/cron.d/ebirdsIP
+sudo echo "0 */6 * * *  root  /var/www/html/public/bash/sendIP.sh >> /dev/null 2>&1" >> /etc/cron.d/ebirdsIP
+sudo echo "@reboot      root  /var/www/html/public/bash/sendIP.sh --delay >> /dev/null 2>&1" >> /etc/cron.d/ebirdsIP
+
+sudo touch /etc/cron.d/ebirdsSensors
+sudo chmod 644 /etc/cron.d/ebirdsSensors
+sudo chown root:root /etc/cron.d/ebirdsSensors
+sudo echo "@reboot      root  /var/www/backend/sensorStart.sh --delay >> /dev/null 2>&1" >> /etc/cron.d/ebirdsSensors
+sudo echo "0 */6 * * *  root  /var/www/backend/sensorStart.sh >> /dev/null 2>&1" >> /etc/cron.d/ebirdsSensors
+
+sudo touch /etc/cron.d/ebirdsInOut
+sudo chmod 644 /etc/cron.d/ebirdsInOut
+sudo chown root:root /etc/cron.d/ebirdsInOut
+sudo echo "@reboot      root  /var/www/backend/ebirds_start.sh --delay >> /dev/null 2>&1" >> /etc/cron.d/ebirdsInOut
 
 printError "$?"
 
