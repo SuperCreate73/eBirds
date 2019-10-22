@@ -25,7 +25,8 @@ class DHTSensor:
             valeurs médianes
         """
         count = 0
-        listHumidity = listTemperature = []
+        listHumidity =[]
+        listTemperature = []
 
         # listHumidity = listTemperature = []
         humidity, temperature = dhtSensor.read(self._type, self._pin)
