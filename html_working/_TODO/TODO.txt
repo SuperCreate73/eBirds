@@ -30,7 +30,7 @@ Fonction de Tag / commentaires / journal
   fonction de publication sur le serveur
 
 Gestion dynamique des capteurs
-  installation dynamique des biliothèques des capteurs
+  installation dynamique des bibliothèques des capteurs
 
 DB
   simplification des tables capteurs

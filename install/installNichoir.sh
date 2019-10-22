@@ -538,6 +538,11 @@ sqlite3 /var/www/nichoir.db << EOS
 				value TINY TEXT,
 				priority INTEGER,
 				valueType TINY TEXT);
+
+	CREATE TABLE IF NOT EXISTS sensors
+			(	sensor TINY TEXT,
+				pin INTEGER,
+				location TINY TEXT);
 EOS
 printError "$?"
 
@@ -646,11 +651,10 @@ sqlite3 /var/www/nichoir.db << EOS
 
 	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeInterval', 'off', 'snapshot_interval', '0') ;
 	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeInterval', 'off', 'ffmpeg_timelapse', '0') ;
-	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeInterval', 'picture', ffmpeg_timelapse', '0') ;
+	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeInterval', 'picture', 'ffmpeg_timelapse', '0') ;
 	INSERT INTO configAlias ('alias', 'aliasValue', 'setting', 'settingValue') VALUES ('imageTypeInterval', 'video', 'snapshot_interval', '0') ;
 EOS
 printError "$?"
-
 
 printMessage "insertion des paramètres - table 'location'" "nichoir.db"
 sqlite3 /var/www/nichoir.db << EOS
@@ -665,6 +669,15 @@ sqlite3 /var/www/nichoir.db << EOS
 EOS
 printError "$?"
 
+printMessage "insertion des paramètres - table 'sensors'" "nichoir.db"
+sqlite3 /var/www/nichoir.db << EOS
+	INSERT INTO sensors ('sensor', 'pin', 'location')	VALUES ('DHT11', '13', 'IN');
+	INSERT INTO sensors ('sensor', 'pin', 'location')	VALUES ('DHT11', '17', 'OUT');
+	INSERT INTO sensors ('sensor', 'pin', 'location')	VALUES ('HX711', '9', 'IN');
+	INSERT INTO sensors ('sensor', 'pin', 'location')	VALUES ('IR', '16', 'IN');
+	INSERT INTO sensors ('sensor', 'pin', 'location')	VALUES ('IR', '15', 'OUT');
+EOS
+printError "$?"
 
 ########################################################################
 printMessage "gestion des permissions des répertoires" ".motion & /var/www"
@@ -725,7 +738,7 @@ sudo touch /etc/cron.d/ebirdsSensors
 sudo chmod 644 /etc/cron.d/ebirdsSensors
 sudo chown root:root /etc/cron.d/ebirdsSensors
 sudo echo "@reboot      root  /var/www/backend/sensorStart.sh --delay >> /dev/null 2>&1" >> /etc/cron.d/ebirdsSensors
-sudo echo "0 */6 * * *  root  /var/www/backend/sensorStart.sh >> /dev/null 2>&1" >> /etc/cron.d/ebirdsSensors
+sudo echo "*/30 * * * *  root  /var/www/backend/sensorStart.sh >> /dev/null 2>&1" >> /etc/cron.d/ebirdsSensors
 
 sudo touch /etc/cron.d/ebirdsInOut
 sudo chmod 644 /etc/cron.d/ebirdsInOut
