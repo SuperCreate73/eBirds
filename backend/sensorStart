@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#One param not mandatory, either 'DEBUG' or 'INFO'
+param=$1
+curDate=$(date)
+#manual command : sudo python ebirdsv2.py -v
+
+if [ $# -gt 0 ] ; then
+#TODO to check if the ampersand is mandatory
+  if [ $param == "--delay" ] ; then
+    sleep 120
+	  echo "$curDate : delayed start-up at boot" >> /var/www/log/ebirdsSensor.log
+    python2 /var/www/backend/ebirdsSensor.py >> /var/www/log/ebirdsSensor.log 2>&1
+  else
+    echo "$curDate : delayed start-up at boot" >> /var/www/log/ebirdsSensor.log
+    python2 /var/www/backend/ebirdsSensor.py $param & >> /var/www/log/ebirdsSensor.log 2>&1
+  fi
+else
+  python /var/www/backend/ebirdsSensor.py & >> /var/www/log/ebirdsSensor.log 2>&1
+fi

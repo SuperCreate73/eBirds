@@ -25,7 +25,7 @@ class DHTSensor:
             valeurs médianes
         """
         count = 0
-        listHumidity =[]
+        listHumidity = []
         listTemperature = []
 
         # listHumidity = listTemperature = []

@@ -731,19 +731,19 @@ printMessage "config des actions planifiées" "crontab"
 sudo touch /etc/cron.d/ebirdsIP
 sudo chmod 644 /etc/cron.d/ebirdsIP
 sudo chown root:root /etc/cron.d/ebirdsIP
-sudo echo "0 */6 * * *  root  /var/www/html/public/bash/sendIP.sh >> /dev/null 2>&1" >> /etc/cron.d/ebirdsIP
-sudo echo "@reboot      root  /var/www/html/public/bash/sendIP.sh --delay >> /dev/null 2>&1" >> /etc/cron.d/ebirdsIP
+sudo echo "0 */6 * * *  root	/var/www/html/public/bash/sendIP " >> /etc/cron.d/ebirdsIP
+sudo echo "@reboot      root	/var/www/html/public/bash/sendIP --delay " >> /etc/cron.d/ebirdsIP
 
 sudo touch /etc/cron.d/ebirdsSensors
 sudo chmod 644 /etc/cron.d/ebirdsSensors
 sudo chown root:root /etc/cron.d/ebirdsSensors
-sudo echo "@reboot      root  /var/www/backend/sensorStart.sh --delay >> /dev/null 2>&1" >> /etc/cron.d/ebirdsSensors
-sudo echo "*/30 * * * *  root  /var/www/backend/sensorStart.sh >> /dev/null 2>&1" >> /etc/cron.d/ebirdsSensors
+sudo echo "*/30 * * * *  root	/var/www/backend/sensorStart " >> /etc/cron.d/ebirdsSensors
+sudo echo "@reboot      root 	/var/www/backend/sensorStart --delay " >> /etc/cron.d/ebirdsSensors
 
 sudo touch /etc/cron.d/ebirdsInOut
 sudo chmod 644 /etc/cron.d/ebirdsInOut
 sudo chown root:root /etc/cron.d/ebirdsInOut
-sudo echo "@reboot      root  /var/www/backend/ebirds_start.sh --delay >> /dev/null 2>&1" >> /etc/cron.d/ebirdsInOut
+sudo echo "@reboot      root  bash /var/www/backend/ebirds_start --delay " >> /etc/cron.d/ebirdsInOut
 
 printError "$?"
 
