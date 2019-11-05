@@ -449,6 +449,10 @@ if [ "$varGit" == "true" ] ; then
 	sudo mv --force eBirds/backend /var/www/ >> $varLogFile 2>&1
 	printError "$?"
 
+	printMessage "déplacement du répertoire log" "/var/www/log"
+	sudo mv --force eBirds/log /var/www/ >> $varLogFile 2>&1
+	printError "$?"
+
 # # TODO permet juste de rendre la commande ebirdsDaemon visible de partout
 # 	printMessage "mise en place du daemon - python" "/usr/bin/ebirdsDaemon"
 # 	sudo ln -s /var/www/backend/ebirdsv2.py /usr/bin/ebirdsDaemon >> $varLogFile 2>&1
@@ -660,7 +664,7 @@ printMessage "insertion des paramètres - table 'location'" "nichoir.db"
 sqlite3 /var/www/nichoir.db << EOS
 	INSERT INTO location ('location', 'value', 'priority', 'valueType')	VALUES ('street', '', 0, 'text');
 	INSERT INTO location ('location', 'value', 'priority', 'valueType') VALUES ('houseNumber', '', 0, 'text');
-	INSERT INTO location ('location', 'value', 'priority', 'valueType') VALUES ('postalCode', '', 0, 'integer');
+	INSERT INTO location ('location', 'value', 'priority', 'valueType') VALUES ('postalCode', '', 0, 'text');
 	INSERT INTO location ('location', 'value', 'priority', 'valueType')	VALUES ('city', '', 0, 'text');
 	INSERT INTO location ('location', 'value', 'priority', 'valueType') VALUES ('country', '', 0, 'text');
 	INSERT INTO location ('location', 'value', 'priority', 'valueType') VALUES ('xCoord', '', 0, 'long');

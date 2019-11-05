@@ -1,4 +1,7 @@
 #! /bin/sh
+
+# NO MORE USED, REPLACED BY CRON.D JOBS
+
 ### BEGIN INIT INFO
 # Provides:          skeleton
 # Required-Start:    $remote_fs $syslog

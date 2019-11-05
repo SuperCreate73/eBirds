@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#One param not mandatory, either 'DEBUG' or 'INFO'
+#One param not mandatory, either 'DEBUG', 'INFO', or '--delay'
 param=$1
 
 #manual command : sudo python ebirdsv2.py -v

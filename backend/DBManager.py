@@ -1,10 +1,6 @@
 #!/usr/bin/python2
 # -*- coding: utf-8  -*-
 
-############################################################
-#  TO REPLACE BY DBMANEGER.PY
-############################################################
-
 import sqlite3
 
 class APISqlite3:
@@ -91,14 +87,6 @@ class DBManager:
         return globals()[self._APIlink](self._dbFile, self._dbTable)
 
 
-
-
-# TODO créer les objets correpondant aux capteurs installés
-#         --> lecture dans la DB
-# TODO modifier la DB en faisant une table avec les données des capteurs
-#         --> rajouter un ID pour chaque paramètre
-# TODO faire une fonction 'read' dynamique avec les données de la table de correspondance
-
 if __name__ == "__main__":
 
     DB = "/var/www/nichoir.db"
@@ -106,14 +94,3 @@ if __name__ == "__main__":
 
     dbCapteur = DBManager(DB, TABLE, "sqlite3").setAPI()
     print (dbCapteur.dbRead('sensor = "DHT11"'))
-
-    # dbTest = {'sensor':'DHT11', 'pin':'13', 'location':'IN'}
-    # print (dbCapteur.dbInsert(dbTest))
-    # dbTest = {'sensor':'DHT11', 'pin':'17', 'location':'OUT'}
-    # print (dbCapteur.dbInsert(dbTest))
-    # dbTest = {'sensor':'HX711', 'pin':'15', 'location':'IN'}
-    # print (dbCapteur.dbInsert(dbTest))
-    # dbTest = {'sensor':'IR', 'pin':'8', 'location':'IN'}
-    # print (dbCapteur.dbInsert(dbTest))
-    # dbTest = {'sensor':'IR', 'pin':'9', 'location':'OUT'}
-    # print (dbCapteur.dbInsert(dbTest))

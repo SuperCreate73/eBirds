@@ -47,7 +47,7 @@ class MotionManager {
 			$shellCmd = 'sudo sed "/var/www/html/public/bash/motionSendMail.sh" -i -e "s:^\(#\|;\)\? \?varMail=.*$:varMail='.$email.':g" ';
 			$output = shell_exec($shellCmd);
 			// modification de motion
-			$this -> setSetting('on_motion_detected', $email);
+			$this -> setSetting('on_motion_detected', '/var/www/html/public/bash/motionSendMail.sh');
 		}
 	}
 

@@ -66,18 +66,20 @@ private function cmp($a, $b) {
 		//
 		$valueType = $this -> allLocationArray[$fieldLocation][2];
 		// query table initialisation -> to get range values for settings
-		if (($valueType == 'text') && (!is_string($value))) {
-				throw new Exception('Paramètre non valide : '. $fieldLocation .' - valeur : '.$value);
+		if ($valueType == 'text')  {
+		    if (!is_string($value) && !$value == "") {
+					throw new Exception('Paramètre non valide : '. $fieldLocation .' - valeur : '.$value);
+				}
 		}
 
 		elseif ($valueType == 'integer') {
-			if (!is_int(intval($value)) && ! $value == "") {
+			if (!is_int(intval($value)) && !$value == "") {
 				throw new Exception('Paramètre non valide : '. $fieldLocation .' - valeur : '.$value);
 			}
 		}
 
 		elseif ($valueType == 'long') {
-			if (!is_float(floatval($value)) && ! $value == "") {
+			if (!is_float(floatval($value)) && !$value == "") {
 				throw new Exception('Paramètre non valide : '. $fieldLocation .' - valeur : '.$value);
 			}
 		}
