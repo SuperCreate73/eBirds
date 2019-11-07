@@ -93,8 +93,77 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 
 	</div> <!--    FIN CADRE II -->
 
+	<!--    FIN CADRE IV -->
+
 
 	<div class="cadre">
+		<div class="row">
+			<div class="two columns">
+				<h2>Localisation</h2>
+			</div>
+
+			<div class="offset-by-nine three columns">
+				<h3>Localisation</h3><input class="button" type="button" value="Me géolocaliser" onclick="geolocaliser();">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="offset-by-two columns">
+				<div class="seven columns">
+
+					<label>Rue et numéro</label>
+					<div class="row">
+						<div class="nine columns">
+							<input id="street" class="u-full-width" type="text" value="<?= ($locationInterface -> street) ?>" name="street">
+						</div>
+						<div class="three columns">
+							<input id="houseNumber" class="u-full-width" type="text" value="<?= ($locationInterface -> houseNumber) ?>" name="houseNumber">
+						</div>
+
+
+				</div>
+					<div class="row">
+						<div class="four columns">
+							<label>C.P.</label>
+							<input id="postalCode" class="u-full-width" type="text" value="<?= ($locationInterface -> postalCode) ?>" name="postalCode">
+						</div>
+
+						<div class="eight columns">
+							<label>Localité</label>
+							<input id="city" class="u-full-width" type="text" value="<?= ($locationInterface -> city) ?>" name="city">
+						</div>
+					</div>
+					<label>Pays</label>
+					<input id="country" class="u-full-width" type="text" value="<?= ($locationInterface -> country) ?>" name="country">
+				</div>
+
+				<div class="three columns">
+					<label>Latitude</label>
+					<input id="latitude" class="u-full-width" type="text" value="<?= ($locationInterface -> xCoord) ?>" name="xCoord">
+					<label>Longitude</label>
+					<input id="longitude" class="u-full-width" type="text" value="<?= ($locationInterface -> yCoord) ?>" name="yCoord">
+					<label>Altitude</label>
+					<input class="u-full-width" type="text" value="<?= ($locationInterface -> zCoord) ?>" name="zCoord">
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="offset-by-seven columns">
+				<div class="five columns">
+					<input class="button u-full-width boutonLogin" value="Enregistrer les modifications" type="submit">
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+	<div class="cadre">
+
 		<div class="row">
 			<div class="two columns">
 				<h2>Caméra</h2>
@@ -186,7 +255,6 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 		</div>
 	</div>
 
-	<hr style="border: .5px solid white;" />
 
 
 
@@ -209,69 +277,7 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 
 
 
-	<!--    FIN CADRE IV -->
-
-
-	<div class="cadre">
-		<div class="row">
-			<div class="two columns">
-				<h2>Général</h2>
-			</div>
-
-			<div class="offset-by-nine three columns">
-				<h3>Localisation</h3><input class="button" type="button" value="Me géolocaliser" onclick="geolocaliser();">
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="offset-by-two columns">
-				<div class="seven columns">
-
-					<label>Rue et numéro</label>
-					<div class="row">
-						<div class="nine columns">
-							<input id="street" class="u-full-width" type="text" value="<?= ($locationInterface -> street) ?>" name="street">
-						</div>
-						<div class="three columns">
-							<input id="houseNumber" class="u-full-width" type="text" value="<?= ($locationInterface -> houseNumber) ?>" name="houseNumber">
-						</div>
-
-
-				</div>
-					<div class="row">
-						<div class="four columns">
-							<label>C.P.</label>
-							<input id="postalCode" class="u-full-width" type="text" value="<?= ($locationInterface -> postalCode) ?>" name="postalCode">
-						</div>
-
-						<div class="eight columns">
-							<label>Localité</label>
-							<input id="city" class="u-full-width" type="text" value="<?= ($locationInterface -> city) ?>" name="city">
-						</div>
-					</div>
-					<label>Pays</label>
-					<input id="country" class="u-full-width" type="text" value="<?= ($locationInterface -> country) ?>" name="country">
-				</div>
-
-				<div class="three columns">
-					<label>Latitude</label>
-					<input id="latitude" class="u-full-width" type="text" value="<?= ($locationInterface -> xCoord) ?>" name="xCoord">
-					<label>Longitude</label>
-					<input id="longitude" class="u-full-width" type="text" value="<?= ($locationInterface -> yCoord) ?>" name="yCoord">
-					<label>Altitude</label>
-					<input class="u-full-width" type="text" value="<?= ($locationInterface -> zCoord) ?>" name="zCoord">
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="offset-by-seven columns">
-				<div class="five columns">
-					<input class="button u-full-width boutonLogin" value="Enregistrer les modifications" type="submit">
-				</div>
-			</div>
-		</div>
-	</div> <!--    FIN CADRE V -->
+ <!--    FIN CADRE V -->
 
 
 </form>
