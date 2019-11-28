@@ -2,91 +2,40 @@
 # -*- coding: utf-8  -*-
 
 import DBManager
-import DHTSensor
+import DHT11Sensor
+import DHT22Sensor
+
+class Sensors:
+    """ Classe pour gérer les capteurs
+
+    """
+    pass
+
+    # Connection à la table des capteurs
+    # Lecture de la table
+    # Retours d'un tableau
+    # Identification des capteurs différents
+    # Import des bibliothèques des différents capteurs
+    # Recherche des classes nommées 'NomDuCapteur'Sensor.
+    # Si elles existent import
+    #   Sinon, message d'erreur
+    # appel de la fonction 'readSensor' et lecture des valeurs
+    #
+    #
+    #
+    # TODO Adapter la DB pour indiquer le paramètre mesuré
+    #   Ce paramètre sera ensuite utilisé pour la lecture
+    #
 
 
-# class DHTSensor:
-#     """ DHT sensor class
-#         Take as args :
-#             - sensor type as number (11 or 22)
-#     """
-#
-#
-#     def __init__(self, sensorType, pin):
-#         if (sensorType == 11 or sensorType == 22):
-#             self._type = sensorType
-#         else:
-#             raise ValueError('Type de capteur inconnu')
-#         self._pin = pin
-#
-#
-#     def __listAverage(self, inputList):
-#         """ Trie les valeurs numériques de la liste en entrée et calcule la
-#             moyenne pondérée (élimine les deux extrèmes)
-#         """
-#         inputList.sort()
-#
-#         inputList = [i for i in inputList if isinstance(i, int) or isinstance(i, float)]
-#
-#         if len(inputList) > 2:
-#             output = round(sum(inputList[1:-1])/(len(inputList)-2), 1)
-#         elif len(inputList) > 0:
-#             output = round(sum(inputList)/len(inputList), 1)
-#         else:
-#             output = None
-#         return output
-#
-#
-#     def read(self):
-#         """ lit la température 5 fois à 5 secondes d'intervalle et
-#             renvoie un tuple (humidité, température) avec la moyenne des trois
-#             valeurs médianes
-#         """
-#         count = 0
-#         listHumidity = []
-#         listTemperature = []
-#
-#         # listHumidity = listTemperature = []
-#         humidity, temperature = dhtSensor.read(self._type, self._pin)
-#         while (len(listTemperature)< 6 or len(listHumidity) < 6) and count < 10:
-#             humidity, temperature = dhtSensor.read(self._type, self._pin)
-#
-#             if humidity:
-#                 listHumidity.append(humidity)
-#
-#             if temperature:
-#                 listTemperature.append(temperature)
-#
-#             sleep(5)
-#             count += 1
-#
-#         # listHumidity.sort()
-#         # listTemperature.sort()
-#         #
-#         # listHumidity = [i for i in listHumidity if isinstance(i, int) or isinstance(i, float)]
-#         # listTemperature = [i for i in listTemperature if isinstance(i, int) or isinstance(i, float)]
-#         #
-#         # if len(listHumidity) > 2:
-#         #     humidity = round(sum(listHumidity[1:-1])/(len(listHumidity)-2), 1)
-#         # elif len(listHumidity) > 0:
-#         #     humidity = round(sum(listHumidity)/len(listHumidity), 1)
-#         # else:
-#         #     humidity = None
-#         #
-#         # if len(listTemperature) > 2:
-#         #     temperature = round(sum(listTemperature[1:-1])/(len(listTemperature)-2), 1)
-#         # elif len(listTemperature) > 0:
-#         #     temperature = round(sum(listTemperature)/len(listTemperature), 1)
-#         # else:
-#         #     temperature = None
-#
-#         return (self.__listAverage(listHumidity), self.__listAverage(listTemperature))
 
-# TODO créer les objets correpondant aux capteurs installés
+# TODO créer les objets correspondant aux capteurs installés
 #         --> lecture dans la DB
 # TODO modifier la DB en faisant une table avec les données des capteurs
 #         --> rajouter un ID pour chaque paramètre
 # TODO faire une fonction 'read' dynamique avec les données de la table de correspondance
+#
+
 
 if __name__ == "__main__":
 # Capteurs possibles : DHT11, DHT22, HX711, IR, SI7021
@@ -98,6 +47,9 @@ if __name__ == "__main__":
 
     dbMeteo = DBManager.DBManager(DB, 'meteo', "sqlite3").setAPI()
     dbSensors = DBManager.DBManager(DB, 'sensors', "sqlite3").setAPI()
+
+    sensorList = dbSensors.dbRead()
+
     readOut['humExt'], readOut['tempExt'] = DHTSensor.DHTSensor(DHT, 17).read()
     readOut['humInt'], readOut['tempInt'] = DHTSensor.DHTSensor(DHT, 27).read()
 
