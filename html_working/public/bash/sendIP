@@ -9,5 +9,7 @@ MACaddress=$(sudo ifconfig | grep -i -m 1  ether | cut -f 10 -d ' ')
 IPlocale=$(sudo ifconfig | grep -i -m 1  "netmask 255.255.255.0" | cut -f 10 -d ' ')
 IPexterne=$(dig TXT +short -4 o-o.myaddr.1.google @ns1.google.com | cut -f 2 -d '"')
 Name=$(hostname)
+Xcoord=$(sqlite3 /var/www/nichoir.db 'select value from location where location = "xCoord";')
+Ycoord=$(sqlite3 /var/www/nichoir.db 'select value from location where location = "yCoord";')
 
-curl --data "ID=$MACaddress&IPEXT=$IPexterne&IPINT=$IPlocale&NAME=$Name" https://ebirds.be/data/identify
+curl --data "ID=$MACaddress&IPEXT=$IPexterne&IPINT=$IPlocale&NAME=$Name&XCOORD=$Xcoord&YCOORD=$Ycoord" https://ebirds.be/data/identify
