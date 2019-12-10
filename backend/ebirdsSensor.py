@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: utf-8  -*-
 
-import DBManager
+import DBManager as dbMan
 import DHT11Sensor
 import DHT22Sensor
 
@@ -45,8 +45,8 @@ if __name__ == "__main__":
     DHT = 22
     readOut = dict()
 
-    dbMeteo = DBManager.DBManager(DB, 'meteo', "sqlite3").setAPI()
-    dbSensors = DBManager.DBManager(DB, 'sensors', "sqlite3").setAPI()
+    dbMeteo = dbMan.DBManager(DB, 'meteo', "sqlite3").setAPI()
+    dbSensors = dbMan.DBManager(DB, 'sensors', "sqlite3").setAPI()
 
     sensorList = dbSensors.dbRead()
 

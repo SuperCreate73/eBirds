@@ -51,6 +51,7 @@ private function sortArray($unformatedList) {
 
 // TODO : Harmoniser la fonction de mise en forme avec SettingsInterface
 
+
 private function cmp($a, $b) {
 
 	if ($a[1] == $b[1]) {
