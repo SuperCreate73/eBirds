@@ -259,8 +259,8 @@ printError "$?"
 installProgram "installation du serveur web" "lighttpd"
 installProgram "installation du gestionnaire de base de données" "sqlite3"
 installProgram "installation" "git"
-installProgram "installation de bibliothèque python" "python-pip"
-installProgram "installation de bibliothèque python" "python-numpy"
+installProgram "installation de bibliothèque python" "python3-pip"
+# installProgram "installation de bibliothèque python" "python-numpy"
 installProgram "installation de PHP" "php-cgi"
 installProgram "installation de PHP" "php-sqlite3"
 installProgram "installation de PHP" "php-json"
@@ -268,24 +268,12 @@ installProgram "installation de PHP" "php7.0"
 installProgram "installation de PHP" "php-zip"
 installProgram "installation du gestionnaire de flux video" "ffmpeg"
 installProgram "installation de dnsutils pour transmission IP" "dnsutils"
-installProgram "installation de dépendances de motion" "libmariadbclient18"
-installProgram "installation de dépendances de motion" "libpq5"
+installProgram "installation de motion" "motion"
 installProgram "installation de l'utilitaire de décompression" "xz-utils"
 
-
-# sudo modprobe bcm2835-v4l2 -> installe un module sur le raspberry pour la camera Pi
-# sudo apt-get install motion -> devrait fonctionner avec le module précédent
-
-
-# installation de motion
-#-----------------------
-printMessage "téléchargement du serveur video" "motion"
-wget --no-verbose -N "github.com/Motion-Project/motion/releases/download/release-4.0.1/pi_stretch_motion_4.0.1-1_armhf.deb" >> $varLogFile 2>&1
-printError "$?"
-
-printMessage "installation du serveur video" "motion"
-sudo dpkg -i "pi_stretch_motion_4.0.1-1_armhf.deb" >> $varLogFile 2>&1
-printError "$?"
+# Activation du module V4l2 pour que la camera PI soit reconnue par Motion
+#-------------------------------------
+echo 'bcm2835-v4l2' >> /etc/modules
 
 # vérification des inter-dépendances
 #-----------------------------------
@@ -299,10 +287,9 @@ printError "$?"
 #######################################################################
 
 # installation des bibliothèques de capteurs : HX711
-# TODO install avec pip3 (ou pip)
 #---------------------------------------------------
 printMessage "import de bibliothèque de capteur" "HX711"
-git clone --quiet https://github.com/tatobari/hx711py >> $varLogFile 2>&1
+pip3 install HX711
 printError "$?"
 
 
@@ -310,37 +297,27 @@ printError "$?"
 #---------------------------------------------------
 printMessage "import de bibliothèques de capteur" "DHT11"
 # TODO install avec pip3 (ou pip)
-python -m pip install Adafruit-DHT
+pip3 install adafruit-circuitpython-dht
+pip3 install adafruit-circuitpython-si7021
 #git clone --quiet https://github.com/adafruit/Adafruit_Python_DHT >> $varLogFile 2>&1
 printError "$?"
 
-# configuration de PYTHON
-#------------------------
-# Bibliothèque DHT11
-# printMessage "modification du répertoire actif" "DHT11"
-# cd Adafruit_Python_DHT
+# TODO remplacer par
+#
+# pip3 install adafruit-circuitpython-si7021
+
+# # Bibliothèque HX711
+# printMessage "modification du répertoire actif" "HX711"
+# cd hx711py
 # (( locError=$? ))
 # printError "$locError"
 #
-# printMessage "configuration des bibliothèques python" "DHT11"
+# printMessage "configuration des bibliothèques python" "HXT11"
 # if [ ! $locError -gt 0 ] ; then
 # 	sudo python setup.py install >> $varLogFile 2>&1
 # 	printError "$?"
 # 	cd ..
 # fi
-
-# Bibliothèque HX711
-printMessage "modification du répertoire actif" "HX711"
-cd hx711py
-(( locError=$? ))
-printError "$locError"
-
-printMessage "configuration des bibliothèques python" "HXT11"
-if [ ! $locError -gt 0 ] ; then
-	sudo python setup.py install >> $varLogFile 2>&1
-	printError "$?"
-	cd ..
-fi
 
 #######################################################################
 # installation et configuration des programmes
