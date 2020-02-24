@@ -2,22 +2,41 @@ sauvegarde des utilisateurs sous firefox
   semble ne pas supporter correctement fetch
 
 installscript
-  -done- ajouter la balise UTF-8 dans le fichier log
-  -done- installation de php-zip
-  -done- dB - nouvelle table avec les données utilisateur / nichoir
-  -done- ajouter une entrée dans la db avec le none
+	- Modifier les bibliothèques Python
+	- Modifier la db
 
 implémentation des fonctions de réglages dans la db
-  -done- traitement du 'none' dans les états Timelapse
-  -done- permettre le stockage time-lapse en photo et/ou vidéo
-  vérifier la taille minimale que peut donner la caméra
+  	- vérifier la taille minimale que peut donner la caméra
 
-données utilisateur
-  -done- nouveau modèle user
-  -done- stockage des valeurs dans la db
-  -done- fonction de téléchargement des coordonnées gps
+Interface
+  ajouter la config du nichoir
+	  - Triple table -> Capteurs (ID, NAME) - CapteursParameters (ID, ID Capteurs, PIN, parameter) - Capteurslabel (IDcaptParam, ID, Langue, label)
+        préremplir la table avec les capteurs et les paramètres en cas d'update, et
+        copier la nouvelle bibliothèques - Ecraser le fichier python existant (indication de la version en commentaire),
+        autre fichier pour bibliothèques perso
+        Bibliothèque par capteur
+        Héritage d'une bibliothèque mère qui appelle tous les capteurs à mesurer
+         -> nom du capteur.parametre1(2, ...) issu de la DB.
 
+    - info sur l'utilisation
+    - comme utilisateur : plus pour ajouter un capteur, moins pour enlever
 
+    sauvegarde dans table sensors
+    - table à modifier pour ajouter l'ID
+  adapter le display des valeurs
+    - choix des capteurs
+    - homepage : adapter le display en fonction des capteurs présents
+
+Python
+  modifier la lecture des capteurs
+    - classe dynamique en fonction des capteurs
+    - adapter en python3
+    - intégrer si7021
+    - détection in/out
+
+Bash
+  - créer une fonction bash
+  - adapter le fichier instal
 
 
 AMELIORATIONS
