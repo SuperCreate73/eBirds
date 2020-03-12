@@ -3,10 +3,10 @@
 
 oldIFS=$IFS
 
-for varFile in $(ls /home/pi/.instal/.input/PYTHONlist*) ; do
-	while IFS=: read description program ; do
+for varFile in $(ls $varInstalPath/.input/PYTHONlist*) ; do
+	while IFS=: read program description ; do
 
-		if test -n "$program" ; then
+		if [ ${program::1} != '#' ]  &&  [ ${#program} -gt 0 ]  ; then
 			printMessage "$description" "$program"
 
 			# installation avec option pip3

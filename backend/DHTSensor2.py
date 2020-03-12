@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: utf-8  -*-
 
-import Adafruit_DHT.common as dhtSensor
+import import adafruit_dht as dhtSensor
+from board import <pin>
+
 from time import sleep
 
 class DHTSensor:
@@ -12,6 +14,7 @@ class DHTSensor:
 
 
     def __init__(self, sensorType, pin):
+        dht_device = adafruit_dht.DHT11(<pin>)
         if (sensorType == 11 or sensorType == 22):
             self._type = sensorType
         else:
