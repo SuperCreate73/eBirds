@@ -1,3 +1,0 @@
-import de bibliothèque de capteur:HX711
-import de bibliothèques de capteur hum./temp. DHT11 & 22:adafruit-circuitpython-dht
-import de bibliothèques de capteur hum./temp. si7021:adafruit-circuitpython-si7021

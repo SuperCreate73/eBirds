@@ -9,6 +9,8 @@ implémentation des fonctions de réglages dans la db
   	- vérifier la taille minimale que peut donner la caméra
 
 Interface
+  bug dans homepage - les T°et Hum sont inversées
+    int <> ext
   ajouter la config du nichoir
 	  - Triple table -> Capteurs (ID, NAME) - CapteursParameters (ID, ID Capteurs, PIN, parameter) - Capteurslabel (IDcaptParam, ID, Langue, label)
         préremplir la table avec les capteurs et les paramètres en cas d'update, et
