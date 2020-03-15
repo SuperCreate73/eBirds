@@ -50,6 +50,18 @@ if [ "$varGit" == "true" ] ; then
 		printError "$?"
 	fi
 
+	# move all in usr/local/etc/
+	cp -r --force eBirds/instal/ /usr/local/etc/instal
+
+	# create link to installNichoir-3.sh -> new bash command
+	rm /usr/local/bin/nichoir
+	ln -s -f /usr/local/etc/instal/installNichoir-3.sh /usr/local/bin/nichoir
+
+	# permission to execute to all .sh files
+	cd /usr/local/etc/instal/
+	chmod 755 `find -mindepth 0 -name "*.sh"`
+	cd -
+
 	printMessage "nettoyage des fichiers résiduels" "rm -r eBirds"
 	rm -r eBirds
 	printError "$?"
