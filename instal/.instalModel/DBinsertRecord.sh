@@ -7,16 +7,14 @@
 #######################################################################
 printMessage "insertion des paramètres - table 'config'" "nichoir.db"
 
-# TODO adapt path for table creation file
+oldIFS="$IFS"
 
-oldIFS=$IFS
-
-for varFile in $(ls $varInstalPath/.input/DBinsert*) ; do
+for varFile in $(ls "$varInstalPath"/.input/DBinsert*) ; do
 	while read varLine ; do
 	    IFS="+"
 			read tmpMain tmpRef <<< "$varLine"
 
-			if [ ${tmpMain::1} != '#' ] ; then
+			if [ "${tmpMain::1}" != '#' ] ; then
 				if [ -n "$tmpRef" ] ; then
 					IFS=":" read tmpTable tmpFields tmpValues <<< "$tmpRef"
 					ref1=$(sqlite3 /var/www/nichoir.db "SELECT $tmpFields FROM $tmpTable WHERE $tmpValues ;")
@@ -32,7 +30,7 @@ for varFile in $(ls $varInstalPath/.input/DBinsert*) ; do
 				fi
 		fi
 
-	done < $varFile
+	done < "$varFile"
 done
 
-IFS=$oldIFS
+IFS="$oldIFS"

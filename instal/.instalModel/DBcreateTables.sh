@@ -7,16 +7,15 @@
 printMessage "creation de la base de données" "nichoir.db"
 # TODO adapt path for table creation file
 
-oldIFS=$IFS
+oldIFS="$IFS"
 
-for varFile in $(ls $varInstalPath/.input/DBtables*) ; do
+for varFile in $(ls "$varInstalPath"/.input/DBtables*) ; do
 	while IFS=: read table fields ; do
-		if [ ${table::1} != '#' ]  &&  [ ${#table} -gt 0 ] && [ ${#table} -gt 0 ] ; then
-#		if test -n "$table" ; then
+		if [ "${table::1}" != '#' ] && [ ${#table} -gt 0 ] ; then
 			sqlite3 /var/www/nichoir.db "CREATE TABLE IF NOT EXISTS $table $fields ;"
 			printError "$?"
 		fi
-	done < $varFile
+	done < "$varFile"
 done
 
-IFS=$oldIFS
+IFS="$oldIFS"

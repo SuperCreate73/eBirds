@@ -33,6 +33,12 @@ varGit=true
 varServer=false
 varUpdate=false
 
+if [ -e /var/www/nichoir.db ] ; then
+	varFirstInstal=false
+else
+	varFirstInstal=true
+fi
+
 # messages à afficher ou imprimer dans le log
 varMessage=""
 
@@ -41,8 +47,8 @@ varMessage=""
 
 # noms par défauts
 varInstalPath='/usr/local/etc/instal'
-varLogFile="logInstalNichoir.log"
-varSourceWeb="web.tar.xz"
+varLogFile="$varInstalPath/logInstal.log"
+#varSourceWeb="web.tar.xz"
 
 # TODO prévoir un mode update :
 #			IF [fichier .info existe ] ; THEN
@@ -186,15 +192,16 @@ printMessage "Mise à jour du système linux" "update"
 apt-get --quiet --assume-yes update >> $varLogFile 2>&1
 printError "$?"
 
+#######################################################################
+#######################################################################
+
+# installation programmes - contrôles internes si déjà existant
 source "$varInstalPath/.instalModel/PRGinstal.sh"
 
-#######################################################################
-#######################################################################
-
-# installation des capteurs / bibliothèques python
+# installation des capteurs / bibliothèques python - contrôle dans pip3 si déjà existant
 source "$varInstalPath/.instalModel/PYTHONinstal.sh"
 
-# téléchargement et copie des fichiers eBirds
+# téléchargement et copie des fichiers eBirds -
 source "$varInstalPath/.instalModel/FILESinstal.sh"
 
 # création de la base de donnée vide
@@ -203,17 +210,15 @@ source "$varInstalPath/.instalModel/DBcreateTables.sh"
 # insertion du user par défaut dans la DB
 source "$varInstalPath/.instalModel/DBinsertAdmin.sh"
 
-# remplissage des tables
-source "$varInstalPath/.instalModel/DBinsertRecord.sh"
+if [ "$varFirstInstal" = "true" ] ; then
+	# remplissage des tables
+	source "$varInstalPath/.instalModel/DBinsertRecord.sh"
 
-# config initiale du nichoir
-# TODO test pour voir si c'est nécessaire
-source "$varInstalPath/.instalModel/CONFIGinit.sh"
+	source "$varInstalPath/.instalModel/CONFIGinit.sh"
 
-# TODO test pour voir si c'est nécessaire
-source "$varInstalPath/.instalModel/CONFIGmotion.sh"
-
-printError "$?"
+	# TODO test pour voir si c'est nécessaire
+	source "$varInstalPath/.instalModel/CONFIGmotion.sh"
+fi
 
 #######################################################################
 # upgrade du système linux
