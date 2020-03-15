@@ -1,14 +1,11 @@
 sauvegarde des utilisateurs sous firefox
   semble ne pas supporter correctement fetch
 
-installscript
-	- Modifier les bibliothèques Python
-	- Modifier la db
-
 implémentation des fonctions de réglages dans la db
   	- vérifier la taille minimale que peut donner la caméra
 
 Interface
+---------
   bug dans homepage - les T°et Hum sont inversées
     int <> ext
   ajouter la config du nichoir
@@ -30,15 +27,15 @@ Interface
     - homepage : adapter le display en fonction des capteurs présents
 
 Python
+------
   modifier la lecture des capteurs
     - classe dynamique en fonction des capteurs
-    - adapter en python3
-    - intégrer si7021
     - détection in/out
 
 Bash
-  - créer une fonction bash
+----
   - adapter le fichier instal
+  - Modifier la db
 
 
 AMELIORATIONS
