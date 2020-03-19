@@ -66,15 +66,3 @@ if [ "$varGit" == "true" ] ; then
 	rm -r eBirds
 	printError "$?"
 fi
-# else
-# 	printMessage "décompression des fichiers sources" "nichoir"
-# 	tar -xJf $varSourceWeb >> $varLogFile 2>&1
-# 	printError "$?"
-#
-# 	printMessage "déplacement des fichiers web" "/var/www/html"
-# 	mv --force web/html/ /var/www/ >> $varLogFile 2>&1
-# 	printError "$?"
-#
-# 	printMessage "nettoyage des fichiers résiduels" "rm -r eBirds"
-# 	rm -r web
-# 	printError "$?"
