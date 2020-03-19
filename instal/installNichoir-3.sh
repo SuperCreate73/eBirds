@@ -165,24 +165,6 @@ if [ ! -e "$varLogFile" ] ; then
 	printError "$?"
 fi
 
-# vérification de la présence des fichiers sources en local ou sur le serveur
-#----------------------------------------------------------------------------
-# if [ ! "$varGit" == "true" ] ; then
-	# if [ ! "$varLocal" == "true" ] ; then
-	# 	printMessage "téléchargement des fichiers sources depuis le serveur" "$varSourceWeb"
-	# 	wget --no-verbose --content-disposition -N "https://www.ebirds.be/data/getNichoir" >> $varLogFile 2>&1
-	# 	printError "$?"
-	# fi
-
-# TODO à modifier
-# 	if [ ! -e "$varSourceWeb" ] ; then
-# 		varMessage="Fichier source manquant ou erreur lors du téléchargement. L'installation du nichoir est interrompue"
-# 		printError "$?"
-# 		exit 2
-# 	fi
-# fi
-
-
 #######################################################################
 # installation et configuration du système
 #######################################################################
@@ -240,9 +222,14 @@ if [ $varErrorCount -gt 0 ] ; then
 	echo -e "\n\nNombre d'erreurs rencontrées : $varErrorCount - Consultez le fichier $logFile pour plus d'informations"
 	echo -e "\n\nNombre d'erreurs rencontrées : $varErrorCount" >> $varLogFile
 	exit 1
-else
+elif [ "$varFirstInstal" = "true" ] ; then
 	echo -e "\n\nL'installation du nichoir est maintenant terminée - aucune erreur rencontrée"
 	echo -e "\n\nLe redémarrage du nichoir est vivement conseillé !"
 	echo -e "\n\nL'installation du nichoir est maintenant terminée - aucune erreur rencontrée" >> $varLogFile
+	exit 0
+else
+	echo -e "\n\nLa mise à jour du nichoir est terminée - aucune erreur rencontrée"
+	echo -e "\n\n"
+	echo -e "\n\nLa mise à jour du nichoir est terminée - aucune erreur rencontrée" >> $varLogFile
 	exit 0
 fi
