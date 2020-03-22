@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 # -*- coding: utf-8  -*-
 
 import DBManager as dbMan
@@ -7,8 +7,8 @@ import DHT22Sensor
 
 class Sensors:
     """ Classe pour gérer les capteurs
-
     """
+
     pass
 
     # Connection à la table des capteurs

@@ -11,12 +11,12 @@ if [ $# -gt 0 ] ; then
 	if [ $param == "--delay" ] ; then
 		sleep 120
 		echo "$curDate : delayed start-up at boot" >> /var/www/log/ebirdsSensor.log
-		python2 /var/www/backend/ebirdsSensor.py >> /var/www/log/ebirdsSensor.log 2>&1
+		python3 /var/www/backend/ebirdsSensor.py >> /var/www/log/ebirdsSensor.log 2>&1
 	else
 		echo "$curDate : unknow parameter provided" >> /var/www/log/ebirdsSensor.log
-		python2 /var/www/backend/ebirdsSensor.py $param & >> /var/www/log/ebirdsSensor.log 2>&1
+		python3 /var/www/backend/ebirdsSensor.py $param & >> /var/www/log/ebirdsSensor.log 2>&1
 	fi
 else
 	echo "$curDate : no parameter provided" >> /var/www/log/ebirdsSensor.log
-	python /var/www/backend/ebirdsSensor.py & >> /var/www/log/ebirdsSensor.log 2>&1
+	python3 /var/www/backend/ebirdsSensor.py & >> /var/www/log/ebirdsSensor.log 2>&1
 fi

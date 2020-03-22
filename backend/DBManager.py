@@ -1,5 +1,7 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 # -*- coding: utf-8  -*-
+
+# TODO check output of dbRead, seems to be lst of list, but description said disctionary ???
 
 import sqlite3
 
@@ -18,13 +20,18 @@ class APISqlite3:
         """ Insert one row in table.
             Take as arg a dictionary with pairs 'column'=value to insert in DB
         """
+
+        # connexion à la DB et ouverture du curseur
         lv_conn = sqlite3.connect(self._dbFile)
         cursor  = lv_conn.cursor()
 
+        # construction de la requête SQL à partir du dictionnaire en paramètre
         sql =   'INSERT INTO {} '.format(self._dbTable) + \
                 '(' + ', '.join(inputDict.keys()) + \
                 ') VALUES '+ \
                 repr(tuple(str(value) for value in inputDict.values()))
+
+        # écriture dans la db dans un bloc Try-Execpt pour gérer les erreurs
         try:
             cursor.execute(sql)
 
@@ -42,15 +49,19 @@ class APISqlite3:
         """ Select * from table and return a dictionary with first column as key.
             optional arg= string -> where clause
         """
+
+        # connexion à la DB et ouverture du curseur
         lv_conn = sqlite3.connect(self._dbFile)
         cursor  = lv_conn.cursor()
         output = []
 
+        # construction de la requête SQL en fonction du paramètre 'whereClause'
         if (whereClause):
             sql = 'SELECT * FROM {} WHERE ({})'.format(self._dbTable, whereClause)
         else:
             sql = 'SELECT * FROM {}'.format(self._dbTable)
 
+        # écriture dans la db dans un bloc Try-Execpt pour gérer les erreurs
         try:
             cursor.execute(sql)
 
@@ -64,19 +75,27 @@ class APISqlite3:
         return output
 
     def dbDelete(self, whereClause = None):
+        """ Not yet coded
+        """
         # TODO if needed
         return whereClause
 
     def dbExist(self, whereClause = None):
+        """ Not yet coded
+        """
         # TODO if needed
         return whereClause
 
     def dbCount(self, whereClause = None):
+        """ Not yet coded
+        """
         # TODO if needed
         return whereClause
 
 
 class DBManager:
+    """ Create links to underlying class for db interactions
+    """
 
     def __init__(self, dbFile, dbTable, apiLink):
         self._APIlink = "API{}".format(apiLink.capitalize())
@@ -84,6 +103,8 @@ class DBManager:
         self._dbTable = dbTable
 
     def setAPI(self):
+        """ Return object for DB interactions
+        """
         return globals()[self._APIlink](self._dbFile, self._dbTable)
 
 
