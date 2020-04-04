@@ -10,3 +10,5 @@ lvPrgConfig="1.0.0"
 lvPrgList="1.0.0"
 
 
+verMotion=""
+verMotionDefault="4.2"

@@ -33,6 +33,8 @@ varGit=true
 varServer=false
 varUpdate=false
 
+source "$varInstalPath/.config/versions.sh"
+
 if [ -e /var/www/nichoir.db ] ; then
 	varFirstInstal=false
 else
@@ -83,7 +85,6 @@ varLogFile="$varInstalPath/logInstal.log"
 #######################################################################
 # déclaration des fonctions
 #######################################################################
-
 source "$varInstalPath/.instalModel/Functions.sh"
 
 #######################################################################
@@ -192,14 +193,14 @@ source "$varInstalPath/.instalModel/DBcreateTables.sh"
 # insertion du user par défaut dans la DB
 source "$varInstalPath/.instalModel/DBinsertAdmin.sh"
 
+# config de motion
+source "$varInstalPath/.instalModel/CONFIGmotion.sh"
+
 if [ "$varFirstInstal" = "true" ] ; then
 	# remplissage des tables
 	source "$varInstalPath/.instalModel/DBinsertRecord.sh"
 
 	source "$varInstalPath/.instalModel/CONFIGinit.sh"
-
-	# TODO test pour voir si c'est nécessaire
-	source "$varInstalPath/.instalModel/CONFIGmotion.sh"
 fi
 
 #######################################################################
