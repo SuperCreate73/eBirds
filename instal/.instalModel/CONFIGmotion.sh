@@ -11,9 +11,9 @@ fi
 
 currentVersion=`dpkg --status motion | grep "Version" | cut -d ':' -f 2 | cut -d '.' -f "1 2" | sed "s/ //g"`
 
-if ! "$currentVersion" = "$verMotion" ; then
-	if ! -d "$varInstalPath/motion/$currentVersion" ; then
-		currentVersion = "$verMotionDefault"
+if [ ! "$currentVersion" = "$verMotion" ] ; then
+	if [ ! -d "$varInstalPath/motion/$currentVersion" ] ; then
+		currentVersion="$verMotionDefault"
 	fi
 
 	if [ ! "$varFirstInstal" = "true" ] ; then
@@ -21,10 +21,10 @@ if ! "$currentVersion" = "$verMotion" ; then
 	fi
 
 	# copie des fichiers et gestion des permissions
-	mv "$varInstalPath/motion/$currentVersion/DBinsert_Motion*" "$varInstalPath/.input/"
+	mv `ls $varInstalPath/motion/$currentVersion/DBinsert_Motion*` "$varInstalPath/.input/"
 	printError "$?"
 
-	mv "$varInstalPath/motion/$currentVersion/MOTIONparam*" "$varInstalPath/.input/"
+	mv `ls $varInstalPath/motion/$currentVersion/MOTIONparam*` "$varInstalPath/.input/"
 	printError "$?"
 
 	chgrp w3 "$varInstalPath/motion/$currentVersion/viewReglages.php"
@@ -57,9 +57,9 @@ if ! "$currentVersion" = "$verMotion" ; then
 	# modification de motion.conf
 	source "$varInstalPath/.instalModel/CONFIGmotionConf.sh"
 
-	sed "$varInstalPath/.config/version.sh" -i -e "s:^\(#\|;\)\? \?verMotion=.*$:verMotion=$currentVersion:g"
+	sed "$varInstalPath/.config/versions.sh" -i -e "s:^\(#\|;\)\? \?verMotion=.*$:verMotion=$currentVersion:g"
 	printError "$?"
-	
+
 fi
 #
 # # création du fichier config local de motion
