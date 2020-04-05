@@ -17,7 +17,7 @@ if [ ! "$currentVersion" = "$verMotion" ] ; then
 	fi
 
 	if [ ! "$varFirstInstal" = "true" ] ; then
-		rm -r "$varInstalPath/.input/DBinsert_*"
+		rm -r `ls $varInstalPath/.input/DBinsert_*`
 	fi
 
 	# copie des fichiers et gestion des permissions
