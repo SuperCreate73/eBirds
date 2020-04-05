@@ -20,11 +20,11 @@ if [ "$varGit" == "true" ] ; then
 	# vérifie que les répertoires photo et film sont bien absent des fichiers
 	# avant de copier la nouvelle copie des fichiers sources
 	if [ -d "eBirds/html_working/public/cameraShots" ] ; then
-		rm -r -d "eBirds/html_working/public/cameraShots" 2>&1
+		rm -r -d "eBirds/html_working/public/cameraShots" > /dev/null 2>&1
 	fi
 
 	if [ -d "eBirds/html_working/public/cameraFilms" ] ; then
-		rm -r -d "eBirds/html_working/public/cameraFilms" 2>&1
+		rm -r -d "eBirds/html_working/public/cameraFilms" > /dev/null 2>&1
 	fi
 
 	printMessage "déplacement des fichiers web" "/var/www/html"
@@ -51,7 +51,7 @@ if [ "$varGit" == "true" ] ; then
 	fi
 
 	# move all in usr/local/etc/
-	cp -r --force eBirds/instal/ /usr/local/etc/instal
+	cp -r --force eBirds/instal/ /usr/local/etc
 
 	# create link to installNichoir-3.sh -> new bash command
 	rm /usr/local/bin/nichoir
