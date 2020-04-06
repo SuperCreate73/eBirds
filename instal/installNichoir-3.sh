@@ -33,8 +33,6 @@ varGit=true
 varServer=false
 varUpdate=false
 
-source "$varInstalPath/.config/versions.sh"
-
 if [ -e /var/www/nichoir.db ] ; then
 	varFirstInstal=false
 else
@@ -51,6 +49,8 @@ varMessage=""
 varInstalPath='/usr/local/etc/instal'
 varLogFile="$varInstalPath/logInstal.log"
 #varSourceWeb="web.tar.xz"
+
+source "$varInstalPath/.config/versions.sh"
 
 # TODO prévoir un mode update :
 #			IF [fichier .info existe ] ; THEN
