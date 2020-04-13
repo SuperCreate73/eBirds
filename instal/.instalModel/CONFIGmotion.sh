@@ -21,27 +21,24 @@ if [ ! "$currentVersion" = "$verMotion" ] ; then
 	fi
 
 	# copie des fichiers et gestion des permissions
-	mv `ls $varInstalPath/motion/$currentVersion/DBinsert_Motion*` "$varInstalPath/.input/"
-	printError "$?"
+	mv `ls $varInstalPath/motion/$currentVersion/DBinsert_Motion*` "$varInstalPath/.input/" || printError "$?"
 
-	mv `ls $varInstalPath/motion/$currentVersion/MOTIONparam*` "$varInstalPath/.input/"
-	printError "$?"
+	mv `ls $varInstalPath/motion/$currentVersion/MOTIONparam*` "$varInstalPath/.input/" || printError "$?"
 
-	chgrp w3 "$varInstalPath/motion/$currentVersion/viewReglages.php"
-	printError "$?"
+	chgrp w3 "$varInstalPath/motion/$currentVersion/viewReglages.php" || printError "$?"
 
-	chmod 774 "$varInstalPath/motion/$currentVersion/viewReglages.php"
-	printError "$?"
+	chmod 774 "$varInstalPath/motion/$currentVersion/viewReglages.php" || printError "$?"
 
-	mv "$varInstalPath/motion/$currentVersion/viewReglages.php" "/var/www/html/view/"
-	printError "$?"
+	mv "$varInstalPath/motion/$currentVersion/viewReglages.php" "/var/www/html/view/" || printError "$?"
 
+ 	# clear motion config tables
 	if [ ! "$varFirstInstal" = "true" ] ; then
 		sqlite3 /var/www/nichoir.db "DELETE from config" > /dev/null 2>&1
 		sqlite3 /var/www/nichoir.db "DELETE from configRange" > /dev/null 2>&1
 		sqlite3 /var/www/nichoir.db "DELETE from configAlias" > /dev/null 2>&1
 
 		source "$varInstalPath/.instalModel/DBinsertRecord.sh"
+
 	else
 		# configuration du démon
 		sed "/etc/default/motion" -i -e "s/^start_motion_daemon=no/start_motion_daemon=yes/g"
@@ -57,8 +54,7 @@ if [ ! "$currentVersion" = "$verMotion" ] ; then
 	# modification de motion.conf
 	source "$varInstalPath/.instalModel/CONFIGmotionConf.sh"
 
-	sed "$varInstalPath/.config/versions.sh" -i -e "s:^\(#\|;\)\? \?verMotion=.*$:verMotion=$currentVersion:g"
-	printError "$?"
+	sed "$varInstalPath/.config/versions.sh" -i -e "s:^verMotion=.*$:verMotion=$currentVersion:g" || printError "$?"
 
 fi
 #
