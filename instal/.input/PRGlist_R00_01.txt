@@ -4,13 +4,12 @@
 
 lighttpd:installation du serveur web
 sqlite3:installation du gestionnaire de base de données
-git:installation d'utilitaire
 python3-pip:installation de bibliothèque python
-php-cgi:installation de PHP
-php-sqlite3:installation de PHP
-php-json:installation de PHP
-php7.0:installation de PHP
-php-zip:installation de PHP
+php:installation de PHP
+php-cgi:installation de PHP-cgi
+php-sqlite3:installation de PHP-sqlite3
+php-json:installation de PHP-json
+php-zip:installation de PHP-zip
 ffmpeg:installation du gestionnaire de flux video
 dnsutils:installation de dnsutils pour transmission IP
 motion:installation de motion

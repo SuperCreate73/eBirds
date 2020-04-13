@@ -3,12 +3,12 @@
 
 # Versions:
 #----------
-verInstal=1.0.1
-verPrgInstal=1.0.0
-verPythonLib=1.0.0
-verNichoirFiles=1.0.0
-verDB=1.0.0
-lvPrgList=1.0.0
+verInstal=""
+verPrgInstal=""
+verPythonLib=""
+lvDbCreate=""
+lvPrgConfig=""
+lvPrgList=""
 
 
 verMotion=""

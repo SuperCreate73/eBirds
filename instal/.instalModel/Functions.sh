@@ -22,6 +22,11 @@ function usage()
 	echo -e "\n  -r    reset - réinitialisation du fichier log"
 	echo -e "\n  -u    upgrade - upgrade du sytème Linux après installation du nichoir"
 	echo -e "\n  -v    verbose - affichage des opérations effectuées"
+	echo -e "\n  -c    check versions - contrôle les versions des programmes et des librairies externes"
+	echo -e "\n        programmes installés et librairies python"
+	echo -e "\n  -f    force install - force la réinstallation complète du nichoir, les données locales étant préservées"
+	echo -e "\n  -s    sanity check - identique aux options -c et -f"
+	echo -e "\n  -i    force update Intall Program - force la réinstallation du programme d'installation"
 	echo -e "\n\nExemple d'utilisation :"
 	echo -e "	$0 -uv    installation du nichoir en mode verbeux avec upgrade du système\n"
 }
