@@ -15,32 +15,31 @@
 # Pour plus d'informations, lancer nichoir avec l'option -h, --help ou ?
 #
 
-# déclaration des fonctions de base du script
+# initialisation
 #######################################################################
+# répertoires par défauts
+varInstalPath='/usr/local/etc/instal'
+varLogFile="$varInstalPath/logInstal.log"
+
+# déclaration des fonctions de base du script
 source "$varInstalPath/.instalModel/Functions.sh"
 
 # vérifie si le paramètre fourni est l'affichage de l'aide
-#######################################################################
 if [ $1 == "-h" ] || [ $1 == "--help" ] || [ $1 == "?" ] || [ $1 == "-?" ] ; then
 	usage
 	exit 0
 fi
 
 # vérifie si l'utilisateur est superUser
-#######################################################################
 if [[ $EUID -ne 0 ]] ; then
 	echo -e "Ce script doit être exécuté avec les droits de SuperUser." 1>&2
 	exit 1
 fi
 
 # lecture du fichier local des versions installées
-#######################################################################
 source "$varInstalPath/.config/versions.sh"
 
-#######################################################################
 # initialisation des variables
-#######################################################################
-# booléen options
 varUpgrade=false
 varVerbose=false
 varReset=false
@@ -53,6 +52,7 @@ varRecall=false
 varCheckBib=false
 varForceInstal=false
 
+# test si première installation
 if [ -e /var/www/nichoir.db ] ; then
 	varFirstInstal=false
 else
@@ -110,14 +110,14 @@ source "$varInstalPath/.instalModel/Functions.sh"
 # analyse des paramètres
 #-----------------------
 # test de la présence de paramètres (nombre de paramètres supérieur à 0)
-if [ $# -gt 0 ] ; then
+if [ "$#" -gt 0 ] ; then
 
-	varAllParams=$@
+	varAllParams="$@"
 	# boucle parcourant les paramètres fournis
-	while [ 1 -le $# ] ; do
+	while [ 1 -le "$#" ] ; do
 
-		if [ ${1:0:2} = "--"] ; then
-			case ${1:2} in
+		if [ "${1:0:2}" = "--" ] ; then
+			case "${1:2}" in
 				"first")
 					varFirstInstal=true
 					;;
@@ -222,13 +222,12 @@ if [ ! "$varRecall" = true ] ; then
 
 	# téléchargement et copie des fichiers eBirds -
 	printMessage "téléchargement des fichiers sources depuis GitHub" "https://github.com/SuperCreate73/eBirds.git"
-	git clone --quiet https://github.com/SuperCreate73/eBirds.git >> $varLogFile 2>&1
-	printError "$?"
+	git clone --quiet "https://github.com/SuperCreate73/eBirds.git" >> $varLogFile 2>&1 || printError "$?"
 
 	# check de la version de l'installateur
 	lvTempVersion=`grep "verInstal" "$varInstalPath/.config/versions.sh" | cut -d '=' -f 2`
 
-	if [ ! $lvTempVersion = "$verInstal" ] || [ $varLoadInstal = true ] ; then
+	if [ ! "$lvTempVersion" = "$verInstal" ] || [ "$varLoadInstal" = true ] ; then
 
 		[ -d /usr/local/etc/instal ] || mkdir /usr/local/etc/instal
 
@@ -245,7 +244,7 @@ if [ ! "$varRecall" = true ] ; then
 		printMessage "copie des fichiers motion" "motion/"
 		cp -r --force eBirds/instal/motion /usr/local/etc/instal/ || printError "$?"
 
-		if [ varFirstInstal = true ] ; then
+		if [ "$varFirstInstal" = true ] ; then
 			printMessage "copie des fichiers de config" ".config/"
 			[ -d /usr/local/etc/instal/.config ] || mkdir /usr/local/etc/instal/.config
 			cp --force eBirds/instal/.config/versions_init.sh /usr/local/etc/instal/.config/versions.sh || printError "$?"
@@ -262,11 +261,10 @@ if [ ! "$varRecall" = true ] ; then
 		cd -
 
 		# update config file with instal version
-		printMessage "mise à jour des fichiers de config" "versions.sh"
-		sed "/usr/local/etc/instal/.config/version.sh" -i -e "s/^verInstal=*$/verInstal=$lvTempVersion/g" || printError "$?"
+		updateParameter "$varInstalPath/.config/version.sh" "verInstal" "$lvTempVersion"
 
 		# recall nichoir with initial parameters for applying new install version
-		sudo nichoir "--recall" $varAllParams
+		sudo nichoir "--recall" "$varAllParams"
 
 		exit 0
 
@@ -280,39 +278,36 @@ fi
 # installation programmes - contrôles internes si déjà existant
 lvTempVersion=`grep "verPrgInstal" "$varInstalPath/.config/versions.sh" | cut -d '=' -f 2`
 
-if [ ! $lvTempVersion = "$verPrgInstal" ] || [ $varCheckBib = true ] ; then
+if [ ! "$lvTempVersion" = "$verPrgInstal" ] || [ "$varCheckBib" = true ] ; then
 	source "$varInstalPath/.instalModel/PRGinstal.sh"
-	printMessage "mise à jour des fichiers de config - verPrgInstal" "versions.sh"
-	sed "/usr/local/etc/instal/.config/version.sh" -i -e "s/^verPrgInstal=*$/verPrgInstal=$lvTempVersion/g" || printError "$?"
+	updateParameter "$varInstalPath/.config/version.sh" "verPrgInstal" "$lvTempVersion"
 fi
 
 # installation des capteurs / bibliothèques python - contrôle dans pip3 si déjà existant
 lvTempVersion=`grep "verPythonLib" "$varInstalPath/.config/versions.sh" | cut -d '=' -f 2`
 
-if [ ! $lvTempVersion = "$verPythonLib" ]  || [ $varCheckBib = true ] ; then
+if [ ! "$lvTempVersion" = "$verPythonLib" ]  || [ "$varCheckBib" = true ] ; then
 	source "$varInstalPath/.instalModel/PYTHONinstal.sh"
-	printMessage "mise à jour des fichiers de config - verPythonLib" "versions.sh"
-	sed "/usr/local/etc/instal/.config/version.sh" -i -e "s/^verPythonLib=*$/verPythonLib=$lvTempVersion/g" || printError "$?"
+	updateParameter "$varInstalPath/.config/version.sh" "verPythonLib" "$lvTempVersion"
 fi
 
 # téléchargement et copie des fichiers eBirds -
 lvTempVersion=`grep "verNichoirFiles" "$varInstalPath/.config/versions.sh" | cut -d '=' -f 2`
 
-if [ ! $lvTempVersion = "$verNichoirFiles" ]  || [ $varForceInstal = true ] ; then
+if [ ! "$lvTempVersion" = "$verNichoirFiles" ]  || [ "$varForceInstal" = true ] ; then
 	source "$varInstalPath/.instalModel/FILESinstal.sh"
-	printMessage "mise à jour des fichiers de config - verNichoirFiles" "versions.sh"
-	sed "/usr/local/etc/instal/.config/version.sh" -i -e "s/^verNichoirFiles=*$/verNichoirFiles=$lvTempVersion/g" || printError "$?"
+	updateParameter "$varInstalPath/.config/version.sh" "verNichoirFiles" "$lvTempVersion"
 fi
 
 lvTempVersion=`grep "verDB" "$varInstalPath/.config/versions.sh" | cut -d '=' -f 2`
-if [ ! $lvTempVersion = "$verDB" ]  || [ $varForceInstal = true ] ; then
+if [ ! "$lvTempVersion" = "$verDB" ]  || [ "$varForceInstal" = true ] ; then
 	# création de la base de donnée
 	source "$varInstalPath/.instalModel/DBcreateTables.sh"
 
 	# insertion du user par défaut dans la DB
 	source "$varInstalPath/.instalModel/DBinsertAdmin.sh"
-	printMessage "mise à jour des fichiers de config - verDB" "versions.sh"
-	sed "/usr/local/etc/instal/.config/version.sh" -i -e "s/^verDB=*$/verDB=$lvTempVersion/g" || printError "$?"
+
+	updateParameter "$varInstalPath/.config/version.sh" "verDB" "$lvTempVersion"
 fi
 
 # config de motion
@@ -325,27 +320,29 @@ if [ "$varFirstInstal" = "true" ] ; then
 	source "$varInstalPath/.instalModel/CONFIGinit.sh"
 fi
 
+# nettoyage des fichiers résiduels
+printMessage "nettoyage des fichiers résiduels" "rm -r eBirds"
+rm -r eBirds || printError "$?"
+
 #######################################################################
 # upgrade du système linux
 #######################################################################
 if [ "$varUpgrade" == true ] ; then
 	printMessage "Mise à jour du système linux" "upgrade"
-	apt-get --quiet --assume-yes upgrade  >> $varLogFile 2>&1
-	printError "$?"
+	apt-get --quiet --assume-yes upgrade  >> $varLogFile 2>&1 || printError "$?"
 
 	printMessage "Mise à jour du système linux" "dist-upgrade"
-	apt-get --quiet --assume-yes dist-upgrade >> $varLogFile 2>&1
-	printError "$?"
+	apt-get --quiet --assume-yes dist-upgrade >> $varLogFile 2>&1 || printError "$?"
 fi
 
 #######################################################################
 # sortie du script
 #######################################################################
-if [ $varErrorCount -gt 0 ] ; then
+if [ "$varErrorCount" -gt 0 ] ; then
 	echo -e "\n\nNombre d'erreurs : $varErrorCount - Consultez le fichier $logFile pour plus d'informations"
 	echo -e "\n\nNombre d'erreurs : $varErrorCount" >> $varLogFile
 	exit 1
-elif [ ! "$varFirstInstal" = "true" ] ; then
+elif [ "$varFirstInstal" = "true" ] ; then
 	echo -e "\n\nL'installation du nichoir est maintenant terminée (aucune erreur)"
 	echo -e "\n\nLe redémarrage du nichoir est vivement conseillé !"
 	echo -e "\n\nL'installation du nichoir est maintenant terminée - aucune erreur" >> $varLogFile

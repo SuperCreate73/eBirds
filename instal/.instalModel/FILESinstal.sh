@@ -43,6 +43,3 @@ if [ ! -d "/var/www/log" ] ; then
 	printMessage "déplacement du répertoire log" "/var/www/log"
 	sudo mv --force eBirds/log /var/www/ >> "$varLogFile" 2>&1 || printError "$?"
 fi
-
-printMessage "nettoyage des fichiers résiduels" "rm -r eBirds"
-rm -r eBirds || printError "$?"

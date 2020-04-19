@@ -6,29 +6,32 @@ function usage()
 # affichage de l'aide
 #--------------------
 #
-	echo -e "\nUsage: $0 [OPTION] "
-	echo -e "\nInstalle et configure la version standart du nichoir dans le dossier courant (version 2.0)"
-	echo -e "Les fichiers nécessaires sont automatiquement téléchargés du serveur ebirds (sauf si l'option 'local' est activée)"
-	echo -e "\nLe script doit être copié dans le répertoire /home/pi (ou votre nom de user si vous l'avez modifié)."
-	echo -e "S'assurer que le script est bien exécutable."
-	echo -e "Lancer le script en sudo : $ sudo ./instalNichoir.sh avec les options éventuelles."
-	echo -e "\n\nOptions:"
-	echo -e "\n  -e    error - affichage des erreurs dans la console (aussi affichées en mode 'verbose')"
-	echo -e "\n  -g    GitHub - charge le nichoir depuis le repository sur GitHub - comportement par défaut"
-	echo -e "\n  -h    help - affichage de l'aide"
-	echo -e "\n  -l    local - installe et configure le nichoir sur base des fichiers prsents dans le répertoire .input"
-	echo -e "\n  -m    mise à jour - télécharge et installe les dernières mises à jours"
-	echo -e "        Comportement par défaut si le nichoir est déjà installé localement (version actuelle disponible)"
-	echo -e "\n  -r    reset - réinitialisation du fichier log"
-	echo -e "\n  -u    upgrade - upgrade du sytème Linux après installation du nichoir"
-	echo -e "\n  -v    verbose - affichage des opérations effectuées"
-	echo -e "\n  -c    check versions - contrôle les versions des programmes et des librairies externes"
-	echo -e "\n        programmes installés et librairies python"
-	echo -e "\n  -f    force install - force la réinstallation complète du nichoir, les données locales étant préservées"
-	echo -e "\n  -s    sanity check - identique aux options -c et -f"
-	echo -e "\n  -i    force update Intall Program - force la réinstallation du programme d'installation"
-	echo -e "\n\nExemple d'utilisation :"
-	echo -e "	$0 -uv    installation du nichoir en mode verbeux avec upgrade du système\n"
+	echo "\nUsage: sudo $0 [OPTION] "
+	echo "\nInstalle, met à jour et configure le nichoir"
+	echo ""
+	echo "Les fichiers nécessaires sont automatiquement téléchargés du serveur ebirds"
+	echo ""
+	echo "Le script initial doit être copié localement avec la permission d'exécution.  Il"
+	echo "est ensuite lancé avec la commande sudo.\n"
+	echo "Après l'installation initiale, le programme est accessible depuis une console avec"
+	echo "la commande 'sudo nichoir [OPTION]'"
+	echo "\n\nOptions:"
+	echo "-------"
+	echo "  -e    error - affiche uniquement les erreurs dans la console (aussi affichées"
+	echo "				en mode 'verbose')"
+	echo "  -h    help - affichage de l'aide"
+	echo "  -m    mise à jour - télécharge et installe les dernières mises à jours"
+	echo "        Comportement par défaut si le nichoir est déjà installé localement"
+	echo "  -r    reset - réinitialisation du fichier log"
+	echo "  -u    upgrade - upgrade du sytème Linux après installation du nichoir"
+	echo "  -v    verbose - affichage des opérations effectuées"
+	echo "  -c    check versions - contrôle les versions des programmes et des librairies externes"
+	echo "        Programmes installés et librairies python"
+	echo "  -f    force install - force la réinstallation complète du nichoir, les données locales étant préservées"
+	echo "  -s    sanity check - identique aux options -c et -f"
+	echo "  -i    force update Install script - force la réinstallation du programme d'installation"
+	echo "\nExemple d'utilisation :"
+	echo "	$0 -uv    installation du nichoir en mode verbeux avec upgrade du système\n"
 }
 
 function printMessage()
@@ -42,7 +45,7 @@ function printMessage()
 	varMessage="$1 -- $2 --"
 
 	# affichage dans la console si mode verbeux
-	if [ "$varVerbose" = true ] ; then  echo "$varMessage" ; fi
+	[ "$varVerbose" = true ] &&  echo "$varMessage"
 
 	# préparation de la chaine de séparation '-----------'
 	str=""
@@ -68,8 +71,23 @@ function printError()
 		# incrément du compteur d'erreurs
 		(( varErrorCount += 1 ))
 		# impression dans logfile
-		echo "    Error on execution - $varMessage - Error Code $1" >> $varLogFile
+		echo "    ERROR - $varMessage - Error Code $1" >> $varLogFile
 		# affichage en console si option activée
 		if [ "$varError" = true ] ; then  echo "    Error on execution - $varMessage - Error Code $1" ; fi
+	fi
+}
+
+function updateParameter() {
+	# update des paramètres dans le fichier de config
+	#--------------------------------------------------------
+	# $1 - fichier de config
+	# $2 - paramètre
+	# $3 - value
+	printMessage "mise à jour du fichier de config - $2" "$1"
+
+	if grep "$2" "$1" ; then
+		sed "$1" -i -e 's/^'"$2"'=.*$/'"$2"'='"$3"'/g' > /dev/null || printError "$?"
+	else
+		echo "$2=$3" >> $1
 	fi
 }

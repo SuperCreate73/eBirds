@@ -5,23 +5,18 @@ printMessage "Configuration de motion" "motion"
 
 # Activation du module V4l2 pour que la camera PI soit reconnue par Motion
 #-------------------------------------
-if ! grep -e "^bcm2835-v4l2$" /etc/modules ; then
+if ! grep -e "^bcm2835-v4l2$" /etc/modules > /dev/null ; then
 	echo 'bcm2835-v4l2' >> /etc/modules
 fi
 
-currentVersion=`dpkg --status motion | grep "Version" | cut -d ':' -f 2 | cut -d '.' -f "1 2" | sed "s/ //g"`
+installedVersion=`dpkg --status motion | grep "Version" | cut -d ':' -f 2 | cut -d '.' -f "1 2" | sed "s/ //g"`
+currentVersion="$installedVersion"
 
 if [ ! "$currentVersion" = "$verMotion" ] ; then
-	if [ ! -d "$varInstalPath/motion/$currentVersion" ] ; then
-		currentVersion="$verMotionDefault"
-	fi
-
-	if [ ! "$varFirstInstal" = "true" ] ; then
-		rm -r `ls $varInstalPath/.input/DBinsert_*`
-	fi
+	[ -d "$varInstalPath/motion/$currentVersion" ] ||	currentVersion="$verMotionDefault"
 
 	# copie des fichiers et gestion des permissions
-	mv `ls $varInstalPath/motion/$currentVersion/DBinsert_Motion*` "$varInstalPath/.input/" || printError "$?"
+	mv `ls $varInstalPath/motion/$currentVersion/DBinsertMotion*` "$varInstalPath/.input/" || printError "$?"
 
 	mv `ls $varInstalPath/motion/$currentVersion/MOTIONparam*` "$varInstalPath/.input/" || printError "$?"
 
@@ -33,6 +28,7 @@ if [ ! "$currentVersion" = "$verMotion" ] ; then
 
  	# clear motion config tables
 	if [ ! "$varFirstInstal" = "true" ] ; then
+		rm `ls $varInstalPath/.input/DBinsert_*` > /dev/null 2>&1
 		sqlite3 /var/www/nichoir.db "DELETE from config" > /dev/null 2>&1
 		sqlite3 /var/www/nichoir.db "DELETE from configRange" > /dev/null 2>&1
 		sqlite3 /var/www/nichoir.db "DELETE from configAlias" > /dev/null 2>&1
@@ -45,8 +41,7 @@ if [ ! "$currentVersion" = "$verMotion" ] ; then
 
 		# configuration du démon
 		printMessage "activation de motion" "motion"
-		systemctl enable motion
-		printError "$?"
+		systemctl enable motion || printError "$?"
 	fi
 
 	motionPath="/etc/motion/motion.conf"
@@ -54,8 +49,7 @@ if [ ! "$currentVersion" = "$verMotion" ] ; then
 	# modification de motion.conf
 	source "$varInstalPath/.instalModel/CONFIGmotionConf.sh"
 
-	sed "$varInstalPath/.config/versions.sh" -i -e "s:^verMotion=.*$:verMotion=$currentVersion:g" || printError "$?"
-
+	updateParameter "$varInstalPath/.config/version.sh" "verMotion" "$installedVersion"
 fi
 #
 # # création du fichier config local de motion
