@@ -225,7 +225,7 @@ if [ ! "$varRecall" = true ] ; then
 	git clone --quiet "https://github.com/SuperCreate73/eBirds.git" >> $varLogFile 2>&1 || printError "$?"
 
 	# check de la version de l'installateur
-	lvTempVersion=`grep "verInstal" "$varInstalPath/.config/versions.sh" | cut -d '=' -f 2`
+	lvTempVersion=`grep "verInstal" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 
 	if [ ! "$lvTempVersion" = "$verInstal" ] || [ "$varLoadInstal" = true ] ; then
 
@@ -276,7 +276,7 @@ fi
 #######################################################################
 
 # installation programmes - contrôles internes si déjà existant
-lvTempVersion=`grep "verPrgInstal" "$varInstalPath/.config/versions.sh" | cut -d '=' -f 2`
+lvTempVersion=`grep "verPrgInstal" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 
 if [ ! "$lvTempVersion" = "$verPrgInstal" ] || [ "$varCheckBib" = true ] ; then
 	source "$varInstalPath/.instalModel/PRGinstal.sh"
@@ -284,7 +284,7 @@ if [ ! "$lvTempVersion" = "$verPrgInstal" ] || [ "$varCheckBib" = true ] ; then
 fi
 
 # installation des capteurs / bibliothèques python - contrôle dans pip3 si déjà existant
-lvTempVersion=`grep "verPythonLib" "$varInstalPath/.config/versions.sh" | cut -d '=' -f 2`
+lvTempVersion=`grep "verPythonLib" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 
 if [ ! "$lvTempVersion" = "$verPythonLib" ]  || [ "$varCheckBib" = true ] ; then
 	source "$varInstalPath/.instalModel/PYTHONinstal.sh"
@@ -292,14 +292,14 @@ if [ ! "$lvTempVersion" = "$verPythonLib" ]  || [ "$varCheckBib" = true ] ; then
 fi
 
 # téléchargement et copie des fichiers eBirds -
-lvTempVersion=`grep "verNichoirFiles" "$varInstalPath/.config/versions.sh" | cut -d '=' -f 2`
+lvTempVersion=`grep "verNichoirFiles" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 
 if [ ! "$lvTempVersion" = "$verNichoirFiles" ]  || [ "$varForceInstal" = true ] ; then
 	source "$varInstalPath/.instalModel/FILESinstal.sh"
 	updateParameter "$varInstalPath/.config/versions.sh" "verNichoirFiles" "$lvTempVersion"
 fi
 
-lvTempVersion=`grep "verDB" "$varInstalPath/.config/versions.sh" | cut -d '=' -f 2`
+lvTempVersion=`grep "verDB" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 if [ ! "$lvTempVersion" = "$verDB" ]  || [ "$varForceInstal" = true ] ; then
 	# création de la base de donnée
 	source "$varInstalPath/.instalModel/DBcreateTables.sh"

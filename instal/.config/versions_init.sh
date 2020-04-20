@@ -6,9 +6,8 @@
 verInstal=""
 verPrgInstal=""
 verPythonLib=""
-lvDbCreate=""
-lvPrgConfig=""
-lvPrgList=""
+verNichoirFiles=""
+verDB=""
 
 
 verMotion=""
