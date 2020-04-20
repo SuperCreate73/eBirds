@@ -5,7 +5,7 @@
 #######################################################################
 # insertion des paramètres dans la base de données
 #######################################################################
-printMessage "insertion des paramètres - table 'config'" "nichoir.db"
+printMessage "insertion des paramètres - table" "nichoir.db"
 
 oldIFS="$IFS"
 
@@ -23,7 +23,7 @@ for varFile in $(ls "$varInstalPath"/.input/DBinsert*) ; do
 
 				IFS=":"
 				read table fields values <<< "$tmpMain"
-
+				printMessage "insertion des paramètres - table: $table - record: F$fields V$values" "nichoir.db"
 				if [ -n "$table" ] ; then
 					sqlite3 /var/www/nichoir.db "INSERT INTO $table $fields VALUES $values ;"
 					printError "$?"
