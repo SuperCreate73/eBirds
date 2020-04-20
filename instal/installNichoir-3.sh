@@ -310,15 +310,15 @@ if [ ! "$lvTempVersion" = "$verDB" ]  || [ "$varForceInstal" = true ] ; then
 	updateParameter "$varInstalPath/.config/versions.sh" "verDB" "$lvTempVersion"
 fi
 
-# config de motion
-source "$varInstalPath/.instalModel/CONFIGmotion.sh"
-
 if [ "$varFirstInstal" = "true" ] ; then
 	# remplissage des tables
 	source "$varInstalPath/.instalModel/DBinsertRecord.sh"
 
 	source "$varInstalPath/.instalModel/CONFIGinit.sh"
 fi
+
+# config de motion
+source "$varInstalPath/.instalModel/CONFIGmotion.sh"
 
 # nettoyage des fichiers résiduels
 printMessage "nettoyage des fichiers résiduels" "rm -r eBirds"
