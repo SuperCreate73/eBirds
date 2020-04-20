@@ -261,7 +261,7 @@ if [ ! "$varRecall" = true ] ; then
 		cd -
 
 		# update config file with instal version
-		updateParameter "$varInstalPath/.config/version.sh" "verInstal" "$lvTempVersion"
+		updateParameter "$varInstalPath/.config/versions.sh" "verInstal" "$lvTempVersion"
 
 		# recall nichoir with initial parameters for applying new install version
 		sudo nichoir "--recall" "$varAllParams"
@@ -280,7 +280,7 @@ lvTempVersion=`grep "verPrgInstal" "$varInstalPath/.config/versions.sh" | cut -d
 
 if [ ! "$lvTempVersion" = "$verPrgInstal" ] || [ "$varCheckBib" = true ] ; then
 	source "$varInstalPath/.instalModel/PRGinstal.sh"
-	updateParameter "$varInstalPath/.config/version.sh" "verPrgInstal" "$lvTempVersion"
+	updateParameter "$varInstalPath/.config/versions.sh" "verPrgInstal" "$lvTempVersion"
 fi
 
 # installation des capteurs / bibliothèques python - contrôle dans pip3 si déjà existant
@@ -288,7 +288,7 @@ lvTempVersion=`grep "verPythonLib" "$varInstalPath/.config/versions.sh" | cut -d
 
 if [ ! "$lvTempVersion" = "$verPythonLib" ]  || [ "$varCheckBib" = true ] ; then
 	source "$varInstalPath/.instalModel/PYTHONinstal.sh"
-	updateParameter "$varInstalPath/.config/version.sh" "verPythonLib" "$lvTempVersion"
+	updateParameter "$varInstalPath/.config/versions.sh" "verPythonLib" "$lvTempVersion"
 fi
 
 # téléchargement et copie des fichiers eBirds -
@@ -296,7 +296,7 @@ lvTempVersion=`grep "verNichoirFiles" "$varInstalPath/.config/versions.sh" | cut
 
 if [ ! "$lvTempVersion" = "$verNichoirFiles" ]  || [ "$varForceInstal" = true ] ; then
 	source "$varInstalPath/.instalModel/FILESinstal.sh"
-	updateParameter "$varInstalPath/.config/version.sh" "verNichoirFiles" "$lvTempVersion"
+	updateParameter "$varInstalPath/.config/versions.sh" "verNichoirFiles" "$lvTempVersion"
 fi
 
 lvTempVersion=`grep "verDB" "$varInstalPath/.config/versions.sh" | cut -d '=' -f 2`
@@ -307,7 +307,7 @@ if [ ! "$lvTempVersion" = "$verDB" ]  || [ "$varForceInstal" = true ] ; then
 	# insertion du user par défaut dans la DB
 	source "$varInstalPath/.instalModel/DBinsertAdmin.sh"
 
-	updateParameter "$varInstalPath/.config/version.sh" "verDB" "$lvTempVersion"
+	updateParameter "$varInstalPath/.config/versions.sh" "verDB" "$lvTempVersion"
 fi
 
 # config de motion

@@ -49,7 +49,7 @@ if [ ! "$currentVersion" = "$verMotion" ] ; then
 	# modification de motion.conf
 	source "$varInstalPath/.instalModel/CONFIGmotionConf.sh"
 
-	updateParameter "$varInstalPath/.config/version.sh" "verMotion" "$installedVersion"
+	updateParameter "$varInstalPath/.config/versions.sh" "verMotion" "$installedVersion"
 fi
 #
 # # création du fichier config local de motion
@@ -58,7 +58,7 @@ fi
 #
 # # chmod 666 /var/log/motion/motion.log
 # # printError "$?"
-# # TODO vérifier quelle est la version installée dans le fichier version.sh
+# # TODO vérifier quelle est la version installée dans le fichier versions.sh
 # # TODO en fonction de la version installée, de la version de motion, adapter
 # # 		les fichiers d'instal
 # motionPath="/etc/motion/motion.conf"
