@@ -5,7 +5,7 @@
 lighttpd:installation du serveur web
 sqlite3:installation du gestionnaire de base de données
 python3-pip:installation de bibliothèque python
-php:installation de PHP
+php7.0:installation de PHP
 php-cgi:installation de PHP-cgi
 php-sqlite3:installation de PHP-sqlite3
 php-json:installation de PHP-json
