@@ -16,7 +16,7 @@ varMessage=""
 (( varErrorCount = 0 ))
 
 # noms par défauts
-varLogFile="logInstalNichoir.log"
+LOG_FILE="logInstalNichoir.log"
 varSourceWeb="web.tar.xz"
 varInstalProgram=".config/instalProgram.txt"
 #varSourcePrg="prg.tar.gz"

@@ -1,5 +1,5 @@
 # Liste des programmes à installer avec possibilité de mettre un commentaire
-# pour le LogFile ou le mode verbeux.  Le nom du programme à installer est
+# pour le LogFile et/ou le mode verbeux.  Le nom du programme à installer est
 # séparé du champs commentaire par un ':'
 
 lighttpd:installation du serveur web

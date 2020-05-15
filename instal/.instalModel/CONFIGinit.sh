@@ -8,7 +8,7 @@
 # Activation du service PHP fastcgi
 #-----------------------------
 printMessage "activation du service fast-cgi" "PHP"
-sudo lighty-enable-mod fastcgi-php >> "$varLogFile" 2>&1
+sudo lighty-enable-mod fastcgi-php >> "$LOG_FILE" 2>&1
 (( locError=$? ))
 printError "$locError"
 if [ $locError = 0 ] ; then
@@ -18,6 +18,7 @@ fi
 
 # Paramétrage de PHP - cgi.fix_pathinfo
 #-------------------------------------
+# TODO check when php 7.3 is loaded ?
 printMessage "paramétrage" "php-cgi"
 sudo sed /etc/php/7.*/cli/php.ini -i -e "s/^;cgi\.fix_pathinfo=1/cgi\.fix_pathinfo=1/g"
 
@@ -46,6 +47,7 @@ else
 	# renomme le fichier de configuration sous lighttpd.conf.bak
 	sudo mv /etc/lighttpd/lighttpd.conf /etc/lighttpd/lighttpd.conf.bak
 	# crée le nouveau fichier de configuration en ajoutant la ligne requise
+# TODO replace by SED command
 	sudo awk '/server.modules/ { print; print "	\"mod_fastcgi\","; next }1' /etc/lighttpd/lighttpd.conf.bak > /etc/lighttpd/lighttpd.conf
 fi
 

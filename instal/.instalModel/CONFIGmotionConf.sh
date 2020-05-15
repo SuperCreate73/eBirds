@@ -9,19 +9,19 @@ printMessage "paramétrage" "motion"
 
 oldIFS="$IFS"
 
-for varFile in $(ls "$varInstalPath"/.input/MOTIONparam*) ; do
+for varFile in $(ls "$INSTALL_PATH/.input/MOTIONparam*") ; do
 	while IFS=: read flag parameter value ; do
 
     case "$flag" in
-      "N")
-        sed "$motionPath" -i -e "s/^\(#\|;\)\? \?$parameter.*$/$parameter $value/g"
-        ;;
-      "P")
+      "N"|"P")
         sed "$motionPath" -i -e "s:^\(#\|;\)\? \?$parameter.*$:$parameter $value:g"
         ;;
       "C")
         sed "$motionPath" -i -e "s:^\(#\|;\)\? \?$parameter.*$:; $parameter $value:g"
         ;;
+			"*")
+				continue
+				;;
     esac
 
     printError "$?"
