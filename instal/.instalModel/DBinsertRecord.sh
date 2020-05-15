@@ -7,30 +7,4 @@
 #######################################################################
 printMessage "insertion des paramètres - table" "nichoir.db"
 
-oldIFS="$IFS"
-
-for varFile in $(ls "$varInstalPath"/.input/DBinsert*) ; do
-	while read varLine ; do
-	    IFS="+"
-			read tmpMain tmpRef <<< "$varLine"
-
-			if [ "${tmpMain::1}" != '#' ] ; then
-				if [ -n "$tmpRef" ] ; then
-					IFS=":" read tmpTable tmpFields tmpValues <<< "$tmpRef"
-					ref1=$(sqlite3 /var/www/nichoir.db "SELECT $tmpFields FROM $tmpTable WHERE $tmpValues ;")
-					tmpMain=$(echo "$tmpMain" | sed 's/_REF1_/'"$ref1"'/' )
-				fi
-
-				IFS=":"
-				read table fields values <<< "$tmpMain"
-				printMessage "insertion des paramètres - table: $table - record: F$fields V$values" "nichoir.db"
-				if [ -n "$table" ] ; then
-					sqlite3 /var/www/nichoir.db "INSERT INTO $table $fields VALUES $values ;"
-					printError "$?"
-				fi
-		fi
-
-	done < "$varFile"
-done
-
-IFS="$oldIFS"
+doInsertRecord $(ls "$INSTALL_PATH"/.input/DBinsert*)

@@ -57,7 +57,8 @@ function printMessage()
 	done
 
 	# écriture dans le fichier log
-	echo -e "\n$varMessage \n$str " >> $varLogFile
+	echo -e "\n$varMessage \n$str " >> $LOG_FILE
+	exit 0
 }
 
 function printError()
@@ -71,13 +72,15 @@ function printError()
 		# incrément du compteur d'erreurs
 		(( varErrorCount += 1 ))
 		# impression dans logfile
-		echo "    ERROR - $varMessage - Error Code $1" >> $varLogFile
+		echo "    ERROR - $varMessage - Error Code $1" >> $LOG_FILE
 		# affichage en console si option activée
-		if [ "$varError" = true ] ; then  echo "    Error on execution - $varMessage - Error Code $1" ; fi
+		[ ! "$varError" ] || echo "    Error on execution - $varMessage - Error Code $1"
 	fi
+	exit 0
 }
 
-function updateParameter() {
+function updateParameter()
+{
 	# update des paramètres dans le fichier de config
 	#--------------------------------------------------------
 	# $1 - fichier de config
@@ -90,4 +93,150 @@ function updateParameter() {
 	else
 		echo "$2=$3" >> $1
 	fi
+	exit 0
+}
+
+
+function optionAnalyse()
+{
+	# boucle parcourant les paramètres fournis
+	while [ 1 -le "$#" ] ; do
+
+		if [ "${1:0:2}" = "--" ] ; then
+			case "${1:2}" in
+				"first")
+					# si installateur manuellement downloadé et pas la première instal
+					if [ "$varFirstInstal" != true ] ; then
+						varCheckBib=true
+						varForceInstal=true
+						varLoadInstal=true
+					fi
+					;;
+				"recall")
+					varRecall=true
+					;;
+				"debug")
+					varDebug=true
+					echo "####################################################"
+					echo "$date - instal nichoir debug log"
+					echo "####################################################"
+					;;
+			esac
+
+		# test de la valeur de la variable - regex testant une chaine commançant par - et contenant
+		# zero ou une occurance de chacune des lettres autorisées
+	elif [[ "$1" =~ ^[-]([deglmruvcsfi]+)$ ]]  ; then
+
+			#	affecte le string des paramètres à 'variables' en enlevant le premier '-'
+			variables=${1:1}
+
+			#	parcours de la chaine de caractère des paramètres et affectation des
+			#   variables d'état des paramètres + tests des combinaisons de paramètres
+			for var_count in `seq 0 ${#variables}` ; do
+				case ${variables:$var_count:1} in
+					"d")
+						varDebug=true
+						echo "####################################################"
+						echo "$date - instal nichoir debug log"
+						echo "####################################################"
+						;;
+					"e")
+						varError=true
+						;;
+					"g")
+						varGit=true
+						;;
+					"l")
+						varLocal=true
+						;;
+					"m")
+						varUpdate=true
+						;;
+					"r")
+						varReset=true
+						;;
+					"u")
+						varUpgrade=true
+						;;
+					"v")
+						varVerbose=true
+						varError=true
+						;;
+					"c")
+						varCheckBib=true
+						;;
+					"f")
+						varForceInstal=true
+						;;
+					"s")
+						varCheckBib=true
+						varForceInstal=true
+						varLoadInstal=true
+						;;
+					"i")
+						varLoadInstal=true
+						;;
+				esac
+			done
+#	motif de paramètres non reconnu
+		else
+			exit "$BAD_OPTION"
+		fi
+
+	#	passage au paramètre suivant
+		shift
+	done
+	exit 0
+
+}
+
+function doMotionVersion ()
+{
+	# update input file with option names of current motion verion
+	# $1 fichier de paramètres Motion à traiter
+	# $2 fichier dans lequel effectuer les remplacements
+
+	OLDIFS="$IFS"
+
+	while IFS=: read referenceName substituteName ; do
+		sed "$2" -i -e "s/$referenceName/$substituteName/g"
+	done < $(grep -e '^[^(#|;).*]' "$1")
+
+	IFS="$OLDIFS"
+	exit 0
+}
+
+function doInsertRecord ()
+{
+	# insert record from input files given as parameters
+	# $x : input file(s)
+
+	oldIFS="$IFS"
+
+	for varFile in $* ; do
+		while read varLine ; do
+		    IFS="+"
+				read tmpMain tmpRef <<< "$varLine"
+
+				if [ "${tmpMain::1}" != '#' ] ; then
+					if [ -n "$tmpRef" ] ; then
+						IFS=":" read tmpTable tmpFields tmpValues <<< "$tmpRef"
+						ref1=$(sqlite3 "$DB_FILE" "SELECT $tmpFields FROM $tmpTable WHERE $tmpValues ;")
+						tmpMain=$(echo "$tmpMain" | sed 's/_REF1_/'"$ref1"'/' )
+					fi
+
+					IFS=":"
+					read table fields values <<< "$tmpMain"
+					printMessage "insertion des paramètres - table: $table - record: F$fields V$values" "nichoir.db"
+					if [ -n "$table" ] ; then
+						sqlite3 "$DB_FILE" "INSERT INTO $table $fields VALUES $values ;"
+						printError "$?"
+					fi
+			fi
+
+		done < "$varFile"
+	done
+
+	IFS="$oldIFS"
+
 }
