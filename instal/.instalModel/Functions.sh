@@ -32,6 +32,8 @@ function usage()
 	echo "  -i    force update Install script - force la réinstallation du programme d'installation"
 	echo "\nExemple d'utilisation :"
 	echo "	$0 -uv    installation du nichoir en mode verbeux avec upgrade du système\n"
+
+	return 0
 }
 
 function printMessage()
@@ -58,7 +60,7 @@ function printMessage()
 
 	# écriture dans le fichier log
 	echo -e "\n$varMessage \n$str " >> $LOG_FILE
-	exit 0
+	return 0
 }
 
 function printError()
@@ -76,7 +78,7 @@ function printError()
 		# affichage en console si option activée
 		[ ! "$varError" ] || echo "    Error on execution - $varMessage - Error Code $1"
 	fi
-	exit 0
+	return 0
 }
 
 function updateParameter()
@@ -93,7 +95,7 @@ function updateParameter()
 	else
 		echo "$2=$3" >> $1
 	fi
-	exit 0
+	return 0
 }
 
 
@@ -117,9 +119,9 @@ function optionAnalyse()
 					;;
 				"debug")
 					varDebug=true
-					echo "####################################################"
-					echo "$date - instal nichoir debug log"
-					echo "####################################################"
+					echo "####################################################" >> $DEBUG_FILE
+					echo $(date)" - instal nichoir debug log" >> $DEBUG_FILE
+					echo "####################################################" >> $DEBUG_FILE
 					;;
 			esac
 
@@ -136,9 +138,9 @@ function optionAnalyse()
 				case ${variables:$var_count:1} in
 					"d")
 						varDebug=true
-						echo "####################################################"
-						echo "$date - instal nichoir debug log"
-						echo "####################################################"
+						echo "####################################################" >> $DEBUG_FILE
+						echo $(date)" - instal nichoir debug log" >> $DEBUG_FILE
+						echo "####################################################" >> $DEBUG_FILE
 						;;
 					"e")
 						varError=true
@@ -186,7 +188,7 @@ function optionAnalyse()
 	#	passage au paramètre suivant
 		shift
 	done
-	exit 0
+	return 0
 
 }
 
@@ -203,7 +205,7 @@ function doMotionVersion ()
 	done < $(grep -e '^[^(#|;).*]' "$1")
 
 	IFS="$OLDIFS"
-	exit 0
+	return 0
 }
 
 function doInsertRecord ()
