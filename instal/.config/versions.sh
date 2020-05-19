@@ -3,7 +3,7 @@
 
 # Versions:
 #----------
-verInstal=1.0.1
+verInstal=1.0.0
 verPrgInstal=1.0.0
 verPythonLib=1.0.0
 verNichoirFiles=1.0.0

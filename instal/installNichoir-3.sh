@@ -41,9 +41,6 @@
 # initialisation des paramètres et constantes + contrôle USER et HELP
 #######################################################################
 
-# déclaration des fonctions de base du script - usage, printLog, ...
-source "$INSTALL_PATH/.instalModel/Functions.sh"
-
 # config constant
 INSTALL_PATH="/usr/local/etc/instal"
 LOG_FILE="$INSTALL_PATH/logInstal.log"
@@ -53,6 +50,9 @@ DEBUG_FILE="/usr/local/etc/instal/debug.log"
 # error constant
 BAD_USER=1
 BAD_OPTION=2
+
+# déclaration des fonctions de base du script - usage, printLog, ...
+source "$INSTALL_PATH/.instalModel/Functions.sh"
 
 # check for help option
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ "$1" = "?" ] || [ "$1" = "-?" ] ; then
@@ -86,23 +86,6 @@ varMessage=""
 # error count
 varErrorCount=0
 
-# look if first instal by checking if DB_file exist
-if [ -e "$DB_FILE" ] ; then
-	varFirstInstal=false
-else
-	varFirstInstal=true
-fi
-
-[ "$varDebug" ] && echo "Config var - varFirstInstal=$varFirstInstal" >> $DEBUG_FILE
-
-# initialisation des variables de version (issu du fichier local des versions)
-source "$INSTALL_PATH/.config/versions.sh"
-
-
-#######################################################################
-# Initialisation
-#######################################################################
-
 # options analyse
 #----------------
 
@@ -125,6 +108,28 @@ if [ "$#" -gt 0 ] ; then
 fi
 
 [ "$varDebug" ] && echo "Options analyse successfull-> list=$varAllParams" >> $DEBUG_FILE
+
+
+# look if first instal by checking if DB_file exist
+if [ -e "$DB_FILE" ] ; then
+	varFirstInstal=false
+else
+	varFirstInstal=true
+fi
+
+echo "Config var - varDebug=$varDebug" > $DEBUG_FILE
+[ $varDebug ] && echo "Config var - varFirstInstal=$varFirstInstal" >> $DEBUG_FILE
+
+# initialisation des variables de version (issu du fichier local des versions)
+source "$INSTALL_PATH/.config/versions.sh" || printError "$?"
+
+[ "$varDebug" ] && echo "version.sh loaded" >> $DEBUG_FILE
+
+
+#######################################################################
+# Initialisation
+#######################################################################
+
 
 # écriture de l'encodage du fichier log si pas encore existant
 #-------------------------------------------------------
@@ -211,6 +216,7 @@ fi
 # copie des fichiers eBirds - site local
 lvTempVersion=`grep "verNichoirFiles" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 
+[ "$varDebug" ] && echo "\$varForceInstal = $varForceInstal" >> $DEBUG_FILE
 if [ ! "$lvTempVersion" = "$verNichoirFiles" ]  || [ "$varForceInstal" = true ] ; then
 	source "$INSTALL_PATH/.instalModel/FILESinstal.sh"
 	updateParameter "$INSTALL_PATH/.config/versions.sh" "verNichoirFiles" "$lvTempVersion"
@@ -267,6 +273,7 @@ rm -r eBirds || printError "$?"
 
 [ "$varDebug" ] && echo "File clean up done" >> $DEBUG_FILE
 
+[ "$varDebug" ] && echo "\$varUpgrade = $varUpgrade" >> $DEBUG_FILE
 #######################################################################
 # upgrade du système linux
 #######################################################################
