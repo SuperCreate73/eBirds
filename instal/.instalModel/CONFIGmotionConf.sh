@@ -9,7 +9,7 @@ printMessage "paramétrage" "motion"
 
 oldIFS="$IFS"
 
-for varFile in $(ls "$INSTALL_PATH/.input/MOTIONparam*") ; do
+for varFile in $(ls "$INSTALL_PATH"/.input/MOTIONparam*) ; do
 	while IFS=: read flag parameter value ; do
 
     case "$flag" in
