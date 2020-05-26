@@ -9,13 +9,13 @@ function updateConfigMotion ()
 
 		# modif des fichiers input : DBinsert_Motion_*
 		printMessage "modification du fichier de paramètres" "DBinsertMotion_*.txt"
-		for varFile in $(ls "$INSTALL_PATH/.input/DBinsertMotion_*") ; do
+		for varFile in $(ls "$INSTALL_PATH"/.input/DBinsertMotion_*) ; do
 			doMotionVersion "$INSTALL_PATH/motion/$currentVersion/MOTIONcompare.txt" "$varFile"
 		done
 
 		# modif des fichiers input : MOTIONparam_*
 		printMessage "modification du fichier de paramètres" "MOTIONparam_*.txt"
-		for varFile in $(ls "$INSTALL_PATH/.input/MOTIONparam_*") ; do
+		for varFile in $(ls "$INSTALL_PATH"/.input/MOTIONparam_*) ; do
 			doMotionVersion "$INSTALL_PATH/motion/$currentVersion/MOTIONcompare.txt" "$varFile"
 		done
 
@@ -26,7 +26,7 @@ function updateConfigMotion ()
 
 	# insertion des paramètres motion dans la DB
 	printMessage "modifications des tables Motion" "nichoir.db"
-	doInsertRecord $(ls "$INSTALL_PATH/.input/DBinsertMotion*")
+	doInsertRecord $(ls "$INSTALL_PATH"/.input/DBinsertMotion*)
 }
 
 #################################################################################
@@ -105,7 +105,7 @@ fi
 	source "$INSTALL_PATH/.instalModel/CONFIGmotionConf.sh"
 
 	updateParameter "$INSTALL_PATH/.config/versions.sh" "verMotion" "$installedVersion"
-	
+
 # # création du fichier config local de motion
 # #cp /etc/motion/motion.conf /usr/local/etc/motion.conf
 # #printError "$?"
