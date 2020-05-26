@@ -182,7 +182,7 @@ function optionAnalyse()
 			done
 #	motif de paramètres non reconnu
 		else
-			exit "$BAD_OPTION"
+			return "$BAD_OPTION"
 		fi
 
 	#	passage au paramètre suivant

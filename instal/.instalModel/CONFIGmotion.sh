@@ -105,8 +105,7 @@ fi
 	source "$INSTALL_PATH/.instalModel/CONFIGmotionConf.sh"
 
 	updateParameter "$INSTALL_PATH/.config/versions.sh" "verMotion" "$installedVersion"
-fi
-#
+	
 # # création du fichier config local de motion
 # #cp /etc/motion/motion.conf /usr/local/etc/motion.conf
 # #printError "$?"
