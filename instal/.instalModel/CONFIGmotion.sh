@@ -51,6 +51,10 @@ if [ ! "$currentVersion" = "$verMotion" ] ; then
 
 	# si pas une nouvelle install et version installée ou ancienne version avec paramètres modifiés -> mise à jour
 	if [ ! "$varFirstInstal" ] ; then
+
+		[ "$varDebug" ] && echo $([ -d "$INSTALL_PATH/motion/$currentVersion" ]) >> $DEBUG_FILE
+		[ "$varDebug" ] && echo $([ -d "$INSTALL_PATH/motion/$verMotion" ]) >> $DEBUG_FILE
+
 		if [ -d "$INSTALL_PATH/motion/$currentVersion" || -d "$INSTALL_PATH/motion/$verMotion" ] ; then
 			# re-initialisation des tables motion
 			sqlite3 /var/www/nichoir.db "DELETE from config" > /dev/null 2>&1
