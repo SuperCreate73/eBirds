@@ -46,8 +46,8 @@ currentVersion="$installedVersion"
 if [ ! "$currentVersion" = "$verMotion" ] ; then
 
 	# Copie des fichiers sources : DBinsert_Motion_*; MOTIONparam_*
-	cp --force "$INSTALL_PATH/motion/$verMotionDefault/DBinsertMotion_*" "$INSTALL_PATH/.input/"
-	cp --force "$INSTALL_PATH/motion/$verMotionDefault/MOTIONparam_*" "$INSTALL_PATH/.input/"
+	cp --force "$INSTALL_PATH/motion/$verMotionDefault/DBinsertMotion_\*" "$INSTALL_PATH/.input/"
+	cp --force "$INSTALL_PATH/motion/$verMotionDefault/MOTIONparam_\*" "$INSTALL_PATH/.input/"
 
 	# si pas une nouvelle install et version installée ou ancienne version avec paramètres modifiés -> mise à jour
 	if [ ! "$varFirstInstal" ] ; then
