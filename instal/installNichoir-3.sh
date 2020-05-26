@@ -250,7 +250,7 @@ if [ "$varFirstInstal" = "true" ] ; then
 	# TODO existing record protection
 
 	printMessage "remplissage des tables DB" "nichoir.db"
-	doInsertRecord $(ls "$INSTALL_PATH/.input/DBinsert_*")
+	doInsertRecord $(ls "$INSTALL_PATH"/.input/DBinsert_*)
 
 	[ "$varDebug" ] && echo "DB / tables insert done" >> $DEBUG_FILE
 
