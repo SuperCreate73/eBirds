@@ -46,7 +46,7 @@ INSTALL_PATH="/usr/local/etc/instal"
 LOG_FILE="$INSTALL_PATH/logInstal.log"
 DB_FILE="/var/www/nichoir.db"
 DEBUG_FILE="/usr/local/etc/instal/debug.log"
-
+VERSION="1.1 - 01-06-2020"
 # error constant
 BAD_USER=1
 BAD_OPTION=2
@@ -69,16 +69,16 @@ fi
 # options variables
 varUpgrade=false
 varVerbose=false
-varReset=false
+varResetLog=false
 varError=false
-varLocal=false
-varGit=true
 varServer=false
 varUpdate=false
 varRecall=false
 varCheckBib=false
-varForceInstal=false
 varDebug=false
+varMotion=false
+varCheckDB=false
+varWebAppInstal=false
 
 # message to display on screen or save in log file
 varMessage=""
@@ -133,7 +133,7 @@ source "$INSTALL_PATH/.config/versions.sh" || printError "$?"
 
 # écriture de l'encodage du fichier log si pas encore existant
 #-------------------------------------------------------
-if [ ! -e "$LOG_FILE" ] || [ "$varReset" = true ] ; then
+if [ ! -e "$LOG_FILE" ] || [ "$varResetLog" = true ] ; then
 	printMessage "Création et paramétrage du fichier log" "$LOG_FILE"
 	echo -e "# coding:UTF-8 \n\n" > $LOG_FILE || printError "$?"
 	[ "$varDebug" ] && echo "Log File created" >> $DEBUG_FILE
@@ -172,7 +172,7 @@ if [ ! "$varRecall" = true ] ; then
 	# Extraction de la version de l'installateur de GitHub
 	lvTempVersion=`grep "verInstal" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 
-	if [ ! "$lvTempVersion" = "$verInstal" ] || [ "$varLoadInstal" = true ] ; then
+	if [ ! "$lvTempVersion" = "$verInstal" ] || [ "$varScriptInstal" = true ] ; then
 
 		source "$INSTALL_PATH/.instalModel/SCRIPTinstal.sh"
 		updateParameter "$INSTALL_PATH/.config/versions.sh" "verInstal" "$lvTempVersion"
@@ -216,8 +216,8 @@ fi
 # copie des fichiers eBirds - site local
 lvTempVersion=`grep "verNichoirFiles" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 
-[ "$varDebug" ] && echo "\$varForceInstal = $varForceInstal" >> $DEBUG_FILE
-if [ ! "$lvTempVersion" = "$verNichoirFiles" ]  || [ "$varForceInstal" = true ] ; then
+[ "$varDebug" ] && echo "\$varWebAppInstal = $varWebAppInstal" >> $DEBUG_FILE
+if [ ! "$lvTempVersion" = "$verNichoirFiles" ]  || [ "$varWebAppInstal" = true ] ; then
 	source "$INSTALL_PATH/.instalModel/FILESinstal.sh"
 	updateParameter "$INSTALL_PATH/.config/versions.sh" "verNichoirFiles" "$lvTempVersion"
 
@@ -229,7 +229,7 @@ fi
 # creation de la base de donnees et initialisation de la table 'user'
 lvTempVersion=`grep "verDB" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 
-if [ ! "$lvTempVersion" = "$verDB" ]  || [ "$varForceInstal" = true ] ; then
+if [ ! "$lvTempVersion" = "$verDB" ]  || [ "$varCheckDB" = true ] ; then
 	# création de la base de donnée
 	source "$INSTALL_PATH/.instalModel/DBcreateTables.sh"
 
