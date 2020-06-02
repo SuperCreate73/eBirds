@@ -15,22 +15,35 @@ function usage()
 	echo "est ensuite lancé avec la commande sudo.\n"
 	echo "Après l'installation initiale, le programme est accessible depuis une console avec"
 	echo "la commande 'sudo nichoir [OPTION]'"
-	echo "\n\nOptions:"
-	echo "-------"
+	echo "\nVersion : $VERSION"
+
+
+
+	echo "\n\nOptions de mise à jour:"
+	echo "-----------------------"
+	echo "  -u    update - télécharge et installe les dernières mises à jours"
+	echo "        Comportement par défaut si le nichoir est déjà installé localement"
+	echo "  -i    update Install script - réinstallation du script d'installation"
+	echo "  -s    sanity check - contrôle les versions des programmes et des librairies externes"
+	echo "        Programmes installés et librairies python"
+	echo "  -f    force install - identique aux options -, -m et -s"
+	echo "  -m    motion - force la réinitialisation de motion"
+	echo "          /!\ les données locales sont préservées mais pas les options de réglages"
+
+	echo "\n\nAutres options:"
+	echo "---------------"
+	echo "  -h, -?, ?, --help      affichage de l'aide"
+	echo "  -v    verbose - affichage des opérations effectuées"
 	echo "  -e    error - affiche uniquement les erreurs dans la console (aussi affichées"
 	echo "				en mode 'verbose')"
-	echo "  -h    help - affichage de l'aide"
-	echo "  -m    mise à jour - télécharge et installe les dernières mises à jours"
-	echo "        Comportement par défaut si le nichoir est déjà installé localement"
-	echo "  -r    reset - réinitialisation du fichier log"
-	echo "  -u    upgrade - upgrade du sytème Linux après installation du nichoir"
-	echo "  -v    verbose - affichage des opérations effectuées"
-	echo "  -c    check versions - contrôle les versions des programmes et des librairies externes"
-	echo "        Programmes installés et librairies python"
-	echo "  -f    force install - force la réinstallation complète du nichoir, les données locales étant préservées"
-	echo "  -s    sanity check - identique aux options -c et -f"
-	echo "  -i    force update Install script - force la réinstallation du programme d'installation"
-	echo "\nExemple d'utilisation :"
+	# echo "  -u    upgrade - upgrade du sytème Linux après installation du nichoir"
+	echo "  -U    upgrade - upgrade du sytème Linux après installation du nichoir"
+	# echo "  -r    reset - réinitialisation du fichier log"
+	echo "  -l    réinitialisation du fichier log"
+	echo "  -d, --debug    log technique de déboggage /usr/local/etc/instal/debug.log"
+
+	echo "\n\nExemple d'utilisation:"
+	echo "----------------------"
 	echo "	$0 -uv    installation du nichoir en mode verbeux avec upgrade du système\n"
 
 	return 0
@@ -110,8 +123,7 @@ function optionAnalyse()
 					# si installateur manuellement downloadé et pas la première instal
 					if [ "$varFirstInstal" != true ] ; then
 						varCheckBib=true
-						varForceInstal=true
-						varLoadInstal=true
+						varScriptInstal=true
 					fi
 					;;
 				"recall")
@@ -127,7 +139,7 @@ function optionAnalyse()
 
 		# test de la valeur de la variable - regex testant une chaine commançant par - et contenant
 		# zero ou une occurance de chacune des lettres autorisées
-	elif [[ "$1" =~ ^[-]([deglmruvcsfi]+)$ ]]  ; then
+	elif [[ "$1" =~ ^[-]([delmuUvsfi]+)$ ]]  ; then
 
 			#	affecte le string des paramètres à 'variables' en enlevant le premier '-'
 			variables=${1:1}
@@ -145,38 +157,33 @@ function optionAnalyse()
 					"e")
 						varError=true
 						;;
-					"g")
-						varGit=true
-						;;
-					"l")
-						varLocal=true
-						;;
 					"m")
-						varUpdate=true
-						;;
-					"r")
-						varReset=true
+						varMotion=true
 						;;
 					"u")
+						varUpdate=true
+						;;
+					"l")
+						varResetLog=true
+						;;
+					"U")
 						varUpgrade=true
 						;;
 					"v")
 						varVerbose=true
 						varError=true
 						;;
-					"c")
-						varCheckBib=true
-						;;
 					"f")
-						varForceInstal=true
+						varCheckBib=true
+						varCheckDB=true
+						varMotion=true
+						varWebAppInstal=true
 						;;
 					"s")
 						varCheckBib=true
-						varForceInstal=true
-						varLoadInstal=true
 						;;
 					"i")
-						varLoadInstal=true
+						varScriptInstal=true
 						;;
 				esac
 			done
@@ -192,23 +199,7 @@ function optionAnalyse()
 
 }
 
-function doMotionVersion ()
-{
-	# update input file with option names of current motion verion
-	# $1 fichier de paramètres Motion à traiter
-	# $2 fichier dans lequel effectuer les remplacements
-
-	OLDIFS="$IFS"
-
-	while IFS=: read referenceName substituteName ; do
-		sed "$2" -i -e "s/$referenceName/$substituteName/g"
-	done < $(grep -e '^[^(#|;).*]' "$1")
-
-	IFS="$OLDIFS"
-	return 0
-}
-
-function doInsertRecord ()
+function doInsertRecord()
 {
 	# insert record from input files given as parameters
 	# $x : input file(s)

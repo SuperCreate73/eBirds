@@ -1,7 +1,10 @@
 #!/bin/bash
 # coding:UTF-8
 
-function updateConfigMotion ()
+#################################################################################
+# functions
+#################################################################################
+function updateConfigMotion()
 {
 	# si la version courante de Motion a des noms de paramètres différents
 	# -> testé par l'existance du répertoire
@@ -29,6 +32,24 @@ function updateConfigMotion ()
 	doInsertRecord $(ls "$INSTALL_PATH"/.input/DBinsertMotion*)
 }
 
+function doMotionVersion()
+{
+	# update input file with option names of current motion verion
+	# $1 fichier de paramètres Motion à traiter
+	# $2 fichier dans lequel effectuer les remplacements
+
+	OLDIFS="$IFS"
+
+	while IFS=: read referenceName substituteName ; do
+		sed "$2" -i -e "s/$referenceName/$substituteName/g" || printError "$?"
+	done < $(grep -e '^[^(#|;).*]' "$1")
+
+	IFS="$OLDIFS"
+	return 0
+}
+
+#################################################################################
+# script begin
 #################################################################################
 printMessage "Configuration de motion" "motion"
 
@@ -55,6 +76,9 @@ if [ ! "$currentVersion" = "$verMotion" ] ; then
 		[ "$varDebug" ] && echo $([ -d "$INSTALL_PATH/motion/$currentVersion" ]) >> $DEBUG_FILE
 		[ "$varDebug" ] && echo $([ -d "$INSTALL_PATH/motion/$verMotion" ]) >> $DEBUG_FILE
 
+		# BUG programme ne semble pas vider et copier les tables, pourquoi ?
+		#
+
 		if [ -d "$INSTALL_PATH/motion/$currentVersion" || -d "$INSTALL_PATH/motion/$verMotion" ] ; then
 			# re-initialisation des tables motion
 			sqlite3 /var/www/nichoir.db "DELETE from config" > /dev/null 2>&1
@@ -73,8 +97,6 @@ if [ ! "$currentVersion" = "$verMotion" ] ; then
 
 		# configuration du démon
 		sed "/etc/default/motion" -i -e "s/^start_motion_daemon=no/start_motion_daemon=yes/g"
-
-		# configuration du démon
 		printMessage "activation de motion" "motion"
 		systemctl enable motion || printError "$?"
 
@@ -82,7 +104,7 @@ if [ ! "$currentVersion" = "$verMotion" ] ; then
 
 	fi
 
-elif [ -d "$INSTALL_PATH/motion/$currentVersion" ] && [ "$flagMotion" ] ; then
+elif [ -d "$INSTALL_PATH/motion/$currentVersion" ] && [ "$varMotion" ] ; then
 	# TODO Ajouter un flag pour forcer la mise à jour de la vue, true si les fichiers du nichoir ont été mis à jour.
 
 	# modif de la vue
