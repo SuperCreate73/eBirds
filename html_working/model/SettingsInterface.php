@@ -96,7 +96,9 @@ class SettingsInterface extends ModelInterface {
 		elseif($valueType == 'range') {
 			if (!($value >= $settingsRangeInterface->allRangesArray[$setting][0] &&
 						$value <= $settingsRangeInterface->allRangesArray[$setting][1])) {
-				throw new Exception('Range non valide : '. $setting .' - valeur : '. $value);
+				throw new Exception('Range non valide : '. $setting .' - valeur : '. $value . ' - type : ' . gettype($value) . '
+				limit low : ' . $settingsRangeInterface->allRangesArray[$setting][0] . ' - type : ' . gettype($settingsRangeInterface->allRangesArray[$setting][0]) . '
+				limit high : ' . $settingsRangeInterface->allRangesArray[$setting][1] . ' - type : ' . gettype($settingsRangeInterface->allRangesArray[$setting][1]));
 			}
 		}
 
