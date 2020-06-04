@@ -6,8 +6,8 @@ function usage()
 # affichage de l'aide
 #--------------------
 #
-	echo "\nUsage: sudo $0 [OPTION] "
-	echo "\nInstalle, met à jour et configure le nichoir"
+	echo -e "\nUsage: sudo $0 [OPTION] "
+	echo -e "\nInstalle, met à jour et configure le nichoir"
 	echo ""
 	echo "Les fichiers nécessaires sont automatiquement téléchargés du serveur ebirds"
 	echo ""
@@ -15,36 +15,33 @@ function usage()
 	echo "est ensuite lancé avec la commande sudo.\n"
 	echo "Après l'installation initiale, le programme est accessible depuis une console avec"
 	echo "la commande 'sudo nichoir [OPTION]'"
-	echo "\nVersion : $VERSION"
+	echo -e "\nVersion : $VERSION"
 
-
-
-	echo "\n\nOptions de mise à jour:"
+	echo -e "\n\nOptions de mise à jour:"
 	echo "-----------------------"
 	echo "  -u    update - télécharge et installe les dernières mises à jours"
 	echo "        Comportement par défaut si le nichoir est déjà installé localement"
 	echo "  -i    update Install script - réinstallation du script d'installation"
+	echo "  -w    update web App - Réinitialisation de l'appli web du nichoir"
 	echo "  -s    sanity check - contrôle les versions des programmes et des librairies externes"
 	echo "        Programmes installés et librairies python"
-	echo "  -f    force install - identique aux options -, -m et -s"
 	echo "  -m    motion - force la réinitialisation de motion"
 	echo "          /!\ les données locales sont préservées mais pas les options de réglages"
+	echo "  -f    force install - identique aux options -w, -m et -s"
 
-	echo "\n\nAutres options:"
+	echo -e "\n\nAutres options:"
 	echo "---------------"
 	echo "  -h, -?, ?, --help      affichage de l'aide"
 	echo "  -v    verbose - affichage des opérations effectuées"
 	echo "  -e    error - affiche uniquement les erreurs dans la console (aussi affichées"
 	echo "				en mode 'verbose')"
-	# echo "  -u    upgrade - upgrade du sytème Linux après installation du nichoir"
 	echo "  -U    upgrade - upgrade du sytème Linux après installation du nichoir"
-	# echo "  -r    reset - réinitialisation du fichier log"
 	echo "  -l    réinitialisation du fichier log"
 	echo "  -d, --debug    log technique de déboggage /usr/local/etc/instal/debug.log"
 
-	echo "\n\nExemple d'utilisation:"
+	echo -e "\n\nExemple d'utilisation:"
 	echo "----------------------"
-	echo "	$0 -uv    installation du nichoir en mode verbeux avec upgrade du système\n"
+	echo -e "	$0 -uv    installation du nichoir en mode verbeux avec upgrade du système\n"
 
 	return 0
 }
@@ -139,7 +136,7 @@ function optionAnalyse()
 
 		# test de la valeur de la variable - regex testant une chaine commançant par - et contenant
 		# zero ou une occurance de chacune des lettres autorisées
-	elif [[ "$1" =~ ^[-]([delmuUvsfi]+)$ ]]  ; then
+	elif [[ "$1" =~ ^[-]([delmuUvswfi]+)$ ]]  ; then
 
 			#	affecte le string des paramètres à 'variables' en enlevant le premier '-'
 			variables=${1:1}
@@ -185,6 +182,9 @@ function optionAnalyse()
 					"i")
 						varScriptInstal=true
 						;;
+					"w")
+						varWebAppInstal=true
+						;;
 				esac
 			done
 #	motif de paramètres non reconnu
@@ -194,10 +194,28 @@ function optionAnalyse()
 
 	#	passage au paramètre suivant
 		shift
+
 	done
+
+	[ $varDebug ] && echo "General options" >> $DEBUG_FILE
+	[ $varDebug ] && echo "Config var - varDebug=$varDebug" >> $DEBUG_FILE
+	[ $varDebug ] && echo "Config var - varError=$varError" >> $DEBUG_FILE
+	[ $varDebug ] && echo "Config var - varVerbose=$varVerbose" >> $DEBUG_FILE
+	[ $varDebug ] && echo "Config var - varResetLog=$varResetLog" >> $DEBUG_FILE
+	[ $varDebug ] && echo "Config var - varUpgrade=$varUpgrade" >> $DEBUG_FILE
+	[ $varDebug ] && echo "Config var - varRecall=$varRecall" >> $DEBUG_FILE
+	[ $varDebug ] && echo "System Update Management" >> $DEBUG_FILE
+	[ $varDebug ] && echo "Config var - varUpdate=$varUpdate" >> $DEBUG_FILE
+	[ $varDebug ] && echo "Config var - varCheckBib=$varCheckBib" >> $DEBUG_FILE
+	[ $varDebug ] && echo "Config var - varCheckDB=$varCheckDB" >> $DEBUG_FILE
+	[ $varDebug ] && echo "Config var - varScriptInstal=$varScriptInstal" >> $DEBUG_FILE
+	[ $varDebug ] && echo "Config var - varWebAppInstal=$varWebAppInstal" >> $DEBUG_FILE
+	[ $varDebug ] && echo "Config var - varMotion=$varMotion" >> $DEBUG_FILE
+
 	return 0
 
 }
+
 
 function doInsertRecord()
 {
@@ -231,5 +249,7 @@ function doInsertRecord()
 	done
 
 	IFS="$oldIFS"
+
+	return 0
 
 }
