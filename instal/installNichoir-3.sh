@@ -45,7 +45,7 @@
 INSTALL_PATH="/usr/local/etc/instal"
 LOG_FILE="$INSTALL_PATH/logInstal.log"
 DB_FILE="/var/www/nichoir.db"
-DEBUG_FILE="/usr/local/etc/instal/debug.log"
+DEBUG_FILE="$INSTALL_PATH/debug.log"
 VERSION="1.1 - 01-06-2020"
 # error constant
 BAD_USER=1
@@ -117,7 +117,6 @@ else
 	varFirstInstal=true
 fi
 
-echo "Config var - varDebug=$varDebug" > $DEBUG_FILE
 [ $varDebug ] && echo "Config var - varFirstInstal=$varFirstInstal" >> $DEBUG_FILE
 
 # initialisation des variables de version (issu du fichier local des versions)
@@ -129,7 +128,6 @@ source "$INSTALL_PATH/.config/versions.sh" || printError "$?"
 #######################################################################
 # Initialisation
 #######################################################################
-
 
 # écriture de l'encodage du fichier log si pas encore existant
 #-------------------------------------------------------
@@ -216,7 +214,6 @@ fi
 # copie des fichiers eBirds - site local
 lvTempVersion=`grep "verNichoirFiles" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 
-[ "$varDebug" ] && echo "\$varWebAppInstal = $varWebAppInstal" >> $DEBUG_FILE
 if [ ! "$lvTempVersion" = "$verNichoirFiles" ]  || [ "$varWebAppInstal" = true ] ; then
 	source "$INSTALL_PATH/.instalModel/FILESinstal.sh"
 	updateParameter "$INSTALL_PATH/.config/versions.sh" "verNichoirFiles" "$lvTempVersion"
@@ -273,7 +270,6 @@ rm -r eBirds || printError "$?"
 
 [ "$varDebug" ] && echo "File clean up done" >> $DEBUG_FILE
 
-[ "$varDebug" ] && echo "\$varUpgrade = $varUpgrade" >> $DEBUG_FILE
 #######################################################################
 # upgrade du système linux
 #######################################################################
