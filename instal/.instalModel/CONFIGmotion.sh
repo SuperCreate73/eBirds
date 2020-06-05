@@ -65,10 +65,13 @@ fi
 installedVersion=`dpkg --status motion | grep "Version" | cut -d ':' -f 2 | cut -d '.' -f "1 2" | sed "s/ //g"`
 currentVersion="$installedVersion"
 
+[ "$varDebug" ] && echo "Entering Motion config" >> $DEBUG_FILE
+
 # gestion des fichiers input
 # si changement de version
 if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 
+	[ "$varDebug" ] && echo "Entering Motion - reinit existing instal" >> $DEBUG_FILE
 	# Copie des fichiers sources : DBinsert_Motion_*; MOTIONparam_*
 	cp --force "$INSTALL_PATH/motion/$verMotionDefault/DBinsertMotion_\*" "$INSTALL_PATH/.input/"
 	cp --force "$INSTALL_PATH/motion/$verMotionDefault/MOTIONparam_\*" "$INSTALL_PATH/.input/"
