@@ -15,9 +15,9 @@ function doMotionVersion()
 	local tmpContent=$(grep -e '^[^(#|;).*]' "$1")
 	[ "$varDebug" ] && echo "doMotionVersion $1 $2" >> $DEBUG_FILE
 	[ "$varDebug" ] && echo "$tmpContent" >> $DEBUG_FILE
-	while IFS=: read referenceName substituteName ; do
+	while IFS=: read referenceName substituteName <&3 ; do
 		sed "$2" -i -e "s/$referenceName/$substituteName/g" || printError "$?"
-	done < $tmpContent
+	done 3< $tmpContent
 
 	IFS="$OLDIFS"
 	return 0
