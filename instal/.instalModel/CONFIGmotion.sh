@@ -76,10 +76,10 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 	cp --force "$INSTALL_PATH/motion/$verMotionDefault/MOTIONparam_\*" "$INSTALL_PATH/.input/"
 
 	[ "$varDebug" ] && echo "Entering Motion - reinit existing instal" >> $DEBUG_FILE
-	[ "$varDebug" ] && echo $([ ! "$varFirstInstal" ]) >> $DEBUG_FILE
+	[ "$varDebug" ] && echo "$varFirstInstal" >> $DEBUG_FILE
 
 	# si pas une nouvelle install et version installée ou ancienne version avec paramètres modifiés -> mise à jour
-	if [ ! "$varFirstInstal" ] ; then
+	if [ "$varFirstInstal" != true ] ; then
 
 		[ "$varDebug" ] && echo $([ -d "$INSTALL_PATH/motion/$currentVersion" ]) >> $DEBUG_FILE
 		[ "$varDebug" ] && echo $([ -d "$INSTALL_PATH/motion/$verMotion" ]) >> $DEBUG_FILE
