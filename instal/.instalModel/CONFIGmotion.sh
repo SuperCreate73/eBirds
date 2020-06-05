@@ -15,7 +15,7 @@ function doMotionVersion()
 
 	while IFS=: read referenceName substituteName ; do
 		sed "$2" -i -e "s/$referenceName/$substituteName/g" || printError "$?"
-	done < $(grep -e '^[^(#|;).*]' "$1")
+	done < ${grep -e '^[^(#|;).*]' "$1"}
 
 	IFS="$OLDIFS"
 	return 0
@@ -72,8 +72,8 @@ currentVersion="$installedVersion"
 if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 
 	# Copie des fichiers sources : DBinsert_Motion_*; MOTIONparam_*
-	cp --force "$INSTALL_PATH/motion/$verMotionDefault/DBinsertMotion_\*" "$INSTALL_PATH/.input/"
-	cp --force "$INSTALL_PATH/motion/$verMotionDefault/MOTIONparam_\*" "$INSTALL_PATH/.input/"
+	cp --force "$INSTALL_PATH"/motion/"$verMotionDefault"/DBinsertMotion_* "$INSTALL_PATH/.input/"
+	cp --force "$INSTALL_PATH"/motion/"$verMotionDefault"/MOTIONparam_* "$INSTALL_PATH/.input/"
 
 	[ "$varDebug" ] && echo "Entering Motion - reinit existing instal" >> $DEBUG_FILE
 	[ "$varDebug" ] && echo "$varFirstInstal" >> $DEBUG_FILE
