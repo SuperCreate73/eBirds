@@ -15,7 +15,7 @@ function doMotionVersion()
 	local tmpContent=$(grep -e '^[^(#|;).*]' "$1")
 	while IFS=: read referenceName substituteName ; do
 		sed "$2" -i -e "s/$referenceName/$substituteName/g" || printError "$?"
-	done < `grep -e '^[^(#|;).*]' "$1"`
+	done < $tmpContent
 
 	IFS="$OLDIFS"
 	return 0
