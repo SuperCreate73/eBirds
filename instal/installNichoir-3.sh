@@ -67,18 +67,18 @@ if [[ "$EUID" -ne 0 ]] ; then
 fi
 
 # options variables
-varUpgrade=false
-varVerbose=false
-varResetLog=false
-varError=false
-varServer=false
-varUpdate=false
-varRecall=false
-varCheckBib=false
-varDebug=false
-varMotion=false
-varCheckDB=false
-varWebAppInstal=false
+varVerbose=false	# display status messages on terminal
+varError=false		# display errors on terminal
+varResetLog=false	# clean log file
+varDebug=false		# debug messages
+varUpgrade=false	# linux system upgrade
+#varServer=false
+varUpdate=false		# default, not used
+varRecall=false		# internal - in case of instal script update
+varCheckBib=false  # instal python library
+varMotion=false		# configure motion tables, configFile & viewReglages
+varCheckDB=false	# initialize or update DB & tables (no records, only structure)
+varWebAppInstal=false # instal local web app
 
 # message to display on screen or save in log file
 varMessage=""
@@ -114,6 +114,10 @@ fi
 if [ -e "$DB_FILE" ] ; then
 	varFirstInstal=false
 else
+	varCheckBib=true
+	varMotion=true
+	varCheckDB=true
+	varWebAppInstal=true
 	varFirstInstal=true
 fi
 
