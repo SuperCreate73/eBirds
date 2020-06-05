@@ -71,10 +71,11 @@ currentVersion="$installedVersion"
 # si changement de version
 if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 
-	[ "$varDebug" ] && echo "Entering Motion - reinit existing instal" >> $DEBUG_FILE
 	# Copie des fichiers sources : DBinsert_Motion_*; MOTIONparam_*
 	cp --force "$INSTALL_PATH/motion/$verMotionDefault/DBinsertMotion_\*" "$INSTALL_PATH/.input/"
 	cp --force "$INSTALL_PATH/motion/$verMotionDefault/MOTIONparam_\*" "$INSTALL_PATH/.input/"
+
+	[ "$varDebug" ] && echo "Entering Motion - reinit existing instal" >> $DEBUG_FILE
 
 	# si pas une nouvelle install et version installée ou ancienne version avec paramètres modifiés -> mise à jour
 	if [ ! "$varFirstInstal" ] ; then
@@ -98,7 +99,7 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 
 		fi
 
-	elif [ "$varFirstInstal" ] ; then
+	else
 		# mise à jour de première instal
 
 		# configuration du démon
@@ -112,6 +113,7 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 
 elif [ -d "$INSTALL_PATH/motion/$currentVersion" ] && [ "$varMotion" ] ; then
 	# TODO Ajouter un flag pour forcer la mise à jour de la vue, true si les fichiers du nichoir ont été mis à jour.
+	[ "$varDebug" ] && echo "Entering Motion - reinit instal phase 2" >> $DEBUG_FILE
 
 	# modif de la vue
 	printMessage "modification de la vue du site web" "viewReglages.php"
@@ -123,6 +125,8 @@ elif [ -d "$INSTALL_PATH/motion/$currentVersion" ] && [ "$varMotion" ] ; then
 
 
 fi
+
+[ "$varDebug" ] && echo "Entering Motion - reinit instal final" >> $DEBUG_FILE
 
 	[ -d "$INSTALL_PATH/motion/$currentVersion" ] || currentVersion="$verMotionDefault"
 
