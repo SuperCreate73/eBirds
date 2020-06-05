@@ -184,6 +184,7 @@ function optionAnalyse()
 						;;
 					"w")
 						varWebAppInstal=true
+						varMotion=true
 						;;
 				esac
 			done

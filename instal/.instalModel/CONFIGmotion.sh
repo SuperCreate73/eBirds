@@ -4,6 +4,23 @@
 #################################################################################
 # functions
 #################################################################################
+
+function doMotionVersion()
+{
+	# update input file with option names of current motion verion
+	# $1 fichier de paramètres Motion à traiter
+	# $2 fichier dans lequel effectuer les remplacements
+
+	OLDIFS="$IFS"
+
+	while IFS=: read referenceName substituteName ; do
+		sed "$2" -i -e "s/$referenceName/$substituteName/g" || printError "$?"
+	done < $(grep -e '^[^(#|;).*]' "$1")
+
+	IFS="$OLDIFS"
+	return 0
+}
+
 function updateConfigMotion()
 {
 	# si la version courante de Motion a des noms de paramètres différents
@@ -32,28 +49,14 @@ function updateConfigMotion()
 	doInsertRecord $(ls "$INSTALL_PATH"/.input/DBinsertMotion*)
 }
 
-function doMotionVersion()
-{
-	# update input file with option names of current motion verion
-	# $1 fichier de paramètres Motion à traiter
-	# $2 fichier dans lequel effectuer les remplacements
-
-	OLDIFS="$IFS"
-
-	while IFS=: read referenceName substituteName ; do
-		sed "$2" -i -e "s/$referenceName/$substituteName/g" || printError "$?"
-	done < $(grep -e '^[^(#|;).*]' "$1")
-
-	IFS="$OLDIFS"
-	return 0
-}
 
 #################################################################################
 # script begin
 #################################################################################
 printMessage "Configuration de motion" "motion"
 
-# Activation du module V4l2 pour que la camera PI soit reconnue par Motion
+# Activation du module V4l2 pour que la camera PI soit reconnue par Motion,
+#+si pas encore fait uniquement (testé par GREP)
 if ! grep -q -e "^bcm2835-v4l2$" /etc/modules ; then
 	echo 'bcm2835-v4l2' >> /etc/modules
 fi
@@ -64,7 +67,7 @@ currentVersion="$installedVersion"
 
 # gestion des fichiers input
 # si changement de version
-if [ ! "$currentVersion" = "$verMotion" ] ; then
+if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ]; then
 
 	# Copie des fichiers sources : DBinsert_Motion_*; MOTIONparam_*
 	cp --force "$INSTALL_PATH/motion/$verMotionDefault/DBinsertMotion_\*" "$INSTALL_PATH/.input/"
@@ -81,9 +84,9 @@ if [ ! "$currentVersion" = "$verMotion" ] ; then
 
 		if [ -d "$INSTALL_PATH/motion/$currentVersion" || -d "$INSTALL_PATH/motion/$verMotion" ] ; then
 			# re-initialisation des tables motion
-			sqlite3 /var/www/nichoir.db "DELETE from config" > /dev/null 2>&1
-			sqlite3 /var/www/nichoir.db "DELETE from configRange" > /dev/null 2>&1
-			sqlite3 /var/www/nichoir.db "DELETE from configAlias" > /dev/null 2>&1
+			sqlite3 "$DB_FILE" "DELETE from config" > /dev/null 2>&1
+			sqlite3 "$DB_FILE" "DELETE from configRange" > /dev/null 2>&1
+			sqlite3 "$DB_FILE" "DELETE from configAlias" > /dev/null 2>&1
 
 			# reinitialisation de la vue "viewReglages.php"
 			sudo cp --force "eBirds/html_working/view/viewReglages.php" "/var/www/html/view/viewReglages.php" >> $LOG_FILE 2>&1 || printError "$?"
@@ -101,8 +104,8 @@ if [ ! "$currentVersion" = "$verMotion" ] ; then
 		systemctl enable motion || printError "$?"
 
 		updateConfigMotion
-
 	fi
+
 
 elif [ -d "$INSTALL_PATH/motion/$currentVersion" ] && [ "$varMotion" ] ; then
 	# TODO Ajouter un flag pour forcer la mise à jour de la vue, true si les fichiers du nichoir ont été mis à jour.
