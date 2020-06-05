@@ -76,6 +76,7 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 	cp --force "$INSTALL_PATH/motion/$verMotionDefault/MOTIONparam_\*" "$INSTALL_PATH/.input/"
 
 	[ "$varDebug" ] && echo "Entering Motion - reinit existing instal" >> $DEBUG_FILE
+	[ "$varDebug" ] && echo $([ ! "$varFirstInstal" ]) >> $DEBUG_FILE
 
 	# si pas une nouvelle install et version installée ou ancienne version avec paramètres modifiés -> mise à jour
 	if [ ! "$varFirstInstal" ] ; then
@@ -86,7 +87,7 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 		# BUG programme ne semble pas vider et copier les tables, pourquoi ?
 		#
 
-		if [ -d "$INSTALL_PATH/motion/$currentVersion" || -d "$INSTALL_PATH/motion/$verMotion" ] ; then
+		if [ -d "$INSTALL_PATH/motion/$currentVersion" ] || [ -d "$INSTALL_PATH/motion/$verMotion" ] ; then
 			# re-initialisation des tables motion
 			sqlite3 "$DB_FILE" "DELETE from config" > /dev/null 2>&1
 			sqlite3 "$DB_FILE" "DELETE from configRange" > /dev/null 2>&1
@@ -101,6 +102,7 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 
 	else
 		# mise à jour de première instal
+		[ "$varDebug" ] && echo "Entering Motion - reinit existing instal - else" >> $DEBUG_FILE
 
 		# configuration du démon
 		sed "/etc/default/motion" -i -e "s/^start_motion_daemon=no/start_motion_daemon=yes/g"
