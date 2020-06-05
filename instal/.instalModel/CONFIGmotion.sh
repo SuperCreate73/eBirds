@@ -13,6 +13,7 @@ function doMotionVersion()
 
 	OLDIFS="$IFS"
 	local tmpContent=$(grep -e '^[^(#|;).*]' "$1")
+	[ "$varDebug" ] && echo "$tmpContent" >> $DEBUG_FILE
 	while IFS=: read referenceName substituteName ; do
 		sed "$2" -i -e "s/$referenceName/$substituteName/g" || printError "$?"
 	done < $tmpContent
