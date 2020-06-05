@@ -12,10 +12,10 @@ function doMotionVersion()
 	# $2 fichier dans lequel effectuer les remplacements
 
 	OLDIFS="$IFS"
-
+	local tmpContent=$(grep -e '^[^(#|;).*]' "$1")
 	while IFS=: read referenceName substituteName ; do
 		sed "$2" -i -e "s/$referenceName/$substituteName/g" || printError "$?"
-	done < ${grep -e '^[^(#|;).*]' "$1"}
+	done < `grep -e '^[^(#|;).*]' "$1"`
 
 	IFS="$OLDIFS"
 	return 0
