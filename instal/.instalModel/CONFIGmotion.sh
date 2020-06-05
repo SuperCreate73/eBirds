@@ -67,7 +67,7 @@ currentVersion="$installedVersion"
 
 # gestion des fichiers input
 # si changement de version
-if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ]; then
+if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 
 	# Copie des fichiers sources : DBinsert_Motion_*; MOTIONparam_*
 	cp --force "$INSTALL_PATH/motion/$verMotionDefault/DBinsertMotion_\*" "$INSTALL_PATH/.input/"
@@ -95,7 +95,7 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ]; then
 
 		fi
 
-	else
+	elif [ "$varFirstInstal" ] ; then
 		# mise à jour de première instal
 
 		# configuration du démon
