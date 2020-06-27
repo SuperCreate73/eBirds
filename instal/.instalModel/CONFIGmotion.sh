@@ -144,6 +144,7 @@ fi
 	# modification de motion.conf
 	source "$INSTALL_PATH/.instalModel/CONFIGmotionConf.sh"
 
+	printMessage "mise à jour du fichier de config - verMotion" "$INSTALL_PATH/.config/versions.sh"
 	updateParameter "$INSTALL_PATH/.config/versions.sh" "verMotion" "$installedVersion"
 
 # # création du fichier config local de motion

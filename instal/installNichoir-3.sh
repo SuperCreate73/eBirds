@@ -6,16 +6,13 @@
 # license : dwyw (do what you want)
 
 #
-# Le script est installé dans le répertoire /usr/local/etc/instal et un lien
+# Le script est installé dans le répertoire /usr/local/etc/instal. Un lien
 # symbolique est généré dans le répertoire /usr/local/bin pour permettre l'appel
 # depuis la console. Le nom du lien symbolique est 'nichoir'
 #
 # Lancer le script en sudo : $ sudo nichoir avec les options
 # éventuelles.
 # Pour plus d'informations, lancer 'nichoir' avec l'option -h, --help ou ?
-#
-#
-#
 #
 #   ###########################################
 
@@ -33,23 +30,48 @@
 #
 # TODO existing record protection when inserting in DB
 #
-# TODO replace AWK by SED command in CONFIGinit.sh
-#
 #   ###########################################
 
 #######################################################################
-# initialisation des paramètres et constantes + contrôle USER et HELP
+# initialisation des variables, paramètres et constantes
 #######################################################################
 
 # config constant
 INSTALL_PATH="/usr/local/etc/instal"
 LOG_FILE="$INSTALL_PATH/logInstal.log"
 DB_FILE="/var/www/nichoir.db"
+SCRIPT_FILE=$(basename "$0")
 DEBUG_FILE="$INSTALL_PATH/debug.log"
 VERSION="1.1 - 01-06-2020"
+
 # error constant
-BAD_USER=1
-BAD_OPTION=2
+BAD_OPTION=65			# unknow option used
+BAD_USER=66				# No root user
+GIT_ERROR=67			# unable to install git
+SOURCES_ERROR=68	# source files not found
+
+# options variables
+varVerbose=false	# display status messages on terminal
+varError=false		# display errors on terminal
+varResetLog=false	# clean log file
+varDebug=false		# debug messages
+varUpgrade=false	# linux system upgrade
+varUpdate=false		# default, not used
+varRecall=false		# internal - in case of instal script update
+varCheckBib=false  # instal python library
+varMotion=false		# configure motion tables, configFile & viewReglages
+varCheckDB=false	# initialize or update DB & tables (no records, only structure)
+varWebAppInstal=false # instal local web app
+varScriptInstal=false # (re)instal update script
+varCopyConfig=false # (re)init config file with template
+
+# script variables
+varMessage=""	  # message to display on screen or save in log file
+varErrorCount=0		# error count
+
+#######################################################################
+# contrôle du user et des paramètres du script
+#######################################################################
 
 # déclaration des fonctions de base du script - usage, printLog, ...
 source "$INSTALL_PATH/.instalModel/Functions.sh"
@@ -66,68 +88,56 @@ if [[ "$EUID" -ne 0 ]] ; then
 	exit "$BAD_USER"
 fi
 
-# options variables
-varVerbose=false	# display status messages on terminal
-varError=false		# display errors on terminal
-varResetLog=false	# clean log file
-varDebug=false		# debug messages
-varUpgrade=false	# linux system upgrade
-#varServer=false
-varUpdate=false		# default, not used
-varRecall=false		# internal - in case of instal script update
-varCheckBib=false  # instal python library
-varMotion=false		# configure motion tables, configFile & viewReglages
-varCheckDB=false	# initialize or update DB & tables (no records, only structure)
-varWebAppInstal=false # instal local web app
+# script parameter analyse
+#-------------------------
+if [ "$#" -gt 0 ] ; then  # if number of script parameter > 0
 
-# message to display on screen or save in log file
-varMessage=""
+	varAllParams="$@" 	# backup of original parameter -> used if script is re-run in case of script update
 
-# error count
-varErrorCount=0
+	optionAnalyse "$@" 	# call of function that analyse script parameters
 
-# options analyse
-#----------------
-
-# test de la présence de paramètres (nombre de paramètres supérieur à 0)
-if [ "$#" -gt 0 ] ; then
-
-	# backup of original parameter -> used if script is re-run
-	varAllParams="$@"
-
-	# call of function that analyse options and init flags
-	optionAnalyse "$@"
-
-	if [ "$?" = "$BAD_OPTION" ] ; then
-			echo "Option(s) non reconnue(s)"
+	if [ "$?" = "$BAD_OPTION" ] ; then	# error in script parameters
+			echo -e "\nOption(s) non reconnue(s)"
+			echo "used options : $varAllParams "
 			echo "------------------------"
 			usage
 			[ "$varDebug" ] && echo "Bad option error -> list=$varAllParams" >> $DEBUG_FILE
 			exit "$BAD_OPTION"
 	fi
+else
+	# TODO comportement par défaut si pas d'option
 fi
 
 [ "$varDebug" ] && echo "Options analyse successfull-> list=$varAllParams" >> $DEBUG_FILE
 
-
 # look if first instal by checking if DB_file exist
 if [ -e "$DB_FILE" ] ; then
 	varFirstInstal=false
-else
+else	# first install
 	varCheckBib=true
 	varMotion=true
 	varCheckDB=true
 	varWebAppInstal=true
 	varFirstInstal=true
+	varResetLog=true
+	varScriptInstal=true
+	varCopyConfig=true
 fi
 
 [ $varDebug ] && echo "Config var - varFirstInstal=$varFirstInstal" >> $DEBUG_FILE
 
-# initialisation des variables de version (issu du fichier local des versions)
-source "$INSTALL_PATH/.config/versions.sh" || printError "$?"
+# initialisation des variables de version (issues du fichier local des versions)
+if [ -e "$INSTALL_PATH/.config/versions.sh" ] ; then
+	source "$INSTALL_PATH/.config/versions.sh" || printError "$?"
 
-[ "$varDebug" ] && echo "version.sh loaded" >> $DEBUG_FILE
+	[ "$varDebug" ] && echo "version.sh loaded" >> $DEBUG_FILE
+else
+	verInstal=""
+	varScriptInstal=true
+	varCopyConfig=true
 
+	[ "$varDebug" ] && echo "version.sh not present - update is configured" >> $DEBUG_FILE
+fi
 
 #######################################################################
 # Initialisation
@@ -138,6 +148,7 @@ source "$INSTALL_PATH/.config/versions.sh" || printError "$?"
 if [ ! -e "$LOG_FILE" ] || [ "$varResetLog" = true ] ; then
 	printMessage "Création et paramétrage du fichier log" "$LOG_FILE"
 	echo -e "# coding:UTF-8 \n\n" > $LOG_FILE || printError "$?"
+	echo -e "$(date) \n\n" >> $LOG_FILE || printError "$?"
 	[ "$varDebug" ] && echo "Log File created" >> $DEBUG_FILE
 fi
 
@@ -160,14 +171,14 @@ if [ ! "$varRecall" = true ] ; then
 		# -q -o=Dpkg::Use-Pty=0 - réduit le nombre d'affichages (mode quiet)
 		# et écriture de la sortie dans le fichier log (mode ajout '>>' )
 		# si une erreur est générée, exécute 'printError'
-		apt-get -q -o=Dpkg::Use-Pty=0 --assume-yes install git >> "$LOG_FILE" 2>&1 || printError "$?"
+		apt-get -q -o=Dpkg::Use-Pty=0 --assume-yes install git >> "$LOG_FILE" 2>&1 || (printError "$?" ; exit "$GIT_ERROR")
 	fi
 
 	[ "$varDebug" ] && echo "Install GIT done" >> $DEBUG_FILE
 
 	# téléchargement des fichiers eBirds dans le répertoire courant
 	printMessage "téléchargement des fichiers sources depuis GitHub" "https://github.com/SuperCreate73/eBirds.git"
-	git clone --quiet "https://github.com/SuperCreate73/eBirds.git" >> $LOG_FILE 2>&1 || printError "$?"
+	git clone --quiet "https://github.com/SuperCreate73/eBirds.git" >> $LOG_FILE 2>&1 || (printError "$?" ; exit "$SOURCES_ERROR")
 
 	[ "$varDebug" ] && echo "Download files from GitHub done" >> $DEBUG_FILE
 
@@ -177,6 +188,8 @@ if [ ! "$varRecall" = true ] ; then
 	if [ ! "$lvTempVersion" = "$verInstal" ] || [ "$varScriptInstal" = true ] ; then
 
 		source "$INSTALL_PATH/.instalModel/SCRIPTinstal.sh"
+
+		printMessage "mise à jour du fichier de config - verInstal" "$INSTALL_PATH/.config/versions.sh"
 		updateParameter "$INSTALL_PATH/.config/versions.sh" "verInstal" "$lvTempVersion"
 
 		[ "$varDebug" ] && echo "Modify instal script done -> reloading script" >> $DEBUG_FILE
@@ -196,6 +209,8 @@ lvTempVersion=`grep "verPrgInstal" "eBirds/instal/.config/versions.sh" | cut -d 
 
 if [ ! "$lvTempVersion" = "$verPrgInstal" ] || [ "$varCheckBib" = true ] ; then
 	source "$INSTALL_PATH/.instalModel/PRGinstal.sh"
+
+	printMessage "mise à jour du fichier de config - verPrgInstal" "$INSTALL_PATH/.config/versions.sh"
 	updateParameter "$INSTALL_PATH/.config/versions.sh" "verPrgInstal" "$lvTempVersion"
 
 	[ "$varDebug" ] && echo "Program installation done" >> $DEBUG_FILE
@@ -208,6 +223,8 @@ lvTempVersion=`grep "verPythonLib" "eBirds/instal/.config/versions.sh" | cut -d 
 
 if [ ! "$lvTempVersion" = "$verPythonLib" ]  || [ "$varCheckBib" = true ] ; then
 	source "$INSTALL_PATH/.instalModel/PYTHONinstal.sh"
+
+	printMessage "mise à jour du fichier de config - verPythonLib" "$INSTALL_PATH/.config/versions.sh"
 	updateParameter "$INSTALL_PATH/.config/versions.sh" "verPythonLib" "$lvTempVersion"
 
 	[ "$varDebug" ] && echo "Python Library installation done" >> $DEBUG_FILE
@@ -220,6 +237,8 @@ lvTempVersion=`grep "verNichoirFiles" "eBirds/instal/.config/versions.sh" | cut 
 
 if [ ! "$lvTempVersion" = "$verNichoirFiles" ]  || [ "$varWebAppInstal" = true ] ; then
 	source "$INSTALL_PATH/.instalModel/FILESinstal.sh"
+
+	printMessage "mise à jour du fichier de config - verNichoirFiles" "$INSTALL_PATH/.config/versions.sh"
 	updateParameter "$INSTALL_PATH/.config/versions.sh" "verNichoirFiles" "$lvTempVersion"
 
 	[ "$varDebug" ] && echo "Local web site update done" >> $DEBUG_FILE
@@ -241,6 +260,7 @@ if [ ! "$lvTempVersion" = "$verDB" ]  || [ "$varCheckDB" = true ] ; then
 
 	[ "$varDebug" ] && echo "DB / admin user insert done" >> $DEBUG_FILE
 
+	printMessage "mise à jour du fichier de config - verDB" "$INSTALL_PATH/.config/versions.sh"
 	updateParameter "$INSTALL_PATH/.config/versions.sh" "verDB" "$lvTempVersion"
 fi
 

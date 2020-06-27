@@ -3,17 +3,18 @@
 
 function usage()
 {
-# affichage de l'aide
-#--------------------
+# print help :
 #
+
 	echo -e "\nUsage: sudo $0 [OPTION] "
+
 	echo -e "\nInstalle, met à jour et configure le nichoir"
-	echo ""
-	echo "Les fichiers nécessaires sont automatiquement téléchargés du serveur ebirds"
-	echo ""
-	echo "Le script initial doit être copié localement avec la permission d'exécution.  Il"
-	echo "est ensuite lancé avec la commande sudo.\n"
-	echo "Après l'installation initiale, le programme est accessible depuis une console avec"
+	echo "Les fichiers nécessaires sont automatiquement téléchargés du serveur ebirds."
+
+	echo -e "\nLe script initial doit être copié localement avec la permission d'exécution.  Il"
+	echo "est ensuite lancé avec la commande sudo."
+
+	echo -e "\nAprès l'installation initiale, le programme est accessible depuis la console avec"
 	echo "la commande 'sudo nichoir [OPTION]'"
 	echo -e "\nVersion : $VERSION"
 
@@ -48,18 +49,15 @@ function usage()
 
 function printMessage()
 {
-# affichage des messages dans le terminal et/ou dans le fichier log
-#-------------------------------------------------------------------
-# $1 texte explicatif à afficher
-# $2 programme à installer
+# print messages on terminal and/or log file :
+# $1 description of current operation
+# $2 item
 
-	# préparation de la chaine de texte pour le fichier Log
-	varMessage="$1 -- $2 --"
+	varMessage="$1 -- $2 --" 		# message format
 
-	# affichage dans la console si mode verbeux
-	[ "$varVerbose" = true ] &&  echo "$varMessage"
+	[ "$varVerbose" = true ] &&  echo "$varMessage"  	# write in console if applicable
 
-	# préparation de la chaine de séparation '-----------'
+	# prepare separation string '-----------'
 	str=""
 	(( count = 0 ))
 
@@ -68,39 +66,34 @@ function printMessage()
 		(( count += 1 ))
 	done
 
-	# écriture dans le fichier log
-	echo -e "\n$varMessage \n$str " >> $LOG_FILE
+	echo -e "\n$varMessage \n$str " >> $LOG_FILE		# write in logfile
+
 	return 0
 }
 
 function printError()
 {
-# impression des erreurs en console et dans le fichier log
-#--------------------------------------------------------
-# $1 code d'erreur
+# print errors on console and log file :
+# $1 error number
+#
 
-	# si le code d'erreur est != 0 -> traitement de l'erreur
-	if [ $1 -gt 0 ] ; then
-		# incrément du compteur d'erreurs
-		(( varErrorCount += 1 ))
-		# impression dans logfile
-		echo "    ERROR - $varMessage - Error Code $1" >> $LOG_FILE
-		# affichage en console si option activée
-		[ ! "$varError" ] || echo "    Error on execution - $varMessage - Error Code $1"
+	if [ $1 -gt 0 ] ; then 	# if error number > 0
+		(( varErrorCount += 1 ))	# error count increment
+		echo "#### ERROR #### $varMessage - Error Code $1" >> $LOG_FILE			# write in logfile
+		[ "$varError" ] && echo "    Error on execution - $varMessage - Error Code $1"	# write in console if applicable
 	fi
+
 	return 0
 }
 
 function updateParameter()
 {
-	# update des paramètres dans le fichier de config
-	#--------------------------------------------------------
-	# $1 - fichier de config
-	# $2 - paramètre
+	# parameter update in config file :
+	# $1 - config file
+	# $2 - parameter
 	# $3 - value
-	printMessage "mise à jour du fichier de config - $2" "$1"
 
-	if grep "$2" "$1" ; then
+	if grep -q "$2" "$1" ; then
 		sed "$1" -i -e 's/^'"$2"'=.*$/'"$2"'='"$3"'/g' > /dev/null || printError "$?"
 	else
 		echo "$2=$3" >> $1
@@ -111,43 +104,40 @@ function updateParameter()
 
 function optionAnalyse()
 {
-	# boucle parcourant les paramètres fournis
+	# analyse of command line Options :
+	#
+
 	while [ 1 -le "$#" ] ; do
 
 		if [ "${1:0:2}" = "--" ] ; then
 			case "${1:2}" in
-				"first")
-					# si installateur manuellement downloadé et pas la première instal
-					if [ "$varFirstInstal" != true ] ; then
+				"first")	# manual download of install script
+					if [ "$varFirstInstal" != true ] ; then 	# not the first install
 						varCheckBib=true
 						varScriptInstal=true
 					fi
 					;;
-				"recall")
+				"recall")		# restart of install script in case of main install update
 					varRecall=true
 					;;
-				"debug")
+				"debug")		# debug option
 					varDebug=true
-					echo "####################################################" >> $DEBUG_FILE
+					echo -e "\n\n####################################################" >> $DEBUG_FILE
 					echo $(date)" - instal nichoir debug log" >> $DEBUG_FILE
 					echo "####################################################" >> $DEBUG_FILE
 					;;
 			esac
 
-		# test de la valeur de la variable - regex testant une chaine commançant par - et contenant
-		# zero ou une occurance de chacune des lettres autorisées
-	elif [[ "$1" =~ ^[-]([delmuUvswfi]+)$ ]]  ; then
+		# check the parameter value - regex beginning with '-' and containing zero or one authorised option
+		elif [[ "$1" =~ ^[-]([delmuUvswfi]+)$ ]]  ; then
 
-			#	affecte le string des paramètres à 'variables' en enlevant le premier '-'
-			variables=${1:1}
+			variables=${1:1}	#	parameters string affected to 'variables' without first character '-'
 
-			#	parcours de la chaine de caractère des paramètres et affectation des
-			#   variables d'état des paramètres + tests des combinaisons de paramètres
-			for var_count in `seq 0 ${#variables}` ; do
-				case ${variables:$var_count:1} in
+			for var_count in `seq 0 ${#variables}` ; do  	# iteration char by char of the parameters string
+				case ${variables:$var_count:1} in		# variables initialisation
 					"d")
 						varDebug=true
-						echo "####################################################" >> $DEBUG_FILE
+						echo -e "\n\n####################################################" >> $DEBUG_FILE
 						echo $(date)" - instal nichoir debug log" >> $DEBUG_FILE
 						echo "####################################################" >> $DEBUG_FILE
 						;;
@@ -188,16 +178,15 @@ function optionAnalyse()
 						;;
 				esac
 			done
-#	motif de paramètres non reconnu
-		else
+
+		else	#	unknow paramter -> error
 			return "$BAD_OPTION"
 		fi
 
-	#	passage au paramètre suivant
-		shift
-
+		shift		#	next parameters
 	done
 
+	# variables status written to debug file
 	[ $varDebug ] && echo "General options" >> $DEBUG_FILE
 	[ $varDebug ] && echo "Config var - varDebug=$varDebug" >> $DEBUG_FILE
 	[ $varDebug ] && echo "Config var - varError=$varError" >> $DEBUG_FILE
@@ -214,13 +203,12 @@ function optionAnalyse()
 	[ $varDebug ] && echo "Config var - varMotion=$varMotion" >> $DEBUG_FILE
 
 	return 0
-
 }
 
 
 function doInsertRecord()
 {
-	# insert record from input files given as parameters
+	# insert record from input files given as parameters :
 	# $x : input file(s)
 
 	oldIFS="$IFS"
@@ -252,5 +240,4 @@ function doInsertRecord()
 	IFS="$oldIFS"
 
 	return 0
-
 }
