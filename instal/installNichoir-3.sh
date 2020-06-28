@@ -40,7 +40,7 @@
 INSTALL_PATH="/usr/local/etc/instal"
 LOG_FILE="$INSTALL_PATH/logInstal.log"
 DB_FILE="/var/www/nichoir.db"
-SCRIPT_FILE=$(basename "$0")
+SCRIPT_FILE=installNichoir-3.sh
 DEBUG_FILE="$INSTALL_PATH/debug.log"
 VERSION="1.1 - 01-06-2020"
 
@@ -104,7 +104,7 @@ if [ "$#" -gt 0 ] ; then  # if number of script parameter > 0
 			[ "$varDebug" ] && echo "Bad option error -> list=$varAllParams" >> $DEBUG_FILE
 			exit "$BAD_OPTION"
 	fi
-else
+# else
 	# TODO comportement par défaut si pas d'option
 fi
 
