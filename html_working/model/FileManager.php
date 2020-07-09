@@ -5,7 +5,7 @@ class FileManager {
 	// Attention, nécessite le droit d'exécution sur les fichiers et répertoires !
 
 //Attributs:
-	private $_filePath = 'public/cameraShots/' ; //
+	private $_filePath = '/var/www/html/public/cameraShots/' ; //
 	private $_fileMask;
 	private $_fileCount;
 	private $_fileList;
@@ -57,17 +57,22 @@ class FileManager {
 	public function deleteFiles($fileList) {
 		// Efface les fichiers donnés en arguments
 
-		// ouverture du répertoire
-		$openedPath = opendir($this->_filePath);
+		try {
+			for ($i = 0; $i <= count($fileList); $i+=10) {
+				$fileListSlice = array_slice($fileList, $i,10);
+				$fileString = "";
+				foreach ($fileListSlice as $file) {
+					// Formattage du tableau
+					$fileToDelete = $this->_filePath.$file.".jpg";
+					$fileString = $fileString." ".$fileToDelete;
+				}
+				$output = shell_exec('sudo rm'. $fileString );
+		 }
 
-		// parcours du tableau avec les fichiers à effacer
-		foreach ($fileList as $file) {
-			// association du chemin d'accès et du nom de fichier
-			$fileToDelete = $this->_filePath.$file.".jpg";
-			// efface le fichier courant
-			unlink($fileToDelete);
-        }
-		closedir($openedPath); // On ferme !
+		 catch (Exception $e) {
+			 $output = shell_exec('echo "Erreur :'. $e .'" >> /var/www/debug.log');
+		 }
+		 return ;
 	}
 
 	public function zipFiles($fileList) {
