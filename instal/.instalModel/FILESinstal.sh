@@ -28,12 +28,22 @@ printMessage "déplacement des fichiers web" "/var/www/html"
 sudo cp -r --force eBirds/html_working/* /var/www/html/ >> $LOG_FILE 2>&1 || printError "$?"
 
 # Crée des répertoires vide si non existant
-if [ ! -d "/var/www/html/public/cameraShots" ] ; then
-	sudo mkdir "/var/www/html/public/cameraShots" >> "$LOG_FILE" 2>&1
+if [ ! -d "/home/pi/images" ] ; then
+	mkdir "/home/pi/images" >> "$LOG_FILE" 2>&1
 fi
 
+if [ ! -d "/home/pi/videos" ] ; then
+	mkdir "/home/pi/videos" >> "$LOG_FILE" 2>&1
+fi
+
+if [ ! -d "/var/www/html/public/cameraShots" ] ; then
+		ln -s "/home/pi/images" "/var/www/html/public/cameraShots"
+fi
+
+
 if [ ! -d "/var/www/html/public/cameraFilms" ] ; then
-	sudo mkdir "/var/www/html/public/cameraFilms" >> "$LOG_FILE" 2>&1
+#	sudo mkdir "/var/www/html/public/cameraFilms" >> "$LOG_FILE" 2>&1
+	ln -s "/home/pi/videos" "/var/www/html/public/cameraFilms"
 fi
 
 printMessage "déplacement des scripts python" "/var/www/backend"

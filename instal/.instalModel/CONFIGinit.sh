@@ -54,14 +54,18 @@ adduser www-data w3 > /dev/null 2>&1 || printError "$?"
 
 echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/localsudo
 
+#directory /home/pi
+chgrp -R w3 /home/pi > /dev/null 2>&1 || printError "$?"
+chmod -R 774 /home/pi > /dev/null 2>&1 || printError "$?"
+
 # directory /var/www
 chgrp -R w3 /var/www/ > /dev/null 2>&1 || printError "$?"
 chmod -R 774 /var/www/ > /dev/null 2>&1 || printError "$?"
 
 # directory /home/pi/.motion
 mkdir /home/pi/.motion > /dev/null 2>&1 || printError "$?"
-chgrp -R w3 /home/pi/.motion/ > /dev/null 2>&1 || printError "$?"
-chmod -R 770 /home/pi/.motion/ > /dev/null 2>&1 || printError "$?"
+chgrp -R w3 /home/pi/.motion > /dev/null 2>&1 || printError "$?"
+chmod -R 770 /home/pi/.motion > /dev/null 2>&1 || printError "$?"
 
 #######################################################################
 # configuration de l'envoi de l'adresse IP au serveur
