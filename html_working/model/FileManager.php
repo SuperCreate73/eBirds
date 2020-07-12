@@ -67,6 +67,7 @@ class FileManager {
 					$fileString = $fileString." ".$fileToDelete;
 				}
 				$output = shell_exec('sudo rm'. $fileString );
+			}
 		 }
 
 		 catch (Exception $e) {
