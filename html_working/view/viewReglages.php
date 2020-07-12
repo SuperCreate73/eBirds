@@ -212,7 +212,7 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 
 			<div class="five columns offset-by-seven">
 				<label>Email de contact en cas de détection de mouvement:</label>
-				<input class="u-full-width" type="text" placeholder="<?= $settingsInterface -> on_motion_detected ?>" name="on_motion_detected" id="on_motion_detected" onchange="">
+				<input class="u-full-width" type="text" value="<?= $settingsInterface -> on_motion_detected ?>" name="on_motion_detected" id="on_motion_detected" onchange="">
 			</div>
 		</div>
 
