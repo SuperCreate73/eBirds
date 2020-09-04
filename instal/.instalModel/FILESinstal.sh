@@ -6,50 +6,70 @@
 #######################################################################
 # nettoyage de /var/www/html si nichoir pas encore installé
 # déterminé avec répertoire 'camerashot' et base de donnée 'nichoir.db'
-if [ -d /var/www/html ] && [ ! `ls -A /var/www/html | wc -c` -eq 0 ] ; then
-	if [ ! -d /var/www/html/public/cameraShots ] || [ ! -e /var/www/nichoir.db ] ; then
-		printMessage "Nettoyage du répertoire html" "rm -r /var/www/html/*"
-		rm -r /var/www/html/* >> $LOG_FILE 2>&1
-		printError "$?"
+IMAGE_PATH_REAL="/home/pi/images"
+IMAGE_PATH_LINK="$WEB_PATH/public/cameraShots"
+VIDEO_PATH_REAL="/home/pi/videos"
+VIDEO_PATH_LINK="$WEB_PATH/public/cameraFilms"
+WEB_PATH_ORIGINAL="eBirds/html_working"
+BACKEND_PATH_ORIGINAL="eBirds/backend"
+LOG_PATH_ORIGINAL="eBirds/log"
+VIDEO_PATH_ORIGINAL="$WEB_PATH_ORIGINAL/public/cameraFilms"
+IMAGE_PATH_ORIGINAL="$WEB_PATH_ORIGINAL/public/cameraShots"
+
+function makeCameraStorage()
+{
+	# create directories and symlinks to store camera image & films
+	filePathReal="$1"
+	filePathLink="$2"
+
+	printMessage "Création des répertoires" "$filePathReal"
+
+	# make 'real' directory if not exist
+	[ ! -d "$filePathReal" ] &&	mkdir "$filePathReal" >> "$LOG_FILE" 2>&1 || printError "$?"
+
+	# make 'symlink' directory if not exist.  Otherwise, copy files in 'real' directory before creating symlink
+	# option backup is used to avoid loosing data
+	if [ ! -d "$filePathLink" ] ; then 		# dir do not exist -> create symlink
+
+		ln -s "$filePathReal" "$filePathLink" >> "$LOG_FILE" 2>&1  || printError "$?" 	# create symlink
+
+	elif [ ! -L "$filePathLink"] ; then		# dir exist & not a symlink
+
+		[ ! `ls -A "$filePathLink" | wc -c` -eq 0 ] && mv -b "$filePathLink/*" "$filePathReal" >> "$LOG_FILE" 2>&1 # dir not empty -> backup files
+		fi
+
+		rm -r "$filePathLink"	>> "$LOG_FILE" 2>&1 || printError "$?"	# remove directory
+		ln -s "$filePathReal" "$filePathLink" >> "$LOG_FILE" 2>&1 || printError "$?" # create symlink
+	fi
+
+	exit 0
+
+}
+
+# clean-up directory $WEB_PATH if dir camera files or dbfile don't exist (first instal)
+if [ -d "$WEB_PATH" ] && [ ! `ls -A "$WEB_PATH" | wc -c` -eq 0 ] ; then 	# si le répertoire existe et n'est pas vide
+	if [ ! -d "$IMAGE_PATH_LINK" ] || [ ! -e "$DB_FILE" ] ; then # si le dir camera n'existe pas ou
+		printMessage "Nettoyage du répertoire html" "rm -r /var/www/html/*"								#+si la db n'existe pas
+		rm -r -d "$WEB_PATH/*" >> "$LOG_FILE" 2>&1 || printError "$?"
 	fi
 fi
 
-# vérifie que les répertoires photo et film sont bien absent des fichiers
-# avant de copier la nouvelle copie des fichiers sources
-if [ -d "eBirds/html_working/public/cameraShots" ] ; then
-	rm -r -d "eBirds/html_working/public/cameraShots" > /dev/null 2>&1
-fi
+# vérifie que les répertoires photo et film sont bien absent des fichiers sources
+#+avant de les copier pour éviter d'écraser des photos/films existants
+[ -d "$IMAGE_PATH_ORIGINAL" ] && rm -r -d "$IMAGE_PATH_ORIGINAL" > /dev/null 2>&1
+[ -d "$VIDEO_PATH_ORIGINAL" ] && rm -r -d "$VIDEO_PATH_ORIGINAL" > /dev/null 2>&1
 
-if [ -d "eBirds/html_working/public/cameraFilms" ] ; then
-	rm -r -d "eBirds/html_working/public/cameraFilms" > /dev/null 2>&1
-fi
+printMessage "déplacement des fichiers web" "$WEB_PATH"
+sudo cp -r --force "$WEB_PATH_ORIGINAL/*" "$WEB_PATH" >> "$LOG_FILE" 2>&1 || printError "$?"
 
-printMessage "déplacement des fichiers web" "/var/www/html"
-sudo cp -r --force eBirds/html_working/* /var/www/html/ >> $LOG_FILE 2>&1 || printError "$?"
+makeCameraStorage "$IMAGE_PATH_REAL" "$IMAGE_PATH_LINK" 	# create image dir
 
-# Crée des répertoires vide si non existant
-if [ ! -d "/home/pi/images" ] ; then
-	mkdir "/home/pi/images" >> "$LOG_FILE" 2>&1
-fi
-
-if [ ! -d "/home/pi/videos" ] ; then
-	mkdir "/home/pi/videos" >> "$LOG_FILE" 2>&1
-fi
-
-if [ ! -d "/var/www/html/public/cameraShots" ] ; then
-		ln -s "/home/pi/images" "/var/www/html/public/cameraShots"
-fi
-
-
-if [ ! -d "/var/www/html/public/cameraFilms" ] ; then
-#	sudo mkdir "/var/www/html/public/cameraFilms" >> "$LOG_FILE" 2>&1
-	ln -s "/home/pi/videos" "/var/www/html/public/cameraFilms"
-fi
+makeCameraStorage "$VIDEO_PATH_REAL" "$VIDEO_PATH_LINK"		# create video dir
 
 printMessage "déplacement des scripts python" "/var/www/backend"
-sudo cp -r --force eBirds/backend /var/www/ >> "$LOG_FILE" 2>&1 || printError "$?"
+cp -r --force "$BACKEND_PATH_ORIGINAL" "$ROOT_PATH" >> "$LOG_FILE" 2>&1 || printError "$?"
 
 if [ ! -d "/var/www/log" ] ; then
 	printMessage "déplacement du répertoire log" "/var/www/log"
-	sudo mv --force eBirds/log /var/www/ >> "$LOG_FILE" 2>&1 || printError "$?"
+	sudo mv --force "$LOG_PATH_ORIGINAL" "$ROOT_PATH" >> "$LOG_FILE" 2>&1 || printError "$?"
 fi

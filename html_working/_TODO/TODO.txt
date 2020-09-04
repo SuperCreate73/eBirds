@@ -9,9 +9,9 @@ Script d'installation :
 répertoire de sauvegarde des photos
   - choix du répertoire
   - référencé via un lien symbolique vers le répertoire
-  - à tester
-      - si les permissions sont ok
-      - si on peut effacer les fichiers depuis l'interface
+  - Testé :
+      - permissions -> ok
+      - effacer des fichiers depuis l'interface -> OK
 
 sauvegarde des utilisateurs sous firefox
   semble ne pas supporter correctement fetch
@@ -37,3 +37,17 @@ Gestion dynamique des capteurs
 
 DB
   simplification des tables capteurs
+
+HARDWARE
+--------
+Carte hat avec les différents connecteurs pré-branchés
+Prémontage des connexions, groupées par capteurs, avec passage pour la vidéo branchée directement sur le pi
+-> faire un prototype
+-> tests
+-> production
+
+Capteurs à prévoir :
+  - micro
+  - convertisseur analogique -> numérique
+  - baffle et ampli (?)
+  - Slot pour résistance (leds allumage et leds détection)

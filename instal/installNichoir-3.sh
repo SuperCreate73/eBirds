@@ -38,9 +38,12 @@
 
 # config constant
 INSTALL_PATH="/usr/local/etc/instal"
+ROOT_PATH="/var/www"
+DB_FILE="$ROOT_PATH/nichoir.db"
+WEB_PATH="$ROOT_PATH/html"
+
+SCRIPT_FILE="installNichoir-3.sh"
 LOG_FILE="$INSTALL_PATH/logInstal.log"
-DB_FILE="/var/www/nichoir.db"
-SCRIPT_FILE=installNichoir-3.sh
 DEBUG_FILE="$INSTALL_PATH/debug.log"
 VERSION="1.1 - 01-06-2020"
 
