@@ -1,11 +1,15 @@
 #!/bin/bash
 # coding:UTF-8
-# TODO TODO enlever les fichiers d'instal ? vérifier si tout est OK
+
 #######################################################################
-# gestion des fichiers sources et copie dans les bons répertoires
+# Source files of 'nichoir' management
+#
+# version : v1.0-beta
+# date : 6-9-2020
 #######################################################################
-# nettoyage de /var/www/html si nichoir pas encore installé
-# déterminé avec répertoire 'camerashot' et base de donnée 'nichoir.db'
+# First clean-up of html dir, copy of html dir sources, copy of backend
+#+dir sources, image and video dir assignments.
+#
 IMAGE_PATH_REAL="/home/pi/images"
 IMAGE_PATH_LINK="$WEB_PATH/public/cameraShots"
 VIDEO_PATH_REAL="/home/pi/videos"

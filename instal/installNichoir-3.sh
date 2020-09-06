@@ -35,7 +35,6 @@
 #######################################################################
 # initialisation des variables, paramètres et constantes
 #######################################################################
-
 # config constant
 INSTALL_PATH="/usr/local/etc/instal"
 ROOT_PATH="/var/www"
