@@ -51,6 +51,7 @@ BAD_OPTION=65			# unknow option used
 BAD_USER=66				# No root user
 GIT_ERROR=67			# unable to install git
 SOURCES_ERROR=68	# source files not found
+WRONG_PARAMETER=69	# wrong parameter sent to function
 
 # options variables
 varVerbose=false	# display status messages on terminal
@@ -70,6 +71,7 @@ varCopyConfig=false # (re)init config file with template
 # script variables
 varMessage=""	  # message to display on screen or save in log file
 varErrorCount=0		# error count
+varFirstInstal=true   # first installation flag -> false if DB already exists
 
 #######################################################################
 # contrôle du user et des paramètres du script
@@ -92,11 +94,19 @@ fi
 
 # script parameter analyse
 #-------------------------
+# look if first instal by checking if DB_file exist
+if [ -e "$DB_FILE" ] ; then
+	varFirstInstal=false
+fi
+
+[ $varDebug ] && echo "Config var - varFirstInstal=$varFirstInstal" >> $DEBUG_FILE
+
+
 if [ "$#" -gt 0 ] ; then  # if number of script parameter > 0
 
 	varAllParams="$@" 	# backup of original parameter -> used if script is re-run in case of script update
 
-	optionAnalyse "$@" 	# call of function that analyse script parameters
+	optionAnalyse "$@" 	# call of function that analyse script parameters (Functions.sh)
 
 	if [ "$?" = "$BAD_OPTION" ] ; then	# error in script parameters
 			echo -e "\nOption(s) non reconnue(s)"
@@ -106,37 +116,25 @@ if [ "$#" -gt 0 ] ; then  # if number of script parameter > 0
 			[ "$varDebug" ] && echo "Bad option error -> list=$varAllParams" >> $DEBUG_FILE
 			exit "$BAD_OPTION"
 	fi
-# else
-	# TODO comportement par défaut si pas d'option
+else
+	optionAnalyse "-u"   # default behaviour
 fi
 
 [ "$varDebug" ] && echo "Options analyse successfull-> list=$varAllParams" >> $DEBUG_FILE
 
 # look if first instal by checking if DB_file exist
-if [ -e "$DB_FILE" ] ; then
-	varFirstInstal=false
-else	# first install
-	varCheckBib=true
-	varMotion=true
-	varCheckDB=true
-	varWebAppInstal=true
-	varFirstInstal=true
-	varResetLog=true
-	varScriptInstal=true
-	varCopyConfig=true
+if [ "$varFirstInstal" ] ; then
+	optionAnalyse "-fli" # init variables for first install
 fi
-
-[ $varDebug ] && echo "Config var - varFirstInstal=$varFirstInstal" >> $DEBUG_FILE
 
 # initialisation des variables de version (issues du fichier local des versions)
 if [ -e "$INSTALL_PATH/.config/versions.sh" ] ; then
-	source "$INSTALL_PATH/.config/versions.sh" || printError "$?"
+	source "$INSTALL_PATH/.config/versions.sh" || printError "$?"  # upload of module version variables
 
 	[ "$varDebug" ] && echo "version.sh loaded" >> $DEBUG_FILE
 else
 	verInstal=""
-	varScriptInstal=true
-	varCopyConfig=true
+	optionAnalyse "-iV" # true for varScriptInstal & varCopyConfig
 
 	[ "$varDebug" ] && echo "version.sh not present - update is configured" >> $DEBUG_FILE
 fi
@@ -145,20 +143,21 @@ fi
 # Initialisation
 #######################################################################
 
-# écriture de l'encodage du fichier log si pas encore existant
-#-------------------------------------------------------
+# create and define encodine of Log file
+#---------------------------------------
 if [ ! -e "$LOG_FILE" ] || [ "$varResetLog" = true ] ; then
 	printMessage "Création et paramétrage du fichier log" "$LOG_FILE"
 	echo -e "# coding:UTF-8 \n\n" > $LOG_FILE || printError "$?"
 	echo -e "$(date) \n\n" >> $LOG_FILE || printError "$?"
+
 	[ "$varDebug" ] && echo "Log File created" >> $DEBUG_FILE
 fi
 
 #######################################################################
-# installation et configuration du système
+# installation & configuration of modules
 #######################################################################
 
-# Téléchargement des sources et mise à jour de l'installateur
+# Upload sources et mise à jour de l'installateur
 #-------------------------------------
 if [ ! "$varRecall" = true ] ; then
 	printMessage "Mise à jour du système linux" "update"

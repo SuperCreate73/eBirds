@@ -28,7 +28,8 @@ function usage()
 	echo "        Programmes installés et librairies python"
 	echo "  -m    motion - force la réinitialisation de motion"
 	echo "          /!\ les données locales sont préservées mais pas les options de réglages"
-	echo "  -f    force install - identique aux options -w, -m et -s"
+	echo "  -f    force install - identique aux options -w, -m, -V et -s"
+	echo "  -V    Ecrase le fichier version.sh avec la version du serveur"
 
 	echo -e "\n\nAutres options:"
 	echo "---------------"
@@ -112,7 +113,7 @@ function optionAnalyse()
 		if [ "${1:0:2}" = "--" ] ; then
 			case "${1:2}" in
 				"first")	# manual download of install script
-					if [ "$varFirstInstal" != true ] ; then 	# not the first install
+					if [ "$varFirstInstal" = false ] ; then 	# not the first install
 						varCheckBib=true
 						varScriptInstal=true
 					fi
@@ -129,7 +130,7 @@ function optionAnalyse()
 			esac
 
 		# check the parameter value - regex beginning with '-' and containing zero or one authorised option
-		elif [[ "$1" =~ ^[-]([delmuUvswfi]+)$ ]]  ; then
+		elif [[ "$1" =~ ^[-]([delmuUvVswfi]+)$ ]]  ; then
 
 			variables=${1:1}	#	parameters string affected to 'variables' without first character '-'
 
@@ -165,6 +166,7 @@ function optionAnalyse()
 						varCheckDB=true
 						varMotion=true
 						varWebAppInstal=true
+						varCopyConfig=true
 						;;
 					"s")
 						varCheckBib=true
@@ -175,6 +177,9 @@ function optionAnalyse()
 					"w")
 						varWebAppInstal=true
 						varMotion=true
+						;;
+					"V")
+						varCopyConfig=true
 						;;
 				esac
 			done
