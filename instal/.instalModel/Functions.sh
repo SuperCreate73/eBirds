@@ -48,61 +48,6 @@ function usage()
 	return 0
 }
 
-function printMessage()
-{
-# print messages on terminal and/or log file :
-# $1 description of current operation
-# $2 item
-
-	varMessage="$1 -- $2 --" 		# message format
-
-	[ "$varVerbose" = true ] &&  echo "$varMessage"  	# write in console if applicable
-
-	# prepare separation string '-----------'
-	str=""
-	(( count = 0 ))
-
-	while [ $count -lt ${#varMessage} ] ; do
-		str="$str-"
-		(( count += 1 ))
-	done
-
-	echo -e "\n$varMessage \n$str " >> $LOG_FILE		# write in logfile
-
-	return 0
-}
-
-function printError()
-{
-# print errors on console and log file :
-# $1 error number
-#
-
-	if [ $1 -gt 0 ] ; then 	# if error number > 0
-		(( varErrorCount += 1 ))	# error count increment
-		echo "#### ERROR #### $varMessage - Error Code $1" >> $LOG_FILE			# write in logfile
-		[ "$varError" ] && echo "    Error on execution - $varMessage - Error Code $1"	# write in console if applicable
-	fi
-
-	return 0
-}
-
-function updateParameter()
-{
-	# parameter update in config file :
-	# $1 - config file
-	# $2 - parameter
-	# $3 - value
-
-	if grep -q "$2" "$1" ; then
-		sed "$1" -i -e 's/^'"$2"'=.*$/'"$2"'='"$3"'/g' > /dev/null || printError "$?"
-	else
-		echo "$2=$3" >> $1
-	fi
-	return 0
-}
-
-
 function optionAnalyse()
 {
 	# analyse of command line Options :
@@ -206,43 +151,6 @@ function optionAnalyse()
 	[ $varDebug ] && echo "Config var - varScriptInstal=$varScriptInstal" >> $DEBUG_FILE
 	[ $varDebug ] && echo "Config var - varWebAppInstal=$varWebAppInstal" >> $DEBUG_FILE
 	[ $varDebug ] && echo "Config var - varMotion=$varMotion" >> $DEBUG_FILE
-
-	return 0
-}
-
-
-function doInsertRecord()
-{
-	# insert record from input files given as parameters :
-	# $x : input file(s)
-
-	oldIFS="$IFS"
-
-	for varFile in $* ; do
-		while read varLine ; do
-	    IFS="+"
-			read tmpMain tmpRef <<< "$varLine"
-
-			if [ "${tmpMain::1}" != '#' ] ; then
-				if [ -n "$tmpRef" ] ; then
-					IFS=":" read tmpTable tmpFields tmpValues <<< "$tmpRef"
-					ref1=$(sqlite3 "$DB_FILE" "SELECT $tmpFields FROM $tmpTable WHERE $tmpValues ;")
-					tmpMain=$(echo "$tmpMain" | sed 's/_REF1_/'"$ref1"'/' )
-				fi
-
-				IFS=":"
-				read table fields values <<< "$tmpMain"
-				printMessage "insertion des paramètres - table: $table - record: F$fields V$values" "nichoir.db"
-				if [ -n "$table" ] ; then
-					sqlite3 "$DB_FILE" "INSERT INTO $table $fields VALUES $values ;"
-					printError "$?"
-				fi
-			fi
-
-		done < "$varFile"
-	done
-
-	IFS="$oldIFS"
 
 	return 0
 }

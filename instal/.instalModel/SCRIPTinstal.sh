@@ -1,43 +1,11 @@
 #!/bin/bash
 # coding:UTF-8
 
-function createDir()
-{
-  # create dir (and parent dir if needed)
-  # $1 name of dir to create
-
-  [ ! -d $1 ] && mkdir -p "$1"
-  return $?
-}
-
-function copyFiles()
-{
-	# copy files or directories and create target dir if not exist
-
-	inputFiles=$1
-	outputDir=$2
-
-	# create output dir if not exist
-	createDir "$outputDir" || printerror "$?"
-
-	printMessage "Files copy :" "$inputFiles"
-	if [ -d $inputFiles ] && [ -d $outputDir ] ; then  # if folder to dir
-		cp -r --force "$inputFiles" "$outputDir" || printError "$?"
-	elif [ -f $inputFiles ] && [ -d $outputDir ] ; then # if file to dir
-		cp --force "$inputFiles" "$outputDir" || printError "$?"
-	elif [ -f $inputFiles ] && [ ! -d $outputDir ]  ; then # if file to file
-		cp --force $inputFiles "$outputDir" || printError "$?"
-	else
-		return "$WRONG_PARAMETER"
-	fi
-	return 0
-}
-
 # Copy installation files
-copyFiles "eBirds/instal/$SCRIPT_FILE" "$INSTALL_PATH" || printerror "$?"
-copyFiles "eBirds/instal/.instalModel" "$INSTALL_PATH" || printerror "$?"
-copyFiles "eBirds/instal/.input" "$INSTALL_PATH" || printerror "$?"
-copyFiles "eBirds/instal/motion" "$INSTALL_PATH" || printerror "$?"
+copyFiles "eBirds/instal/$SCRIPT_FILE" "$INSTALL_PATH" || printError "$?"
+copyFiles "eBirds/instal/.instalModel" "$INSTALL_PATH" || printError "$?"
+copyFiles "eBirds/instal/.input" "$INSTALL_PATH" || printError "$?"
+copyFiles "eBirds/instal/motion" "$INSTALL_PATH" || printError "$?"
 
 if [ "$varCopyConfig" = true ] ; then
 	copyFiles "eBirds/instal/.config/versions_init.sh" "$INSTALL_PATH/.config/versions.sh" || printerror "$?"

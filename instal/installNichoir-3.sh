@@ -52,6 +52,7 @@ BAD_USER=66				# No root user
 GIT_ERROR=67			# unable to install git
 SOURCES_ERROR=68	# source files not found
 WRONG_PARAMETER=69	# wrong parameter sent to function
+BAD_INPUT_FILE=70 # bad input file sent to function
 
 # options variables
 varVerbose=false	# display status messages on terminal
@@ -79,6 +80,7 @@ varFirstInstal=true   # first installation flag -> false if DB already exists
 
 # déclaration des fonctions de base du script - usage, printLog, ...
 source "$INSTALL_PATH/.instalModel/Functions.sh"
+source "$INSTALL_PATH/.instalModel/FunctionsHelpers.sh"
 
 # check for help option
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ "$1" = "?" ] || [ "$1" = "-?" ] ; then
@@ -87,7 +89,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ "$1" = "?" ] || [ "$1" = "-?" ] ;
 fi
 
 # check for superUser right
-if [[ "$EUID" -ne 0 ]] ; then
+if [ "$EUID" -ne 0 ] ; then
 	echo -e "Ce script doit être exécuté avec les droits de SuperUser." 1>&2
 	exit "$BAD_USER"
 fi
@@ -99,9 +101,7 @@ if [ -e "$DB_FILE" ] ; then
 	varFirstInstal=false
 fi
 
-[ $varDebug ] && echo "Config var - varFirstInstal=$varFirstInstal" >> $DEBUG_FILE
-
-
+# script parameter analyse
 if [ "$#" -gt 0 ] ; then  # if number of script parameter > 0
 
 	varAllParams="$@" 	# backup of original parameter -> used if script is re-run in case of script update
@@ -143,21 +143,24 @@ fi
 # Initialisation
 #######################################################################
 
-# create and define encodine of Log file
+# create and define encoding of Log file
 #---------------------------------------
-if [ ! -e "$LOG_FILE" ] || [ "$varResetLog" = true ] ; then
+[ "$varResetLog" = true ] && [ -e "$LOG_FILE" ] && removeFile "$LOG_FILE"
+if [ ! -e "$LOG_FILE" ] ; then
 	printMessage "Création et paramétrage du fichier log" "$LOG_FILE"
-	echo -e "# coding:UTF-8 \n\n" > $LOG_FILE || printError "$?"
-	echo -e "$(date) \n\n" >> $LOG_FILE || printError "$?"
+	createFile "$LOG_FILE" "# coding:UTF-8 " || printError "$?"
 
 	[ "$varDebug" ] && echo "Log File created" >> $DEBUG_FILE
 fi
+
+# print separator and current date in logfile
+echo -e "\n\n########################################## \n$(date)\n\n" >> "$LOG_FILE"
 
 #######################################################################
 # installation & configuration of modules
 #######################################################################
 
-# Upload sources et mise à jour de l'installateur
+# Upload sources & instal script update
 #-------------------------------------
 if [ ! "$varRecall" = true ] ; then
 	printMessage "Mise à jour du système linux" "update"
@@ -191,7 +194,7 @@ if [ ! "$varRecall" = true ] ; then
 		source "$INSTALL_PATH/.instalModel/SCRIPTinstal.sh"
 
 		printMessage "mise à jour du fichier de config - verInstal" "$INSTALL_PATH/.config/versions.sh"
-		updateParameter "$INSTALL_PATH/.config/versions.sh" "verInstal" "$lvTempVersion"
+		updateParameter "$INSTALL_PATH/.config/versions.sh" "verInstal" "$lvTempVersion" || printError "$?"
 
 		[ "$varDebug" ] && echo "Modify instal script done -> reloading script" >> $DEBUG_FILE
 
@@ -205,14 +208,14 @@ fi
 #######################################################################
 #######################################################################
 
-# installation programmes - contrôles internes si déjà existant
+# external programs installation - internal control if already installed
 lvTempVersion=`grep "verPrgInstal" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 
 if [ ! "$lvTempVersion" = "$verPrgInstal" ] || [ "$varCheckBib" = true ] ; then
 	source "$INSTALL_PATH/.instalModel/PRGinstal.sh"
 
 	printMessage "mise à jour du fichier de config - verPrgInstal" "$INSTALL_PATH/.config/versions.sh"
-	updateParameter "$INSTALL_PATH/.config/versions.sh" "verPrgInstal" "$lvTempVersion"
+	updateParameter "$INSTALL_PATH/.config/versions.sh" "verPrgInstal" "$lvTempVersion" || printError "$?"
 
 	[ "$varDebug" ] && echo "Program installation done" >> $DEBUG_FILE
 
@@ -226,7 +229,7 @@ if [ ! "$lvTempVersion" = "$verPythonLib" ]  || [ "$varCheckBib" = true ] ; then
 	source "$INSTALL_PATH/.instalModel/PYTHONinstal.sh"
 
 	printMessage "mise à jour du fichier de config - verPythonLib" "$INSTALL_PATH/.config/versions.sh"
-	updateParameter "$INSTALL_PATH/.config/versions.sh" "verPythonLib" "$lvTempVersion"
+	updateParameter "$INSTALL_PATH/.config/versions.sh" "verPythonLib" "$lvTempVersion" || printError "$?"
 
 	[ "$varDebug" ] && echo "Python Library installation done" >> $DEBUG_FILE
 
@@ -240,7 +243,8 @@ if [ ! "$lvTempVersion" = "$verNichoirFiles" ]  || [ "$varWebAppInstal" = true ]
 	source "$INSTALL_PATH/.instalModel/FILESinstal.sh"
 
 	printMessage "mise à jour du fichier de config - verNichoirFiles" "$INSTALL_PATH/.config/versions.sh"
-	updateParameter "$INSTALL_PATH/.config/versions.sh" "verNichoirFiles" "$lvTempVersion"
+	updateParameter "$INSTALL_PATH/.config/versions.sh" "verNichoirFiles" "$lvTempVersion" || printError "$?"
+
 
 	[ "$varDebug" ] && echo "Local web site update done" >> $DEBUG_FILE
 

@@ -1,14 +1,14 @@
 #!/bin/bash
 # coding:UTF-8
 
-source ".instalModel/Functions.sh"
-source ".instalModel/SCRIPTinstal.sh"
+# source ".instalModel/Functions.sh"
+# source ".instalModel/SCRIPTinstal.sh"
 
 function initVariables()
 {
   BAD_OPTION=65			# unknow option used
-  DEBUG_FILE="/var/www/debug.txt"
-  INSTALL_PATH="/var/www/unitTest"
+  DEBUG_FILE="test/debug.txt"
+  INSTALL_PATH="test"
   ROOT_PATH="/var/www"
   DB_FILE="$ROOT_PATH/nichoir.db"
   WEB_PATH="$ROOT_PATH/html"
@@ -23,6 +23,7 @@ function initVariables()
   GIT_ERROR=67			# unable to install git
   SOURCES_ERROR=68	# source files not found
   WRONG_PARAMETER=69 # wrong parameter sent to function
+  BAD_INPUT_FILE=70 # bad input file sent to function
 
   # options variables
   varVerbose=false	# display status messages on terminal
@@ -40,6 +41,11 @@ function initVariables()
   varCopyConfig=false # (re)init config file with template
   varFirstInstall=false
 }
+
+initVariables
+source ".instalModel/Functions.sh"
+source ".instalModel/FunctionsHelpers.sh"
+source ".instalModel/SCRIPTinstal.sh"
 
 function utestSingleOption()
 {
@@ -75,68 +81,205 @@ function utestSingleOptionBad()
   fi
 }
 
-utestSingleOption "--first" "varCheckBib" "varScriptInstal"
-utestSingleOption "--recall" "varRecall"
-utestSingleOption "--debug" "varDebug"
-utestSingleOption "-d" "varDebug"
-utestSingleOption "-e" "varError"
-utestSingleOption "-m" "varMotion"
-utestSingleOption "-u" "varUpdate"
-utestSingleOption "-l" "varResetLog"
-utestSingleOption "-U" "varUpgrade"
-utestSingleOption "-v" "varVerbose" "varError"
-utestSingleOption "-f" "varCheckBib" "varCheckDB" "varMotion" "varWebAppInstal"
-utestSingleOption "-s" "varCheckBib"
-utestSingleOption "-i" "varScriptInstal"
-utestSingleOption "-w" "varWebAppInstal" "varMotion"
-utestSingleOptionBad "d"
-utestSingleOptionBad "-z"
-utestSingleOptionBad "-1"
-utestSingleOptionBad "1"
-utestSingleOptionBad "d"
+# utestSingleOption "--first" "varCheckBib" "varScriptInstal"
+# utestSingleOption "--recall" "varRecall"
+# utestSingleOption "--debug" "varDebug"
+# utestSingleOption "-d" "varDebug"
+# utestSingleOption "-e" "varError"
+# utestSingleOption "-m" "varMotion"
+# utestSingleOption "-u" "varUpdate"
+# utestSingleOption "-l" "varResetLog"
+# utestSingleOption "-U" "varUpgrade"
+# utestSingleOption "-v" "varVerbose" "varError"
+# utestSingleOption "-f" "varCheckBib" "varCheckDB" "varMotion" "varWebAppInstal"
+# utestSingleOption "-s" "varCheckBib"
+# utestSingleOption "-i" "varScriptInstal"
+# utestSingleOption "-w" "varWebAppInstal" "varMotion"
+# utestSingleOptionBad "d"
+# utestSingleOptionBad "-z"
+# utestSingleOptionBad "-1"
+# utestSingleOptionBad "1"
+# utestSingleOptionBad "d"
 
 #####################################################################
-function createFile()
+
+function utestFileUtility()
 {
-  # create file if does'nt exist
-  # $1 name of file to create
-  # $2 optional string to insert in new file
+  initVariables
 
-  [ -f $1 ] && return 0  # exit if already exist
+  # create file in existing dir with input string
+  createFile tstFile.txt "test simple de string à intégrer"
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to create file - input = tstFile.txt"
+  else
+    echo "UnitTestPass - createFile - input = tstFile.txt"
+  fi
 
-  local inputString="$2"
+  # create file in existing dir with input string
+  createFile tstFile18.txt "# coding:UTF-8 \
+  \
+  $(date) \
+  \
+  "
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to create file - input = tstFile.txt"
+  else
+    echo "UnitTestPass - createFile - input = tstFile.txt"
+  fi
 
-  [ $inputString ] || inputString="Test string"
-  echo "$inputString" >  "$1"
-  return $?
-}
+  # create file in existing dir no input string
+  createFile tstFile2.txt
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to create file - input = tstFile2.txt"
+  else
+    echo "UnitTestPass - createFile - input = tstFile2.txt"
+  fi
 
+  # create file same name
+  createFile tstFile2.txt
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to create - file exist - input = tstFile2.txt"
+  else
+    echo "UnitTestPass - createFile - file exist - input = tstFile2.txt"
+  fi
 
-function removeFile()
-{
-  # $1 name of file to remove
-  # $2 option -f -> force
-  [ -e "$1" ] && rm -r -d "$1"
-  return "$?"
-}
+  # create file non existing dir -> error
+  createFile corona/tstFile2.txt
+  if [ "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to create - unknow dir - input = tstFile2.txt"
+  else
+    echo "UnitTestPass - createFile - error on unknow dir - input = tstFile2.txt"
+  fi
 
-function removeDir()
-{
-  # $1 name of directory to remove
-  # $2 option -f -> force
+  # remove existing file
+  removeFile tstFile.txt
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to delete file - input = tstFile.txt"
+  else
+    echo "UnitTestPass - deleteFile - input = tstFile.txt"
+  fi
+
+  # remove non existing file -> error
+  removeFile tstFile3.txt
+  if [ "$?" -eq 0 ] ; then
+    echo "UnitTestError - deleteFile - false input = tstFile.txt"
+  else
+    echo "UnitTestPass - deleteFile - false input = tstFile.txt"
+  fi
+
+  # create dir
+  createDir dirTest
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to create dir - input = dirTest"
+  else
+    echo "UnitTestPass - createDir - input = dirTest"
+  fi
+
+  # create dir with parent
+  createDir "dirTest2/dirtest2"
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to create parent dir - input = dirTest2/dirtest2"
+  else
+    echo "UnitTestPass - create parent Dir - input = dirTest2/dirtest2"
+  fi
+
+  # remove dir
+  removeDir dirTest
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to remove dir - input = dirTest"
+  else
+    echo "UnitTestPass - remove dir - input = dirTest"
+  fi
+
+  # remove dir with subfiles
+  removeDir dirTest2
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to remove dir with sub - input = dirTest2"
+  else
+    echo "UnitTestPass - remove dirwith sub - input = dirTest2"
+  fi
+
+  # remove non existing dir -> error
+  removeDir cacophonie
+  if [ "$?" -eq 0 ] ; then
+    echo "UnitTestError - error on remove non existing dir - input = dirTest"
+  else
+    echo "UnitTestPass - remove non existing dir -> error - input = dirTest"
+  fi
+
+  # copy file to existing dir
+  copyFiles tstFile2.txt "test/"
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to copy file in existing dir - input = tstFile2.txt test/"
+  else
+    echo "UnitTestPass - copy file to existing dir - input = tstFile2.txt test/"
+  fi
+
+  # copy file to non existing dir
+  copyFiles tstFile2.txt "test2/"
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to copy file to non existing dir - input = tstFile2.txt test2/"
+  else
+    echo "UnitTestPass - copy file to non existing dir - input = tstFile2.txt test2/"
+  fi
+
+  # copy file to existing file
+  copyFiles tstFile2.txt "test/tstFileCopy.svg"
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to copy file to existing file - input = tstFile2.txt test/tstFileCopy.svg"
+  else
+    echo "UnitTestPass - copy file to existing file - input = tstFile2.txt test/tstFileCopy.svg"
+  fi
+
+  # copy file to non existing file
+  copyFiles tstFile2.txt "test/newTestCopy.txt"
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to copy file to non existing file - input = tstFile2.txt test/newTestCopy.txt"
+  else
+    echo "UnitTestPass - copy file to non existing file - input = tstFile2.txt test/newTestCopy.txt"
+  fi
+
+  # copy dir to existing dir
+  copyFiles motion "test/testDir1"
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to copy dir to existing dir - input = motion test/testDir1"
+  else
+    echo "UnitTestPass - copy dir to existing dir - input = motion test/testDir1"
+  fi
+
+  # copy dir to non existing dir
+  copyFiles motion "test/testDir2"
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to copy dir to non existing dir - input = motion test/testDir2"
+  else
+    echo "UnitTestPass - copy dir to non existing dir - input = motion test/testDir2"
+  fi
+
+  # Bad parameter
+  copyFiles 1 2
+  if [ ! "$?" -eq 70 ] ; then
+    echo "UnitTestError - undetected bad parameter $? - input = 1 2"
+  else
+    echo "UnitTestPass - detected bad parameter $? - input = 1 2"
+  fi
+
+  # missing parameter
+  copyFiles motion
+  if [ ! "$?" -eq "$WRONG_PARAMETER" ] ; then
+    echo "UnitTestError - undetected missing parameter $? - input = 1"
+  else
+    echo "UnitTestPass - detected missing parameter $? - input = 1"
+  fi
 
   return 0
 }
 
-function utestCopyFiles()
-{
+utestFileUtility
 
-  # test cases :
-  #   pass -> copy file to existing dir
-  #   pass -> copy file to non existing dir
-  #   pass -> copy file to file
-  #   pass -> copy dir to existing dir
-  #   pass -> copy dir to non existing dir
-  #   pass -> bad parameters
-  return 0
-}
+updateParameter "tstFile19.txt" "test1" "test1Modifié" || printError "$?"
+
+updateParameter "tstFile19.txt" "test2" "test1Modifié" ":" || printError "$?"
+
+updateParameter "tstFile19.txt" "test3" "test3Modifié" " " || printError "$?"
+
+updateParameter "tstFile20.txt" "test3" "test3Modifié" " " || printError "$?"

@@ -12,22 +12,20 @@ for varFile in $(ls "$INSTALL_PATH"/.input/PYTHONlist*) ; do
 	[ "$varCheckBib" = true ] || libraryList=$(pip3 freeze)
 	while IFS=: read program description ; do
 
-		if [ "${program::1}" != '#' ]  &&  [ ${#program} -gt 0 ]  ; then
-			printMessage "$description" "$program"
+#		if [ "${program::1}" != '#' ]  &&  [ ${#program} -gt 0 ]  ; then
+		printMessage "$description" "$program"
 
-			if [ ! "$varCheckBib" = true ] && grep "$program" <<< $libraryList > /dev/null ; then
-				# itération suivante sans passer par la fin de boucle
-				continue
-			fi
-
-			# installation avec option pip3
-			pip3 install "$program" >> "$LOG_FILE" 2>&1
-
-			# gestion des erreurs éventuelles
-			printError "$?"
+		if [ ! "$varCheckBib" = true ] && grep "$program" <<< $libraryList > /dev/null ; then
+			# itération suivante sans passer par la fin de boucle
+			continue
 		fi
 
-	done < "$varFile"
+		# installation avec option pip3
+		pip3 install "$program" >> "$LOG_FILE" 2>&1 || printError "$?"
+
+#		fi
+
+	done <<< $(grep -e '^[^(#|;).*]' "$varFile")
 done
 
 IFS="$oldIFS"
