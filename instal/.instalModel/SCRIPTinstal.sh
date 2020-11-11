@@ -3,9 +3,9 @@
 
 # Copy installation files
 copyFiles "eBirds/instal/$SCRIPT_FILE" "$INSTALL_PATH" || printError "$?"
-copyFiles "eBirds/instal/.instalModel" "$INSTALL_PATH" || printError "$?"
-copyFiles "eBirds/instal/.input" "$INSTALL_PATH" || printError "$?"
-copyFiles "eBirds/instal/motion" "$INSTALL_PATH" || printError "$?"
+copyDir "eBirds/instal/.instalModel" "$INSTALL_PATH" || printError "$?"
+copyDir "eBirds/instal/.input" "$INSTALL_PATH" || printError "$?"
+copyDir "eBirds/instal/motion" "$INSTALL_PATH" || printError "$?"
 
 if [ "$varCopyConfig" = true ] ; then
 	copyFiles "eBirds/instal/.config/versions_init.sh" "$INSTALL_PATH/.config/versions.sh" || printerror "$?"

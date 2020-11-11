@@ -154,3 +154,74 @@ function optionAnalyse()
 
 	return 0
 }
+
+function readInputFile()
+{
+	# $1  pattern of inputFiles to apply
+	# $2  function to call for input treatment
+
+	# control input files can be retrieved
+	if [ `ls "$1"* 2> /dev/null | wc -l` -eq 0 ] ; then
+		return $WRONG_PARAMETER
+	fi
+
+	local currentLine=""
+	# read lines without comments and send it to the function $2
+	# exit on error
+	while read -r currentLine ; do
+		"$2" "$currentLine" 2> /dev/null || return $PROCESSING_LINE_ERROR
+	done <<< $(grep -h -e '^[^(#|;|//).*]' `ls "$1"*`)
+
+	return 0
+}
+
+function prgInstallation()
+{
+	local PRGname=`cut -d ':' -f 1 <<< $*`
+	local PRGdescription=`cut -d ':' -f 2 <<< $*`
+	local localError=""
+
+	if  ! dpkg -V "$PRGname" > /dev/null 2>&1 ; then  # look if prg already installed
+		printMessage "$PRGdescription" "$PRGname"
+		apt-get -q -o=Dpkg::Use-Pty=0 --assume-yes install "$PRGname" >> "$LOG_FILE" 2>&1
+				# installation avec option 'assume-yes' (oui à toutes les questions)
+				# -q -o=Dpkg::Use-Pty=0 - réduit le nombre d'affichages (mode quiet)
+				# et écriture de la sortie dans le fichier log (mode ajout)
+
+		# error processing
+		localError=$?
+		if [ "$localError" -gt 0 ] ; then
+			printError "$localError"
+			return $INSTALLATION_ERROR
+		else
+			return 0
+		fi
+
+	fi
+
+	return 0
+}
+
+function pythonInstallation()
+{
+	local PRGname=`cut -d ':' -f 1 <<< $*`
+	local PRGdescription=`cut -d ':' -f 2 <<< $*`
+	local localError=""
+
+	if [ "$varCheckBib" = true ] || grep -q "$program" <<< $(pip3 freeze) ; then
+		printMessage "$description" "$program"
+
+		# installation with pip3 utility
+	 	pip3 install "$program" >> "$LOG_FILE" 2>&1
+		
+		# error processing
+		localError=$?
+		if [ "$localError" -gt 0 ] ; then
+			printError "$localError"
+			return $INSTALLATION_ERROR
+		fi
+
+	fi
+
+	return 0
+}

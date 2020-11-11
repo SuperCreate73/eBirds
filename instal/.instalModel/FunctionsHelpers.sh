@@ -150,14 +150,14 @@ function createDir()
 
 function copyFiles()
 {
-	# copy files or directories and create target dir if not exist
+	# copy files and create target dir if not exist
 
 	local inputFiles=$1
 	local outputDir=$2
 
   # basic tests of function parameter
   [ -f "$inputFiles" -o -d "$inputFiles" ] || return "$BAD_INPUT_FILE"
-  [ ! -z "$outputDir" ] || return "$WRONG_PARAMETER"
+  [ ! -z "$outputDir" ] || return "$WRONG_PARAMETER" # empty string
 
 	# create output dir if not exist
 	printMessage "Create dir :" "$outputDir"
@@ -168,11 +168,38 @@ function copyFiles()
 
 	printMessage "Files copy :" "$inputFiles"
 	if [ -d "$inputFiles" ] && [ -d "$outputDir" ] ; then  # if folder to dir
-		cp -r --force "$inputFiles" "$outputDir" || printError "$?"
+		cp -r --force "$inputFiles"/* "$outputDir" || printError "$?"
 	elif [ -f "$inputFiles" ] && [ -d "$outputDir" ] ; then # if file to dir
 		cp --force "$inputFiles" "$outputDir" || printError "$?"
-	elif [ -f "$inputFiles" ] && [ ! -d "$outputDir" ]  ; then # if file to file
+	elif [ -f "$inputFiles" ] && [ -f "$outputDir" ]  ; then # if file to file
 		cp --force "$inputFiles" "$outputDir" || printError "$?"
+	else
+		return "$WRONG_PARAMETER"
+	fi
+	return 0
+}
+
+function copyDir()
+{
+	# copy directories and create target dir if not exist
+
+	local inputDir=$1
+	local outputDir=$2
+
+  # basic tests of function parameter
+  [ -d "$inputDir" ] || return "$BAD_INPUT_FILE" # not a directory
+  [ ! -z "$outputDir" ] || return "$WRONG_PARAMETER" # empty string
+
+	# create output dir if not exist
+	printMessage "Create dir :" "$outputDir"
+  if ! createDir "$outputDir" ; then
+    printError "$?"
+    return 1
+  fi
+
+	printMessage "Dir copy :" "$inputFiles"
+	if [ -d "$inputDir" ] && [ -d "$outputDir" ] ; then  # if folder to dir
+		cp -r --force "$inputDir" "$outputDir" || printError "$?"
 	else
 		return "$WRONG_PARAMETER"
 	fi

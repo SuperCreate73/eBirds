@@ -53,6 +53,8 @@ GIT_ERROR=67			# unable to install git
 SOURCES_ERROR=68	# source files not found
 WRONG_PARAMETER=69	# wrong parameter sent to function
 BAD_INPUT_FILE=70 # bad input file sent to function
+PROCESSING_LINE_ERROR=71 # unable to process input line
+INSTALLATION_ERROR=72 # program installation process error
 
 # options variables
 varVerbose=false	# display status messages on terminal
@@ -212,7 +214,14 @@ fi
 lvTempVersion=`grep "verPrgInstal" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 
 if [ ! "$lvTempVersion" = "$verPrgInstal" ] || [ "$varCheckBib" = true ] ; then
-	source "$INSTALL_PATH/.instalModel/PRGinstal.sh"
+
+	# TODO Installation de PHP à revoir -> php installe par défaut un serveur WEB qui entre en conflit avec Lighttpd
+
+	printMessage "installation des programmes" "$INSTALL_PATH/.input/PRGlist*.sh"
+	readInputFile "$INSTALL_PATH/.input/PRGlist" "prgInstallation" || printError "$?"
+
+	printMessage "vérification des dépendances" "tous paquets"
+	sudo apt-get install --fix-missing >> "$LOG_FILE" 2>&1 || printError "$?"
 
 	printMessage "mise à jour du fichier de config - verPrgInstal" "$INSTALL_PATH/.config/versions.sh"
 	updateParameter "$INSTALL_PATH/.config/versions.sh" "verPrgInstal" "$lvTempVersion" || printError "$?"
@@ -226,7 +235,9 @@ fi
 lvTempVersion=`grep "verPythonLib" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 
 if [ ! "$lvTempVersion" = "$verPythonLib" ]  || [ "$varCheckBib" = true ] ; then
-	source "$INSTALL_PATH/.instalModel/PYTHONinstal.sh"
+
+	printMessage "installation des bibliothèques python" "$INSTALL_PATH/.input/PYTHONlist*"
+	readInputFile "$INSTALL_PATH/.input/PYTHONlist" "pythonInstallation" || printError "$?"
 
 	printMessage "mise à jour du fichier de config - verPythonLib" "$INSTALL_PATH/.config/versions.sh"
 	updateParameter "$INSTALL_PATH/.config/versions.sh" "verPythonLib" "$lvTempVersion" || printError "$?"

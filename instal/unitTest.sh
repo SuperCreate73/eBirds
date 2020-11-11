@@ -24,6 +24,8 @@ function initVariables()
   SOURCES_ERROR=68	# source files not found
   WRONG_PARAMETER=69 # wrong parameter sent to function
   BAD_INPUT_FILE=70 # bad input file sent to function
+  PROCESSING_LINE_ERROR=71 # program installation process error
+  INSTALLATION_ERROR=72 # error processing in pgrInstalation function
 
   # options variables
   varVerbose=false	# display status messages on terminal
@@ -45,7 +47,7 @@ function initVariables()
 initVariables
 source ".instalModel/Functions.sh"
 source ".instalModel/FunctionsHelpers.sh"
-source ".instalModel/SCRIPTinstal.sh"
+#source ".instalModel/SCRIPTinstal.sh"
 
 function utestSingleOption()
 {
@@ -271,15 +273,114 @@ function utestFileUtility()
     echo "UnitTestPass - detected missing parameter $? - input = 1"
   fi
 
+
+  # copy dir to existing dir
+  mkdir "test/testDir3" > /dev/null 2>&1
+  copyDir motion "test/testDir3"
+  tmpResponse="$?"
+  if [ ! "$tmpResponse" -eq 0 ] ; then
+    echo "UnitTestError - unable to copy dir to existing dir - $tmpResponse input = motion test/testDir3"
+  else
+    echo "UnitTestPass - copy dir to existing dir - input = motion test/testDir3"
+  fi
+
+  # copy dir to non existing dir
+  copyDir motion "test/testDir4"
+  tmpResponse="$?"
+  if [ ! "$tmpResponse" -eq 0 ] ; then
+    echo "UnitTestError - unable to copy dir to non existing dir - $tmpResponse input = motion test/testDir2"
+  else
+    echo "UnitTestPass - copy dir to non existing dir - input = motion test/testDir2"
+  fi
+
+  # Bad parameter
+  copyDir 1 2
+  if [ ! "$?" -eq 70 ] ; then
+    echo "UnitTestError - undetected bad parameter $? - input = 1 2"
+  else
+    echo "UnitTestPass - detected bad parameter $? - input = 1 2"
+  fi
+
+  # missing parameter
+  copyDir motion
+  if [ ! "$?" -eq "$WRONG_PARAMETER" ] ; then
+    echo "UnitTestError - undetected missing parameter $? - input = 1"
+  else
+    echo "UnitTestPass - detected missing parameter $? - input = 1"
+  fi
+
   return 0
 }
 
+function uTestApplyConfig()
+{
+  initVariables
+
+  # normal behaviour
+  readInputFile "$INSTALL_PATH/.input/PRGlist" "prgInstallation"
+  local TMP_OUTPUT="$?"
+  if [ ! "$TMP_OUTPUT" -eq 0 ] ; then
+    echo "UnitTestError - Error on applying config - $TMP_OUTPUT"
+  else
+    echo "UnitTestPass - uTestApplyConfig - $TMP_OUTPUT"
+  fi
+
+  TMP_OUTPUT=0
+  # wrong parameter error
+  readInputFile "$INSTALL_PATH/.input/PRplist" "prgInstallation"
+  TMP_OUTPUT="$?"
+  if [ "$TMP_OUTPUT" -eq 0 ] ; then
+    echo "UnitTestError - wrong file not detected - $TMP_OUTPUT"
+  else
+    echo "UnitTestPass - wrong file detected - $TMP_OUTPUT"
+  fi
+
+  TMP_OUTPUT=0
+  # wrong function call error
+  readInputFile "$INSTALL_PATH/.input/PRGlist" "prgInstallation23"
+  TMP_OUTPUT="$?"
+  if [ "$TMP_OUTPUT" -eq 0 ] ; then
+    echo "UnitTestError - wrong function name not detected - $TMP_OUTPUT"
+  else
+    echo "UnitTestPass - wrong function name detected - $TMP_OUTPUT"
+  fi
+}
+
+function uTestApplyPythonConfig()
+{
+  initVariables
+
+  # normal behaviour
+  readInputFile "$INSTALL_PATH/.input/PYTHONlist" "pythonInstallation"
+  local TMP_OUTPUT="$?"
+  if [ ! "$TMP_OUTPUT" -eq 0 ] ; then
+    echo "UnitTestError - Error on applying config - $TMP_OUTPUT"
+  else
+    echo "UnitTestPass - uTestApplyConfig - $TMP_OUTPUT"
+  fi
+
+  TMP_OUTPUT=0
+  # wrong parameter error
+  readInputFile "$INSTALL_PATH/.input/PYTHOlist" "pythonInstallation"
+  TMP_OUTPUT="$?"
+  if [ "$TMP_OUTPUT" -eq 0 ] ; then
+    echo "UnitTestError - wrong file not detected - $TMP_OUTPUT"
+  else
+    echo "UnitTestPass - wrong file detected - $TMP_OUTPUT"
+  fi
+
+  TMP_OUTPUT=0
+
+}
+
+# uTestApplyPythonConfig
+# uTestApplyConfig
 utestFileUtility
-
-updateParameter "tstFile19.txt" "test1" "test1Modifié" || printError "$?"
-
-updateParameter "tstFile19.txt" "test2" "test1Modifié" ":" || printError "$?"
-
-updateParameter "tstFile19.txt" "test3" "test3Modifié" " " || printError "$?"
-
-updateParameter "tstFile20.txt" "test3" "test3Modifié" " " || printError "$?"
+#
+# updateParameter "tstFile19.txt" "test1" "test1Modifié" || printError "$?"
+#
+# updateParameter "tstFile19.txt" "test2" "test1Modifié" ":" || printError "$?"
+#
+# updateParameter "tstFile19.txt" "test3" "test3Modifié" " " || printError "$?"
+#
+# updateParameter "tstFile20.txt" "test3" "test3Modifié" " " || printError "$?"
