@@ -55,6 +55,9 @@ WRONG_PARAMETER=69	# wrong parameter sent to function
 BAD_INPUT_FILE=70 # bad input file sent to function
 PROCESSING_LINE_ERROR=71 # unable to process input line
 INSTALLATION_ERROR=72 # program installation process error
+CREATE_DIR_ERROR=73 # unable to create dir
+CREATE_SYMLINK_ERROR=74 # unable to create symLink
+CREATE_TABLE_ERROR=75	# error creating DB table
 
 # options variables
 varVerbose=false	# display status messages on terminal
@@ -267,7 +270,8 @@ lvTempVersion=`grep "verDB" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 
 
 if [ ! "$lvTempVersion" = "$verDB" ]  || [ "$varCheckDB" = true ] ; then
 	# création de la base de donnée
-	source "$INSTALL_PATH/.instalModel/DBcreateTables.sh"
+	printMessage "Creation des tables DB" "$INSTALL_PATH/.input/DBtables*.sh"
+	readInputFile "$INSTALL_PATH/.input/DBtables" "createTable" || printError "$?"
 
 	[ "$varDebug" ] && echo "DB / table creation done" >> $DEBUG_FILE
 

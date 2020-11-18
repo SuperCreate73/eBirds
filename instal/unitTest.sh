@@ -26,6 +26,10 @@ function initVariables()
   BAD_INPUT_FILE=70 # bad input file sent to function
   PROCESSING_LINE_ERROR=71 # program installation process error
   INSTALLATION_ERROR=72 # error processing in pgrInstalation function
+  CREATE_DIR_ERROR=73 # unable to create dir
+  CREATE_SYMLINK_ERROR=74 # unable to create symLink
+  CREATE_TABLE_ERROR=75	# error creating DB table
+
 
   # options variables
   varVerbose=false	# display status messages on terminal
@@ -161,12 +165,12 @@ function utestFileUtility()
     echo "UnitTestPass - deleteFile - input = tstFile.txt"
   fi
 
-  # remove non existing file -> error
+  # remove non existing file -> no error, nothing happens
   removeFile tstFile3.txt
-  if [ "$?" -eq 0 ] ; then
-    echo "UnitTestError - deleteFile - false input = tstFile.txt"
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - deleteFile - false input = tstFile3.txt"
   else
-    echo "UnitTestPass - deleteFile - false input = tstFile.txt"
+    echo "UnitTestPass - deleteFile - false input = tstFile3.txt"
   fi
 
   # create dir
@@ -201,9 +205,9 @@ function utestFileUtility()
     echo "UnitTestPass - remove dirwith sub - input = dirTest2"
   fi
 
-  # remove non existing dir -> error
+  # remove non existing dir -> no error, nothing happens
   removeDir cacophonie
-  if [ "$?" -eq 0 ] ; then
+  if [ ! "$?" -eq 0 ] ; then
     echo "UnitTestError - error on remove non existing dir - input = dirTest"
   else
     echo "UnitTestPass - remove non existing dir -> error - input = dirTest"
@@ -255,6 +259,14 @@ function utestFileUtility()
     echo "UnitTestError - unable to copy dir to non existing dir - input = motion test/testDir2"
   else
     echo "UnitTestPass - copy dir to non existing dir - input = motion test/testDir2"
+  fi
+
+  # copy empty dir to existing dir
+  copyFiles "test/testDir7" "test/testDir5"
+  if [ ! "$?" -eq 0 ] ; then
+    echo "UnitTestError - unable to copy empty dir to existing dir - input = motion test/testDir7"
+  else
+    echo "UnitTestPass - copy empty dir to existing dir - input = motion test/testDir7"
   fi
 
   # Bad parameter
@@ -309,8 +321,85 @@ function utestFileUtility()
     echo "UnitTestPass - detected missing parameter $? - input = 1"
   fi
 
+
+  # clear empty dir
+  clearDir "test/testDir5"
+  tmpResponse="$?"
+  if [ ! "$tmpResponse" -eq 0 ] ; then
+    echo "UnitTestError - unable to clear empty dir - $tmpResponse - input = test/testDir5"
+  else
+    echo "UnitTestPass - clear empty dir - input = test/testDir5"
+  fi
+
+  # clear dir containing other dirs
+  clearDir "test/testDir4"
+  tmpResponse="$?"
+  if [ ! "$tmpResponse" -eq 0 ] ; then
+    echo "UnitTestError - unable to copy clear non empty dir - $tmpResponse - input = test/testDir4"
+  else
+    echo "UnitTestPass - clear non empty dir - input = test/testDir4"
+  fi
+
+  # missing parameter
+  clearDir "test/testDir6"
+  tmpResponse="$?"
+  if [ ! "$tmpResponse" -eq "$WRONG_PARAMETER" ] ; then
+    echo "UnitTestError - undetected wrong parameter $tmpResponse - input = test/testDir6"
+  else
+    echo "UnitTestPass - detected missing parameter $tmpResponse - input = test/testDir6"
+  fi
+
+  # symlink creation with input file
+  createSymLink "/home/olivier/Documents/nichoir/web/eBirdsGit/instal/test/test/tstFile2.txt" "test/symLink1"
+  tmpResponse="$?"
+  if [ ! "$tmpResponse" -eq 0 ] ; then
+    echo "UnitTestError - Unable to create file symLink1 ($tmpResponse) - input = test/tstFile2.txt test/symLink1"
+  else
+    echo "UnitTestPass - file symLink1 successfull created - input = test/tstFile2.txt test/symLink1"
+  fi
+
+  # symlink creation with input dir
+  createSymLink "/home/olivier/Documents/nichoir/web/eBirdsGit/instal/test/test/testDir1" "test/symLink2"
+  tmpResponse="$?"
+  if [ ! "$tmpResponse" -eq 0 ] ; then
+    echo "UnitTestError - Unable to create dir symLink1 ($tmpResponse) - input = test/testDir1 test/symLink2"
+  else
+    echo "UnitTestPass - dir symLink2 successfull created - input = test/testDir1 test/symLink2"
+  fi
+
+  # symlink creation with non existing input file
+  createSymLink "/home/olivier/Documents/nichoir/web/eBirdsGit/instal/test/test/tstFile18.txt" "test/symLink3"
+  tmpResponse="$?"
+  if [ ! "$tmpResponse" -eq "$BAD_INPUT_FILE" ] ; then
+    echo "UnitTestError - bad input not detected when creating symLink3 ($tmpResponse) - input = test/tstFile18.txt test/symLink3"
+  else
+    echo "UnitTestPass - bad input detected when creating symlink - input = test/tstFile18.txt test/symLink3"
+  fi
+
+  # symlink creation with existing target file
+  createSymLink "/home/olivier/Documents/nichoir/web/eBirdsGit/instal/test/test/testDir1" "test/testSymLink"
+  tmpResponse="$?"
+  if [ ! "$tmpResponse" -eq 0 ] ; then
+    echo "UnitTestError - Unable to create symLink on existing target file ($tmpResponse) - input = test/testDir1 test/testSymLink"
+  else
+    echo "UnitTestPass - symLink on existing target file successfully created - input = test/testDir1 test/testSymLink"
+  fi
+
+  # symlink creation with non existing output Dir
+  createSymLink "/home/olivier/Documents/nichoir/web/eBirdsGit/instal/test/test/tstFile2.txt" "test/testDir52/symlink4"
+  tmpResponse="$?"
+  if [ "$tmpResponse" -eq 0 ] ; then
+    echo "UnitTestError - bad output dir not detected when creating symLink4 ($tmpResponse) - input = test/tstFile18.txt test/testDir52/symlink4"
+  else
+    echo "UnitTestPass - bad output dir detected when creating symlink4 ($tmpResponse) - input = test/tstFile18.txt test/testDir52/symlink4"
+  fi
+
   return 0
 }
+
+#utestFileUtility
+
+######################################################################################################
 
 function uTestApplyConfig()
 {
@@ -346,6 +435,9 @@ function uTestApplyConfig()
   fi
 }
 
+# uTestApplyConfig
+
+#################################################################################################
 function uTestApplyPythonConfig()
 {
   initVariables
@@ -374,9 +466,8 @@ function uTestApplyPythonConfig()
 }
 
 # uTestApplyPythonConfig
-# uTestApplyConfig
-utestFileUtility
-#
+
+##################################################################################################
 # updateParameter "tstFile19.txt" "test1" "test1Modifié" || printError "$?"
 #
 # updateParameter "tstFile19.txt" "test2" "test1Modifié" ":" || printError "$?"

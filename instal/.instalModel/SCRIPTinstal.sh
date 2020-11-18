@@ -13,8 +13,7 @@ fi
 
 # create link to $SCRIPT_FILE -> new bash command
 printMessage "création du lien symbolique" "/usr/local/bin/nichoir"
-rm /usr/local/bin/nichoir > /dev/null 2>&1  # remove if exist
-ln --symbolic "$INSTALL_PATH/$SCRIPT_FILE" /usr/local/bin/nichoir || printError "$?"
+createSymLink "$INSTALL_PATH/$SCRIPT_FILE" /usr/local/bin/nichoir || printError "$?"
 
 # permission to execute to all .sh files
 # donne la permission en exécution aux fichiers .sh

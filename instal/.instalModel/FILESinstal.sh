@@ -10,65 +10,59 @@
 # First clean-up of html dir, copy of html dir sources, copy of backend
 #+dir sources, image and video dir assignments.
 #
-IMAGE_PATH_REAL="/home/pi/images"
-IMAGE_PATH_LINK="$WEB_PATH/public/cameraShots"
-VIDEO_PATH_REAL="/home/pi/videos"
-VIDEO_PATH_LINK="$WEB_PATH/public/cameraFilms"
-WEB_PATH_ORIGINAL="eBirds/html_working"
-BACKEND_PATH_ORIGINAL="eBirds/backend"
-LOG_PATH_ORIGINAL="eBirds/log"
-VIDEO_PATH_ORIGINAL="$WEB_PATH_ORIGINAL/public/cameraFilms"
-IMAGE_PATH_ORIGINAL="$WEB_PATH_ORIGINAL/public/cameraShots"
+IMAGE_DIR_REAL="/home/pi/images"
+IMAGE_DIR_LINK="$WEB_PATH/public/cameraShots"
+VIDEO_DIR_REAL="/home/pi/videos"
+VIDEO_DIR_LINK="$WEB_PATH/public/cameraFilms"
+WEB_DIR_ORIGINAL="eBirds/html_working"
+BACKEND_DIR_ORIGINAL="eBirds/backend"
+LOG_DIR_ORIGINAL="eBirds/log"
+VIDEO_DIR_ORIGINAL="$WEB_DIR_ORIGINAL/public/cameraFilms"
+IMAGE_DIR_ORIGINAL="$WEB_DIR_ORIGINAL/public/cameraShots"
 
 function makeCameraStorage()
 {
 	# create directories and symlinks to store camera image & films
-	local filePathReal="$1"
-	local filePathLink="$2"
 
-	printMessage "Création des répertoires" "$filePathReal"
-
-	# make 'real' directory if not exist
-	createDir "$filePathReal" || printError "$?"
-
-	# make 'symlink' directory if not exist.  Otherwise, copy files in 'real' directory before creating symlink
-	# option backup is used to avoid loosing data
-	if [ ! -d "$filePathLink" ] ; then 		# dir do not exist -> create symlink
-
-		ln -s "$filePathReal" "$filePathLink" >> "$LOG_FILE" 2>&1  || printError "$?" 	# create symlink
-
-	elif [ ! -L "$filePathLink"] ; then		# dir exist & not a symlink
-		[ ! `ls -A "$filePathLink" | wc -c` -eq 0 ] && mv -b "$filePathLink/*" "$filePathReal" >> "$LOG_FILE" 2>&1 # dir not empty -> backup files
-		removeDir "$filePathLink" || printError "$?"	# remove directory
-		ln -s "$filePathReal" "$filePathLink" >> "$LOG_FILE" 2>&1 || printError "$?" # create symlink
+	if [ ! -L "$2"] ; then		# dir exist & not a symlink
+	# if target exists and not a symlink, copy files to real dir
+		printMessage "Sauvegarde des fichiers existants" "$2/*"
+		copyFiles "$2" "$1" || printError "$?"  # dir not empty -> backup files
 	fi
+
+	printMessage "Création du lien symbolique" "$2"
+	createSymLink "$1" "$2" || printError "$?" # create symlink
 
 	return 0
 }
 
-# clean-up directory $WEB_PATH if dir camera files or dbfile don't exist (first instal)
-if [ -d "$WEB_PATH" ] && [ ! `ls -A "$WEB_PATH" | wc -c` -eq 0 ] ; then 	# si le répertoire existe et n'est pas vide
-	if [ ! -d "$IMAGE_PATH_LINK" ] || [ ! -e "$DB_FILE" ] ; then # si le dir camera n'existe pas ou
-		printMessage "Nettoyage du répertoire html" "rm -r /var/www/html/*"								#+si la db n'existe pas
-		rm -r -d "$WEB_PATH/*" >> "$LOG_FILE" 2>&1 || printError "$?"
-	fi
+# clean-up directory $WEB_PATH if first instal
+if [ "$varFirstInstal" ] ; then 	# first instal
+	printMessage "Nettoyage du répertoire html" "clearDir /var/www/html/*"
+	clearDir "$WEB_PATH" || printError "$?"
 fi
 
 # delete from source files (normally not present)
-removeDir	"$IMAGE_PATH_ORIGINAL"
-removeDir	"$VIDEO_PATH_ORIGINAL"
+removeDir	"$IMAGE_DIR_ORIGINAL"
+removeDir	"$VIDEO_DIR_ORIGINAL"
 
 printMessage "déplacement des fichiers web" "$WEB_PATH"
-copyFiles "$WEB_PATH_ORIGINAL" "$WEB_PATH" || printError "$?"
+copyFiles "$WEB_DIR_ORIGINAL" "$WEB_PATH" || printError "$?"
 
-makeCameraStorage "$IMAGE_PATH_REAL" "$IMAGE_PATH_LINK" 	# create image dir
+printMessage "Création du dir de stockage des photos" "$IMAGE_DIR_REAL"
+createDir "$IMAGE_DIR_REAL" || printError "$?"
 
-makeCameraStorage "$VIDEO_PATH_REAL" "$VIDEO_PATH_LINK"		# create video dir
+printMessage "Création du dir de stockage des videos" "$VIDEO_DIR_REAL"
+createDir "$VIDEO_DIR_REAL" || printError "$?"
+
+makeCameraStorage "$IMAGE_DIR_REAL" "$IMAGE_DIR_LINK" 	# create image dir
+
+makeCameraStorage "$VIDEO_DIR_REAL" "$VIDEO_DIR_LINK"		# create video dir
 
 printMessage "déplacement des scripts python" "/var/www/backend"
-copyDir "$BACKEND_PATH_ORIGINAL" "$ROOT_PATH" || printError "$?"
+copyDir "$BACKEND_DIR_ORIGINAL" "$ROOT_PATH" || printError "$?"
 
-if [ ! -d "/var/www/log" ] ; then
-	printMessage "copie du répertoire log" "/var/www/log"
-	copyDir "$LOG_PATH_ORIGINAL" "$ROOT_PATH" || printError "$?"
+if [ ! -d "$ROOT_PATH/log" ] ; then
+	printMessage "création du répertoire des log" "$ROOT_PATH/log"
+	createDir "$ROOT_PATH/log" || printError "$?"
 fi

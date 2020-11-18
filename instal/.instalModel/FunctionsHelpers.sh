@@ -123,8 +123,8 @@ function removeFile()
   # $1 name of file to remove
   # $2 option -f -> force--> not used
 
-  [ -e "$1" ] && rm -r -d "$1"
-  return $?
+  [ -e "$1" -o -L "$1" ] && ( rm -r -d "$1" ; return $? )
+  return 0
 }
 
 function removeDir()
@@ -133,6 +133,18 @@ function removeDir()
   # $2 option -f -> force --> not used
 
   removeFile "$1"
+  return $?
+}
+
+function clearDir()
+{
+  # clear all files and directory in input dir
+  # $1 name of dir to clean-up
+
+  [ ! -d "$1" ] && return "$WRONG_PARAMETER"
+	[ `ls -A "$1" | wc -c` -eq 0 ] && return 0  # empty dir
+
+	rm -r -d "$1"/*
   return $?
 }
 
@@ -155,19 +167,21 @@ function copyFiles()
 	local inputFiles=$1
 	local outputDir=$2
 
-  # basic tests of function parameter
+  # basic tests of parameters
   [ -f "$inputFiles" -o -d "$inputFiles" ] || return "$BAD_INPUT_FILE"
   [ ! -z "$outputDir" ] || return "$WRONG_PARAMETER" # empty string
+
 
 	# create output dir if not exist
 	printMessage "Create dir :" "$outputDir"
   if ! createDir "$outputDir" ; then
     printError "$?"
-    return 1
+    return $CREATE_DIR_ERROR
   fi
 
 	printMessage "Files copy :" "$inputFiles"
-	if [ -d "$inputFiles" ] && [ -d "$outputDir" ] ; then  # if folder to dir
+	if [ -d "$inputFiles" ] && [ -d "$outputDir" ] ; then  # if dir to dir
+		[ `ls -A "$inputFiles" | wc -c` -eq 0 ] && return 0  # empty dir
 		cp -r --force "$inputFiles"/* "$outputDir" || printError "$?"
 	elif [ -f "$inputFiles" ] && [ -d "$outputDir" ] ; then # if file to dir
 		cp --force "$inputFiles" "$outputDir" || printError "$?"
@@ -194,7 +208,7 @@ function copyDir()
 	printMessage "Create dir :" "$outputDir"
   if ! createDir "$outputDir" ; then
     printError "$?"
-    return 1
+    return $CREATE_DIR_ERROR
   fi
 
 	printMessage "Dir copy :" "$inputFiles"
@@ -204,4 +218,25 @@ function copyDir()
 		return "$WRONG_PARAMETER"
 	fi
 	return 0
+}
+
+function createSymLink()
+{
+	# Remove existing target and create symlink
+	# $1 input dir or file to refer
+	# $2 symlink to create
+
+	# basic tests of function parameter
+  [ -e "$1" ] || return "$BAD_INPUT_FILE" # do not exists
+
+	removeFile "$2" || return "$?"
+
+	# create symlink
+	if ! ln -s -f "$1" "$2" > /dev/null 2>&1 ; then
+    printError "$?"
+    return $CREATE_SYMLINK_ERROR
+  fi
+
+	return 0
+
 }

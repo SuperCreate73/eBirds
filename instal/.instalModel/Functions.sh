@@ -183,20 +183,10 @@ function prgInstallation()
 
 	if  ! dpkg -V "$PRGname" > /dev/null 2>&1 ; then  # look if prg already installed
 		printMessage "$PRGdescription" "$PRGname"
-		apt-get -q -o=Dpkg::Use-Pty=0 --assume-yes install "$PRGname" >> "$LOG_FILE" 2>&1
+		apt-get -q -o=Dpkg::Use-Pty=0 --assume-yes install "$PRGname" >> "$LOG_FILE" 2>&1 || return "$INSTALLATION_ERROR"
 				# installation avec option 'assume-yes' (oui à toutes les questions)
 				# -q -o=Dpkg::Use-Pty=0 - réduit le nombre d'affichages (mode quiet)
 				# et écriture de la sortie dans le fichier log (mode ajout)
-
-		# error processing
-		localError=$?
-		if [ "$localError" -gt 0 ] ; then
-			printError "$localError"
-			return $INSTALLATION_ERROR
-		else
-			return 0
-		fi
-
 	fi
 
 	return 0
@@ -213,7 +203,7 @@ function pythonInstallation()
 
 		# installation with pip3 utility
 	 	pip3 install "$program" >> "$LOG_FILE" 2>&1
-		
+
 		# error processing
 		localError=$?
 		if [ "$localError" -gt 0 ] ; then
@@ -222,6 +212,16 @@ function pythonInstallation()
 		fi
 
 	fi
+
+	return 0
+}
+
+function createTable()
+{
+	local DBtable=`cut -d ':' -f 1 <<< $*`
+	local DBfields=`cut -d ':' -f 2 <<< $*`
+
+	sqlite3 "$DB_FILE" "CREATE TABLE IF NOT EXISTS $table $fields ;" >> "$LOG_FILE" 2>&1 || return "$CREATE_TABLE_ERROR"
 
 	return 0
 }
