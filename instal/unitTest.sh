@@ -468,6 +468,52 @@ function uTestApplyPythonConfig()
 
 # uTestApplyPythonConfig
 
+function uTestSubstitute()
+{
+  local TMP_OUTPUT
+
+  # simple test
+  # substitute "tstFile2.txt" "Test:Essai"
+  # TMP_OUTPUT="$?"
+  # if [ ! "$TMP_OUTPUT" -eq 0 ] ; then
+  #   echo "UnitTestError - Error on substitution - $TMP_OUTPUT"
+  # else
+  #   echo "UnitTestPass - substitution is OK - $TMP_OUTPUT"
+  # fi
+
+  # wrong file
+  substitute "Test:Essai" "testFile385.txt"
+  TMP_OUTPUT="$?"
+  if [ "$TMP_OUTPUT" -eq 0 ] ; then
+    echo "UnitTestError - substitute - wrong file not detected - $TMP_OUTPUT"
+  else
+    echo "UnitTestPass - substitution - wrong file detected - $TMP_OUTPUT"
+  fi
+
+  # first string empty
+  substitute ":Essai" "tstFile2.txt"
+  TMP_OUTPUT="$?"
+  if [ "$TMP_OUTPUT" -eq 0 ] ; then
+    echo "UnitTestError - substitute - search string empty not detected - $TMP_OUTPUT"
+  else
+    echo "UnitTestPass - substitution - search string empty detected - $TMP_OUTPUT"
+  fi
+
+  # normal behaviour
+  readInputFile "testSubstitute.txt" "substitute" "tstFile2.txt"
+  local TMP_OUTPUT="$?"
+  if [ ! "$TMP_OUTPUT" -eq 0 ] ; then
+    echo "UnitTestError - Error on applying config - $TMP_OUTPUT"
+  else
+    echo "UnitTestPass - uTestApplyConfig - $TMP_OUTPUT"
+  fi
+
+}
+
+# uTestSubstitute
+
+readInputFile "MOTIONcompare.txt" "substitute" "$(ls DBinsertMotion_*.txt)" || echo "$?"
+
 ##################################################################################################
 # updateParameter "tstFile19.txt" "test1" "test1Modifié" || printError "$?"
 #

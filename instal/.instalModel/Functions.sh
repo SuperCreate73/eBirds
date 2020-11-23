@@ -280,10 +280,9 @@ function substitute()
 	# $1 target file
 	# $2 original string and substitude string separated by ':'
 
-	local targetFile="$1"
-	shift
-	local originName=`cut -d ':' -f 1 <<< $*`
-	local substituteName=`cut -d ':' -f 2 <<< $*`
+	local targetFile="$2"
+	local originName=`cut -d ':' -f 1 <<< $1`
+	local substituteName=`cut -d ':' -f 2 <<< $1`
 
 	# parameters control
 	[ -f "$targetFile" ] || return "$WRONG_PARAMETER"  # targetFile is a normal file
