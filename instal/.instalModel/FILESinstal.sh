@@ -24,7 +24,7 @@ function makeCameraStorage()
 {
 	# create directories and symlinks to store camera image & films
 
-	if [ ! -L "$2"] ; then		# dir exist & not a symlink
+	if [ ! -L "$2" ] ; then		# dir exist & not a symlink
 	# if target exists and not a symlink, copy files to real dir
 		printMessage "Sauvegarde des fichiers existants" "$2/*"
 		copyFiles "$2" "$1" || printError "$?"  # dir not empty -> backup files

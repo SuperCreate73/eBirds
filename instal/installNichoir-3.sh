@@ -33,7 +33,7 @@
 #   ###########################################
 
 #######################################################################
-# initialisation des variables, paramètres et constantes
+# initialisation des variaPROCESSING_LINE_ERROR=71 # unable to process input linebles, paramètres et constantes
 #######################################################################
 # config constant
 INSTALL_PATH="/usr/local/etc/instal"

@@ -167,7 +167,7 @@ function readInputFile()
 	local currentLine=""
 
 	# control input files can be retrieved
-	if [ `ls "$1"* 2> /dev/null | wc -l` -eq 0 ] ; then
+	if [ `ls "$inputFiles"* 2> /dev/null | wc -l` -eq 0 ] ; then
 		return $WRONG_PARAMETER
 	fi
 
@@ -203,11 +203,11 @@ function pythonInstallation()
 	local PRGdescription=`cut -d ':' -f 2 <<< $*`
 	local localError=""
 
-	if [ "$varCheckBib" = true ] || grep -q "$program" <<< $(pip3 freeze) ; then
-		printMessage "$description" "$program"
+	if [ "$varCheckBib" = true ] || grep -q "$PRGname" <<< $(pip3 freeze) ; then
+		printMessage "$PRGdescription" "$PRGname"
 
 		# installation with pip3 utility
-	 	pip3 install "$program" >> "$LOG_FILE" 2>&1
+	 	pip3 install "$PRGname" >> "$LOG_FILE" 2>&1
 
 		# error processing
 		localError=$?
@@ -226,7 +226,7 @@ function createTable()
 	local DBtable=`cut -d ':' -f 1 <<< $*`
 	local DBfields=`cut -d ':' -f 2 <<< $*`
 
-	sqlite3 "$DB_FILE" "CREATE TABLE IF NOT EXISTS $table $fields ;" >> "$LOG_FILE" 2>&1 || return "$CREATE_TABLE_ERROR"
+	sqlite3 "$DB_FILE" "CREATE TABLE IF NOT EXISTS $DBtable $DBfields ;" >> "$LOG_FILE" 2>&1 || return "$CREATE_TABLE_ERROR"
 
 	return 0
 }
