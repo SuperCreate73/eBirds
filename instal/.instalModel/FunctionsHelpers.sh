@@ -141,7 +141,7 @@ function clearDir()
   # clear all files and directory in input dir
   # $1 name of dir to clean-up
 
-  [ ! -d "$1" ] && return "$WRONG_PARAMETER"
+  [ -d "$1" ] || return "$WRONG_PARAMETER"
 	[ `ls -A "$1" | wc -c` -eq 0 ] && return 0  # empty dir
 
 	rm -r -d "$1"/*

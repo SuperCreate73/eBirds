@@ -29,7 +29,8 @@ function initVariables()
   CREATE_DIR_ERROR=73 # unable to create dir
   CREATE_SYMLINK_ERROR=74 # unable to create symLink
   CREATE_TABLE_ERROR=75	# error creating DB table
-
+  INSERT_DB_ERROR=76 # Error when inserting in DB
+  SUBSTITUTE_ERROR=77	# Error during substitution
 
   # options variables
   varVerbose=false	# display status messages on terminal

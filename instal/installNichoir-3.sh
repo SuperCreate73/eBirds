@@ -58,6 +58,8 @@ INSTALLATION_ERROR=72 # program installation process error
 CREATE_DIR_ERROR=73 # unable to create dir
 CREATE_SYMLINK_ERROR=74 # unable to create symLink
 CREATE_TABLE_ERROR=75	# error creating DB table
+INSERT_DB_ERROR=76 # Error when inserting in DB
+SUBSTITUTE_ERROR=77	# Error during sed substitution
 
 # options variables
 varVerbose=false	# display status messages on terminal
@@ -275,8 +277,9 @@ if [ ! "$lvTempVersion" = "$verDB" ]  || [ "$varCheckDB" = true ] ; then
 
 	[ "$varDebug" ] && echo "DB / table creation done" >> $DEBUG_FILE
 
-	# insertion du user par défaut dans la DB
-	source "$INSTALL_PATH/.instalModel/DBinsertAdmin.sh"
+	# insert defaut User
+	printMessage "insertion de l'utilisateur admin (password = admin)" "$1"
+  insertAdmin "$DB_FILE" || printerror "$?"
 
 	[ "$varDebug" ] && echo "DB / admin user insert done" >> $DEBUG_FILE
 
@@ -291,7 +294,7 @@ if [ "$varFirstInstal" = "true" ] ; then
 	# TODO existing record protection
 
 	printMessage "remplissage des tables DB" "nichoir.db"
-	doInsertRecord $(ls "$INSTALL_PATH"/.input/DBinsert_*)
+	readInputFile "$INSTALL_PATH/.input/DBinsert" "insertRecord" || printError "$?"
 
 	[ "$varDebug" ] && echo "DB / tables insert done" >> $DEBUG_FILE
 

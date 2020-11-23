@@ -59,7 +59,7 @@ printMessage "Configuration de motion" "motion"
 
 # Activation du module V4l2 pour que la camera PI soit reconnue par Motion,
 #+si pas encore fait uniquement (testé par GREP)
-if ! grep -q -e "^bcm2835-v4l2$" /etc/modules ; then
+if ! grep -q -e "^bcm2835-v4l2\$" /etc/modules ; then
 	echo 'bcm2835-v4l2' >> /etc/modules
 fi
 

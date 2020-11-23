@@ -160,17 +160,22 @@ function readInputFile()
 	# $1  pattern of inputFiles to apply
 	# $2  function to call for input treatment
 
+
+	local inputFiles="$1" ; shift
+	local callProcess="$1" ; shift
+	local parameters="$@"
+	local currentLine=""
+
 	# control input files can be retrieved
 	if [ `ls "$1"* 2> /dev/null | wc -l` -eq 0 ] ; then
 		return $WRONG_PARAMETER
 	fi
 
-	local currentLine=""
 	# read lines without comments and send it to the function $2
 	# exit on error
 	while read -r currentLine ; do
-		"$2" "$currentLine" 2> /dev/null || return $PROCESSING_LINE_ERROR
-	done <<< $(grep -h -e '^[^(#|;|//).*]' `ls "$1"*`)
+		"$callProcess" "$currentLine" "$parameters" 2> /dev/null || return $PROCESSING_LINE_ERROR
+	done <<< $(grep -h -e '^[^(#|;|//).*]' `ls "$inputFiles"*`)
 
 	return 0
 }
@@ -222,6 +227,69 @@ function createTable()
 	local DBfields=`cut -d ':' -f 2 <<< $*`
 
 	sqlite3 "$DB_FILE" "CREATE TABLE IF NOT EXISTS $table $fields ;" >> "$LOG_FILE" 2>&1 || return "$CREATE_TABLE_ERROR"
+
+	return 0
+}
+
+function insertAdmin()
+{
+	if [ `sqlite3 "$1" "SELECT count() FROM users"` -gt 0 ] ; then
+		return 0 	# table not empty
+	fi
+
+  # calculate MD5 password
+  local adminPwd=$(echo -n "admin" | md5sum | cut -d ' ' -f 1)
+
+	# insert in table
+  sqlite3 "$1" "INSERT INTO users ('login', 'password') VALUES ('admin', '$adminPwd');" || return "$INSERT_DB_ERROR"
+
+	return 0
+}
+
+function insertRecord()
+{
+	# insert record from input files given as parameters :
+	# $x : input file(s)
+
+	local tmpMain=`cut -d '+' -f 1 <<< $*`
+	local tmpRef=`cut -d '+' -f 2 <<< $*`
+
+	if [ -n "$tmpRef" ] ; then
+		local tmpTable=`cut -d ':' -f 1 <<< $tmpRef`
+		local tmpFields=`cut -d ':' -f 2 <<< $tmpRef`
+		local tmpValues=`cut -d ':' -f 3 <<< $tmpRef`
+
+		local ref1=$(sqlite3 "$DB_FILE" "SELECT $tmpFields FROM $tmpTable WHERE $tmpValues ;")
+		tmpMain=$(echo "$tmpMain" | sed 's/_REF1_/'"$ref1"'/' )
+	fi
+
+	local table=`cut -d ':' -f 1 <<< $tmpMain`
+	local fields=`cut -d ':' -f 2 <<< $tmpMain`
+	local values=`cut -d ':' -f 3 <<< $tmpMain`
+
+	if [ -n "$table" ] ; then
+		sqlite3 "$DB_FILE" "INSERT INTO $table $fields VALUES $values ;" || return "$INSERT_DB_ERROR"
+	fi
+
+	return 0
+}
+
+function substitute()
+{
+	# substitute string in file using sed command
+	# $1 target file
+	# $2 original string and substitude string separated by ':'
+
+	local targetFile="$1"
+	shift
+	local originName=`cut -d ':' -f 1 <<< $*`
+	local substituteName=`cut -d ':' -f 2 <<< $*`
+
+	# parameters control
+	[ -f "$targetFile" ] || return "$WRONG_PARAMETER"  # targetFile is a normal file
+	[ -n "$originName" ] || return "$WRONG_PARAMETER"  # original string not null (substitute could be null)
+
+	sed "$targetFile" -i -e "s/$originName/$substituteName/g" || return "$?"
 
 	return 0
 }

@@ -11,12 +11,9 @@
 # Activation du service PHP fastcgi
 #-----------------------------
 printMessage "activation du service fast-cgi" "PHP"
-sudo lighty-enable-mod fastcgi-php >> "$LOG_FILE" 2>&1
-(( locError=$? ))
-printError "$locError"
+sudo lighty-enable-mod fastcgi-php >> "$LOG_FILE" 2>&1 || printError "$?"
 if [ $locError = 0 ] ; then
-	sudo service lighttpd force-reload
-	printError "$?"
+	sudo service lighttpd force-reload || printError "$?"
 fi
 
 # Paramétrage de PHP - cgi.fix_pathinfo
@@ -28,18 +25,19 @@ sudo sed /etc/php/7.*/cli/php.ini -i -e "s/^;cgi\.fix_pathinfo=1/cgi\.fix_pathin
 # Paramétrage du fichier /boot/config.txt
 #----------------------------------------
 # activation de la caméra
-grep -q -e "^start_x=1$" /boot/config.txt || sudo echo -e "\n# activation de la caméra \nstart_x=1" >> /boot/config.txt
+grep -q -e "^start_x=1\$" /boot/config.txt || sudo echo -e "\n# activation de la caméra \nstart_x=1" >> /boot/config.txt
 # allocation de mémoire
-grep -q -e "^gpu_mem=128$" /boot/config.txt || sudo echo "gpu_mem=128" >> /boot/config.txt
+grep -q -e "^gpu_mem=128\$" /boot/config.txt || sudo echo "gpu_mem=128" >> /boot/config.txt
 # désactiver la led de la caméra
-grep -q -e "^disable_camera_led=1$" /boot/config.txt || sudo echo "disable_camera_led=1" >> /boot/config.txt
+grep -q -e "^disable_camera_led=1\$" /boot/config.txt || sudo echo "disable_camera_led=1" >> /boot/config.txt
 
 # configuration de lighttpd
 #--------------------------
 # teste si la ligne de configuration existe déjà
-printMessage "paramétrage" "lighttpd"
-sudo grep -q -e '^ *"mod_fastcgi",$' /etc/lighttpd/lighttpd.conf  || sudo sed -i -e '/^ *server.modules$/a\    "mod_fastcgi",' /etc/lighttpd/lighttpd.conf
-printError "$?"
+if [ ! sudo grep -q -e '^ *"mod_fastcgi",$' /etc/lighttpd/lighttpd.conf ] ; then
+	printMessage "paramétrage" "lighttpd"
+	sudo sed -i -e '/^ *server.modules$/a\    "mod_fastcgi",' /etc/lighttpd/lighttpd.conf || printError "$?"
+fi
 
 ########################################################################
 # gestion des groupes et des permissions
