@@ -24,7 +24,7 @@ function makeCameraStorage()
 {
 	# create directories and symlinks to store camera image & films
 
-	if [ ! -L "$2" ] ; then		# dir exist & not a symlink
+	if [ ! -L $2 -a -d $2 -a `ls -A $2 | wc -c` -ne 0 ] ; echo $? ; then		# dir exist & not a symlink
 	# if target exists and not a symlink, copy files to real dir
 		printMessage "Sauvegarde des fichiers existants" "$2/*"
 		copyFiles "$2" "$1" || printError "$?"  # dir not empty -> backup files
@@ -47,7 +47,7 @@ removeDir	"$IMAGE_DIR_ORIGINAL"
 removeDir	"$VIDEO_DIR_ORIGINAL"
 
 printMessage "déplacement des fichiers web" "$WEB_PATH"
-copyFiles "$WEB_DIR_ORIGINAL" "$WEB_PATH" || printError "$?"
+copyDir "$WEB_DIR_ORIGINAL" "$WEB_PATH" || printError "$?"
 
 printMessage "Création du dir de stockage des photos" "$IMAGE_DIR_REAL"
 createDir "$IMAGE_DIR_REAL" || printError "$?"

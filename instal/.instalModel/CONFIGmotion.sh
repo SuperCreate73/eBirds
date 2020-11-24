@@ -36,7 +36,7 @@ function updateConfigMotion()
 printMessage "Configuration de motion" "motion"
 
 # Activation V4l2 module for using PI camera with Motion
-[ grep -q -e "^bcm2835-v4l2\$" /etc/modules ] || echo 'bcm2835-v4l2' >> /etc/modules
+grep -q -e "^bcm2835-v4l2\$" /etc/modules || echo 'bcm2835-v4l2' >> /etc/modules
 
 # get installed version (number part) of motion
 installedVersion=`dpkg --status motion | grep "Version" | cut -d ':' -f 2 | cut -d '.' -f "1 2" | sed "s/ //g"`
@@ -103,47 +103,14 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 # 	# modif de la vue
 # 	printMessage "modification de la vue du site web" "viewReglages.php"
 # 	doMotionVersion "$INSTALL_PATH/motion/$currentVersion/MOTIONcompare.txt" "/var/www/html/view/viewReglages.php"
-
-
-
 fi
 
 [ "$varDebug" ] && echo "Entering Motion - reinit instal final" >> $DEBUG_FILE
 
 [ -d "$INSTALL_PATH/motion/$currentVersion" ] || currentVersion="$verMotionDefault"
 
-# TODO condition à revoir :
-#		> first_instal - si version < reference -> modif des fichiers, sinon référence
-#		> modif - effacer les tables motion, puis idem first_instal
-# 	Attention à la vue settings, qui sera PE modifiée à chaque mise à jour
-#    varWebAppInstal=true si l'appliweb est mise à jour et donc la vue ...
-
-motionPath="/etc/motion/motion.conf"
-
-# modification de motion.conf
-source "$INSTALL_PATH/.instalModel/CONFIGmotionConf.sh"
+printMessage "paramétrage" "motion.conf"
+readInputFile "$INSTALL_PATH/.input/MOTIONparam" "motionConfig" "/etc/motion/motion.conf" || printError "$?"
 
 printMessage "mise à jour du fichier de config - verMotion" "$INSTALL_PATH/.config/versions.sh"
 updateParameter "$INSTALL_PATH/.config/versions.sh" "verMotion" "$installedVersion"
-
-# # création du fichier config local de motion
-# #cp /etc/motion/motion.conf /usr/local/etc/motion.conf
-# #printError "$?"
-#
-# # chmod 666 /var/log/motion/motion.log
-# # printError "$?"
-# motionPath="/etc/motion/motion.conf"
-#
-# # modification de motion.conf
-# source "$INSTALL_PATH/.instalModel/CONFIGmotionConf.sh"
-#
-# # configuration du démon
-# sed "/etc/default/motion" -i -e "s/^start_motion_daemon=no/start_motion_daemon=yes/g"
-#
-# # configuration du démon
-# printMessage "activation de motion" "motion"
-# systemctl enable motion
-# printError "$?"
-
-
-# if [ -z "$1" ] ; then  # test si au moins un paramètre est passé

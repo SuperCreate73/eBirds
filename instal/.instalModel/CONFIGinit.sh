@@ -34,9 +34,9 @@ grep -q -e "^disable_camera_led=1\$" /boot/config.txt || sudo echo "disable_came
 # configuration de lighttpd
 #--------------------------
 # teste si la ligne de configuration existe déjà
-if [ ! sudo grep -q -e '^ *"mod_fastcgi",$' /etc/lighttpd/lighttpd.conf ] ; then
+if ! grep -q -e '^ *"mod_fastcgi",$' /etc/lighttpd/lighttpd.conf ; then
 	printMessage "paramétrage" "lighttpd"
-	sudo sed -i -e '/^ *server.modules$/a\    "mod_fastcgi",' /etc/lighttpd/lighttpd.conf || printError "$?"
+	sudo sed -i -e '/^ *server.modules = ($/a\        "mod_fastcgi",' /etc/lighttpd/lighttpd.conf || printError "$?"
 fi
 
 ########################################################################

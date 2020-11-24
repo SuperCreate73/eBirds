@@ -288,7 +288,23 @@ function substitute()
 	[ -f "$targetFile" ] || return "$WRONG_PARAMETER"  # targetFile is a normal file
 	[ -n "$originName" ] || return "$WRONG_PARAMETER"  # original string not null (substitute could be null)
 
-	sed "$targetFile" -i -e "s/$originName/$substituteName/g" || return "$?"
+	sed "$targetFile" -i -e "s:$originName:$substituteName:g" || return "$?"
 
+	return 0
+}
+
+function motionConfig()
+{
+	local commentOut=`cut -d ':' -f 1 <<< $1`
+	local searchString=`cut -d ':' -f 2 <<< $1`
+	local value=`cut -d ':' -f 3 <<< $1`
+
+	if [ "$commentOut" = "C" ] ; then
+		commentOut='; '
+	else
+		commentOut=""
+	fi
+
+	substitute "^\(#\|;\)\? \?$searchString.*$:$commentOut$searchString $value" "$2" || return "$?"
 	return 0
 }

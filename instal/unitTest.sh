@@ -512,8 +512,9 @@ function uTestSubstitute()
 
 # uTestSubstitute
 
-readInputFile "MOTIONcompare.txt" "substitute" "$(ls DBinsertMotion_*.txt)" || echo "$?"
+# readInputFile "MOTIONcompare.txt" "substitute" "$(ls DBinsertMotion_*.txt)" || echo "$?"
 
+readInputFile "$INSTALL_PATH/.input/MOTIONparam" "motionConfig" "motion.conf" || printError "$?"
 ##################################################################################################
 # updateParameter "tstFile19.txt" "test1" "test1Modifié" || printError "$?"
 #
