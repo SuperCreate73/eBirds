@@ -55,46 +55,11 @@ function updateParameter()
 	[ ! -z "$4" ] && separator="$4"
 	# if parameter already exist
 	if grep -q "$2" "$1" ; then
-		sed "$1" -i -e 's/^'"$2$separator"'.*$/'"$2$separator$3"'/g' > /dev/null || return "$?"
+		substitute "^$2$separator.*$:$2$separator$3" "$1" || return "$?"
+#		sed "$1" -i -e 's/^'"$2$separator"'.*$/'"$2$separator$3"'/g' > /dev/null || return "$?"
 	else
 		echo "$2$separator$3" >> $1 || return "$?"
 	fi
-	return 0
-}
-
-function doInsertRecord()
-{
-	# insert record from input files given as parameters :
-	# $x : input file(s)
-
-	oldIFS="$IFS"
-
-	for varFile in $* ; do
-		while read varLine ; do
-	    IFS="+"
-			read tmpMain tmpRef <<< "$varLine"
-
-			if [ "${tmpMain::1}" != '#' ] ; then
-				if [ -n "$tmpRef" ] ; then
-					IFS=":" read tmpTable tmpFields tmpValues <<< "$tmpRef"
-					ref1=$(sqlite3 "$DB_FILE" "SELECT $tmpFields FROM $tmpTable WHERE $tmpValues ;")
-					tmpMain=$(echo "$tmpMain" | sed 's/_REF1_/'"$ref1"'/' )
-				fi
-
-				IFS=":"
-				read table fields values <<< "$tmpMain"
-				printMessage "insertion des paramètres - table: $table - record: F$fields V$values" "nichoir.db"
-				if [ -n "$table" ] ; then
-					sqlite3 "$DB_FILE" "INSERT INTO $table $fields VALUES $values ;"
-					printError "$?"
-				fi
-			fi
-
-		done < "$varFile"
-	done
-
-	IFS="$oldIFS"
-
 	return 0
 }
 
