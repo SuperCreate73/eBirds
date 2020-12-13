@@ -36,14 +36,14 @@
 # initialisation des variaPROCESSING_LINE_ERROR=71 # unable to process input linebles, paramètres et constantes
 #######################################################################
 # config constant
-INSTALL_PATH="/usr/local/etc/instal"
-ROOT_PATH="/var/www"
-DB_FILE="$ROOT_PATH/nichoir.db"
-WEB_PATH="$ROOT_PATH/html"
+INSTALL_ROOTPATH="/usr/local/etc/instal"
+WEBAPP_ROOTPATH="/var/www"
+DB_FILE="$WEBAPP_ROOTPATH/nichoir.db"
+WEB_PATH="$WEBAPP_ROOTPATH/html"
 
 SCRIPT_FILE="installNichoir-3.sh"
-LOG_FILE="$INSTALL_PATH/logInstal.log"
-DEBUG_FILE="$INSTALL_PATH/debug.log"
+LOG_FILE="$INSTALL_ROOTPATH/logInstal.log"
+DEBUG_FILE="$INSTALL_ROOTPATH/debug.log"
 VERSION="1.1 - 01-06-2020"
 
 # error constant
@@ -86,8 +86,8 @@ varFirstInstal=true   # first installation flag -> false if DB already exists
 #######################################################################
 
 # déclaration des fonctions de base du script - usage, printLog, ...
-source "$INSTALL_PATH/.instalModel/Functions.sh"
-source "$INSTALL_PATH/.instalModel/FunctionsHelpers.sh"
+source "$INSTALL_ROOTPATH/.instalModel/Functions.sh"
+source "$INSTALL_ROOTPATH/.instalModel/FunctionsHelpers.sh"
 
 # check for help option
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ "$1" = "?" ] || [ "$1" = "-?" ] ; then
@@ -135,8 +135,8 @@ if [ "$varFirstInstal" ] ; then
 fi
 
 # initialisation des variables de version (issues du fichier local des versions)
-if [ -e "$INSTALL_PATH/.config/versions.sh" ] ; then
-	source "$INSTALL_PATH/.config/versions.sh" || printError "$?"  # upload of module version variables
+if [ -e "$INSTALL_ROOTPATH/.config/versions.sh" ] ; then
+	source "$INSTALL_ROOTPATH/.config/versions.sh" || printError "$?"  # upload of module version variables
 
 	[ "$varDebug" ] && echo "version.sh loaded" >> $DEBUG_FILE
 else
@@ -196,12 +196,32 @@ if [ ! "$varRecall" = true ] ; then
 	# Extraction de la version de l'installateur de GitHub
 	lvTempVersion=`grep "verInstal" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 
+	### Script files installation ###
 	if [ ! "$lvTempVersion" = "$verInstal" ] || [ "$varScriptInstal" = true ] ; then
 
-		source "$INSTALL_PATH/.instalModel/SCRIPTinstal.sh"
+		# Copy script files
+		copyFiles "eBirds/instal/$SCRIPT_FILE" "$INSTALL_ROOTPATH" || printError "$?"
+		copyDir "eBirds/instal/.instalModel" "$INSTALL_ROOTPATH" || printError "$?"
+		copyDir "eBirds/instal/.input" "$INSTALL_ROOTPATH" || printError "$?"
+		copyDir "eBirds/instal/motion" "$INSTALL_ROOTPATH" || printError "$?"
 
-		printMessage "mise à jour du fichier de config - verInstal" "$INSTALL_PATH/.config/versions.sh"
-		updateParameter "$INSTALL_PATH/.config/versions.sh" "verInstal" "$lvTempVersion" || printError "$?"
+		# Copy version file
+		if [ "$varCopyConfig" = true ] ; then
+			copyFiles "eBirds/instal/.config/versions_init.sh" "$INSTALL_ROOTPATH/.config/versions.sh" || printerror "$?"
+		fi
+
+		# create link to $SCRIPT_FILE -> new bash command
+		printMessage "création du lien symbolique" "/usr/local/bin/nichoir"
+		createSymLink "$INSTALL_ROOTPATH/$SCRIPT_FILE" /usr/local/bin/nichoir || printError "$?"
+
+		# permission to execute to all .sh files
+		# donne la permission en exécution aux fichiers .sh
+		# 	-> recherche des fichiers *.sh dans le répertoire d'install
+		printMessage "gestion des permissions des fichiers d'instal" "chmod 755"
+		find "$INSTALL_ROOTPATH" -name "*.sh" -exec chmod 755 {} \; || printError "$?"
+
+		printMessage "mise à jour du fichier de config - verInstal" "$INSTALL_ROOTPATH/.config/versions.sh"
+		updateParameter "$INSTALL_ROOTPATH/.config/versions.sh" "verInstal" "$lvTempVersion" || printError "$?"
 
 		[ "$varDebug" ] && echo "Modify instal script done -> reloading script" >> $DEBUG_FILE
 
@@ -222,14 +242,14 @@ if [ ! "$lvTempVersion" = "$verPrgInstal" ] || [ "$varCheckBib" = true ] ; then
 
 	# TODO Installation de PHP à revoir -> php installe par défaut un serveur WEB qui entre en conflit avec Lighttpd
 
-	printMessage "installation des programmes" "$INSTALL_PATH/.input/PRGlist*.sh"
-	readInputFile "$INSTALL_PATH/.input/PRGlist" "prgInstallation" || printError "$?"
+	printMessage "installation des programmes" "$INSTALL_ROOTPATH/.input/PRGlist*.sh"
+	readInputFile "$INSTALL_ROOTPATH/.input/PRGlist" "prgInstallation" || printError "$?"
 
 	printMessage "vérification des dépendances" "tous paquets"
 	sudo apt-get install --fix-missing >> "$LOG_FILE" 2>&1 || printError "$?"
 
-	printMessage "mise à jour du fichier de config - verPrgInstal" "$INSTALL_PATH/.config/versions.sh"
-	updateParameter "$INSTALL_PATH/.config/versions.sh" "verPrgInstal" "$lvTempVersion" || printError "$?"
+	printMessage "mise à jour du fichier de config - verPrgInstal" "$INSTALL_ROOTPATH/.config/versions.sh"
+	updateParameter "$INSTALL_ROOTPATH/.config/versions.sh" "verPrgInstal" "$lvTempVersion" || printError "$?"
 
 	[ "$varDebug" ] && echo "Program installation done" >> $DEBUG_FILE
 
@@ -241,11 +261,11 @@ lvTempVersion=`grep "verPythonLib" "eBirds/instal/.config/versions.sh" | cut -d 
 
 if [ ! "$lvTempVersion" = "$verPythonLib" ]  || [ "$varCheckBib" = true ] ; then
 
-	printMessage "installation des bibliothèques python" "$INSTALL_PATH/.input/PYTHONlist*"
-	readInputFile "$INSTALL_PATH/.input/PYTHONlist" "pythonInstallation" || printError "$?"
+	printMessage "installation des bibliothèques python" "$INSTALL_ROOTPATH/.input/PYTHONlist*"
+	readInputFile "$INSTALL_ROOTPATH/.input/PYTHONlist" "pythonInstallation" || printError "$?"
 
-	printMessage "mise à jour du fichier de config - verPythonLib" "$INSTALL_PATH/.config/versions.sh"
-	updateParameter "$INSTALL_PATH/.config/versions.sh" "verPythonLib" "$lvTempVersion" || printError "$?"
+	printMessage "mise à jour du fichier de config - verPythonLib" "$INSTALL_ROOTPATH/.config/versions.sh"
+	updateParameter "$INSTALL_ROOTPATH/.config/versions.sh" "verPythonLib" "$lvTempVersion" || printError "$?"
 
 	[ "$varDebug" ] && echo "Python Library installation done" >> $DEBUG_FILE
 
@@ -256,10 +276,10 @@ fi
 lvTempVersion=`grep "verNichoirFiles" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 
 if [ ! "$lvTempVersion" = "$verNichoirFiles" ]  || [ "$varWebAppInstal" = true ] ; then
-	source "$INSTALL_PATH/.instalModel/FILESinstal.sh"
+	source "$INSTALL_ROOTPATH/.instalModel/FILESinstal.sh"
 
-	printMessage "mise à jour du fichier de config - verNichoirFiles" "$INSTALL_PATH/.config/versions.sh"
-	updateParameter "$INSTALL_PATH/.config/versions.sh" "verNichoirFiles" "$lvTempVersion" || printError "$?"
+	printMessage "mise à jour du fichier de config - verNichoirFiles" "$INSTALL_ROOTPATH/.config/versions.sh"
+	updateParameter "$INSTALL_ROOTPATH/.config/versions.sh" "verNichoirFiles" "$lvTempVersion" || printError "$?"
 
 
 	[ "$varDebug" ] && echo "Local web site update done" >> $DEBUG_FILE
@@ -272,8 +292,8 @@ lvTempVersion=`grep "verDB" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 
 
 if [ ! "$lvTempVersion" = "$verDB" ]  || [ "$varCheckDB" = true ] ; then
 	# création de la base de donnée
-	printMessage "Creation des tables DB" "$INSTALL_PATH/.input/DBtables*.sh"
-	readInputFile "$INSTALL_PATH/.input/DBtables" "createTable" || printError "$?"
+	printMessage "Creation des tables DB" "$INSTALL_ROOTPATH/.input/DBtables*.sh"
+	readInputFile "$INSTALL_ROOTPATH/.input/DBtables" "createTable" || printError "$?"
 
 	[ "$varDebug" ] && echo "DB / table creation done" >> $DEBUG_FILE
 
@@ -283,8 +303,8 @@ if [ ! "$lvTempVersion" = "$verDB" ]  || [ "$varCheckDB" = true ] ; then
 
 	[ "$varDebug" ] && echo "DB / admin user insert done" >> $DEBUG_FILE
 
-	printMessage "mise à jour du fichier de config - verDB" "$INSTALL_PATH/.config/versions.sh"
-	updateParameter "$INSTALL_PATH/.config/versions.sh" "verDB" "$lvTempVersion"
+	printMessage "mise à jour du fichier de config - verDB" "$INSTALL_ROOTPATH/.config/versions.sh"
+	updateParameter "$INSTALL_ROOTPATH/.config/versions.sh" "verDB" "$lvTempVersion"
 fi
 
 #--------------------------------------------------------------------
@@ -294,11 +314,11 @@ if [ "$varFirstInstal" = "true" ] ; then
 	# TODO existing record protection
 
 	printMessage "remplissage des tables DB" "nichoir.db"
-	readInputFile "$INSTALL_PATH/.input/DBinsert" "insertRecord" || printError "$?"
+	readInputFile "$INSTALL_ROOTPATH/.input/DBinsert" "insertRecord" || printError "$?"
 
 	[ "$varDebug" ] && echo "DB / tables insert done" >> $DEBUG_FILE
 
-	source "$INSTALL_PATH/.instalModel/CONFIGinit.sh"
+	source "$INSTALL_ROOTPATH/.instalModel/CONFIGinit.sh"
 
 	[ "$varDebug" ] && echo "Initial config done" >> $DEBUG_FILE
 
@@ -306,11 +326,11 @@ fi
 
 #--------------------------------------------------------------------
 # config de motion
-# XXX Check after this line
-source "$INSTALL_PATH/.instalModel/CONFIGmotion.sh"
+source "$INSTALL_ROOTPATH/.instalModel/CONFIGmotion.sh"
 
 [ "$varDebug" ] && echo "Motion config done" >> $DEBUG_FILE
 
+#--------------------------------------------------------------------
 # nettoyage des fichiers résiduels
 printMessage "nettoyage des fichiers résiduels" "rm -r eBirds"
 rm -r eBirds || printError "$?"

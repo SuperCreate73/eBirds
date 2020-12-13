@@ -8,13 +8,13 @@ function initVariables()
 {
   BAD_OPTION=65			# unknow option used
   DEBUG_FILE="test/debug.txt"
-  INSTALL_PATH="test"
-  ROOT_PATH="/var/www"
-  DB_FILE="$ROOT_PATH/nichoir.db"
-  WEB_PATH="$ROOT_PATH/html"
+  INSTALL_ROOTPATH="test"
+  WEBAPP_ROOTPATH="/var/www"
+  DB_FILE="$WEBAPP_ROOTPATH/nichoir.db"
+  WEB_PATH="$WEBAPP_ROOTPATH/html"
 
   SCRIPT_FILE="installNichoir-3.sh"
-  LOG_FILE="$INSTALL_PATH/logInstal.log"
+  LOG_FILE="$INSTALL_ROOTPATH/logInstal.log"
   VERSION="1.1 - 01-06-2020"
 
   # error constant
@@ -407,7 +407,7 @@ function uTestApplyConfig()
   initVariables
 
   # normal behaviour
-  readInputFile "$INSTALL_PATH/.input/PRGlist" "prgInstallation"
+  readInputFile "$INSTALL_ROOTPATH/.input/PRGlist" "prgInstallation"
   local TMP_OUTPUT="$?"
   if [ ! "$TMP_OUTPUT" -eq 0 ] ; then
     echo "UnitTestError - Error on applying config - $TMP_OUTPUT"
@@ -417,7 +417,7 @@ function uTestApplyConfig()
 
   TMP_OUTPUT=0
   # wrong parameter error
-  readInputFile "$INSTALL_PATH/.input/PRplist" "prgInstallation"
+  readInputFile "$INSTALL_ROOTPATH/.input/PRplist" "prgInstallation"
   TMP_OUTPUT="$?"
   if [ "$TMP_OUTPUT" -eq 0 ] ; then
     echo "UnitTestError - wrong file not detected - $TMP_OUTPUT"
@@ -427,7 +427,7 @@ function uTestApplyConfig()
 
   TMP_OUTPUT=0
   # wrong function call error
-  readInputFile "$INSTALL_PATH/.input/PRGlist" "prgInstallation23"
+  readInputFile "$INSTALL_ROOTPATH/.input/PRGlist" "prgInstallation23"
   TMP_OUTPUT="$?"
   if [ "$TMP_OUTPUT" -eq 0 ] ; then
     echo "UnitTestError - wrong function name not detected - $TMP_OUTPUT"
@@ -444,7 +444,7 @@ function uTestApplyPythonConfig()
   initVariables
 
   # normal behaviour
-  readInputFile "$INSTALL_PATH/.input/PYTHONlist" "pythonInstallation"
+  readInputFile "$INSTALL_ROOTPATH/.input/PYTHONlist" "pythonInstallation"
   local TMP_OUTPUT="$?"
   if [ ! "$TMP_OUTPUT" -eq 0 ] ; then
     echo "UnitTestError - Error on applying config - $TMP_OUTPUT"
@@ -454,7 +454,7 @@ function uTestApplyPythonConfig()
 
   TMP_OUTPUT=0
   # wrong parameter error
-  readInputFile "$INSTALL_PATH/.input/PYTHOlist" "pythonInstallation"
+  readInputFile "$INSTALL_ROOTPATH/.input/PYTHOlist" "pythonInstallation"
   TMP_OUTPUT="$?"
   if [ "$TMP_OUTPUT" -eq 0 ] ; then
     echo "UnitTestError - wrong file not detected - $TMP_OUTPUT"
@@ -514,7 +514,7 @@ function uTestSubstitute()
 
 # readInputFile "MOTIONcompare.txt" "substitute" "$(ls DBinsertMotion_*.txt)" || echo "$?"
 
-readInputFile "$INSTALL_PATH/.input/MOTIONparam" "motionConfig" "motion.conf" || printError "$?"
+readInputFile "$INSTALL_ROOTPATH/.input/MOTIONparam" "motionConfig" "motion.conf" || printError "$?"
 ##################################################################################################
 # updateParameter "tstFile19.txt" "test1" "test1Modifié" || printError "$?"
 #

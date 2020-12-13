@@ -1,11 +1,3 @@
-Script d'installation :
-  - créer une table 'prgConfig'
-  - insérer une ligne key=motion, value=version
-  - insérer un nouveau modèle pour lire les réglages (motion, autres ?)
-  - dans le fichier motionManager, insérer l'appel au nouveau modèle
-  - chequer la version de motion
-  - modifier le nom des paramètres en fonction de la version de motion
-
 répertoire de sauvegarde des photos
   - choix du répertoire
   - référencé via un lien symbolique vers le répertoire
@@ -20,8 +12,6 @@ données utilisateur
   -done- nouveau modèle user
   -done- stockage des valeurs dans la db
   -done- fonction de téléchargement des coordonnées gps
-
-dpkg --status motion | grep "Version" | cut -d ':' -f 2 | cut -d '.' -f "1 2" | sed "s/ //g"
 
 AMELIORATIONS
 -------------

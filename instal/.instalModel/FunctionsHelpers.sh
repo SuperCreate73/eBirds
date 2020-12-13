@@ -1,67 +1,6 @@
 #!/bin/bash
 # coding:UTF-8
 
-function printMessage()
-{
-# print messages on terminal and/or log file :
-# $1 description of current operation
-# $2 item
-
-	varMessage="$1 -- $2 --" 		# message format
-
-	[ "$varVerbose" = true ] &&  echo "$varMessage"  	# write in console if applicable
-
-	# prepare separation string '-----------'
-	str=""
-	(( count = 0 ))
-
-	while [ $count -lt ${#varMessage} ] ; do
-		str="$str-"
-		(( count += 1 ))
-	done
-
-	echo -e "\n$varMessage \n$str " >> $LOG_FILE		# write in logfile
-
-	return 0
-}
-
-function printError()
-{
-# print errors on console and log file :
-# $1 error number
-#
-
-	if [ $1 -gt 0 ] ; then 	# if error number > 0
-		(( varErrorCount += 1 ))	# error count increment
-		echo "#### ERROR #### $varMessage - Error Code $1" >> $LOG_FILE			# write in logfile
-		[ "$varError" ] && echo "    Error on execution - $varMessage - Error Code $1"	# write in console if applicable
-	fi
-
-	return 0
-}
-
-function updateParameter()
-{
-	# parameter update in config file :
-	# $1 - config file
-	# $2 - parameter
-	# $3 - value
-	# $4 - separator - defaut '='
-
-	[ -f "$1" ] || return "$BAD_INPUT_FILE"
-
-	local separator='='
-
-	[ ! -z "$4" ] && separator="$4"
-	# if parameter already exist
-	if grep -q "$2" "$1" ; then
-		substitute "^$2$separator.*$:$2$separator$3" "$1" || return "$?"
-#		sed "$1" -i -e 's/^'"$2$separator"'.*$/'"$2$separator$3"'/g' > /dev/null || return "$?"
-	else
-		echo "$2$separator$3" >> $1 || return "$?"
-	fi
-	return 0
-}
 
 ################################################################################
 # file / dir utilities
@@ -88,6 +27,7 @@ function removeFile()
   # $1 name of file to remove
   # $2 option -f -> force--> not used
 
+	# If file  or Symlink exist, remove it and return result code
   [ -e "$1" -o -L "$1" ] && ( rm -r -d "$1" ; return $? )
   return 0
 }

@@ -10,15 +10,18 @@
 # First clean-up of html dir, copy of html dir sources, copy of backend
 #+dir sources, image and video dir assignments.
 #
-IMAGE_DIR_REAL="/home/pi/images"
-IMAGE_DIR_LINK="$WEB_PATH/public/cameraShots"
-VIDEO_DIR_REAL="/home/pi/videos"
-VIDEO_DIR_LINK="$WEB_PATH/public/cameraFilms"
 WEB_DIR_ORIGINAL="eBirds/html_working"
-BACKEND_DIR_ORIGINAL="eBirds/backend"
-LOG_DIR_ORIGINAL="eBirds/log"
-VIDEO_DIR_ORIGINAL="$WEB_DIR_ORIGINAL/public/cameraFilms"
+
 IMAGE_DIR_ORIGINAL="$WEB_DIR_ORIGINAL/public/cameraShots"
+IMAGE_DIR_LINK="$WEB_PATH/public/cameraShots"
+IMAGE_DIR_REAL="/home/pi/images"
+
+VIDEO_DIR_ORIGINAL="$WEB_DIR_ORIGINAL/public/cameraFilms"
+VIDEO_DIR_LINK="$WEB_PATH/public/cameraFilms"
+VIDEO_DIR_REAL="/home/pi/videos"
+
+BACKEND_DIR_ORIGINAL="eBirds/backend"
+
 
 function makeCameraStorage()
 {
@@ -60,9 +63,9 @@ makeCameraStorage "$IMAGE_DIR_REAL" "$IMAGE_DIR_LINK" 	# create image dir
 makeCameraStorage "$VIDEO_DIR_REAL" "$VIDEO_DIR_LINK"		# create video dir
 
 printMessage "déplacement des scripts python" "/var/www/backend"
-copyDir "$BACKEND_DIR_ORIGINAL" "$ROOT_PATH" || printError "$?"
+copyDir "$BACKEND_DIR_ORIGINAL" "$WEBAPP_ROOTPATH" || printError "$?"
 
-if [ ! -d "$ROOT_PATH/log" ] ; then
-	printMessage "création du répertoire des log" "$ROOT_PATH/log"
-	createDir "$ROOT_PATH/log" || printError "$?"
+if [ ! -d "$WEBAPP_ROOTPATH/log" ] ; then
+	printMessage "création du répertoire des log" "$WEBAPP_ROOTPATH/log"
+	createDir "$WEBAPP_ROOTPATH/log" || printError "$?"
 fi

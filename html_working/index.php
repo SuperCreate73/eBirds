@@ -33,8 +33,8 @@ try	{	// instruction permettant de récupérer les erreurs éventuelles dans l'i
 		'photoThumb' => 'photoThumb',
 		'information' => 'information',
 		'reglages' => 'reglages', //tomodify with test is already connected
-		'login' => 'login', //tomodify with test is already connected
-		'logout'=> 'logout',
+		'login' => 'login', //to modify with test is already connected
+		'logout' => 'logout',
 		'loginVerify' => 'loginVerify',
 		'doReglages' => 'doReglages',
 		'homepage' => 'homePage',
@@ -48,10 +48,8 @@ try	{	// instruction permettant de récupérer les erreurs éventuelles dans l'i
 	}
 
 	if ($page == 'reglages' && $nom == '' ) {
-		//
-		//	if ($nom == '') {
 		$_SESSION['pageCourante'] = $page;
-		$page='login';
+		$page = 'login';
 	}
 
 	if ($page == 'login') {			// ------------------ Login

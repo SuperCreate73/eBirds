@@ -21,7 +21,7 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 
 	# Copie des fichiers sources : DBinsert_Motion_*; MOTIONparam_*
 	printMessage "copie des fichiers sources" "MOTIONparam_*.txt; DBinsert_Motion_*"
-	copyFiles "$INSTALL_PATH/motion/$verMotionDefault" "$INSTALL_PATH/.input" || printError "$?"
+	copyFiles "$INSTALL_ROOTPATH/motion/$verMotionDefault" "$INSTALL_ROOTPATH/.input" || printError "$?"
 
 	[ "$varDebug" ] && echo "Entering Motion - reinit existing instal" >> $DEBUG_FILE
 	[ "$varDebug" ] && echo "$varFirstInstal" >> $DEBUG_FILE
@@ -52,33 +52,33 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 	############################################################################
 	# si la version courante de Motion a des noms de paramètres différents
 	# -> testé par l'existance du répertoire
-	if [ -f "$INSTALL_PATH/motion/$currentVersion/MOTIONcompare.txt" ] ; then
+	if [ -f "$INSTALL_ROOTPATH/motion/$currentVersion/MOTIONcompare.txt" ] ; then
 
 		# modif des fichiers input : DBinsert_Motion_*
 		printMessage "modification du fichier de paramètres" "DBinsertMotion_*.txt"
-		readInputFile "$INSTALL_PATH/motion/$currentVersion/MOTIONcompare.txt" "substitute" "$(ls $INSTALL_PATH/.input/DBinsertMotion_*.txt)" || printError "$?"
+		readInputFile "$INSTALL_ROOTPATH/motion/$currentVersion/MOTIONcompare.txt" "substitute" "$(ls $INSTALL_ROOTPATH/.input/DBinsertMotion_*.txt)" || printError "$?"
 
 		# modif des fichiers input : MOTIONparam_*
 		printMessage "modification du fichier de paramètres" "MOTIONparam_*.txt"
-		readInputFile "$INSTALL_PATH/motion/$currentVersion/MOTIONcompare.txt" "substitute" "$(ls $INSTALL_PATH/.input/MOTIONparam_*.txt)" || printError "$?"
+		readInputFile "$INSTALL_ROOTPATH/motion/$currentVersion/MOTIONcompare.txt" "substitute" "$(ls $INSTALL_ROOTPATH/.input/MOTIONparam_*.txt)" || printError "$?"
 
 		# modif de la vue
 		printMessage "modification de la vue du site web" "viewReglages.php"
-		readInputFile "$INSTALL_PATH/motion/$currentVersion/MOTIONcompare.txt" "substitute" "/var/www/html/view/viewReglages.php" || printError "$?"
+		readInputFile "$INSTALL_ROOTPATH/motion/$currentVersion/MOTIONcompare.txt" "substitute" "/var/www/html/view/viewReglages.php" || printError "$?"
 	fi
 
 	# insertion des paramètres motion dans la DB
 	printMessage "modifications des tables Motion" "nichoir.db"
-	readInputFile "$INSTALL_PATH/.input/DBinsertMotion" "insertRecord" "$(ls $INSTALL_PATH/.input/MOTIONparam_*.txt)" || printError "$?"
+	readInputFile "$INSTALL_ROOTPATH/.input/DBinsertMotion" "insertRecord" "$(ls $INSTALL_ROOTPATH/.input/MOTIONparam_*.txt)" || printError "$?"
 fi
 ############################################################################
 
 [ "$varDebug" ] && echo "Motion config - end reached" >> $DEBUG_FILE
 
-[ -d "$INSTALL_PATH/motion/$currentVersion" ] || currentVersion="$verMotionDefault"
+[ -d "$INSTALL_ROOTPATH/motion/$currentVersion" ] || currentVersion="$verMotionDefault"
 
 printMessage "paramétrage" "motion.conf"
-readInputFile "$INSTALL_PATH/.input/MOTIONparam" "motionConfig" "/etc/motion/motion.conf" || printError "$?"
+readInputFile "$INSTALL_ROOTPATH/.input/MOTIONparam" "motionConfig" "/etc/motion/motion.conf" || printError "$?"
 
-printMessage "mise à jour du fichier de config - verMotion" "$INSTALL_PATH/.config/versions.sh"
-updateParameter "$INSTALL_PATH/.config/versions.sh" "verMotion" "$installedVersion"
+printMessage "mise à jour du fichier de config - verMotion" "$INSTALL_ROOTPATH/.config/versions.sh"
+updateParameter "$INSTALL_ROOTPATH/.config/versions.sh" "verMotion" "$installedVersion"
