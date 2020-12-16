@@ -1,24 +1,17 @@
+répertoire de sauvegarde des photos
+  - choix du répertoire
+  - référencé via un lien symbolique vers le répertoire
+  - Testé :
+      - permissions -> ok
+      - effacer des fichiers depuis l'interface -> OK
+
 sauvegarde des utilisateurs sous firefox
   semble ne pas supporter correctement fetch
-
-installscript
-  -done- ajouter la balise UTF-8 dans le fichier log
-  -done- installation de php-zip
-  -done- dB - nouvelle table avec les données utilisateur / nichoir
-  -done- ajouter une entrée dans la db avec le none
-
-implémentation des fonctions de réglages dans la db
-  -done- traitement du 'none' dans les états Timelapse
-  -done- permettre le stockage time-lapse en photo et/ou vidéo
-  vérifier la taille minimale que peut donner la caméra
 
 données utilisateur
   -done- nouveau modèle user
   -done- stockage des valeurs dans la db
   -done- fonction de téléchargement des coordonnées gps
-
-
-
 
 AMELIORATIONS
 -------------
@@ -34,3 +27,17 @@ Gestion dynamique des capteurs
 
 DB
   simplification des tables capteurs
+
+HARDWARE
+--------
+Carte hat avec les différents connecteurs pré-branchés
+Prémontage des connexions, groupées par capteurs, avec passage pour la vidéo branchée directement sur le pi
+-> faire un prototype
+-> tests
+-> production
+
+Capteurs à prévoir :
+  - micro
+  - convertisseur analogique -> numérique
+  - baffle et ampli (?)
+  - Slot pour résistance (leds allumage et leds détection)

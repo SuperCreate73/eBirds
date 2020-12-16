@@ -212,7 +212,7 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 
 			<div class="five columns offset-by-seven">
 				<label>Email de contact en cas de détection de mouvement:</label>
-				<input class="u-full-width" type="text" placeholder="<?= $settingsInterface -> on_motion_detected ?>" name="on_motion_detected" id="on_motion_detected" onchange="">
+				<input class="u-full-width" type="text" value="<?= $settingsInterface -> on_motion_detected ?>" name="on_motion_detected" id="on_motion_detected" onchange="">
 			</div>
 		</div>
 
@@ -250,8 +250,8 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 		</div>
 
 		<div class="five columns offset-by-two">
-			<label>Intervalle en seconde entre les prises de vue (0-3600):</label><div id="texteIntervalle" ><?= $settingsInterface -> snapshotInterval ?></div>
-			<input class="u-full-width" type="range" min="0" max="3600" value="<?= $settingsInterface -> snapshotInterval ?>" placeholder="<?= $settingsInterface -> snapshotInterval ?>" name="snapshotInterval" id="snapshotInterval" oninput="updateSnapInterval(this.value);">
+			<label>Intervalle en seconde entre les prises de vue (0-3600):</label><div id="texteIntervalle" ><?= $settingsInterface -> snapshot_interval ?></div>
+			<input class="u-full-width" type="range" min="0" max="3600" value="<?= $settingsInterface -> snapshot_interval ?>" placeholder="<?= $settingsInterface -> snapshot_interval ?>" name="snapshot_interval" id="snapshot_interval" oninput="updateSnapInterval(this.value);">
 		</div>
 	</div>
 

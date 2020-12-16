@@ -44,31 +44,31 @@ function setFocusMen2($position)
 	return $tabFocus;
 }
 
-function layoutPane($allArrayData,$page,$limit=10,$colnum=3)
+function layoutPane($allArrayData, $page, $limit=10, $colnum=3)
 {
 	// fonction de mise en forme en '$colnum' nombre de colonne
 	//
 	// initialisation des variables
 	for ($iter=0; $iter<$colnum; $iter++)
 	{
-		$arrayDataByCol[$iter]=array_slice($allArrayData,($limit*$colnum*($page-1)+($iter*$limit)),$limit);
+		$arrayDataByCol[$iter] = array_slice($allArrayData, ($limit * $colnum * ($page - 1) + ($iter * $limit)), $limit);
 	}
 
 	return $arrayDataByCol;
 }
 
-function numberOfPage($allArrayData,$listMax)
+function numberOfPage($allArrayData, $listMax)
 {
 	// Calcule le nombre de page à prévoir pour l'affichage des fichiers photos
 	// allArrayData = Array des fichiers à compter
 	// listMax = Nombre max d'item par page (taille des colonnes x nombre de colonnes)
 	if (count($allArrayData) % $listMax == 0)
 	{
-		return intdiv(count($allArrayData),$listMax);
+		return intdiv(count($allArrayData), $listMax);
 	}
 	else
 	{
-		return (intdiv(count($allArrayData),$listMax)+1);
+		return (intdiv(count($allArrayData), $listMax) + 1);
 	}
 }
 

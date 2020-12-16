@@ -1,0 +1,13 @@
+# Liste des paramètres de motion dont le nom change avec les versions, avec
+# comme séparateur ':'.
+# Le premier champ indique le le nom de référence (version 4.2) et le deuxième
+# celui de la version installée (4.0).
+#
+
+movie_max_time:max_movie_time
+movie_output:ffmpeg_output_movies
+pid_file:process_id_file
+picture_quality:quality
+picture_output:output_pictures
+timelapse_mode:ffmpeg_timelapse_mode
+timelapse_interval:ffmpeg_timelapse

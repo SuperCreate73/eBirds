@@ -1,0 +1,16 @@
+# Liste des programmes à installer avec possibilité de mettre un commentaire
+# pour le LogFile et/ou le mode verbeux.  Le nom du programme à installer est
+# séparé du champs commentaire par un ':'
+
+lighttpd:installation du serveur web
+sqlite3:installation du gestionnaire de base de données
+python3-pip:installation de bibliothèque python
+php7.0:installation de PHP
+php-cgi:installation de PHP-cgi
+php-sqlite3:installation de PHP-sqlite3
+php-json:installation de PHP-json
+php-zip:installation de PHP-zip
+ffmpeg:installation du gestionnaire de flux video
+dnsutils:installation de dnsutils pour transmission IP
+motion:installation de motion
+xz-utils:installation de l'utilitaire de décompression
