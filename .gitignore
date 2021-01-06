@@ -2,3 +2,6 @@
 *.mpeg
 *.pyc
 *.tar.gz
+
+instal/test/*
+instal/tstFile2.txt

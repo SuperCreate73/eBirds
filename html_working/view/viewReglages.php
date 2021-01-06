@@ -12,6 +12,14 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 <h1>Réglages</h1>
 <!--div id="accordion"-->
 <form method="POST" action="index.php?page=reglages&action=doreglages">
+
+
+	<!-- ############################################################################# -->
+	<!-- ############################################################################# -->
+	<!-- #########  Cadre de réglages système  ####################################### -->
+	<!-- ############################################################################# -->
+	<!-- ############################################################################# -->
+
 	<div class="cadre">
 
 		<div class="row spaced">
@@ -91,10 +99,13 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 			</div>
 		<?php } ?>
 
-	</div> <!--    FIN CADRE II -->
+	</div>
 
-	<!--    FIN CADRE IV -->
-
+	<!-- ############################################################################# -->
+	<!-- ############################################################################# -->
+	<!-- #########  Cadre de la Localisation  ######################################## -->
+	<!-- ############################################################################# -->
+	<!-- ############################################################################# -->
 
 	<div class="cadre">
 		<div class="row">
@@ -157,10 +168,11 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 		</div>
 	</div>
 
-
-
-
-
+	<!-- ############################################################################# -->
+	<!-- ############################################################################# -->
+	<!-- #########  Cadre des réglages caméra  ####################################### -->
+	<!-- ############################################################################# -->
+	<!-- ############################################################################# -->
 
 	<div class="cadre">
 
@@ -219,9 +231,6 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 
 		<hr style="border: .5px solid white;" />
 
-
-
-
 		<div class="two columns">
 			<h3>Intervalles réguliers</h3>
 		</div>
@@ -255,11 +264,6 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 		</div>
 	</div>
 
-
-
-
-
-
 	<div class="row">
 		<div class="offset-by-seven columns">
 			<div class="five columns">
@@ -267,14 +271,101 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 			</div>
 		</div>
 	</div>
+</div>
+
+<!-- ############################################################################# -->
+<!-- ############################################################################# -->
+<!-- #########  Cadre des capteurs  ############################################## -->
+<!-- ############################################################################# -->
+<!-- ############################################################################# -->
+
+	<div class="cadre">
+
+		<div class="row spaced">
+			<div class="eight columns">
+				<h2>Capteurs</h2>
+			</div>
+		</div>
 
 
+		<div class="row">
+			<div class="offset-by-two columns">
+				<div class="row">
+					<h3>Humidité / Température :</h3>
+				</div>
 
+				<div class="four columns">
+				  <input type="checkbox" id="DHT11" name="DHT11" value="DHT11">
+				  <label for="DHT11"> DHT11</label>
+					<br>
+				  <input type="checkbox" id="DHT22" name="DHT22" value="DHT22">
+				  <label for="DHT22"> DHT22</label><br>
+				</div>
+					<div class="offset-by-seven columns">
+						<div class="five columns">
+							<input class="button u-full-width boutonLogin" value="Enregistrer les modifications" type="submit">
+						</div>
+					</div>
 
+				<div class="three columns">
+					<input type="checkbox" id="in11" name="in11" value="in11">
+					<label for="in11"> intérieur </label>
+				</div>
 
-		<!--/div -->
-	</div> <!--    FIN CADRE II -->
+				<div class="one column">
+					<div id="save_name" class='my_button save' value="Enregistrer" onclick="changerNom()"></div>
+					<!--input class="button u-full-width boutonLogin" value="Modifier"-->
+				</div>
+			</div>
+		</div>
 
+		<!-- ############################# -->
+		<!-- identifiant -->
+		<!-- ############################# -->
+		<div class="row">
+			<div class="offset-by-two columns">
+				<div class="two columns">
+					<h3>Identifiant :</h3>
+				</div>
+
+				<div class="seven columns">
+					<input class="u-full-width" type="text" placeholder="Identifiant" name="id">
+				</div>
+
+				<div class="one column">
+					<div id="save_id" class='my_button save' value="Enregistrer id" onclick="save_id()"></div>
+
+					<!--input class="button u-full-width boutonLogin" value="Modifier"-->
+				</div>
+			</div>
+		</div>
+
+		<!-- ############################# -->
+		<!-- gestion des utilisateurs -->
+		<!-- ############################# -->
+		<div class="row">
+			<div class="offset-by-two columns">
+				<div class="seven columns">
+					<h3>Utilisateurs :</h3>
+				</div>
+
+				<div class="three columns">
+					<div id="add_user" class='my_button' value="ajouter utilisateur" onclick="addUser()"></div>
+					<!--input class="button u-full-width boutonLogin" value="Ajouter" onclick="addUser()"-->
+				</div>
+			</div>
+		</div>
+
+		<?php foreach ($users as $key => $userItem) { ?>
+			<div class='row'>
+				<div class='offset-by-four columns' id='<?= $userItem[0] ; ?>' >
+					<div class='seven columns'><?= $userItem[0] ; ?></div><div class="my_button deleteUser" onclick="removeUser('<?= $userItem[0]; ?>');">
+					</div>
+				</div>
+			</div>
+		<?php } ?>
+
+	</div>
 
 
  <!--    FIN CADRE V -->
