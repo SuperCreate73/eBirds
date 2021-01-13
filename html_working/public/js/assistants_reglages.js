@@ -180,3 +180,20 @@ function geolocaliser(){
     });
 
 }
+function toggleSelectMode (activeChkBox) {
+	// Active ou désactive le mode de sélection.  Si désactivé, annule la sélection courante.
+	//activeChkBox.classList.includes('toggleSelect')
+
+	if (activeChkBox.classList.contains('toggleSelect')) {
+		// sort du mode 'sélection' et efface la liste courante
+		activeChkBox.classList.remove('toggleSelect');
+    activeChkBox.classList.add('toggleUnSelect');
+		toggleSelect = false;
+	}
+	else {
+		// active le mode 'sélection'
+		activeChkBox.classList.remove('toggleUnSelect');
+    activeChkBox.classList.add('toggleSelect');
+		toggleSelect = true;
+	}
+}

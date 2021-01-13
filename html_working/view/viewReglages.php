@@ -289,18 +289,49 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 
 
 		<div class="row">
-			<div class="offset-by-two columns">
-				<div class="row">
+			<div class="settingFrame">
 					<h3>Humidité / Température :</h3>
-				</div>
+					<div class="rangeLine">
+						<div class="verticalFrame">
+							<label for="sensor_name">capteur à ajouter :</label>
+							<select id="sensor_name" name="sensor_name">
+								<option value="DHT-11" >DHT-11</option>
+								<option value="DHT-22" >DHT-22</option>
+								<option value="HX711" >HX711</option>
+								<option value="SI-4523" >SI-4523</option>
+							</select>
+						</div>
+						<div class="verticalFrame">
+							<label for="sensor_location">position :</label>
+							<select id="sensor_location" name="sensor_location">
+								<option value="in" >intérieur</option>
+								<option value="out" >extérieur</option>
+							</select>
+						</div>
 
-				<div class="four columns">
-				  <input type="checkbox" id="DHT11" name="DHT11" value="DHT11">
-				  <label for="DHT11"> DHT11</label>
+						<div class="verticalFrame">
+							<label for="pin_id">pin :</label>
+							<input class="inputSensor" type="text" value="" name="pin_id" id="pin_id" onchange="">
+						</div>
+
+						<div class="verticalFrame">
+							<label for="sensorNicName">nom :</label>
+							<input class="inputSensor" type="text" value="" name="sensorNicName" id="sensorNicName" onchange="">
+						</div>
+
+						<div id="add_sensor" class="my_button" value="ajouter capteur" onclick="addSensor()"></div>
+					</div>
+
+			</div>
+
 					<br>
-				  <input type="checkbox" id="DHT22" name="DHT22" value="DHT22">
+					<br>
+					<br>
+					<div id="checkbox_dht11" class="checkbox toggleUnSelect" value="DHT11" title="DHT11 sensor" onclick="toggleSelectMode(this)"></div>
+					<label for="checkbox_dht11">DHT11</label><br>
+				  <input type="chekbox" id="DHT22" name="DHT22" value="DHT22">
 				  <label for="DHT22"> DHT22</label><br>
-				</div>
+
 					<div class="offset-by-seven columns">
 						<div class="five columns">
 							<input class="button u-full-width boutonLogin" value="Enregistrer les modifications" type="submit">
@@ -316,7 +347,6 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 					<div id="save_name" class='my_button save' value="Enregistrer" onclick="changerNom()"></div>
 					<!--input class="button u-full-width boutonLogin" value="Modifier"-->
 				</div>
-			</div>
 		</div>
 
 		<!-- ############################# -->

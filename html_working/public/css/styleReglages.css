@@ -36,7 +36,13 @@
 	background-position: 0 -40px;
     cursor: pointer;
 }
-
+#add_sensor{
+	background-image: url(../images/btn_ajout.png);
+}
+#add_sensor:hover{
+	background-position: 0 -40px;
+    cursor: pointer;
+}
 .deleteUser{
 	background-image: url(../images/btn_remove.png);
 	float:none;
@@ -54,6 +60,7 @@
 input, select{
 	color: #461A00;
 	font-size: 1.8rem;
+	margin-bottom: 0;
 }
 
 input.button{
@@ -71,4 +78,72 @@ input.button{
 
 /******** Positioning ***********/
 
-# TODO
+/* # TODO */
+.settingFrame {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+}
+
+.verticalFrame {
+	margin-left: 1rem;
+	margin-right: 1rem;
+	flex-basis: 8rem;
+	flex-grow: 2;
+	display:flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+}
+
+.rangeLine {
+	flex-grow: 2;
+	display: flex;
+	flex-flow: row wrap;
+	align-items: flex-end;
+}
+.settingFrame > h3 {
+	padding-left: 3rem;
+	flex-basis: 12rem;
+	flex-grow:1;
+	/* flex-shrink: 2; */
+	margin-right: 2rem;
+}
+
+.toggleUnSelect {
+    background-image: url(../images/btn_checkBox_white.png);
+    background-repeat: no-repeat;
+    float: right;
+    width: 40px;
+}
+
+.toggleSelect{
+	background-image: url(../images/btn_checkBox_white.png);
+	background-repeat:no-repeat;
+	float:right;
+	width:40px;
+	background-position: -118px 0px;
+}
+
+.checkbox:hover {
+    background-position: -59px 0;
+    cursor: pointer;
+}
+input{
+	margin-top: 0px;
+}
+input[type="checkbox"] {
+	width: 15rem;
+}
+
+.settingFrame > label {
+	display: inherit;
+	width: 8rem;
+}
+
+.settingFrame > input {
+	width:8rem;
+}
+
+.inputSensor {
+	width: 8rem;
+}
