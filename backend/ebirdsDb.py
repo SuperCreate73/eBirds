@@ -2,7 +2,7 @@
 # -*- coding: utf-8  -*-
 
 ############################################################
-#  TO REPLACE BY DBMANEGER.PY
+#  TO REPLACE BY DBMANAGER.PY
 ############################################################
 
 import sqlite3

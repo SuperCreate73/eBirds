@@ -6,12 +6,24 @@ import DHT11Sensor
 import DHT22Sensor
 
 class Sensors:
-    """ Classe pour gérer les capteurs
+    """
+    Classe pour gérer les capteurs
+
     """
 
     pass
 
-    # Connection à la table des capteurs
+    # comment crééer la table des capteurs ?
+    # question au démarrage ?
+    # configurer dans la fenêtre de config en PHP
+    # drop down avec le choix du type de capteur et la marque
+    # enregistrement des bibliothèques
+    #
+    #
+    # table 'sensors' : ID, Name, Pin, Param
+    # table 'sensor_definition' : ID, Name, Param1
+
+    # Connection à la table 'sensors'
     # Lecture de la table
     # Retours d'un tableau
     # Identification des capteurs différents

@@ -75,26 +75,32 @@ class APISqlite3:
         return output
 
     def dbDelete(self, whereClause = None):
-        """ Not yet coded
+        """
+        Not yet coded
         """
         # TODO if needed
         return whereClause
 
     def dbExist(self, whereClause = None):
-        """ Not yet coded
+        """
+        Not yet coded
         """
         # TODO if needed
         return whereClause
 
     def dbCount(self, whereClause = None):
-        """ Not yet coded
+        """
+        Not yet coded
         """
         # TODO if needed
         return whereClause
 
 
 class DBManager:
-    """ Create links to underlying class for db interactions
+    """
+    Master class to initiate appropriate db manager.
+    Interface curently available :
+        SQLITE3
     """
 
     def __init__(self, dbFile, dbTable, apiLink):
@@ -103,7 +109,8 @@ class DBManager:
         self._dbTable = dbTable
 
     def setAPI(self):
-        """ Return object for DB interactions
+        """
+        Link db API sent as parameter 'apilink'
         """
         return globals()[self._APIlink](self._dbFile, self._dbTable)
 
