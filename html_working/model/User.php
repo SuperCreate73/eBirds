@@ -1,6 +1,6 @@
 <?php
 
-require_once("model/DbManager.php");
+// require_once("model/DbManager.php");
 
 class User extends DbManager {
 	//
@@ -31,10 +31,19 @@ class User extends DbManager {
 			$this->modifyUser($login,$passmd5);
 		}
 		else {
-			// Create new user
-			$db = $this->dbConnect();
-			$sql = "INSERT INTO users (login, password) VALUES ('".$login."', '".$passmd5."');";
-			$stmt = $db->query($sql);
+			$stmt = $db->prepare("INSERT INTO ".$this->_table." (login, password) VALUES (:login, :password) ");
+			$stmt->bindParam('login', $login);
+			$stmt->bindParam('password', $passmd5);
+			$stmt->execute();
+			$result = $stmt->fetch();
+			$stmt->closeCursor();
+			return $result;
+      //
+      //
+			// // Create new user
+			// $db = $this->dbConnect();
+			// $sql = "INSERT INTO users (login, password) VALUES ('".$login."', '".$passmd5."');";
+			// $stmt = $db->query($sql);
 		}
 	}
 

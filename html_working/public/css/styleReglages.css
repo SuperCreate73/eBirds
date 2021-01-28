@@ -135,15 +135,18 @@ input[type="checkbox"] {
 	width: 15rem;
 }
 
-.settingFrame > label {
+.sensorElement {
 	display: inherit;
-	width: 8rem;
+	width: 15rem;
+	flex-shrink: 0;
+	flex-grow: 3;
 }
 
-.settingFrame > input {
-	width:8rem;
-}
+/* .settingFrame > input {
+	width:12rem;
+} */
 
 .inputSensor {
-	width: 8rem;
+	width: 12rem;
+	flex-basis: auto;
 }

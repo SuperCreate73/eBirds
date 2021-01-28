@@ -78,7 +78,7 @@ function saveUser($login,$password)
 
 	//saveUser
 	$user = new User();
-	$user->setUser($login, $password);
+	return ($user->setUser($login, $password));
 }
 
 function delUser($login)
@@ -86,8 +86,34 @@ function delUser($login)
 	// Revoque user from DB
 	// If no more connection login, create default one (admin, admin)
 	$user = new User();
-	$user->delUser($login);
+	return ($user->delUser($login));
 }
+
+function addSensor($sensorTable)
+{
+	// add a sensor definition to system
+
+	$sensor = new Sensor('sensor_config');
+	return ($sensor->setSensor($sensorTable));
+
+
+// 	function recupEvenement($jour, $localisation, \PDO $bdd)
+// {
+//      $recup_desc = $bdd->prepare('SELECT description FROM events WHERE lieu= :localisation AND jour= :jour');
+//      $recup_desc->bindParam('localisation',$localisation);
+//      $recup_desc->bindParam('jour',$jour);
+//      $recup_desc->execute();
+//      $description = $recup_desc->fetch();
+//      $recup_desc->closeCursor();
+//      return $description ['description'];
+// }
+// // Exemple d'utilisation
+// $bdd = new PDO();
+// echo recupEvenement('le jour', 'la localisation',$bdd);
+
+}
+
+
 
 // function motionSettings ()
 // {

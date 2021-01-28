@@ -197,3 +197,13 @@ function toggleSelectMode (activeChkBox) {
 		toggleSelect = true;
 	}
 }
+
+function addSensor () {
+//  # TODO
+// sélectionner les valeurs
+// les mettre dans un tableau
+// envoyer le tableau à PHP avec Fetch
+// Mise à jour du display
+
+  console.log('add sensor to your nichoir')
+}

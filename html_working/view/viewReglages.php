@@ -293,8 +293,8 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 					<h3>Humidité / Température :</h3>
 					<div class="rangeLine">
 						<div class="verticalFrame">
-							<label for="sensor_name">capteur à ajouter :</label>
-							<select id="sensor_name" name="sensor_name">
+							<label for="sensor_name" class="sensorElement">capteur à ajouter :</label>
+							<select id="sensor_name" name="sensor_name" class="sensorElement">
 								<option value="DHT-11" >DHT-11</option>
 								<option value="DHT-22" >DHT-22</option>
 								<option value="HX711" >HX711</option>

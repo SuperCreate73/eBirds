@@ -2,27 +2,29 @@
 
 require_once("controller/jsController.php");
 
+session_start();
+$action = (isset($_GET['action'])) ? htmlspecialchars($_GET['action']) : '';
+$parameter1 = (isset($_GET['param1'])) ? htmlspecialchars($_GET['param1']) : '';
+$parameter2 = (isset($_GET['param2'])) ? htmlspecialchars($_GET['param2']) : NULL;
+
+$actionArray = array (
+	'shutdown' => 'shutdown',
+	'reboot' => 'reboot',
+	'upgrade' => 'upgrade',
+	'distUpgrade' => 'distUgrade',
+	'deletefiles' => 'deleteFiles',
+	'download' => 'zipUpload',
+	'changeName'=>'changeName',
+	'viewselection'=>'viewSelection',
+	'saveUser' => 'saveUser',
+	'delUser' => 'delUser',
+	'motionSettings' => 'motionSettings',
+	'doReglages' => 'doReglages',
+	'addSensor' => 'addSensor',
+);
+
 try
 {
-	session_start();
-	$action = (isset($_GET['action'])) ? htmlspecialchars($_GET['action']) : '';
-	$parameter1 = (isset($_GET['param1'])) ? htmlspecialchars($_GET['param1']) : '';
-	$parameter2 = (isset($_GET['param2'])) ? htmlspecialchars($_GET['param2']) : NULL;
-
-	$actionArray = array (
-		'shutdown' => 'shutdown',
-		'reboot' => 'reboot',
-		'upgrade' => 'upgrade',
-		'distUpgrade' => 'distUgrade',
-		'deletefiles' => 'deleteFiles',
-		'download' => 'zipUpload',
-		'changeName'=>'changeName',
-		'viewselection'=>'viewSelection',
-		'saveUser' => 'saveUser',
-		'delUser' => 'delUser',
-		'motionSettings' => 'motionSettings',
-		'doReglages' => 'doReglages',
-	);
 	// debug_to_console('JSROUTER_Paramètres '.$action." ".$parameter1." ".$parameter2);
 	// if (getenv("HTTP_DEBUG_MODE") == 3) {
   //   debug_to_console('JSROUTER_Paramètres '.$action." ".$parameter1." ".$parameter2);

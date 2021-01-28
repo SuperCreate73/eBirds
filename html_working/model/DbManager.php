@@ -59,9 +59,10 @@ abstract class DbManager {
 
 		// SQL query
 		$db = $this->dbConnect();
-		$sql = "SELECT ". $sqlColumns ." FROM ". $this->_table .";";
-		$stmt = $db->query($sql);
+		$stmt = $db->prepare("SELECT ". $sqlColumns ." FROM ". $this->_table );
+		$stmt->execute();
 		$list = $stmt->fetchall();
+		$stmt->closeCursor();
 		return $list;
 	}
 
@@ -86,9 +87,11 @@ abstract class DbManager {
 
 		// sql request
 		$db = $this->dbConnect();
-		$sql = "SELECT ".$sqlColumns." FROM ".$this->_table." WHERE ".$key." = '".$value."' ;";
-		$stmt = $db->query($sql);
+		$stmt = $db->prepare("SELECT ".$sqlColumns." FROM ".$this->_table." WHERE (".$key." = :value) ");
+		$stmt->bindParam('value', $value);
+		$stmt->execute();
 		$list = $stmt->fetchall(PDO::FETCH_BOTH);
+		$stmt->closeCursor();
 
 		if (count($list) == 1) {
 			$list = array_shift($list);
@@ -102,26 +105,34 @@ abstract class DbManager {
 		// return (boolean)
 		//
 		$db = $this->dbConnect();
-		$sql = "SELECT EXISTS(SELECT 1 FROM ".$this->_table." WHERE (".$whereClause.")) AS returnVal ;";
-		$stmt = $db->query($sql);
+		$stmt = $db->prepare("SELECT EXISTS (SELECT 1 FROM ".$this->_table." WHERE (".$whereClause.")) AS returnVal ");
+		$stmt->execute();
 		$result = $stmt->fetch();
+		$stmt->closeCursor();
 
-		if ($result['returnVal'] == 1) {
-			return True;
-		}
-		else {
-			return False;
-		}
+		return ($result['returnVal'] == 1) ? True : False ;
+
+		// if ($result['returnVal'] == 1) {
+		// 	return True;
+		// }
+		// else {
+		// 	return False;
+		// }
 	}
 
 	protected function countRecords ($whereClause = NULL) {
 		// Get number of rows
 		// return (integer)
 		//
-		$where = (is_null($whereClause)) ? "" : " WHERE (".$whereClause.")";
+		$where = is_null($whereClause) ? "" : " WHERE (".$whereClause.")";
+
 		$db = $this->dbConnect();
-		$sql = "SELECT count(*) FROM ".$this->_table.$where." ;";
-		return $db->query($sql)->fetchColumn();
+		$stmt = $db->prepare("SELECT count(*) FROM ".$this->_table.$where );
+		$stmt->execute();
+		$result = $stmt->fetchColumn();
+		$stmt->closeCursor();
+
+		return $result;
 		// $stmt = $db->query($sql);
 		// $result = $stmt->fetch();
     //
