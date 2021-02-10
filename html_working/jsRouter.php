@@ -21,6 +21,7 @@ $actionArray = array (
 	'motionSettings' => 'motionSettings',
 	'doReglages' => 'doReglages',
 	'addSensor' => 'addSensor',
+	'getAllSensor' => 'getAllSensor',
 );
 
 try
@@ -43,6 +44,7 @@ try
 	else {
 		$actionArray[$action]($parameter1,$parameter2);
 	}
+	return '<div>response</div>';
 }
 
 catch(Exception $e) {

@@ -85,10 +85,11 @@ class SensorName extends DbManager {
 	// -> get, push, modify
 	//
 
-	public function __construct() {
+	public function __construct($table) {
 		// assign value of active table to protected variable '_table',
 		// -> used in DbManager class
-		$this->_table = 'sensor_name';
+		$this->_table = $table;
+		$this->sensorList = $this->getAll()
 	}
 
   // Liste des getters : fonctions permettant de récupérer les valeurs des attributs privés
@@ -106,7 +107,7 @@ class SensorName extends DbManager {
 		// return all sensors from sensor_config on a list
     // TODO possibilité de limiter le nombre de colonne retournées
     //
-		return $this->getAll('sensorName');
+		return $this->sensorList;
 
 	}
 

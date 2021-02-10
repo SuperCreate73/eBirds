@@ -95,7 +95,15 @@ function addSensor($sensorTable)
 
 	$sensor = new Sensor('sensor_config');
 	return ($sensor->setSensor($sensorTable));
+}
 
+function getAllSensor()
+{
+	// get list of all sensors
+
+	$sensor = new SensorName('sensor_name');
+	return ($sensor->getAllSensor());
+}
 
 // 	function recupEvenement($jour, $localisation, \PDO $bdd)
 // {
@@ -110,8 +118,6 @@ function addSensor($sensorTable)
 // // Exemple d'utilisation
 // $bdd = new PDO();
 // echo recupEvenement('le jour', 'la localisation',$bdd);
-
-}
 
 
 

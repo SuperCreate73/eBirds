@@ -205,5 +205,19 @@ function addSensor () {
 // envoyer le tableau à PHP avec Fetch
 // Mise à jour du display
 
-  console.log('add sensor to your nichoir')
+  console.log('add sensor to your nichoir');
+  fetch ("jsRouter.php?action=getAllSensor")
+    .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not OK');
+        }
+        else
+        {
+          console.log(response.body);
+        }
+      })
+    .catch(error => {
+      console.error('Error fetching new user :', error);
+    });
+
 }
