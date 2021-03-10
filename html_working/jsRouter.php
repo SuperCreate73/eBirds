@@ -26,25 +26,30 @@ $actionArray = array (
 
 try
 {
-	// debug_to_console('JSROUTER_Paramètres '.$action." ".$parameter1." ".$parameter2);
+	(getenv("HTTP_DEBUG_MODE") >= 1) ? debugToFile('LEVEL1:JSROUTER_Parameters', $action ." ". $parameter1 ." ". $parameter2) : NULL ;
 	// if (getenv("HTTP_DEBUG_MODE") == 3) {
   //   debug_to_console('JSROUTER_Paramètres '.$action." ".$parameter1." ".$parameter2);
   // }
 
+	$response=NULL;
 	if ( ! array_key_exists($action, $actionArray)) {
 		throw new Exception('Action non valide !');
 	}
 
 	if ($action == 'changeName' ) {
-		$actionArray[$action]($parameter1);
+		$response = $actionArray[$action]($parameter1);
 	}
 	elseif ($action == 'viewselection') {
-		$actionArray[$action]('selectionArray');
+		$response = $actionArray[$action]('selectionArray');
 	}
 	else {
-		$actionArray[$action]($parameter1,$parameter2);
+		$response = $actionArray[$action]($parameter1,$parameter2);
 	}
-	return '<div>response</div>';
+
+	(getenv("HTTP_DEBUG_MODE") >= 1) ? debugToFile('LEVEL1:JSROUTER_output', json_encode($response)) : NULL ;
+
+	// echo(json_encode($response));
+	return ;
 }
 
 catch(Exception $e) {

@@ -31,13 +31,18 @@ class User extends DbManager {
 			$this->modifyUser($login,$passmd5);
 		}
 		else {
-			$stmt = $db->prepare("INSERT INTO ".$this->_table." (login, password) VALUES (:login, :password) ");
-			$stmt->bindParam('login', $login);
-			$stmt->bindParam('password', $passmd5);
-			$stmt->execute();
-			$result = $stmt->fetch();
-			$stmt->closeCursor();
-			return $result;
+			try {
+				$db = $this->dbConnect();
+				$stmt = $db->prepare("INSERT INTO ".$this->_table." (login, password) VALUES (:login, :password) ");
+				$stmt->bindParam('login', $login);
+				$stmt->bindParam('password', $passmd5);
+				$stmt->execute();
+				$stmt->closeCursor();
+				return true;
+			}
+			catch (Exception $e) {
+				return false;
+			}
       //
       //
 			// // Create new user

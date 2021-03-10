@@ -1,8 +1,24 @@
 <?php
 
-function classLoad ($classe) {
-	//Automatic class load -> drived by spl_autoload_register('classLoad')
-	require 'model/'.$classe.'.php';
+function classLoad ($className) {
+	// Automatic class load -> drived by spl_autoload_register('classLoad')
+	// This function will scan all the path present in $paths to find $className + '.php'
+	//
+	$prePath = getcwd();
+	$paths = array(
+			'model/',
+			'model/db/',
+			'model/interface/',
+	);
+
+	foreach ($paths as $path) {
+			$curPath = $prePath ."/". $path . $className . '.php';
+			// echo "$curPath  -  ";
+			if (file_exists($curPath)) {
+					require_once($curPath);
+					break;
+			}
+	}
 }
 
 spl_autoload_register('classLoad');
@@ -72,13 +88,31 @@ function numberOfPage($allArrayData, $listMax)
 	}
 }
 
-function debug_to_console($data)
+function debug_to_console($info, $data)
 {
-    $output = $data;
-    if ( is_array( $output ) )
-        $output = implode( ',', $output);
+    if ( is_array( $data ) ) {
+        $output = json_encode($data);
+		}
+		else {
+			$output = $data;
+		}
 
-    echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
+		echo "<script>console.log( '" . $info . " : " . $output . "' );</script>";
+}
+
+function debugToFile($info, $data)
+{
+    if ( is_array( $data ) ) {
+        $output = json_encode($data);
+		}
+		else {
+			$output = $data;
+		}
+
+		$file = getenv("HTTP_DEBUG_FILE");
+	  $handle = fopen($file, 'a');
+	  fwrite($handle, date('Y-m-d H:i:s')." # ". $info . " : " . $output . " ##\n");
+	  fclose($handle);
 }
 
 function resetSelection ($fileTable) {

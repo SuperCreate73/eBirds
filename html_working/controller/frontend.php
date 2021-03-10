@@ -142,6 +142,7 @@ function reglages($nom, $action=null) {
 	else  {
 		$settingsInterface = new SettingsInterface(); // initialize settings with DB values
 		$locationInterface = new LocationInterface(); // initialize location with DB values
+		$sensorInterface = new SensorInterface();
 	}
 
 	require('view/viewReglages.php');

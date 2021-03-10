@@ -1,3 +1,4 @@
 # Debug mode for web server application
 # the only level used actually is 3 ... maybe one day ??
-SetEnv HTTP_DEBUG_MODE "2"
+SetEnv HTTP_DEBUG_MODE "3"
+SetEnv HTTP_DEBUG_FILE "debug.log"

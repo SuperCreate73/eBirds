@@ -2,6 +2,7 @@
 *.mpeg
 *.pyc
 *.tar.gz
+*.log
 
 instal/test/*
 instal/tstFile2.txt

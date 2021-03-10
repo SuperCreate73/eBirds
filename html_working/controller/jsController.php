@@ -78,7 +78,16 @@ function saveUser($login,$password)
 
 	//saveUser
 	$user = new User();
-	return ($user->setUser($login, $password));
+	$response = $user->setUser($login, $password);
+	if ($response) {
+		$output = array( 	'status' => 'OK',
+											'login' => $login, );
+	}
+	else {
+		$output = array( 	'status' => 'FAIL',);
+	}
+	echo(json_encode($output));
+	return $output;
 }
 
 function delUser($login)
@@ -102,7 +111,9 @@ function getAllSensor()
 	// get list of all sensors
 
 	$sensor = new SensorName('sensor_name');
-	return ($sensor->getAllSensor());
+	$response = $sensor->getAllSensor();
+	echo(json_encode($response));
+	return ($response);
 }
 
 // 	function recupEvenement($jour, $localisation, \PDO $bdd)

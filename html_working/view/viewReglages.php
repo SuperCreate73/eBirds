@@ -212,9 +212,9 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 			<div class="five columns">
 				<label for="modeCamera">Mode d'enregistrement images:</label>
 				<select class="u-full-width" id="modeCamera" onchange="" name="imageTypeDetection">
-					<option value="off" <?= ($settingsInterface -> imageTypeDetection=='off') ? 'selected' : "" ?> >Off</option>
-					<option value="picture" <?= ($settingsInterface -> imageTypeDetection=='picture') ? 'selected' : "" ?> >Photo</option>
-					<option value="video" <?= ($settingsInterface -> imageTypeDetection=='video') ? 'selected' : "" ?> >Video</option>
+					<option value="off" <?= ($settingsInterface->imageTypeDetection=='off') ? 'selected' : "" ?> >Off</option>
+					<option value="picture" <?= ($settingsInterface->imageTypeDetection=='picture') ? 'selected' : "" ?> >Photo</option>
+					<option value="video" <?= ($settingsInterface->imageTypeDetection=='video') ? 'selected' : "" ?> >Video</option>
 				</select>
 			</div>
 			<div class="five columns">
@@ -295,12 +295,12 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 						<div class="verticalFrame">
 							<label for="sensor_name" class="sensorElement">capteur à ajouter :</label>
 							<select id="sensor_name" name="sensor_name" class="sensorElement">
-								<option value="DHT-11" >DHT-11</option>
-								<option value="DHT-22" >DHT-22</option>
-								<option value="HX711" >HX711</option>
-								<option value="SI-4523" >SI-4523</option>
+								<?php foreach ($sensorInterface->sensorName as $key => $sensorItem) { ?>
+									<option value="<?= $sensorItem ?>" ><?= $sensorItem ?></option>
+								<?php } ?>
 							</select>
 						</div>
+
 						<div class="verticalFrame">
 							<label for="sensor_location">position :</label>
 							<select id="sensor_location" name="sensor_location">

@@ -100,18 +100,38 @@ function saveUser() {
 
         return;
     }
-    fetch ("jsRouter.php?action=saveUser&param1="+nameUser+"&param2="+passwdUser)
-      .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not OK');
-          }
-        })
-      .then(fermerFenetre())
-      .catch(error => {
-        console.error('Error fetching new user :', error);
+    // fetch ("jsRouter.php?action=saveUser&param1="+nameUser+"&param2="+passwdUser)
+    //   .then(response => {
+    //       if (!response.ok) {
+    //         throw new Error('Network response was not OK');
+    //       }
+    //     })
+    //   .then(fermerFenetre())
+    //   .catch(error => {
+    //     console.error('Error fetching new user :', error);
+    //   });
+
+      const myRequest = new Request("jsRouter.php?action=saveUser&param1="+nameUser+"&param2="+passwdUser, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+          mode: 'cors',
+          cache: 'default',
       });
 
-    document.location.reload();
+      fetch(myRequest)
+        .then(response => response.json())
+        .then(data => {
+               console.log("my object: %o", data);
+             })
+        .catch(error => {
+              console.error('Error fetching new sensor :', error);
+            });
+
+
+    // document.location.reload();
 }
 
 function changerNom(){
@@ -206,18 +226,24 @@ function addSensor () {
 // Mise à jour du display
 
   console.log('add sensor to your nichoir');
-  fetch ("jsRouter.php?action=getAllSensor")
-    .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not OK');
-        }
-        else
-        {
-          console.log(response.body);
-        }
-      })
+
+  const myRequest = new Request("jsRouter.php?action=getAllSensor", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      mode: 'cors',
+      cache: 'default',
+  });
+
+  fetch(myRequest)
+    .then(response => response.json())
+    .then(data => {
+          console.log("my object: %o", data);
+        })
     .catch(error => {
-      console.error('Error fetching new user :', error);
-    });
+          console.error('Error fetching new sensor :', error);
+        });
 
 }

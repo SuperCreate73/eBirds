@@ -63,6 +63,12 @@ abstract class DbManager {
 		$stmt->execute();
 		$list = $stmt->fetchall();
 		$stmt->closeCursor();
+
+		if (getenv("HTTP_DEBUG_MODE") == 4) {
+			debug_to_console('DBManager_GetAll_query :SELECT '. $sqlColumns ." FROM ". $this->_table);
+			debug_to_console('DBManager_GetAll_output '.json_encode($list));
+		}
+
 		return $list;
 	}
 
