@@ -293,9 +293,10 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 					<h3>Humidité / Température :</h3>
 					<div class="rangeLine">
 						<div class="verticalFrame">
-							<label for="sensor_name" class="sensorElement">capteur à ajouter :</label>
+							<label for="sensor_name" class="sensorElement">capteur :</label>
 							<select id="sensor_name" name="sensor_name" class="sensorElement">
-								<?php foreach ($sensorInterface->sensorName as $key => $sensorItem) { ?>
+								<option value="None" "selected"></option>
+							<?php foreach ($sensorInterface->sensorName as $key => $sensorItem) { ?>
 									<option value="<?= $sensorItem ?>" ><?= $sensorItem ?></option>
 								<?php } ?>
 							</select>
@@ -304,9 +305,18 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 						<div class="verticalFrame">
 							<label for="sensor_location">position :</label>
 							<select id="sensor_location" name="sensor_location">
+								<option value="na" >N/A</option>
 								<option value="in" >intérieur</option>
 								<option value="out" >extérieur</option>
 							</select>
+						</div>
+
+						<div class="verticalFrame">
+							<label for="sensor_readOut">paramètre :</label>
+							<!-- <select id="sensor_readOut" name="sensor_readOut">
+								<option value="None" ></option>
+							</select> -->
+							Température / Humidité
 						</div>
 
 						<div class="verticalFrame">
@@ -369,36 +379,6 @@ $javaScripts = 	'<script src="public/js/assistants_reglages.js"></script>';
 				</div>
 			</div>
 		</div>
-
-		<!-- ############################# -->
-		<!-- gestion des utilisateurs -->
-		<!-- ############################# -->
-		<div class="row">
-			<div class="offset-by-two columns">
-				<div class="seven columns">
-					<h3>Utilisateurs :</h3>
-				</div>
-
-				<div class="three columns">
-					<div id="add_user" class='my_button' value="ajouter utilisateur" onclick="addUser()"></div>
-					<!--input class="button u-full-width boutonLogin" value="Ajouter" onclick="addUser()"-->
-				</div>
-			</div>
-		</div>
-
-		<?php foreach ($users as $key => $userItem) { ?>
-			<div class='row'>
-				<div class='offset-by-four columns' id='<?= $userItem[0] ; ?>' >
-					<div class='seven columns'><?= $userItem[0] ; ?></div><div class="my_button deleteUser" onclick="removeUser('<?= $userItem[0]; ?>');">
-					</div>
-				</div>
-			</div>
-		<?php } ?>
-
-	</div>
-
-
- <!--    FIN CADRE V -->
 
 
 </form>

@@ -1,0 +1,7 @@
+# sensor tables creation
+
+sensor_name:(sensorNameID INTEGER PRIMARY KEY AUTOINCREMENT, sensorName TINY TEXT, description TEXT)
+sensor_readOut:(sensorReadOutID INTEGER PRIMARY KEY AUTOINCREMENT, sensorNameID INTEGER, sensorPinRef INTEGER, sensorReadOut TINY TEXT, shortName TINY TEXT)
+active_sensor:(activeSensorID INTEGER PRIMARY KEY AUTOINCREMENT, sensorNameID INTEGER, placement TINY TEXT, labelName TINY TEXT)
+active_sensor_pin:(activeSensorPinID INTEGER PRIMARY KEY AUTOINCREMENT, activeSensorID INTEGER, GPIONumber INTEGER)
+active_sensor_dataLink:(activeSensorDataLinkID INTEGER PRIMARY KEY AUTOINCREMENT, activeSensorID INTEGER, activeSensorReadOut TINY TEXT, keyDataName TINY TEXT)

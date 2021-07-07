@@ -1,0 +1,13 @@
+sensor_name:('sensorName', 'description'):('DHT11', 'Temperature/humidity sensor - both measures on one PIN')
+sensor_name:('sensorName', 'description'):('DHT22', 'Temperature/humidity sensor - both measures on one PIN')
+sensor_name:('sensorName', 'description'):('SI7021', 'Temperature/humidity sensor - both measures on I2C PIN, requires clock PIN')
+sensor_name:('sensorName', 'description'):('HX711', 'Weigth sensor - one data PIN, requires clock PIN')
+sensor_name:('sensorName', 'description'):('IR', 'Infra-red passing detector - ! raspberry only accept digital signal - one data PIN')
+
+sensor_readOut:(sensorNameID, sensorPinRef, sensorReadOut, shortName):(_REF1_, 1, 'Humidity', 'H')+sensor_name:(sensorNameID):(sensorName='DHT11')
+sensor_readOut:(sensorNameID, sensorPinRef, sensorReadOut, shortName):(_REF1_, 1, 'Temperature', 'T°')+sensor_name:(sensorNameID):(sensorName='DHT11')
+sensor_readOut:(sensorNameID, sensorPinRef, sensorReadOut, shortName):(_REF1_, 1, 'Humidity', 'H')+sensor_name:(sensorNameID):(sensorName='DHT22')
+sensor_readOut:(sensorNameID, sensorPinRef, sensorReadOut, shortName):(_REF1_, 1, 'Temperature', 'T°')+sensor_name:(sensorNameID):(sensorName='DHT22')
+sensor_readOut:(sensorNameID, sensorPinRef, sensorReadOut, shortName):(_REF1_, 1, 'Humidity', 'H')+sensor_name:(sensorNameID):(sensorName='SI7021')
+sensor_readOut:(sensorNameID, sensorPinRef, sensorReadOut, shortName):(_REF1_, 1, 'Temperature', 'T°')+sensor_name:(sensorNameID):(sensorName='SI7021')
+sensor_readOut:(sensorNameID, sensorPinRef, sensorReadOut, shortName):(_REF1_, 1, 'Weight', 'W')+sensor_name:(sensorNameID):(sensorName='HX711')

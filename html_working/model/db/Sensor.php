@@ -1,6 +1,11 @@
 <?php
 
 class Sensor extends DbManager {
+// classe sensorSet indépendante, pas une extension de DbManager.
+// Cette classe instancie les différentes classes des sensors et gère les input/output.
+// Toutes les classes sont déclarées dans le même fichier qui porte le nom de la classe
+// maître, comme ça elle sera automatiquement inclue grâce à la fonction générale.
+//
 	//
 	// Class managing sensors tables
 	// - sensor_definition
@@ -72,7 +77,7 @@ class Sensor extends DbManager {
 
 	function getSensorNames() {
 
-		$sensorName = new sensorName();
+		$sensorName = new SensorName('sensor_name');
 		return $sensorName->getAllSensor();
 
 	}
