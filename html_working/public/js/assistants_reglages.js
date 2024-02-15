@@ -36,6 +36,10 @@ function distupgrade(){
     document.getElementById("FenetreMessage").classList.add('montre');
 }
 
+function testfunction(){
+    let target = addUser()
+}
+
 function addUser(){
     document.getElementById("FenetreContenu").innerHTML="\
       <br>\

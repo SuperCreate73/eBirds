@@ -145,3 +145,4 @@ function createSymLink()
 	return 0
 
 }
+

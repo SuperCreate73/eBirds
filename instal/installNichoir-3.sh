@@ -15,7 +15,7 @@
 # Pour plus d'informations, lancer 'nichoir' avec l'option -h, --help ou ?
 #
 #   ###########################################
-
+#
 # IDEA lire un fichier avec la configuration d'installation :
 # 			Quels capteurs ?
 # 			Quels types ?
@@ -33,7 +33,7 @@
 #   ###########################################
 
 #######################################################################
-# initialisation des variaPROCESSING_LINE_ERROR=71 # unable to process input linebles, paramètres et constantes
+# initialisation des variables, paramètres et constantes
 #######################################################################
 # config constant
 INSTALL_ROOTPATH="/usr/local/etc/instal"
@@ -193,7 +193,7 @@ if [ ! "$varRecall" = true ] ; then
 
 	[ "$varDebug" ] && echo "Download files from GitHub done" >> $DEBUG_FILE
 
-	# Extraction de la version de l'installateur de GitHub
+	# Extraction de la version de l'installateur des fichiers sources de GitHub
 	lvTempVersion=`grep "verInstal" "eBirds/instal/.config/versions.sh" | cut -d '=' -f 2`
 
 	### Script files installation ###
