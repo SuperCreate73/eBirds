@@ -7,6 +7,8 @@ if [[ $EUID -ne 0 ]] ; then
 	exit 1
 fi
 
+SCRIPT_FILE="installNichoir-3.sh"
+
 # get line of marker ARCHIVE
 txtLine=$(grep --text --line-number "^ARCHIVE$" "$0") 2> /dev/null
 

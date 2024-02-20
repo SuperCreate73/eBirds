@@ -2,3 +2,6 @@
 *.mpeg
 *.pyc
 *.tar.gz
+/instal/.cs_files
+/instal/.cs_workspaces
+/instal/CS_SESSION

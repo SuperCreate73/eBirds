@@ -58,6 +58,9 @@ createDir "$IMAGE_DIR_REAL" || printError "$?"
 printMessage "Création du dir de stockage des videos" "$VIDEO_DIR_REAL"
 createDir "$VIDEO_DIR_REAL" || printError "$?"
 
+chown pi:w3 "$IMAGE_DIR_REAL" && chmod 666 "$IMAGE_DIR_REAL"
+chown pi:w3 "$VIDEO_DIR_REAL" && chmod 666 "$VIDEO_DIR_REAL"
+
 makeCameraStorage "$IMAGE_DIR_REAL" "$IMAGE_DIR_LINK" 	# create image dir
 
 makeCameraStorage "$VIDEO_DIR_REAL" "$VIDEO_DIR_LINK"		# create video dir

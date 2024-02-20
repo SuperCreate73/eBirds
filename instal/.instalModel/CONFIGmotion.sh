@@ -13,6 +13,11 @@ grep -q -e "^bcm2835-v4l2\$" /etc/modules || echo 'bcm2835-v4l2' >> /etc/modules
 installedVersion=`dpkg --status motion | grep "Version" | cut -d ':' -f 2 | cut -d '.' -f "1 2" | sed "s/ //g"`
 currentVersion="$installedVersion"
 
+if [! -d "/var/www/log/motion" ] ; then
+	createDir "/var/www/log/motion" || printError "$?"
+	chown pi:w3 "/var/www/log/motion" && chmod 666 "/var/www/log/motion"
+fi
+
 [ "$varDebug" ] && echo "Entering Motion config" >> $DEBUG_FILE
 
 # gestion des fichiers input
