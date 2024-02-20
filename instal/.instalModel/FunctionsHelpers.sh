@@ -125,6 +125,33 @@ function copyDir()
 	return 0
 }
 
+function copyDirHtml()
+{
+	# copy directories and create target dir if not exist
+
+	local inputDir=$1
+	local outputDir=$2
+
+  # basic tests of function parameter
+  [ -d "$inputDir" ] || return "$BAD_INPUT_FILE" # not a directory
+  [ ! -z "$outputDir" ] || return "$WRONG_PARAMETER" # empty string
+
+	# create output dir if not exist
+	printMessage "Create dir :" "$outputDir"
+  if ! createDir "$outputDir" ; then
+    printError "$?"
+    return $CREATE_DIR_ERROR
+  fi
+
+	printMessage "Dir copy :" "$inputFiles"
+	if [ -d "$inputDir" ] && [ -d "$outputDir" ] ; then  # if folder to dir
+		cp -r --force "$inputDir/*" "$outputDir" || printError "$?"
+	else
+		return "$WRONG_PARAMETER"
+	fi
+	return 0
+}
+
 function createSymLink()
 {
 	# Remove existing target and create symlink

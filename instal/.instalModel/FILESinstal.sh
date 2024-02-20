@@ -50,7 +50,7 @@ removeDir	"$IMAGE_DIR_ORIGINAL"
 removeDir	"$VIDEO_DIR_ORIGINAL"
 
 printMessage "déplacement des fichiers web" "$WEB_PATH"
-copyDir "$WEB_DIR_ORIGINAL" "$WEB_PATH" || printError "$?"
+copyDirHtml "$WEB_DIR_ORIGINAL" "$WEB_PATH" || printError "$?"
 
 printMessage "Création du dir de stockage des photos" "$IMAGE_DIR_REAL"
 createDir "$IMAGE_DIR_REAL" || printError "$?"
