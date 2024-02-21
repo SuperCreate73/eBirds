@@ -145,7 +145,7 @@ function copyDirHtml()
 
 	printMessage "Dir copy :" "$inputFiles"
 	if [ -d "$inputDir" ] && [ -d "$outputDir" ] ; then  # if folder to dir
-		cp -r --force "$inputDir/*" "$outputDir" || printError "$?"
+		cp -r --force "$inputDir/*" --target-directory="$outputDir" || printError "$?"
 	else
 		return "$WRONG_PARAMETER"
 	fi

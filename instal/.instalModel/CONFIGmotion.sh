@@ -13,9 +13,11 @@ grep -q -e "^bcm2835-v4l2\$" /etc/modules || echo 'bcm2835-v4l2' >> /etc/modules
 installedVersion=`dpkg --status motion | grep "Version" | cut -d ':' -f 2 | cut -d '.' -f "1 2" | sed "s/ //g"`
 currentVersion="$installedVersion"
 
+# create log directory, log file and set permission and ownership
 if [! -d "/var/www/log/motion" ] ; then
 	createDir "/var/www/log/motion" || printError "$?"
-	chown pi:w3 "/var/www/log/motion" && chmod 666 "/var/www/log/motion"
+	touch /var/www/log/motion/motion.log
+	chown -R root:w3 "/var/www/log/motion" && chmod -R 666 "/var/www/log/motion"
 fi
 
 [ "$varDebug" ] && echo "Entering Motion config" >> $DEBUG_FILE
@@ -28,6 +30,9 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 	printMessage "copie des fichiers sources" "MOTIONparam_*.txt; DBinsert_Motion_*"
 	copyFiles "$INSTALL_ROOTPATH/motion/$verMotionDefault" "$INSTALL_ROOTPATH/.input" || printError "$?"
 
+	# copy motion.conf in default dir /usr/local/etc/
+	cp /etc/motion/motion.conf /usr/local/etc/
+
 	[ "$varDebug" ] && echo "Entering Motion - reinit existing instal" >> $DEBUG_FILE
 	[ "$varDebug" ] && echo "$varFirstInstal" >> $DEBUG_FILE
 
@@ -38,7 +43,7 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 
 		# configuration du démon
 		printMessage "Configuration initiale de motion" "motion"
-		substitute "start_motion_daemon=no:start_motion_daemon=yes" "/etc/default/motion" || printError "$?"
+		substitute "daemon on:daemon off" "/usr/local/etc/motion.conf" || printError "$?"
 
 		printMessage "activation de motion" "motion"
 		systemctl enable motion || printError "$?"
@@ -83,7 +88,7 @@ fi
 [ -d "$INSTALL_ROOTPATH/motion/$currentVersion" ] || currentVersion="$verMotionDefault"
 
 printMessage "paramétrage" "motion.conf"
-readInputFile "$INSTALL_ROOTPATH/.input/MOTIONparam" "motionConfig" "/etc/motion/motion.conf" || printError "$?"
+readInputFile "$INSTALL_ROOTPATH/.input/MOTIONparam" "motionConfig" "/usr/local/etc/motion.conf" || printError "$?"
 
 printMessage "mise à jour du fichier de config - verMotion" "$INSTALL_ROOTPATH/.config/versions.sh"
 updateParameter "$INSTALL_ROOTPATH/.config/versions.sh" "verMotion" "$installedVersion"

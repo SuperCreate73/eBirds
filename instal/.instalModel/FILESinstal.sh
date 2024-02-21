@@ -54,9 +54,11 @@ copyDirHtml "$WEB_DIR_ORIGINAL" "$WEB_PATH" || printError "$?"
 
 printMessage "Création du dir de stockage des photos" "$IMAGE_DIR_REAL"
 createDir "$IMAGE_DIR_REAL" || printError "$?"
+createDir	"$IMAGE_DIR_ORIGINAL" || printError "$?"
 
 printMessage "Création du dir de stockage des videos" "$VIDEO_DIR_REAL"
 createDir "$VIDEO_DIR_REAL" || printError "$?"
+createDir	"$VIDEO_DIR_ORIGINAL" || printError "$?"
 
 chown pi:w3 "$IMAGE_DIR_REAL" && chmod 666 "$IMAGE_DIR_REAL"
 chown pi:w3 "$VIDEO_DIR_REAL" && chmod 666 "$VIDEO_DIR_REAL"
