@@ -14,7 +14,7 @@ installedVersion=`dpkg --status motion | grep "Version" | cut -d ':' -f 2 | cut 
 currentVersion="$installedVersion"
 
 # create log directory, log file and set permission and ownership
-if [! -d "/var/www/log/motion" ] ; then
+if [ ! -d "/var/www/log/motion" ] ; then
 	createDir "/var/www/log/motion" || printError "$?"
 	touch /var/www/log/motion/motion.log
 	chown -R root:w3 "/var/www/log/motion" && chmod -R 666 "/var/www/log/motion"
