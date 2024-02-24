@@ -149,7 +149,8 @@ function copyDirHtml()
 	else
 		return "$WRONG_PARAMETER"
 	fi
-  mv "$WEB_PATH/html_working" "$WEB_PATH" || printError "$?"
+  rm -r "$WEB_PATH"
+  mv "$WEBAPP_ROOTPATH/html_working" "$WEB_PATH" || printError "$?"
 	return 0
 }
 
