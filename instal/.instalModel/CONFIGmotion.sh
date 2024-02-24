@@ -17,7 +17,8 @@ currentVersion="$installedVersion"
 if [ ! -d "/var/www/log/motion" ] ; then
 	createDir "/var/www/log/motion" || printError "$?"
 	touch /var/www/log/motion/motion.log
-	chown -R root:w3 "/var/www/log/motion" && chmod -R 666 "/var/www/log/motion"
+	chown -R motion:w3 "/var/www/log/motion" && chmod -R 777 "/var/www/log/motion"
+	chmod -R 777 "/var/www/log"
 fi
 
 [ "$varDebug" ] && echo "Entering Motion config" >> $DEBUG_FILE
@@ -30,9 +31,6 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 	printMessage "copie des fichiers sources" "MOTIONparam_*.txt; DBinsert_Motion_*"
 	copyFiles "$INSTALL_ROOTPATH/motion/$verMotionDefault" "$INSTALL_ROOTPATH/.input" || printError "$?"
 
-	# copy motion.conf in default dir /usr/local/etc/
-	cp /etc/motion/motion.conf /usr/local/etc/
-
 	[ "$varDebug" ] && echo "Entering Motion - reinit existing instal" >> $DEBUG_FILE
 	[ "$varDebug" ] && echo "$varFirstInstal" >> $DEBUG_FILE
 
@@ -43,7 +41,7 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 
 		# configuration du démon
 		printMessage "Configuration initiale de motion" "motion"
-		substitute "daemon on:daemon off" "/usr/local/etc/motion.conf" || printError "$?"
+		substitute "daemon on:daemon off" "/etc/motion/motion.conf" || printError "$?"
 
 		printMessage "activation de motion" "motion"
 		systemctl enable motion || printError "$?"
@@ -88,7 +86,11 @@ fi
 [ -d "$INSTALL_ROOTPATH/motion/$currentVersion" ] || currentVersion="$verMotionDefault"
 
 printMessage "paramétrage" "motion.conf"
-readInputFile "$INSTALL_ROOTPATH/.input/MOTIONparam" "motionConfig" "/usr/local/etc/motion.conf" || printError "$?"
+readInputFile "$INSTALL_ROOTPATH/.input/MOTIONparam" "motionConfig" "/etc/motion/motion.conf" || printError "$?"
 
 printMessage "mise à jour du fichier de config - verMotion" "$INSTALL_ROOTPATH/.config/versions.sh"
 updateParameter "$INSTALL_ROOTPATH/.config/versions.sh" "verMotion" "$installedVersion"
+
+	# copy motion.conf in default dir /usr/local/etc/
+	cp /etc/motion/motion.conf /usr/local/etc/
+
