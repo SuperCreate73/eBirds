@@ -25,7 +25,14 @@ sudo sed /etc/php/7.*/cli/php.ini -i -e "s/^;cgi\.fix_pathinfo=1/cgi\.fix_pathin
 # Paramétrage du fichier /boot/config.txt
 #----------------------------------------
 # activation de la caméra
-grep -q -e "^start_x=1\$" /boot/config.txt || sudo echo -e "\n# activation de la caméra \nstart_x=1" >> /boot/config.txt
+# TODO
+# DONE replace : camera_auto_detect=1 by start_x=1
+# DONE comment out : dtoverlay=vc4-kms-v3d
+# add : dtoverlay=vc4-fkms-v3d -> line after [pi4]
+substitute "/boot/config.txt" "camera_auto_detect=1:start_x=1"
+substitute "/boot/config.txt" "dtoverlay=vc4-kms-v3d:#dtoverlay=vc4-kms-v3d"
+sed -i -e '/^ *\[pi4\] *$/a\dtoverlay=vc4-fkms-v3d' /boot/config.txt || printError "$?"
+#grep -q -e "^start_x=1\$" /boot/config.txt || sudo echo -e "\n# activation de la caméra \nstart_x=1" >> /boot/config.txt
 # allocation de mémoire
 grep -q -e "^gpu_mem=128\$" /boot/config.txt || sudo echo "gpu_mem=128" >> /boot/config.txt
 # désactiver la led de la caméra
@@ -36,7 +43,8 @@ grep -q -e "^disable_camera_led=1\$" /boot/config.txt || sudo echo "disable_came
 # teste si la ligne de configuration existe déjà
 if ! grep -q -e '^ *"mod_fastcgi",$' /etc/lighttpd/lighttpd.conf ; then
 	printMessage "paramétrage" "lighttpd"
-	sudo sed -i -e '/^ *server.modules = ($/a\        "mod_fastcgi",' /etc/lighttpd/lighttpd.conf || printError "$?"
+	sudo sed -i -e '/^ *"mod_indexfile",$/a\        "mod_fastcgi",' /etc/lighttpd/lighttpd.conf || printError "$?"
+	#sudo sed -i -e '/^ *server.modules = ($/a\        "mod_fastcgi",' /etc/lighttpd/lighttpd.conf || printError "$?"
 fi
 
 ########################################################################
@@ -50,7 +58,7 @@ adduser pi w3 > /dev/null 2>&1 || printError "$?"
 adduser motion w3 > /dev/null 2>&1 || printError "$?"
 adduser www-data w3 > /dev/null 2>&1 || printError "$?"
 
-echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/localsudo
+echo "w3 ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/localsudo
 
 #directory /home/pi
 chgrp -R w3 /home/pi > /dev/null 2>&1 || printError "$?"
