@@ -54,7 +54,7 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 	sqlite3 "$DB_FILE" "DELETE FROM configRange" > /dev/null 2>&1
 	sqlite3 "$DB_FILE" "DELETE FROM configAlias" > /dev/null 2>&1
 
-	copie et gestion des permissions de la vue viewReglages.php
+	# copie et gestion des permissions de la vue viewReglages.php
 	copyFiles "eBirds/html_working/view/viewReglages.php" "/var/www/html/view/viewReglages.php" || printError "$?"
 	chgrp w3 "/var/www/html/view/viewReglages.php" || printError "$?"
 	chmod 774 "/var/www/html/view/viewReglages.php" || printError "$?"

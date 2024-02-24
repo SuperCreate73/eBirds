@@ -27,10 +27,12 @@ function makeCameraStorage()
 {
 	# create directories and symlinks to store camera image & films
 
-	if [ ! -L $2 -a -d $2 -a `ls -A $2 | wc -c` -ne 0 ] ; echo $? ; then		# dir exist & not a symlink
-	# if target exists and not a symlink, copy files to real dir
-		printMessage "Sauvegarde des fichiers existants" "$2/*"
-		copyFiles "$2" "$1" || printError "$?"  # dir not empty -> backup files
+	if [ -e $2 ] ; then
+		if [ ! -L $2 -a -d $2 -a `ls -A "$2" | wc -c` -ne 0 ] ; echo $? ; then		# dir exist & not a symlink
+		# if target exists and not a symlink, copy files to real dir
+			printMessage "Sauvegarde des fichiers existants" "$2/*"
+			copyFiles "$2" "$1" || printError "$?"  # dir not empty -> backup files
+		fi
 	fi
 
 	printMessage "Création du lien symbolique" "$2"
@@ -60,8 +62,8 @@ printMessage "Création du dir de stockage des videos" "$VIDEO_DIR_REAL"
 createDir "$VIDEO_DIR_REAL" || printError "$?"
 # createDir	"$VIDEO_DIR_ORIGINAL" || printError "$?"
 
-chown pi:w3 "$IMAGE_DIR_REAL" && chmod 666 "$IMAGE_DIR_REAL"
-chown pi:w3 "$VIDEO_DIR_REAL" && chmod 666 "$VIDEO_DIR_REAL"
+#chown pi:w3 "$IMAGE_DIR_REAL" && chmod 666 "$IMAGE_DIR_REAL"
+#chown pi:w3 "$VIDEO_DIR_REAL" && chmod 666 "$VIDEO_DIR_REAL"
 
 makeCameraStorage "$IMAGE_DIR_REAL" "$IMAGE_DIR_LINK" 	# create image dir
 
