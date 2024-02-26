@@ -16,6 +16,7 @@ N:stream_motion:on
 N:stream_maxrate:12
 N:timelapse_fps:1
 C:on_motion_detected:email
+P:log_file:/usr/local/etc/.motion/log/motion.log
 P:target_dir:/var/www/html/public
 P:pid_file:/home/pi/.motion/motion.pid
 P:snapshot_filename:cameraShots/%v-%Y%m%d%H%M%S-snapshot

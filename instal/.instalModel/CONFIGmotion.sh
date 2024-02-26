@@ -14,11 +14,12 @@ installedVersion=`dpkg --status motion | grep "Version" | cut -d ':' -f 2 | cut 
 currentVersion="$installedVersion"
 
 # create log directory, log file and set permission and ownership
-if [ ! -d "/var/www/log/motion" ] ; then
-	createDir "/var/www/log/motion" || printError "$?"
-	touch /var/www/log/motion/motion.log
-	chown -R motion:w3 "/var/www/log/motion" && chmod -R 777 "/var/www/log/motion"
-	chmod -R 777 "/var/www/log"
+if [ ! -d "/usr/local/etc/.motion/log" ] ; then
+	createDir "/usr/local/etc/.motion/log" || printError "$?"
+#	touch /var/www/log/motion/motion.log
+	chown -R motion:w3 "/usr/local/etc/.motion/log"
+	#&& chmod -R 777 "/var/www/log/motion"
+#	chmod -R 777 "/var/www/log"
 fi
 
 [ "$varDebug" ] && echo "Entering Motion config" >> $DEBUG_FILE
@@ -42,9 +43,6 @@ if [ ! "$currentVersion" = "$verMotion" ] || [ "$varMotion" ] ; then
 		# configuration du démon
 		printMessage "Configuration initiale de motion" "motion"
 		substitute "daemon on:daemon off" "/etc/motion/motion.conf" || printError "$?"
-
-		printMessage "activation de motion" "motion"
-		systemctl enable motion || printError "$?"
 	fi
 
 	# DB tables initialisation
@@ -93,4 +91,9 @@ updateParameter "$INSTALL_ROOTPATH/.config/versions.sh" "verMotion" "$installedV
 
 	# copy motion.conf in default dir /usr/local/etc/
 	cp /etc/motion/motion.conf /usr/local/etc/
+
+	if [ "$varFirstInstal" ] ; then
+		printMessage "activation de motion" "motion"
+		systemctl enable motion || printError "$?"
+	fi
 
