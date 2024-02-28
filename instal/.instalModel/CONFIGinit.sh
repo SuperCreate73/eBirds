@@ -12,7 +12,7 @@
 #-----------------------------
 printMessage "activation du service fast-cgi" "PHP"
 sudo lighty-enable-mod fastcgi-php >> "$LOG_FILE" 2>&1 || printError "$?"
-if [ $locError = 0 ] ; then
+if [ $locError == 0 ] ; then
 	sudo service lighttpd force-reload || printError "$?"
 fi
 
