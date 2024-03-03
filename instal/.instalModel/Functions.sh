@@ -331,6 +331,9 @@ function insertRecord()
 	local values=`cut -d ':' -f 3 <<< $tmpMain`
 
 	if [ -n "$table" ] ; then
+		echo "$DB_FILE"
+		echo "INSERT INTO $table $fields VALUES $values ;"
+
 		sqlite3 "$DB_FILE" "INSERT INTO $table $fields VALUES $values ;" || return "$INSERT_DB_ERROR"
 	fi
 
