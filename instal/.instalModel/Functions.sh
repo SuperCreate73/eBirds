@@ -331,6 +331,9 @@ function insertRecord()
 	local values=`cut -d ':' -f 3 <<< $tmpMain`
 
 	if [ -n "$table" ] ; then
+		echo "$table"
+		echo "$fields"
+		echo "$values"
 		echo "$DB_FILE"
 		echo "INSERT INTO $table $fields VALUES $values ;"
 
