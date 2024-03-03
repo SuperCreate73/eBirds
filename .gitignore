@@ -5,3 +5,12 @@
 /instal/.cs_files
 /instal/.cs_workspaces
 /instal/CS_SESSION
+Documentation/
+debug.log
+decompress.sh
+gitToken.txt
+imager_1.8.5_amd64.deb
+logInstal.log
+nichoir.sh
+test/
+.gitignore

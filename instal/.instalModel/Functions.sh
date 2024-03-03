@@ -236,7 +236,8 @@ function readInputFile()
 	# read lines without comments and send it to the function $2
 	# exit on error
 	while read -r currentLine ; do
-		"$callProcess" "$currentLine" "$parameters" 2> /dev/null || return $PROCESSING_LINE_ERROR
+		"$callProcess" "$currentLine" "$parameters" || return $PROCESSING_LINE_ERROR
+		#"$callProcess" "$currentLine" "$parameters" 2> /dev/null || return $PROCESSING_LINE_ERROR
 	done <<< $(grep -h -e '^[^(#|;|//).*]' `ls "$inputFiles"*`)
 
 	return 0
