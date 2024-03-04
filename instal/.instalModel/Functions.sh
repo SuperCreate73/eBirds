@@ -314,6 +314,10 @@ function insertRecord()
 	# insert record from input files given as parameters :
 	# $x : input file(s)
 
+	echo $#
+	echo $1
+	echo $2
+
 	local tmpMain=`cut -d '+' -f 1 <<< $*`
 	local tmpRef=`cut -d '+' -f 2 <<< $*`
 
