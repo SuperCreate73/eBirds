@@ -314,12 +314,8 @@ function insertRecord()
 	# insert record from input files given as parameters :
 	# $x : input file(s)
 
-	echo $#
-	echo $1
-	echo $2
-
-	local tmpMain=`cut -d '+' -f 1 <<< $*`
-	local tmpRef=`cut -d '+' -f 2 <<< $*`
+	local tmpMain=`cut -d '+' -f 1 <<< $1`
+	local tmpRef=`cut -d '+' -f 2 <<< $1`
 
 	if [ -n "$tmpRef" ] ; then
 		local tmpTable=`cut -d ':' -f 1 <<< $tmpRef`
@@ -335,12 +331,6 @@ function insertRecord()
 	local values=`cut -d ':' -f 3 <<< $tmpMain`
 
 	if [ -n "$table" ] ; then
-		echo "$table"
-		echo "$fields"
-		echo "$values"
-		echo "$DB_FILE"
-		echo "INSERT INTO $table $fields VALUES $values ;"
-
 		sqlite3 "$DB_FILE" "INSERT INTO $table $fields VALUES $values ;" || return "$INSERT_DB_ERROR"
 	fi
 
