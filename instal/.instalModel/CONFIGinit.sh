@@ -101,4 +101,8 @@ echo "@reboot      root  bash /var/www/backend/ebirds_start --delay " >> /etc/cr
 chmod 644 /etc/cron.d/ebirdsInOut
 chown root:root /etc/cron.d/ebirdsInOut
 
+echo "@reboot		motion --delay " >> /etc/cron.d/ebirdsInOut
+chmod 644 /etc/cron.d/motion
+chown root:root /etc/cron.d/motion
+
 printError "$?"
