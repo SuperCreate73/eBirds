@@ -37,6 +37,7 @@ sed -i -e '/^ *\[pi4\] *$/a\dtoverlay=vc4-fkms-v3d' /boot/config.txt || printErr
 grep -q -e "^gpu_mem=128\$" /boot/config.txt || sudo echo "gpu_mem=128" >> /boot/config.txt
 # désactiver la led de la caméra
 grep -q -e "^disable_camera_led=1\$" /boot/config.txt || sudo echo "disable_camera_led=1" >> /boot/config.txt
+sudo raspi-config nonint do_legacy 0
 
 # configuration de lighttpd
 #--------------------------
@@ -101,7 +102,7 @@ echo "@reboot      root  bash /var/www/backend/ebirds_start --delay " >> /etc/cr
 chmod 644 /etc/cron.d/ebirdsInOut
 chown root:root /etc/cron.d/ebirdsInOut
 
-echo "@reboot		motion --delay " >> /etc/cron.d/ebirdsInOut
+echo "@reboot motion /usr/bin/motion -b" >> /etc/cron.d/motion
 chmod 644 /etc/cron.d/motion
 chown root:root /etc/cron.d/motion
 
